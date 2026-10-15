@@ -35,5 +35,5 @@ rewardbench = ["py.typed", "storage/schema.sql", "providers/data/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src", "tests/core"]
-addopts = "-q"
+pythonpath = ["src", "tests/core", "tests/analysis"]
+addopts = "-q --import-mode=importlib"

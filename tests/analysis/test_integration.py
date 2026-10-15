@@ -1,15 +1,16 @@
-"""Integration scaffolding through the real runner and SQLite log.
+"""Integration through the real runner and SQLite log.
 
-The model and the physics adapter in these tests are stand-ins from the core
-test helpers. They do not call a paid API and they are not Gymnasium or
-ApolloLander flights. A test that needs those adapters is skipped until Agent 2's
-package is on this branch.
+Most tests use stand-in models and environments. They do not call a paid API.
+``test_mock_model_completes_an_apollolander_episode`` drives the real
+ApolloLander adapter with a scripted controller. That flight is not evidence
+that a language model adapted.
 """
 
 from __future__ import annotations
 
 import importlib
 import importlib.util
+import shutil
 from pathlib import Path
 
 import pytest
@@ -22,6 +23,7 @@ from rewardbench.analysis.report import write_report
 from rewardbench.analysis.sessions import session_summaries
 from rewardbench.contracts import FeedbackCondition, Split
 from rewardbench.core.runner import ExperimentRunner
+from rewardbench.environments.apollolander import ApolloLanderAdapter, constant_controller
 from rewardbench.storage import SqliteStore
 
 _FAKES_PATH = Path(__file__).resolve().parents[1] / "core" / "fakes.py"
@@ -252,19 +254,35 @@ def test_gymnasium_and_apollo_reports_stay_separate(tmp_path: Path) -> None:
     store.close()
 
 
-def test_real_simulator_adapter_waits_for_agent_2() -> None:
-    for module_name in (
-        "rewardbench.environments.lunarlander",
-        "rewardbench.environments.apollo",
-        "rewardbench.environments.apollolander",
-    ):
-        try:
-            importlib.import_module(module_name)
-        except ModuleNotFoundError:
-            continue
-        else:
-            pytest.fail(
-                f"{module_name} is importable, but this scaffolding does not yet "
-                "drive it. Replace the skip with a real episode before calling that a pass."
-            )
-    pytest.skip("Agent 2's Gymnasium and ApolloLander adapters are not on agent/analysis")
+def test_mock_model_completes_an_apollolander_episode(tmp_path: Path) -> None:
+    if shutil.which("node") is None:
+        pytest.skip("ApolloLander physics runs in Node")
+    fakes = _fakes()
+    database = tmp_path / "rewardbench.sqlite"
+    controller = constant_controller(0, -90)
+    config = fakes.make_config(
+        experiment_name="integration-apollolander",
+        environment_id="apollolander",
+        num_revisions=2,
+        episodes_per_revision=1,
+        database_path=str(database),
+        max_episode_steps=8000,
+    )
+    model = fakes.FakeModel([fakes.proposal(controller), fakes.proposal(controller)])
+    store = SqliteStore(database)
+    summary = ExperimentRunner(config, model, ApolloLanderAdapter(), store).run()
+    assert summary.status.value == "completed"
+    assert len(model.requests) == 2
+    stored = store.fetch_episodes(summary.experiment_id)
+    assert len(stored) == 2
+    assert all(row.total_reward is not None for row in stored)
+    feedback = model.requests[1].history[0].feedback
+    assert feedback is not None
+    assert stored[0].total_reward == pytest.approx(feedback[0].total_reward)
+    bundle = load_logs(database)
+    assert bundle.synthetic is False
+    assert {environment_family(row.environment_id) for row in bundle.episodes} == {APOLLO_LANDER}
+    report = write_report(bundle, tmp_path / "report").markdown_path.read_text(encoding="utf-8")
+    assert "### ApolloLander" in report
+    assert "### Gymnasium LunarLander" not in report
+    store.close()
