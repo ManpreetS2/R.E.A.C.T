@@ -1,0 +1,31 @@
+experiment_name: lunarlander-development-numerical
+environment_id: lunarlander-v3
+provider: openai
+model_id: gpt-4.1
+feedback_condition: numerical_reward
+split: development
+seed: 12345
+num_revisions: 5
+episodes_per_revision: 3
+history_window: 4
+max_episode_steps: 1000
+max_model_retries: 2
+checkpoint_every: 1
+on_invalid_policy: skip
+on_model_failure: abort
+on_episode_failure: skip
+database_path: runs/rewardbench.sqlite
+budget:
+  max_cost_usd: 2.0
+  max_tokens: 200000
+  max_wall_seconds: 3600
+  max_revisions: 5
+  max_episodes: 15
+  max_model_calls: 20
+development_seeds: [1, 2, 3, 4, 5, 6, 7, 8]
+held_out_seeds: [101, 102, 103, 104, 105, 106, 107, 108]
+model_settings:
+  temperature: 0
+metadata:
+  task: lunarlander-v3
+notes: Development split with numerical rewards. Notes are not part of the experiment id.
