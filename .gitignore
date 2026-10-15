@@ -12,3 +12,13 @@ runs/
 *.sqlite3
 *.db
 .DS_Store
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+*.mp4
+examples/lunarlander/output/
+examples/apollolander/output/
+node_modules/

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Apollo Lander — fixed map</title>
+  <style>
+    @font-face {
+      font-family: "HersheySimplex";
+      src: url("../upstream/fonts/avhersheysimplexmedium-webfont.woff2") format("woff2"),
+           url("../upstream/fonts/avhersheysimplexmedium-webfont.woff") format("woff");
+    }
+    html, body { margin: 0; background: #000006; height: 100%; }
+    canvas { width: 100vw; height: 100vh; display: block; }
+  </style>
+</head>
+<body>
+  <canvas id="screen" width="1920" height="1080"></canvas>
+  <script src="../upstream/perlin.js"></script>
+  <script src="physics.js"></script>
+  <script>
+    const canvas = document.getElementById("screen");
+    const context = canvas.getContext("2d");
+    const sim = ApolloPhysics.createSimulation({ lockedCamera: true, maxSteps: 9000 });
+    window.apolloObserve = () => sim.observe();
+    let thrusting = false;
+    let rotation = -90;
+    const hud = { model: "human", revision: "—" };
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") rotation = Math.max(-90, rotation - 10);
+      if (event.key === "ArrowRight") rotation = Math.min(90, rotation + 10);
+      if (event.key === " " || event.key === "ArrowUp") thrusting = true;
+      if (event.key === "l") sim.reset({ lockedCamera: false, maxSteps: 9000 });
+      if (event.key === "k") sim.reset({ lockedCamera: true, maxSteps: 9000 });
+      if (event.key === "r") {
+        rotation = -90;
+        sim.reset({ lockedCamera: true, maxSteps: 9000 });
+      }
+    });
+    window.addEventListener("keyup", (event) => {
+      if (event.key === " " || event.key === "ArrowUp") thrusting = false;
+    });
+
+    let previous = performance.now();
+    let accumulator = 0;
+    function frame(now) {
+      const dt = Math.min(100, now - previous);
+      previous = now;
+      accumulator += dt;
+      let guard = 0;
+      while (accumulator >= 1000 / 60 && guard < 5) {
+        const result = sim.getResult();
+        if (!result.done) {
+          try {
+            sim.step({ thrust: thrusting ? 1 : 0, rotation });
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        accumulator -= 1000 / 60;
+        guard += 1;
+      }
+      draw();
+      requestAnimationFrame(frame);
+    }
+
+    function draw() {
+      const map = sim.mapInfo();
+      const frame = sim.frameGeometry();
+      const observation = sim.observe();
+      const result = sim.getResult();
+      const camera = frame.camera;
+      context.fillStyle = "#000006";
+      context.fillRect(0, 0, 1920, 1080);
+      context.save();
+      context.strokeStyle = "#F0F6FF";
+      context.lineWidth = 1.5;
+      context.beginPath();
+      map.points.forEach((point, index) => {
+        const [sx, sy] = project(point.x, point.y, camera);
+        if (index === 0) context.moveTo(sx, sy);
+        else context.lineTo(sx, sy);
+      });
+      context.stroke();
+      context.strokeStyle = "#d6de7a";
+      context.lineWidth = 4;
+      context.beginPath();
+      const [x1, y1] = project(frame.zone.x1, frame.zone.y, camera);
+      const [x2] = project(frame.zone.x2, frame.zone.y, camera);
+      context.moveTo(x1, y1);
+      context.lineTo(x2, y1);
+      context.stroke();
+      context.strokeStyle = "#F0F6FF";
+      context.lineWidth = 1.6;
+      for (const line of frame.lander) {
+        context.beginPath();
+        line.forEach((point, index) => {
+          const [sx, sy] = project(point.x, point.y, camera);
+          if (index === 0) context.moveTo(sx, sy);
+          else context.lineTo(sx, sy);
+        });
+        context.stroke();
+      }
+      if (frame.thrust) {
+        context.beginPath();
+        frame.thrust.forEach((point, index) => {
+          const [sx, sy] = project(point.x, point.y, camera);
+          if (index === 0) context.moveTo(sx, sy);
+          else context.lineTo(sx, sy);
+        });
+        context.stroke();
+      }
+      context.restore();
+      context.fillStyle = "#F0F6FF";
+      context.font = "22px HersheySimplex, monospace";
+      context.fillText("APOLLO LANDER  FIXED MAP", 48, 48);
+      context.fillText(`MODEL ${hud.model}   REV ${hud.revision}`, 48, 80);
+      context.fillText(`REWARD ${result.reward.toFixed(1)}   STATUS ${result.status}`, 48, 112);
+      const speed = Math.hypot(observation.vx, observation.vy);
+      context.fillText(`SPEED ${speed.toFixed(3)}   FUEL ${observation.fuel.toFixed(1)}`, 48, 144);
+      context.fillText("ARROWS ROTATE   SPACE THRUST   R RESET   L/K CAMERA", 48, 1040);
+    }
+
+    function project(x, y, camera) {
+      return [
+        (x - camera.left) / camera.width * camera.screenWidth,
+        (y - camera.top) / camera.height * camera.screenHeight,
+      ];
+    }
+
+    requestAnimationFrame(frame);
+  </script>
+</body>
+</html>
