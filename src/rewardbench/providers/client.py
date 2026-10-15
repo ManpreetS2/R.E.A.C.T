@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import random
 import time
+from dataclasses import replace
 from collections.abc import Callable, Mapping, Sequence
 from typing import Any
 
@@ -100,6 +101,8 @@ class RewardModelClient:
             )
         system_text, user_text = render_messages(request)
         settings = dict(request.model_settings)
+        if self.provider != "mock":
+            self._spending.ensure_open()
         quote = self._quote(system_text, user_text, settings)
         if self.provider != "mock" and not quote.available:
             raise ModelClientError(
@@ -118,12 +121,13 @@ class RewardModelClient:
                 attempts,
                 quote,
             )
+        except BudgetExceeded:
+            raise
         except Exception:
-            if reserved:
-                self._spending.release(reserved)
+            self._record_failed_usage(attempts, reserved)
             raise
         self._settle_or_release(reserved, response, quote, attempts)
-        return response
+        return self._annotate(response, quote)
 
     def _complete_with_retries(
         self,
@@ -209,7 +213,7 @@ class RewardModelClient:
             reasoning_tokens=reasoning_tokens,
             total_tokens=total_tokens,
             latency_seconds=latency,
-            estimated_cost_usd=cost.usd if cost.priced else 0.0,
+            estimated_cost_usd=cost.usd,
             model_id=self.model_id,
             provider=self.provider,
             parse_error=parse_error,
@@ -229,6 +233,34 @@ class RewardModelClient:
             attempts=self._retry.max_retries + 1,
         )
 
+    def _record_failed_usage(self, attempts: list[dict[str, Any]], reserved: float) -> None:
+        """Keep token charges from a failed call instead of releasing them."""
+
+        if self.provider == "mock":
+            if reserved:
+                self._spending.release(reserved)
+            return
+        if not attempts:
+            if reserved:
+                self._spending.release(reserved)
+            return
+        prompt, completion, reasoning, _total, _latency = _sum_attempts(attempts)
+        if prompt == 0 and completion == 0 and reasoning == 0:
+            if reserved:
+                self._spending.release(reserved)
+            return
+        cost = self._catalog.estimate(
+            self.provider,
+            self.model_id,
+            prompt_tokens=prompt,
+            completion_tokens=completion,
+            reasoning_tokens=reasoning,
+        )
+        charge = cost.usd if cost.usd > 0 else reserved
+        self._charge(reserved, charge, cost.status, cost.note)
+        if cost.status != "priced":
+            self._spending.stop(cost.note or "provider usage is not covered by the catalog")
+
     def _settle_or_release(
         self,
         reserved: float,
@@ -240,26 +272,47 @@ class RewardModelClient:
             if reserved:
                 self._spending.release(reserved)
             return
-        actual = response.estimated_cost_usd if response.usage.get("cost_status") == "priced" else None
-        if actual is None:
-            if reserved:
-                self._spending.release(reserved)
+        status = str(response.usage.get("cost_status") or "")
+        note = str(response.usage.get("pricing_note") or "provider usage is not covered by the catalog")
+        actual = response.estimated_cost_usd
+        if status != "priced":
+            charge = actual if actual > 0 else reserved
+            self._charge(reserved, charge, status, note)
+            self._spending.stop(note)
             raise ModelClientError(
-                str(response.usage.get("pricing_note") or "provider usage is not covered by the catalog"),
+                f"{note}; recorded {charge:.6f} USD and blocked further provider calls in this process",
                 retryable=False,
             )
-        amount = reserved
-        if amount:
-            try:
-                self._spending.settle(amount, actual)
-            except BudgetExceeded:
-                raise
-        within = usage_within_quote(attempts, quote)
-        if not within:
+        self._charge(reserved, actual, status, note)
+        if not usage_within_quote(attempts, quote):
+            overrun = ""
+            if actual > reserved + 1e-12:
+                overrun = (
+                    f"; billed {actual:.6f} USD exceeded the reserved {reserved:.6f} USD "
+                    "and was recorded"
+                )
             raise ModelClientError(
-                "billed tokens exceeded the reserved input, output, or reasoning ceiling",
+                "billed tokens exceeded the reserved input, output, or reasoning ceiling" + overrun,
                 retryable=False,
             )
+
+    def _charge(self, reserved: float, actual: float, status: str, note: str) -> None:
+        try:
+            self._spending.settle(reserved, actual)
+        except BudgetExceeded:
+            if status != "priced":
+                self._spending.stop(note)
+            raise
+
+    def _annotate(self, response: ModelResponse, quote: PriceQuote) -> ModelResponse:
+        usage = dict(response.usage)
+        actual = response.estimated_cost_usd
+        usage["spent_usd"] = self._spending.spent_usd
+        usage["held_usd"] = self._spending.held_usd
+        usage["budget_exceeded"] = False
+        usage["reservation_exceeded"] = bool(quote.available and actual > quote.usd + 1e-12)
+        usage["spending_scope"] = "in_process_only"
+        return replace(response, usage=usage)
 
     def _log_attempt(self, record: Mapping[str, Any]) -> None:
         LOGGER.info(

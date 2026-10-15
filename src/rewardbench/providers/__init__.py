@@ -11,6 +11,9 @@ Do not put keys in source or in a committed ``.env``. ``build_model_client``
 does not call the network; ``propose`` does. Use ``provider="mock"`` for
 offline experiments. Prices live in ``providers/data/pricing_2026-10-14.json``
 and can be replaced with ``pricing_catalog``.
+
+Controller text comes from ``EnvironmentSpec``. This package does not validate
+environment-specific controller fields. The spending lock is in-process only.
 """
 
 from rewardbench.providers.capabilities import PROVIDER_DIFFERENCES

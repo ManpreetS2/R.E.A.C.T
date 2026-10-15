@@ -63,23 +63,41 @@ class SpendingGuard:
     """Hold a worst-case reservation before a request, then charge the bill.
 
     ``held_usd`` covers calls that have been allowed but have not finished.
-    The lock makes that check safe for concurrent ``propose`` calls that share
-    one guard. The guard does not invent a price. Releasing a reservation
+    The lock is a ``threading.Lock`` in this process. It makes concurrent
+    ``propose`` calls that share one guard check the same cap. It does not
+    coordinate other processes, and the provider does not enforce it. A
+    response can still cost more than the reservation; that actual charge is
+    added to ``spent_usd`` and the overrun is raised. Releasing a reservation
     never increases ``spent_usd``.
     """
 
     max_spend_usd: float | None = None
     spent_usd: float = 0.0
     held_usd: float = 0.0
+    blocked_reason: str | None = None
     _lock: threading.Lock = field(default_factory=threading.Lock, init=False, repr=False)
 
     @property
     def capped(self) -> bool:
         return self.max_spend_usd is not None
 
+    def ensure_open(self) -> None:
+        """Refuse another live call after an unpriced or blocking charge."""
+
+        with self._lock:
+            self._raise_if_blocked()
+
+    def stop(self, reason: str) -> None:
+        """Block later reservations in this process. Does not invent a price."""
+
+        with self._lock:
+            if not self.blocked_reason:
+                self.blocked_reason = reason
+
     def reserve(self, amount_usd: float) -> float:
         amount = max(0.0, amount_usd)
         with self._lock:
+            self._raise_if_blocked()
             if self.max_spend_usd is not None:
                 projected = self.spent_usd + self.held_usd + amount
                 if projected > self.max_spend_usd + 1e-12:
@@ -115,3 +133,14 @@ class SpendingGuard:
     def release(self, reserved_usd: float) -> None:
         with self._lock:
             self.held_usd = max(0.0, self.held_usd - max(0.0, reserved_usd))
+
+    def _raise_if_blocked(self) -> None:
+        if not self.blocked_reason:
+            return
+        limit = self.max_spend_usd if self.max_spend_usd is not None else self.spent_usd
+        raise BudgetExceeded(
+            f"provider spending is blocked in this process: {self.blocked_reason}",
+            resource="provider_cost_usd",
+            spent=self.spent_usd + self.held_usd,
+            limit=limit,
+        )

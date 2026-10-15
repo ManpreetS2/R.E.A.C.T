@@ -157,5 +157,53 @@ def status_error(response: HttpResponse) -> HttpCallError:
         status=response.status,
         retryable=response.status in RETRYABLE_STATUS,
         latency_seconds=response.latency_seconds,
+        usage=usage_from_body(response.body),
         retry_after_s=retry_after_seconds(response.headers),
     )
+
+
+def usage_from_body(body: bytes) -> dict[str, int]:
+    """Read token counts from an error body so a billed failure is not dropped."""
+
+    try:
+        parsed = json.loads(body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return {}
+    if not isinstance(parsed, dict):
+        return {}
+    usage = parsed.get("usage")
+    if not isinstance(usage, dict):
+        error = parsed.get("error")
+        usage = error.get("usage") if isinstance(error, dict) else None
+    if not isinstance(usage, dict):
+        usage = parsed.get("usageMetadata")
+    if not isinstance(usage, dict):
+        return {}
+    details = usage.get("completion_tokens_details")
+    reasoning = _usage_int(details.get("reasoning_tokens")) if isinstance(details, dict) else 0
+    prompt = _usage_int(
+        usage.get("prompt_tokens", usage.get("input_tokens", usage.get("promptTokenCount")))
+    )
+    completion = _usage_int(
+        usage.get(
+            "completion_tokens",
+            usage.get("output_tokens", usage.get("candidatesTokenCount")),
+        )
+    )
+    if reasoning == 0:
+        reasoning = _usage_int(usage.get("thoughtsTokenCount", usage.get("thinking_tokens")))
+    total = _usage_int(usage.get("total_tokens", usage.get("totalTokenCount")))
+    if total == 0:
+        total = prompt + completion
+    return {
+        "prompt_tokens": prompt,
+        "completion_tokens": completion,
+        "reasoning_tokens": reasoning,
+        "total_tokens": total,
+    }
+
+
+def _usage_int(value: object) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        return 0
+    return value

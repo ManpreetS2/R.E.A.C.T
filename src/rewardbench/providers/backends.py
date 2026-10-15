@@ -91,7 +91,7 @@ class MockBackend:
         if self.script:
             item = self.script.pop(0)
         else:
-            item = ScriptedReply(text='{"policy":"heuristic"}')
+            item = ScriptedReply(text="{}")
         if isinstance(item, Exception):
             raise item
         reply = item if isinstance(item, ScriptedReply) else ScriptedReply(text=str(item))

@@ -99,21 +99,18 @@ class PricingCatalog:
             cache_read_tokens=cache_read_tokens,
             cache_write_tokens=cache_write_tokens,
         )
+        billed_output = completion_tokens
+        if not rate.reasoning_included_in_output:
+            billed_output += reasoning_tokens
+        token_usd = _usd(prompt_tokens, input_rate) + _usd(billed_output, output_rate)
         if cache_status != "priced":
             return CostEstimate(
-                usd=0.0,
+                usd=token_usd,
                 status=cache_status,
                 version=self.version,
                 note=cache_note,
             )
-        billed_output = completion_tokens
-        if not rate.reasoning_included_in_output:
-            billed_output += reasoning_tokens
-        usd = (
-            _usd(prompt_tokens, input_rate)
-            + _usd(billed_output, output_rate)
-            + cache_cost
-        )
+        usd = token_usd + cache_cost
         return CostEstimate(usd=usd, status="priced", version=self.version, note=rate.note)
 
 
