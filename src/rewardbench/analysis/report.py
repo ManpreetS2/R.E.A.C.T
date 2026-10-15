@@ -8,6 +8,7 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
 from rewardbench.analysis.diagnostics import fairness_notes, resume_notes, seed_leakage
+from rewardbench.analysis.environments import environment_family, family_display
 from rewardbench.analysis.plots import (
     plot_improvement_per_dollar,
     plot_initial_vs_final,
@@ -26,6 +27,7 @@ from rewardbench.analysis.sessions import (
     GroupEstimate,
     SessionSummary,
     conditional_median_seconds,
+    experiment_rollups,
     reached_proportion,
     session_summaries,
     summarize_groups,
@@ -97,10 +99,16 @@ def write_report(
         status_summaries = [row for row in summaries if row.validation_status == status]
         if not status_summaries:
             continue
-        lines.extend(_status_section(status, status_summaries, confidence, reward_targets))
-        plot_dir = directory / status
-        plot_paths.extend(_plots(status_summaries, plot_dir, confidence, reward_targets))
-        lines.extend(_plot_links(plot_dir, directory))
+        lines.extend(_status_heading(status))
+        families = sorted({environment_family(row.environment_id) for row in status_summaries})
+        for family in families:
+            family_rows = [
+                row for row in status_summaries if environment_family(row.environment_id) == family
+            ]
+            lines.extend(_family_section(family, family_rows, confidence, reward_targets))
+            plot_dir = directory / status / family
+            plot_paths.extend(_plots(family_rows, plot_dir, confidence, reward_targets))
+            lines.extend(_plot_links(plot_dir, directory))
     if not any(row.validation_status == INDEPENDENTLY_VALIDATED for row in summaries):
         lines.extend(
             [
@@ -200,12 +208,7 @@ def _diagnostic_section(bundle: LogBundle, summaries: list[SessionSummary]) -> l
     return lines
 
 
-def _status_section(
-    status: str,
-    summaries: list[SessionSummary],
-    confidence: float,
-    targets: tuple[float, ...],
-) -> list[str]:
+def _status_heading(status: str) -> list[str]:
     title = (
         "Independently validated logs"
         if status == INDEPENDENTLY_VALIDATED
@@ -218,25 +221,67 @@ def _status_section(
             "Keep them separate from any later confirmed results."
         )
         lines.append("")
-    if not summaries:
-        lines.append("No sessions in this category.")
-        lines.append("")
-        return lines
-    lines.append(
+    return lines
+
+
+def _family_section(
+    family: str,
+    summaries: list[SessionSummary],
+    confidence: float,
+    targets: tuple[float, ...],
+) -> list[str]:
+    environment_ids = ", ".join(sorted({row.environment_id for row in summaries}))
+    lines = [
+        f"### {family_display(family)}",
+        "",
+        "Gymnasium LunarLander and ApolloLander are separate benchmarks. "
+        "Scores in this section are not pooled with any other environment family.",
+        "",
+        f"Environment ids: {environment_ids}.",
+        "",
         f"Session-level {confidence * 100:g}% confidence intervals use the Student-t "
-        "interval for means. Bounds are omitted when fewer than two sessions contribute."
-    )
-    lines.append("")
+        "interval for means. Bounds are omitted when fewer than two sessions contribute.",
+        "",
+    ]
     lines.extend(_session_table(summaries))
-    lines.extend(_group_table(summarize_groups(summaries, validation_status=status, confidence=confidence)))
-    lines.extend(_target_table(summaries, targets, status, confidence))
+    lines.extend(
+        _group_table(
+            summarize_groups(summaries, confidence=confidence),
+            count_label="Sessions",
+        )
+    )
+    lines.extend(
+        [
+            "#### Repeated experiments",
+            "",
+            "One experiment id is one replicate. Additional sessions of that id are resumes, "
+            "not additional experiments. The reward change is taken from the session that "
+            "reached the highest revision index. Cost and tokens are summed across the "
+            "experiment's sessions. The interval is across experiments, so one experiment "
+            "has no interval.",
+            "",
+        ]
+    )
+    lines.extend(
+        _group_table(
+            summarize_groups(experiment_rollups(summaries), confidence=confidence),
+            count_label="Experiments",
+        )
+    )
+    lines.extend(_target_table(summaries, targets, summaries[0].validation_status, confidence))
+    if family != "gymnasium":
+        lines.append(
+            "Reward targets in this section are caller-supplied numbers. "
+            "They are not Gymnasium LunarLander thresholds and they are not results."
+        )
+        lines.append("")
     return lines
 
 
 def _session_table(summaries: list[SessionSummary]) -> list[str]:
     lines = [
-        "| Model | Condition | Split | Session | Status | Initial | Final | Improvement | Cost USD | Per dollar | Invalid rate | Crash rate |",
-        "| --- | --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+        "| Model | Environment | Condition | Split | Session | Status | Initial | Final | Improvement | Cost USD | Per dollar | Invalid rate | Crash rate |",
+        "| --- | --- | --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for summary in summaries:
         lines.append(
@@ -244,6 +289,7 @@ def _session_table(summaries: list[SessionSummary]) -> list[str]:
             + " | ".join(
                 [
                     summary.model_id,
+                    summary.environment_id,
                     summary.feedback_condition,
                     summary.split,
                     summary.session_id,
@@ -265,18 +311,20 @@ def _session_table(summaries: list[SessionSummary]) -> list[str]:
     return lines
 
 
-def _group_table(estimates: list[GroupEstimate]) -> list[str]:
+def _group_table(estimates: list[GroupEstimate], *, count_label: str) -> list[str]:
     lines = [
-        "| Model | Condition | Split | Sessions | Mean improvement | Interval | Mean per dollar | Interval |",
-        "| --- | --- | --- | ---: | ---: | --- | ---: | --- |",
+        f"| Model | Environment | Condition | Split | {count_label} | Experiments | Mean improvement | Interval | Mean per dollar | Interval |",
+        "| --- | --- | --- | --- | ---: | ---: | ---: | --- | ---: | --- |",
     ]
     for estimate in estimates:
         lines.append(
-            "| {model} | {condition} | {split} | {n} | {improvement} | {improvement_ci} | {per_dollar} | {per_dollar_ci} |".format(
+            "| {model} | {environment} | {condition} | {split} | {n} | {experiments} | {improvement} | {improvement_ci} | {per_dollar} | {per_dollar_ci} |".format(
                 model=estimate.model_id,
+                environment=estimate.environment_id,
                 condition=estimate.feedback_condition,
                 split=estimate.split,
                 n=estimate.n_sessions,
+                experiments=estimate.n_experiments,
                 improvement=_fmt(estimate.improvement.point),
                 improvement_ci=_interval(estimate.improvement),
                 per_dollar=_fmt(estimate.improvement_per_dollar.point),

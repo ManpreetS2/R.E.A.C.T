@@ -6,7 +6,7 @@ session summaries. Episode-level pooling is not used for confidence intervals.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from rewardbench.analysis.schema import AttemptObservation, EpisodeObservation, Interval, LogBundle
 from rewardbench.analysis.stats import mean_interval, median, wilson_interval
@@ -73,6 +73,7 @@ class GroupEstimate:
     invalid_rate: Interval
     crash_rate: Interval
     success_rate: Interval
+    n_experiments: int
 
 
 @dataclass(frozen=True)
@@ -130,6 +131,41 @@ def summarize_groups(
         for _, rows in sorted(grouped.items(), key=lambda item: item[0])
     ]
     return estimates
+
+
+def experiment_rollups(summaries: list[SessionSummary]) -> list[SessionSummary]:
+    """Collapse sessions that share an experiment id into one replicate.
+
+    A resumed run opens another session for the same experiment. That second
+    session is not a new experiment. The reward trajectory is taken from the
+    session that reached the highest revision index. Cost and tokens are the
+    sum across every session of that experiment.
+    """
+
+    grouped: dict[str, list[SessionSummary]] = {}
+    for summary in summaries:
+        grouped.setdefault(summary.experiment_id, []).append(summary)
+    rolled: list[SessionSummary] = []
+    for rows in grouped.values():
+        chosen = max(
+            rows,
+            key=lambda row: (
+                row.final_revision if row.final_revision is not None else -1,
+                row.session_id,
+            ),
+        )
+        cost = sum(row.total_cost_usd for row in rows)
+        tokens = sum(row.total_tokens for row in rows)
+        per_dollar = None if chosen.improvement is None or cost <= 0.0 else chosen.improvement / cost
+        rolled.append(
+            replace(
+                chosen,
+                total_cost_usd=cost,
+                total_tokens=tokens,
+                improvement_per_dollar=per_dollar,
+            )
+        )
+    return sorted(rolled, key=_session_sort)
 
 
 def time_to_targets(
@@ -298,6 +334,7 @@ def _estimate_group(rows: list[SessionSummary], confidence: float) -> GroupEstim
         environment_id=sample.environment_id,
         validation_status=sample.validation_status,
         n_sessions=len(rows),
+        n_experiments=len({row.experiment_id for row in rows}),
         initial_reward=mean_interval([row.initial_mean_reward for row in rows], confidence),
         final_reward=mean_interval([row.final_mean_reward for row in rows], confidence),
         improvement=mean_interval([row.improvement for row in rows], confidence),

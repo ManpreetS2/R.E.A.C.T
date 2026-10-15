@@ -35,7 +35,13 @@ For each session the pipeline records:
 
 Group tables then take the mean of those session values. The interval is a two-sided Student-t interval. It is omitted when fewer than two sessions contribute. Wilson intervals are used for the proportion of sessions that reach a reward target.
 
+A repeated experiment is a distinct experiment id with the same model, condition, split, and environment. Sessions that share an experiment id are one replicate, including resumes. The repeated-experiment interval uses one row per experiment id. Its reward change comes from the session with the highest revision index, and its cost is the sum of that experiment's sessions.
+
 Episode-level pooling is not used for those intervals. Episodes inside one session share a controller and a seed schedule, so they are not independent replicates.
+
+## Environment families
+
+`environment_id` selects the benchmark. `LunarLander-v3` is Gymnasium. Any id containing `apollo` is ApolloLander, including an id that also mentions Gymnasium. Other ids stay in their own family. The report writes a separate section and a separate figure directory for each family. Those scores are never averaged together.
 
 ## Figures
 

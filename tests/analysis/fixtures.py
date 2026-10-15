@@ -141,6 +141,7 @@ def insert_experiment(
     condition: str = "numerical_reward",
     split: str = "development",
     seed: int = 0,
+    environment_id: str = "LunarLander-v3",
     synthetic: bool = True,
     validation_status: str = "preliminary",
     development_seeds: tuple[int, ...] = (1, 2),
@@ -167,7 +168,7 @@ def insert_experiment(
         (
             experiment_id,
             "fixture",
-            "LunarLander-v3",
+            environment_id,
             provider,
             model_id,
             condition,

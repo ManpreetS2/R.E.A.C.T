@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
+from rewardbench.analysis.environments import environment_family, family_display
 from rewardbench.analysis.schema import EMPTY_LOG_MESSAGE, SYNTHETIC_BANNER
 from rewardbench.analysis.sessions import SessionSummary, TargetTime
 from rewardbench.analysis.stats import mean_interval
@@ -392,6 +393,7 @@ def _figure(
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     is_synthetic = any(summary.synthetic for summary in summaries) if synthetic is None else synthetic
+    title = _with_family(title, summaries)
     if not summaries and synthetic is None:
         _empty(ax)
     if is_synthetic:
@@ -402,6 +404,15 @@ def _figure(
     fig.text(0.01, 0.01, footnote, fontsize=7.5, color="#333333", wrap=True)
     fig.tight_layout(rect=(0, 0.06, 1, 0.96 if is_synthetic else 1))
     return fig, ax
+
+
+def _with_family(title: str, summaries: list[SessionSummary]) -> str:
+    families = sorted({environment_family(summary.environment_id) for summary in summaries})
+    if len(families) == 1:
+        return f"{family_display(families[0])}: {title}"
+    if len(families) > 1:
+        return f"Separate environment families: {title}"
+    return title
 
 
 def _empty(ax: Axes, message: str = EMPTY_LOG_MESSAGE) -> None:
@@ -435,7 +446,9 @@ def _series_label(summary: SessionSummary, summaries: list[SessionSummary]) -> s
         if item.model_id == summary.model_id
     }
     name = summary.model_id if len(providers) == 1 else f"{summary.provider}/{summary.model_id}"
-    return f"{name} ({summary.feedback_condition}, {summary.split})"
+    return (
+        f"{name} | {summary.environment_id} | {summary.feedback_condition} | {summary.split}"
+    )
 
 
 def _target_label(row: TargetTime) -> str:

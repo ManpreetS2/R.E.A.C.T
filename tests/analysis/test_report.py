@@ -34,7 +34,7 @@ def test_synthetic_report_is_labeled_and_not_a_ranking(tmp_path: Path) -> None:
     assert text.index("model-a") < text.index("model-b")
     for plot in result.plot_paths:
         assert plot.read_bytes().startswith(b"\x89PNG")
-    assert (tmp_path / "report" / "preliminary" / "time_to_target.png").is_file()
+    assert (tmp_path / "report" / "preliminary" / "gymnasium" / "time_to_target.png").is_file()
 
 
 def test_cli_report_and_export(tmp_path: Path) -> None:

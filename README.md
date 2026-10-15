@@ -1,6 +1,6 @@
 # RewardBench
 
-RewardBench measures how language models adapt to numerical rewards and penalties under controlled conditions. The first environment is Gymnasium LunarLander-v3. Models revise a controller from earlier attempts. They do not update neural network weights.
+The first logged environment is Gymnasium LunarLander-v3. ApolloLander, when it is logged under its own environment id, is summarized separately and is not pooled with LunarLander.
 
 The research question is: which language model adapts most effectively to numerical rewards and penalties under controlled experimental conditions?
 

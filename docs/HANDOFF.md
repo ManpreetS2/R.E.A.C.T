@@ -10,7 +10,7 @@ Branch: `agent/analysis`
 
 Shared git directory: `/Users/manpreet/rewardbench/.git`
 
-Base commit: `1fceef7` (`Add the shared rewardbench contract and project foundation.`)
+Foundation this branch contains: `af4803d` (`Add the experiment runner, SQLite log, and core tests.`), replayed under the analysis commit. The original contract commit remains `1fceef7`.
 
 Do not open `/Users/manpreet/Projects/rewardbench`. That directory is a separate repository (`git rev-parse --git-common-dir` is `/Users/manpreet/Projects/rewardbench/.git`). It has no commits and no origin. It is not this branch.
 
@@ -48,11 +48,20 @@ Command, from this worktree, with Python 3.12.1:
 MPLBACKEND=Agg .venv/bin/python -m pytest tests/analysis --override-ini addopts= -q --tb=no
 ```
 
-Result: `24 passed in 2.99s`.
+Result: `26 passed in 5.58s` on Python 3.12.1.
 
 The GitHub Actions workflow was written and was not executed from this machine. Do not describe it as a green check.
 
 `.venv/` is local and gitignored. Recreate it with the README instructions.
+
+## Another MacBook tomorrow
+
+1. Copy the shared repository, not the empty checkout under `Projects`. The git directory that matters is `/Users/manpreet/rewardbench/.git`. A full copy of `/Users/manpreet/rewardbench` plus `/Users/manpreet/rewardbench-worktrees/analysis` keeps the worktree link only if the copied paths stay the same. On the other machine, prefer a normal clone once GitHub has the branch. Until then, copy the shared repo and run `git worktree add /path/to/analysis agent/analysis` from that copy.
+2. Check `git rev-parse --abbrev-ref HEAD` prints `agent/analysis` and `git merge-base HEAD agent/core` prints `af4803d` if `agent/core` is present.
+3. Create a new virtual environment. Do not copy `.venv/`. macOS: `python3.11 -m venv .venv && source .venv/bin/activate`. Windows: `py -3.11 -m venv .venv` then `.\.venv\Scripts\Activate.ps1`. Then `python -m pip install -e ".[dev]" && python -m pip install numpy scipy matplotlib`.
+4. Run `python -m pytest tests/analysis -q`.
+5. Do not point the report at a log from a different environment family and describe it as LunarLander. Gymnasium and ApolloLander stay in separate report sections.
+6. Do not push, merge, or call a paid model API while regenerating figures.
 
 ## Tonight: GitHub transfer
 

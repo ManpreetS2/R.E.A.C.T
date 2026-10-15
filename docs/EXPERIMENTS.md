@@ -50,7 +50,7 @@ Keep the SQLite file as the source of truth. Record its SHA-256 from the generat
 python -m rewardbench.analysis report --logs runs/rewardbench.sqlite --out reports/run1 --reward-targets 0,200
 ```
 
-This writes `reports/run1/report.md` and, when rows exist, figures under `preliminary/` or `independently_validated/`. Those directories are never combined into one chart.
+This writes `reports/run1/report.md`. Figures go under `preliminary/<family>/` or `independently_validated/<family>/`. `gymnasium` and `apollo-lander` are different directories. Those directories are never combined into one chart.
 
 `--reward-targets` is a list of reward levels you chose before looking at the curve. `200` is the conventional LunarLander reference level used by Gymnasium discussions. It is not an empirical claim that any model reached it.
 
