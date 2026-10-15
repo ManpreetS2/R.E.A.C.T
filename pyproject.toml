@@ -24,5 +24,5 @@ rewardbench = ["py.typed", "storage/schema.sql"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "tests/core"]
 addopts = "-q"

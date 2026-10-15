@@ -43,7 +43,11 @@ from rewardbench.contracts import (
     StoredError,
     ValidationResult,
 )
+from rewardbench.core.budget import BudgetLimiter
+from rewardbench.core.history import HistoryBuilder
 from rewardbench.core.ids import canonical_config, config_hash, experiment_id, new_session_id
+from rewardbench.core.runner import ExperimentRunner
+from rewardbench.storage import SqliteStore
 
 __version__ = "0.1.0"
 
@@ -84,6 +88,10 @@ __all__ = [
     "StoredEpisode",
     "StoredError",
     "ValidationResult",
+    "BudgetLimiter",
+    "ExperimentRunner",
+    "HistoryBuilder",
+    "SqliteStore",
     "canonical_config",
     "config_hash",
     "experiment_id",
