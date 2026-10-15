@@ -40,6 +40,16 @@ PROVIDER_DIFFERENCES: dict[str, tuple[str, ...]] = {
     ),
     "mock": (
         "Returns scripted text in-process. It does not open a socket and does not read an API key.",
-        "Token counts and latency come from the script, so cost math can be tested offline.",
+        "Token counts and latency come from the script. Mock calls are not billed and are not reserved against a provider cap.",
     ),
 }
+
+# A strict dollar cap is only as strong as the reservation below.
+SPENDING_LIMITS: tuple[str, ...] = (
+    "Before a live call, the client reserves input tokens at one per UTF-8 byte plus 64 framing tokens, output tokens at max_output_tokens (default 800, and that same number is sent), and one reservation per HTTP try including provider retries.",
+    "The reservation is held under a lock so concurrent propose calls that share a SpendingGuard cannot each pass a cap that only one of them can afford.",
+    "OpenAI and xAI reasoning tokens are reserved inside max output because the catalog marks them as included in completion tokens. Gemini bills thoughts separately, so a capped or live Gemini call is refused unless max_reasoning_tokens or gemini_thinking_budget is set, and that budget is sent as thinkingBudget.",
+    "Anthropic thinking, when enabled, must sit strictly below max_output_tokens because those tokens share the output cap. The catalog has no cache read or cache write price. Adapters do not send cache breakpoints. A response that reports cache tokens is rejected because that charge was not reserved.",
+    "The runner may call propose again after a ModelClientError. Each call reserves its own retries. There is no single hold that covers the runner's max_model_retries in advance.",
+    "If the catalog has no finite rate, or a separate reasoning or cache charge has no ceiling, the client does not send the request.",
+)

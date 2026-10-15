@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import random
+import threading
 import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -59,37 +60,58 @@ class RateLimiter:
 
 @dataclass
 class SpendingGuard:
-    """Reserve an estimate before the request, then charge the priced result.
+    """Hold a worst-case reservation before a request, then charge the bill.
 
-    A call that cannot be priced is refused when a cap is set. The guard does
-    not invent a rate. One in-flight response can finish after its estimate;
-    the next call stops if the cap is already exhausted.
+    ``held_usd`` covers calls that have been allowed but have not finished.
+    The lock makes that check safe for concurrent ``propose`` calls that share
+    one guard. The guard does not invent a price. Releasing a reservation
+    never increases ``spent_usd``.
     """
 
     max_spend_usd: float | None = None
     spent_usd: float = 0.0
+    held_usd: float = 0.0
+    _lock: threading.Lock = field(default_factory=threading.Lock, init=False, repr=False)
 
     @property
     def capped(self) -> bool:
         return self.max_spend_usd is not None
 
-    def ensure(self, estimate_usd: float) -> None:
-        if self.max_spend_usd is None:
-            return
-        projected = self.spent_usd + max(0.0, estimate_usd)
-        if projected > self.max_spend_usd + 1e-12:
-            raise BudgetExceeded(
-                (
-                    f"estimated request cost {estimate_usd:.6f} USD would bring "
-                    f"provider spend to {projected:.6f} USD, over the cap "
-                    f"{self.max_spend_usd:.6f} USD"
-                ),
-                resource="provider_cost_usd",
-                spent=self.spent_usd,
-                limit=self.max_spend_usd,
-            )
+    def reserve(self, amount_usd: float) -> float:
+        amount = max(0.0, amount_usd)
+        with self._lock:
+            if self.max_spend_usd is not None:
+                projected = self.spent_usd + self.held_usd + amount
+                if projected > self.max_spend_usd + 1e-12:
+                    raise BudgetExceeded(
+                        (
+                            f"reserved request cost {amount:.6f} USD would bring "
+                            f"provider commitments to {projected:.6f} USD, over the cap "
+                            f"{self.max_spend_usd:.6f} USD"
+                        ),
+                        resource="provider_cost_usd",
+                        spent=self.spent_usd + self.held_usd,
+                        limit=self.max_spend_usd,
+                    )
+            self.held_usd += amount
+            return amount
 
-    def charge(self, actual_usd: float) -> None:
-        if actual_usd < 0:
-            actual_usd = 0.0
-        self.spent_usd += actual_usd
+    def settle(self, reserved_usd: float, actual_usd: float) -> None:
+        actual = max(0.0, actual_usd)
+        with self._lock:
+            self.held_usd = max(0.0, self.held_usd - max(0.0, reserved_usd))
+            self.spent_usd += actual
+            if self.max_spend_usd is not None and self.spent_usd > self.max_spend_usd + 1e-9:
+                raise BudgetExceeded(
+                    (
+                        f"billed cost {actual:.6f} USD brought provider spend to "
+                        f"{self.spent_usd:.6f} USD, over the cap {self.max_spend_usd:.6f} USD"
+                    ),
+                    resource="provider_cost_usd",
+                    spent=self.spent_usd,
+                    limit=self.max_spend_usd,
+                )
+
+    def release(self, reserved_usd: float) -> None:
+        with self._lock:
+            self.held_usd = max(0.0, self.held_usd - max(0.0, reserved_usd))

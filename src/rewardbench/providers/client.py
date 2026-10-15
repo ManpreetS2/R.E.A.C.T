@@ -9,6 +9,7 @@ from collections.abc import Callable, Mapping, Sequence
 from typing import Any
 
 from rewardbench.contracts import (
+    BudgetExceeded,
     FeedbackCondition,
     ModelClient,
     ModelClientError,
@@ -29,15 +30,17 @@ from rewardbench.providers.backends import (
     OpenAIBackend,
     resolve_api_key,
 )
-from rewardbench.providers.capabilities import PROVIDER_DIFFERENCES
+from rewardbench.providers.capabilities import PROVIDER_DIFFERENCES, SPENDING_LIMITS
 from rewardbench.providers.http import HttpCallError, Transport, TransportError, UrllibTransport
 from rewardbench.providers.limits import RateLimiter, RetryPolicy, SpendingGuard
 from rewardbench.providers.parsing import parse_controller
 from rewardbench.providers.pricing import (
     CostEstimate,
+    PriceQuote,
     PricingCatalog,
-    estimate_text_tokens,
     load_catalog,
+    quote_call,
+    usage_within_quote,
 )
 
 LOGGER = logging.getLogger("rewardbench.providers")
@@ -97,10 +100,38 @@ class RewardModelClient:
             )
         system_text, user_text = render_messages(request)
         settings = dict(request.model_settings)
-        self._refuse_unpriced_when_capped(system_text, user_text, settings)
-        self._spending.ensure(self._reserve_usd(system_text, user_text, settings))
-
+        quote = self._quote(system_text, user_text, settings)
+        if self.provider != "mock" and not quote.available:
+            raise ModelClientError(
+                f"{quote.note}; refusing the call before any provider request",
+                retryable=False,
+            )
+        reserved = 0.0
+        if self._spending.capped:
+            reserved = self._spending.reserve(quote.usd if quote.available else 0.0)
         attempts: list[dict[str, Any]] = []
+        completion: Completion | None = None
+        try:
+            completion = self._complete_with_retries(settings, system_text, user_text, attempts)
+            response = self._response_from_completion(
+                completion,
+                attempts,
+                quote,
+            )
+        except Exception:
+            if reserved:
+                self._spending.release(reserved)
+            raise
+        self._settle_or_release(reserved, response, quote, attempts)
+        return response
+
+    def _complete_with_retries(
+        self,
+        settings: Mapping[str, Any],
+        system_text: str,
+        user_text: str,
+        attempts: list[dict[str, Any]],
+    ) -> Completion:
         completion: Completion | None = None
         for attempt in range(self._retry.max_retries + 1):
             self._rate_limiter.acquire()
@@ -136,21 +167,27 @@ class RewardModelClient:
 
         if completion is None:
             raise ModelClientError("provider did not return a response", retryable=True)
+        return completion
 
+    def _response_from_completion(
+        self,
+        completion: Completion,
+        attempts: list[dict[str, Any]],
+        quote: PriceQuote,
+    ) -> ModelResponse:
         prompt_tokens, completion_tokens, reasoning_tokens, total_tokens, latency = _sum_attempts(
             attempts
         )
+        cache_read, cache_write = _cache_tokens(completion)
         cost = self._catalog.estimate(
             self.provider,
             self.model_id,
             prompt_tokens=prompt_tokens,
             completion_tokens=completion_tokens,
             reasoning_tokens=reasoning_tokens,
+            cache_read_tokens=cache_read,
+            cache_write_tokens=cache_write,
         )
-        if cost.priced:
-            self._spending.charge(cost.usd)
-        elif self._spending.capped:
-            self._spending.charge(0.0)
         parameters, parse_error = parse_controller(completion.text)
         usage = _usage_payload(
             provider=self.provider,
@@ -161,6 +198,7 @@ class RewardModelClient:
             catalog_version=self._catalog.version,
             spent_usd=self._spending.spent_usd,
             cap_usd=self._spending.max_spend_usd,
+            quote=quote,
         )
         self._remember(attempts, error=parse_error)
         return ModelResponse(
@@ -178,40 +216,50 @@ class RewardModelClient:
             usage=usage,
         )
 
-    def _refuse_unpriced_when_capped(
-        self,
-        system_text: str,
-        user_text: str,
-        settings: Mapping[str, Any],
-    ) -> None:
-        if not self._spending.capped:
-            return
-        estimate = self._catalog.estimate(
+    def _quote(self, system_text: str, user_text: str, settings: Mapping[str, Any]) -> PriceQuote:
+        if self.provider == "mock":
+            return PriceQuote(True, 0.0, "offline", "mock calls are not billed", attempts=1)
+        return quote_call(
+            self._catalog,
             self.provider,
             self.model_id,
-            prompt_tokens=estimate_text_tokens(system_text) + estimate_text_tokens(user_text),
-            completion_tokens=_reserve_output_tokens(settings),
-            reasoning_tokens=_reserve_reasoning_tokens(settings),
-        )
-        if estimate.priced:
-            return
-        raise ModelClientError(
-            (
-                f"{estimate.note}; refusing the call because a spending cap is set "
-                f"on catalog {self._catalog.version}"
-            ),
-            retryable=False,
+            system_text=system_text,
+            user_text=user_text,
+            settings=settings,
+            attempts=self._retry.max_retries + 1,
         )
 
-    def _reserve_usd(self, system_text: str, user_text: str, settings: Mapping[str, Any]) -> float:
-        estimate = self._catalog.estimate(
-            self.provider,
-            self.model_id,
-            prompt_tokens=estimate_text_tokens(system_text) + estimate_text_tokens(user_text),
-            completion_tokens=_reserve_output_tokens(settings),
-            reasoning_tokens=_reserve_reasoning_tokens(settings),
-        )
-        return estimate.usd if estimate.priced else 0.0
+    def _settle_or_release(
+        self,
+        reserved: float,
+        response: ModelResponse,
+        quote: PriceQuote,
+        attempts: list[dict[str, Any]],
+    ) -> None:
+        if self.provider == "mock":
+            if reserved:
+                self._spending.release(reserved)
+            return
+        actual = response.estimated_cost_usd if response.usage.get("cost_status") == "priced" else None
+        if actual is None:
+            if reserved:
+                self._spending.release(reserved)
+            raise ModelClientError(
+                str(response.usage.get("pricing_note") or "provider usage is not covered by the catalog"),
+                retryable=False,
+            )
+        amount = reserved
+        if amount:
+            try:
+                self._spending.settle(amount, actual)
+            except BudgetExceeded:
+                raise
+        within = usage_within_quote(attempts, quote)
+        if not within:
+            raise ModelClientError(
+                "billed tokens exceeded the reserved input, output, or reasoning ceiling",
+                retryable=False,
+            )
 
     def _log_attempt(self, record: Mapping[str, Any]) -> None:
         LOGGER.info(
@@ -419,6 +467,13 @@ def _sum_attempts(
     return prompt, completion, reasoning, total, latency
 
 
+def _cache_tokens(completion: Completion) -> tuple[int, int]:
+    extra = completion.extra_usage
+    read = extra.get("cache_read_input_tokens") or 0
+    write = extra.get("cache_write_input_tokens") or extra.get("cache_creation_input_tokens") or 0
+    return int(read), int(write)
+
+
 def _usage_payload(
     *,
     provider: str,
@@ -429,6 +484,7 @@ def _usage_payload(
     catalog_version: str,
     spent_usd: float,
     cap_usd: float | None,
+    quote: PriceQuote,
 ) -> dict[str, Any]:
     last = attempts[-1]
     return {
@@ -436,6 +492,13 @@ def _usage_payload(
         "pricing_version": catalog_version,
         "cost_status": cost.status,
         "pricing_note": cost.note,
+        "reservation_usd": quote.usd,
+        "reservation_attempts": quote.attempts,
+        "prompt_token_ceiling": quote.prompt_tokens,
+        "max_output_tokens": quote.completion_tokens,
+        "reasoning_token_ceiling": quote.reasoning_tokens,
+        "input_ceiling": quote.input_ceiling,
+        "spending_limits": list(SPENDING_LIMITS),
         "retry_count": max(0, len(attempts) - 1),
         "request_id": completion.request_id,
         "response_model_id": completion.response_model_id,

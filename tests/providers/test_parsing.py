@@ -27,6 +27,15 @@ def test_forbidden_code_field_is_rejected():
     assert "forbidden" in error
 
 
+def test_array_and_trailing_junk_are_rejected():
+    array, array_error = parse_controller("[1, 2, 3]")
+    junk, junk_error = parse_controller('{"policy":"heuristic"} and then python')
+    prose, prose_error = parse_controller('Sure: {"policy":"heuristic"}')
+    assert array is None and "object" in array_error
+    assert junk is None and "only value" in junk_error
+    assert prose is None and prose_error
+
+
 def test_non_finite_number_is_rejected():
     parameters, error = parse_controller('{"gain":1e309}')
     assert parameters is None

@@ -9,6 +9,7 @@ import urllib.request
 import pytest
 
 from rewardbench.contracts import BudgetExceeded, FeedbackCondition, ModelClient, ModelClientError
+from rewardbench.prompts import SYSTEM_PROMPT
 from rewardbench.providers import build_model_client
 from rewardbench.providers.http import HttpResponse, TransportError
 
@@ -33,6 +34,16 @@ def _chat(content: str, *, reasoning: int = 0, prompt: int = 20, completion: int
     }
 
 
+def _task_instruction(provider: str, body: dict) -> tuple[str, str]:
+    if provider in {"openai", "xai"}:
+        return body["messages"][0]["content"], body["messages"][1]["content"]
+    if provider == "anthropic":
+        return body["system"], body["messages"][0]["content"]
+    system = body["systemInstruction"]["parts"][0]["text"]
+    user = body["contents"][0]["parts"][0]["text"]
+    return system, user
+
+
 def _client(provider: str, model_id: str, transport: FakeTransport, **kwargs):
     return build_model_client(
         provider,
@@ -55,12 +66,21 @@ def test_four_providers_are_interchangeable_on_the_same_controller():
         ("xai", "grok-4.3", _chat(text), "https://api.x.ai/v1/chat/completions"),
     ]
     parsed = []
+    instructions = []
     for provider, model_id, payload, url_part in specs:
         transport = FakeTransport([http_json(payload, latency=0.4)])
         client = _client(provider, model_id, transport)
         assert isinstance(client, ModelClient)
         response = client.propose(
-            make_request(settings={"temperature": 0, "top_k": 20, "seed": 7})
+            make_request(
+                settings={
+                    "temperature": 0,
+                    "top_k": 20,
+                    "seed": 7,
+                    "max_output_tokens": 800,
+                    "max_reasoning_tokens": 32,
+                }
+            )
         )
         assert response.parse_error is None
         assert dict(response.parameters)["policy"] == "heuristic"
@@ -73,7 +93,10 @@ def test_four_providers_are_interchangeable_on_the_same_controller():
         body = json.loads(transport.requests[0].body)
         assert "tools" not in body
         assert "web_search" not in body
+        instructions.append(_task_instruction(provider, body))
     assert parsed[0] == parsed[1] == parsed[2] == parsed[3]
+    assert len(set(instructions)) == 1
+    assert instructions[0][0] == SYSTEM_PROMPT
 
 
 def test_provider_sampling_knobs_are_not_copied_blindly():
@@ -86,6 +109,7 @@ def test_provider_sampling_knobs_are_not_copied_blindly():
         "reasoning_effort": "low",
         "grok_reasoning_effort": "high",
         "max_output_tokens": 120,
+        "max_reasoning_tokens": 64,
     }
 
     openai = FakeTransport([http_json(_chat(text))])
@@ -101,9 +125,9 @@ def test_provider_sampling_knobs_are_not_copied_blindly():
     assert "top_k" not in openai_body
 
     grok = FakeTransport([http_json(_chat(text))])
-    response = _client("xai", "grok-custom-id", grok).propose(make_request(settings=settings))
+    response = _client("xai", "grok-4.3", grok).propose(make_request(settings=settings))
     grok_body = json.loads(grok.requests[0].body)
-    assert grok_body["model"] == "grok-custom-id"
+    assert grok_body["model"] == "grok-4.3"
     assert grok_body["max_tokens"] == 120
     assert "max_completion_tokens" not in grok_body
     assert grok_body["reasoning_effort"] == "high"
@@ -114,11 +138,17 @@ def test_provider_sampling_knobs_are_not_copied_blindly():
 
     claude = FakeTransport([http_json(_anthropic(text))])
     claude_response = _client("anthropic", "claude-haiku-5-5", claude).propose(
-        make_request(settings={**settings, "anthropic_thinking_budget_tokens": 200})
+        make_request(
+            settings={
+                **settings,
+                "max_output_tokens": 800,
+                "anthropic_thinking_budget_tokens": 200,
+            }
+        )
     )
     claude_body = json.loads(claude.requests[0].body)
     assert claude_body["system"].startswith("You are proposing a controller")
-    assert claude_body["max_tokens"] == 120
+    assert claude_body["max_tokens"] == 800
     assert claude_body["thinking"]["budget_tokens"] == 200
     assert "temperature" not in claude_body
     assert claude_body["top_k"] == 10
@@ -137,7 +167,7 @@ def test_provider_sampling_knobs_are_not_copied_blindly():
     assert gemini_body["generationConfig"]["responseMimeType"] == "application/json"
     assert gemini_body["generationConfig"]["topK"] == 10
     assert "seed" not in gemini_body["generationConfig"]
-    assert "thinkingConfig" not in gemini_body["generationConfig"]
+    assert gemini_body["generationConfig"]["thinkingConfig"] == {"thinkingBudget": 64}
     assert gemini.requests[0].headers["x-goog-api-key"] == SECRET
     assert "key=" not in gemini.requests[0].url
     assert gemini_response.reasoning_tokens == 15
@@ -244,22 +274,23 @@ def test_retry_timeout_auth_and_redaction(caplog):
     assert SECRET not in json.dumps(auth_client.invocations)
 
 
-def test_spending_cap_stops_before_an_unaffordable_call_and_after_real_usage():
+def test_spending_cap_reserves_the_output_ceiling_before_the_call():
     blocked = FakeTransport([http_json(_chat(json.dumps(CONTROLLER)))])
     client = _client("openai", "gpt-5.4-mini", blocked, max_spend_usd=0.001)
     with pytest.raises(BudgetExceeded) as exc:
-        client.propose(make_request())
+        client.propose(make_request(settings={"max_output_tokens": 800}))
     assert exc.value.resource == "provider_cost_usd"
     assert blocked.requests == []
 
-    first = http_json(_chat(json.dumps(CONTROLLER), prompt=0, completion=3000, reasoning=0))
-    second = FakeTransport([first, http_json(_chat(json.dumps(CONTROLLER)))])
-    capped = _client("openai", "gpt-5.4-mini", second, max_spend_usd=0.01)
-    response = capped.propose(make_request(settings={"max_output_tokens": 1}))
-    assert response.estimated_cost_usd == pytest.approx(3000 * 4.5 / 1_000_000)
+    over = FakeTransport(
+        [http_json(_chat(json.dumps(CONTROLLER), prompt=1, completion=3000, reasoning=0))]
+    )
+    capped = _client("openai", "gpt-5.4-mini", over, max_spend_usd=0.01)
     with pytest.raises(BudgetExceeded):
         capped.propose(make_request(settings={"max_output_tokens": 1}))
-    assert len(second.requests) == 1
+    assert len(over.requests) == 1
+    assert capped._spending.spent_usd == pytest.approx((1 * 0.75 + 3000 * 4.5) / 1_000_000)
+    assert capped._spending.held_usd == 0
 
 
 def test_unknown_price_with_a_cap_does_not_call_the_provider():
@@ -308,8 +339,8 @@ def test_missing_key_and_rate_limit(monkeypatch):
         max_retries=0,
         max_spend_usd=20,
     )
-    client.propose(make_request(settings={"max_output_tokens": 1}))
-    client.propose(make_request(settings={"max_output_tokens": 1}))
+    client.propose(make_request(settings={"max_output_tokens": 50}))
+    client.propose(make_request(settings={"max_output_tokens": 50}))
     assert clock.slept == [5.0]
     assert len(transport.requests) == 2
 
@@ -333,7 +364,10 @@ def _gemini(text: str, *, thoughts: int = 0) -> dict:
     }
 
 
-def _anthropic(text: str) -> dict:
+def _anthropic(text: str, *, cache_read: int = 0) -> dict:
+    usage = {"input_tokens": 15, "output_tokens": 9}
+    if cache_read:
+        usage["cache_read_input_tokens"] = cache_read
     return {
         "id": "msg_1",
         "model": "claude-haiku-5-5-20261001",
@@ -342,22 +376,18 @@ def _anthropic(text: str) -> dict:
             {"type": "thinking", "thinking": "hidden"},
             {"type": "text", "text": text},
         ],
-        "usage": {
-            "input_tokens": 15,
-            "output_tokens": 9,
-            "cache_read_input_tokens": 4,
-        },
+        "usage": usage,
     }
 
 
-def test_anthropic_cache_tokens_are_recorded_and_not_priced_as_normal_input():
-    transport = FakeTransport([http_json(_anthropic(json.dumps(CONTROLLER)))])
-    response = _client("anthropic", "claude-haiku-5-5", transport).propose(make_request())
-    assert response.prompt_tokens == 15
-    assert response.completion_tokens == 9
-    assert response.usage["extra_usage"]["cache_read_input_tokens"] == 4
-    assert response.estimated_cost_usd == pytest.approx((15 * 0.1 + 9 * 0.5) / 1_000_000)
-    assert "cache_read_input_tokens" in response.usage["extra_usage"]["unpriced_details"]
+def test_anthropic_cache_tokens_without_a_rate_are_rejected():
+    transport = FakeTransport([http_json(_anthropic(json.dumps(CONTROLLER), cache_read=4))])
+    client = _client("anthropic", "claude-haiku-5-5", transport)
+    with pytest.raises(ModelClientError) as exc:
+        client.propose(make_request(settings={"max_output_tokens": 800}))
+    assert exc.value.retryable is False
+    assert "cache" in str(exc.value).lower()
+    assert len(transport.requests) == 1
 
 
 def test_urllib_transport_reads_http_errors_without_a_socket(monkeypatch):

@@ -1,7 +1,7 @@
 experiment_name: lunarlander-development-nofeedback
 environment_id: lunarlander-v3
 provider: openai
-model_id: gpt-4.1
+model_id: gpt-5.4-mini
 feedback_condition: no_feedback
 split: development
 seed: 12345
@@ -26,6 +26,7 @@ development_seeds: [1, 2, 3, 4, 5, 6, 7, 8]
 held_out_seeds: [101, 102, 103, 104, 105, 106, 107, 108]
 model_settings:
   temperature: 0
+  max_output_tokens: 800
 metadata:
   task: lunarlander-v3
 notes: Development split with rewards withheld from the model. Scores are still logged.

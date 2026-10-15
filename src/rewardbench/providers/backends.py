@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from typing import Any
 from urllib.parse import quote
 
+from rewardbench.providers.pricing import configured_max_output
 from rewardbench.providers.http import (
     HttpRequest,
     Transport,
@@ -513,9 +514,11 @@ def _gemini_payload(
         generation["responseMimeType"] = "application/json"
         applied["responseMimeType"] = "application/json"
     budget = settings.get("gemini_thinking_budget")
+    if budget is None and "max_reasoning_tokens" in settings:
+        budget = settings.get("max_reasoning_tokens")
     if budget is not None:
         generation["thinkingConfig"] = {"thinkingBudget": int(budget)}
-        applied["gemini_thinking_budget"] = int(budget)
+        applied["thinkingBudget"] = int(budget)
     if "reasoning_effort" in settings:
         ignored["reasoning_effort"] = "Gemini uses gemini_thinking_budget, not reasoning_effort"
     payload = {
@@ -588,10 +591,10 @@ def _copy_number(
 
 
 def _max_output(settings: Mapping[str, Any]) -> int:
-    value = settings.get("max_output_tokens", 800)
-    if isinstance(value, bool) or not isinstance(value, int) or value < 1:
-        return 800
-    return value
+    limit, _error = configured_max_output(settings)
+    if limit is None:
+        raise TransportError("max_output_tokens must be a positive integer", retryable=False)
+    return limit
 
 
 def _int(value: object) -> int:
