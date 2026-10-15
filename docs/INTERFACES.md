@@ -569,8 +569,24 @@ class SqliteStore:
 experiments. Pass `ExperimentConfig.database_path`.
 
 `global_budget`, when it is a different limiter from the experiment budget,
-receives each new charge. Use it as a process-wide cap across runs. The
-experiment limiter is always rebuilt from that experiment's rows.
+is the shared spending cap. Pass the same object to every run that must share
+it. The limiter counts each stored attempt once, including after resume, and
+overlapping runs cannot both start a paid call when only one fits under the
+cap. Dollar and token limits block further model calls. They still allow
+episodes for a controller that was already purchased. The v1.0.0 method
+signatures are unchanged.
+
+A repeated `run` of a completed, failed, or locally budget-exhausted
+experiment does not call the model again. An interrupted run continues at the
+first incomplete revision and reuses a selected controller. One experiment
+cannot be executed twice at the same time; the second caller waits, then sees
+the stored result.
+
+The model request uses the environment description captured at the start of
+the run. No-feedback history has `feedback is None` and does not include
+reward fields. Episodes whose seeds are outside the active split are omitted
+from that history. Held-out rows stored for another experiment are not read
+into a development request.
 
 Handled stops:
 

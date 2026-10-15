@@ -91,13 +91,14 @@ class FakeEnv:
         self.environment_id = environment_id
         self.fail_seeds = fail_seeds or set()
         self.on_episode = on_episode
+        self.task_description = "Land the vehicle."
         self.episodes: list[tuple[int, int, int]] = []
 
     def describe(self) -> EnvironmentSpec:
         return EnvironmentSpec(
             environment_id=self.environment_id,
             display_name="Fake lander",
-            task_description="Land the vehicle.",
+            task_description=self.task_description,
             controller_schema={"type": "object", "required": ["gain"]},
             action_space_summary="idle, left, main, right",
             observation_space_summary="position and velocity",
