@@ -1,0 +1,40 @@
+{
+  "version": "2026-10-14",
+  "currency": "USD",
+  "source": "Planning list prices from the 14 October 2026 master plan. Verify against the provider on the day of a paid run. This file is not an invoice.",
+  "models": {
+    "openai:gpt-5.4-mini": {
+      "input_per_million": 0.75,
+      "output_per_million": 4.5,
+      "reasoning_included_in_output": true,
+      "note": "Reasoning tokens are billed inside output tokens when the API includes them in completion_tokens."
+    },
+    "openai:gpt-5.4": {
+      "input_per_million": 2.5,
+      "output_per_million": 15.0,
+      "reasoning_included_in_output": true,
+      "note": "Optional teacher model in the master plan. Not a student-cohort default."
+    },
+    "google:gemini-3.1-flash-lite": {
+      "input_per_million": 0.25,
+      "output_per_million": 1.5,
+      "reasoning_included_in_output": false,
+      "note": "thoughtsTokenCount is separate from candidatesTokenCount and is priced here at the output rate."
+    },
+    "anthropic:claude-haiku-5-5": {
+      "input_per_million": 0.1,
+      "output_per_million": 0.5,
+      "reasoning_included_in_output": true,
+      "long_context_threshold_tokens": 100000,
+      "long_context_input_per_million": null,
+      "long_context_output_per_million": null,
+      "note": "Rates apply to prompts up to 100000 tokens. The master plan says the price is higher above that and does not publish the higher rate."
+    },
+    "xai:grok-4.3": {
+      "input_per_million": 1.25,
+      "output_per_million": 2.5,
+      "reasoning_included_in_output": true,
+      "note": "Short-context list price. Grok 4.3 is a cross-tier reference, not a like-priced match for the other student models. Grok 4.1 Fast is retired and intentionally absent."
+    }
+  }
+}
