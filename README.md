@@ -6,6 +6,12 @@ The research question is: which language model adapts most effectively to numeri
 
 This repository does not answer that question until independently validated logs exist. The analysis tools summarize logs. They do not invent scores or rank models.
 
+## Credits
+
+ApolloLander was created by Seb Lee-Delisle. RewardBench uses that game as a separate benchmark from Gymnasium LunarLander. The original project is at <https://github.com/sebleedelisle/apollolander> and is distributed under the MIT License: <https://github.com/sebleedelisle/apollolander/blob/master/LICENSE>.
+
+Gymnasium LunarLander-v3 is a separate environment. Its scores are not pooled with ApolloLander.
+
 ## Requirements
 
 - Python 3.11 or newer

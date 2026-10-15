@@ -38,30 +38,35 @@ Owned paths:
 - `.github/workflows/analysis-checks.yml`
 - `examples/analysis/run_report.py`
 
-The loader reads schema version 1 as documented in `docs/INTERFACES.md`: `experiments`, `sessions`, `attempts`, `episodes`, and `errors` when present. It does not import the runner. Agent 1's later store and runner files were still uncommitted on `agent/core` when this branch was created, so they are not in this commit.
+The loader reads schema version 1 as documented in `docs/INTERFACES.md`. This branch already contains Agent 1's runner and SQLite store from `af4803d`. It does not contain Agent 3's provider adapters or Agent 2's Gymnasium and ApolloLander packages.
 
 ## Tests already run
 
 Command, from this worktree, with Python 3.12.1:
 
 ```bash
-MPLBACKEND=Agg .venv/bin/python -m pytest tests/analysis --override-ini addopts= -q --tb=no
+MPLBACKEND=Agg .venv/bin/python -m pytest tests/core tests/analysis -q
 ```
 
-Result: `26 passed in 5.58s` on Python 3.12.1.
+Result on 2026-10-15: `65 passed, 1 skipped in 8.49s`.
 
-The GitHub Actions workflow was written and was not executed from this machine. Do not describe it as a green check.
+The skip is `test_real_simulator_adapter_waits_for_agent_2`. Agent 2's adapters are not committed on `agent/analysis`, so that test does not claim a real Gymnasium or ApolloLander flight. The other new checks drive the real runner and SQLite store with a mock model and a stand-in environment. They confirm stored rewards, hidden no-feedback history, held-out seed isolation, resume without a duplicate attempt, failed episodes left out of the chart mean, and separate Gymnasium and ApolloLander report sections.
 
-`.venv/` is local and gitignored. Recreate it with the README instructions.
+The GitHub Actions workflow was updated and was not executed from this machine. Do not describe it as a green check.
+
+`.venv/` is local and gitignored. Recreate it with the README instructions. `pip install -e ".[dev]"` is required before `tests/core` because the config loader imports PyYAML.
 
 ## Another MacBook tomorrow
 
-1. Copy the shared repository, not the empty checkout under `Projects`. The git directory that matters is `/Users/manpreet/rewardbench/.git`. A full copy of `/Users/manpreet/rewardbench` plus `/Users/manpreet/rewardbench-worktrees/analysis` keeps the worktree link only if the copied paths stay the same. On the other machine, prefer a normal clone once GitHub has the branch. Until then, copy the shared repo and run `git worktree add /path/to/analysis agent/analysis` from that copy.
-2. Check `git rev-parse --abbrev-ref HEAD` prints `agent/analysis` and `git merge-base HEAD agent/core` prints `af4803d` if `agent/core` is present.
-3. Create a new virtual environment. Do not copy `.venv/`. macOS: `python3.11 -m venv .venv && source .venv/bin/activate`. Windows: `py -3.11 -m venv .venv` then `.\.venv\Scripts\Activate.ps1`. Then `python -m pip install -e ".[dev]" && python -m pip install numpy scipy matplotlib`.
-4. Run `python -m pytest tests/analysis -q`.
-5. Do not point the report at a log from a different environment family and describe it as LunarLander. Gymnasium and ApolloLander stay in separate report sections.
-6. Do not push, merge, or call a paid model API while regenerating figures.
+1. Copy the shared repository at `/Users/manpreet/rewardbench`, not `/Users/manpreet/Projects/rewardbench`. The git directory is `/Users/manpreet/rewardbench/.git`. Worktrees break if the absolute paths change. On the other MacBook, once GitHub has the branch, clone it and check out `agent/analysis`. Until then, copy the shared repo and run `git worktree add /path/to/analysis agent/analysis` from that copy.
+2. Confirm `git rev-parse --abbrev-ref HEAD` is `agent/analysis` and `git merge-base HEAD agent/core` is `af4803d` when `agent/core` is present.
+3. Create a new virtual environment. Do not copy `.venv/`.
+   - macOS: `python3.11 -m venv .venv` then `source .venv/bin/activate`
+   - Windows: `py -3.11 -m venv .venv` then `.\.venv\Scripts\Activate.ps1`
+   - Then: `python -m pip install --upgrade pip` and `python -m pip install -e ".[dev]"` and `python -m pip install numpy scipy matplotlib`
+4. Run `python -m pytest tests/core tests/analysis -q`. Expect the real-simulator test to stay skipped until Agent 2's package is on the branch.
+5. Do not describe a stand-in episode as a Gymnasium or ApolloLander result. The report keeps those families in separate sections.
+6. Do not push, merge, or call a paid model API.
 
 ## Tonight: GitHub transfer
 
@@ -74,14 +79,17 @@ The GitHub Actions workflow was written and was not executed from this machine. 
 
 ## Tomorrow
 
-1. Fetch or merge the new `agent/core` commits that add `src/rewardbench/storage/sqlite.py`, `schema.sql`, and the runner, if those commits exist.
-2. Re-read `docs/INTERFACES.md` before changing the loader. If the contract version or schema version changes, update the loader and the tests together. Do not edit `docs/INTERFACES.md` from this branch.
-3. Point `python -m rewardbench.analysis report` at a real `runs/rewardbench.sqlite`.
-4. Keep preliminary rows out of any public chart. Publish only a report whose independently validated section was produced from a log you checked.
+1. When Agent 2's Gymnasium and ApolloLander adapters are committed, replace the skipped test in `tests/analysis/test_integration.py` with a run through those adapters. Do not mark that test passed before it executes.
+2. Bring in `agent/providers` only when the human integrates branches. Do not call the live adapters.
+3. Re-read `docs/INTERFACES.md` before changing the loader. Do not edit that file from this branch.
+4. Keep preliminary logs out of any public chart.
 5. Do not copy `tests/analysis/fixtures.py` into a paper, blog, or LinkedIn post. Those rows are synthetic.
 
 ## Unresolved
 
-- No independently validated experiment log exists in this branch.
-- Provider adapters and the LunarLander package live on other branches and are not merged here.
-- Local git identity is unset. This branch's analysis commit, if present, was created with a per-command author so that `git config` was not changed.
+- No independently validated experiment log exists.
+- `agent/providers` (`af51315`) is not contained in this branch.
+- `agent/lunarlander` has no commits, so the real simulators are not integrated.
+- The real-simulator integration test is skipped for that reason.
+- GitHub Actions has not run.
+- Local git identity is unset. Analysis commits use a per-command author and do not change `git config`.
