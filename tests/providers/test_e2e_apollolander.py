@@ -282,7 +282,8 @@ def test_pilot_quote_for_gpt54mini_is_bounded_before_any_call() -> None:
     assert pilot.provider == "openai"
     assert pilot.model_id == "gpt-5.4-mini"
     assert pilot.environment_id == "apollolander"
-    assert pilot.model_settings["max_output_tokens"] == 400
+    assert pilot.model_settings["max_output_tokens"] == 800
+    assert pilot.model_settings["reasoning_effort"] == "none"
     assert pilot.max_model_retries == 0
     assert pilot.budget.max_cost_usd == pytest.approx(0.05)
     assert pilot.metadata.get("approval_required") is True
@@ -299,7 +300,7 @@ def test_pilot_quote_for_gpt54mini_is_bounded_before_any_call() -> None:
         attempts=pilot.max_model_retries + 1,
     )
     assert quote.available
-    assert quote.completion_tokens == 400
+    assert quote.completion_tokens == 800
     assert quote.attempts == 1
     assert quote.usd > 0
     # One reserved attempt at the pilot output ceiling stays under the $0.05 software target

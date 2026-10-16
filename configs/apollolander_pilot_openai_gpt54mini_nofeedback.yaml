@@ -1,7 +1,9 @@
 # No-feedback twin of apollolander_pilot_openai_gpt54mini.yaml.
-# Same seeds, revisions, retries, cost ceiling, and simulator settings.
+# Same seeds, revisions, retries, cost ceiling, model settings, and simulator settings.
 # Only feedback_condition / names / database path differ.
 # DO NOT run until the owner explicitly approves spending and exports OPENAI_API_KEY.
+# Dry-run without a key:
+#   python examples/providers/dry_run_first_call.py
 
 experiment_name: apollolander-pilot-openai-gpt54mini-nofeedback
 environment_id: apollolander
@@ -30,16 +32,20 @@ budget:
 development_seeds: [0, 1, 2, 3, 4, 5, 6, 7]
 held_out_seeds: [1000000, 1000001, 1000002, 1000003]
 model_settings:
-  temperature: 0
-  max_output_tokens: 400
+  max_output_tokens: 800
+  reasoning_effort: none
   json_mode: true
 metadata:
   pilot: true
-  agent: agent1
+  agent: agent4-integration
   approval_required: true
+  recommended_first_policy: constant
+  client_max_spend_usd: 0.05
+  client_max_retries: 0
   paired_with: apollolander_pilot_openai_gpt54mini.yaml
 notes: >
   Authorized live no-feedback pilot twin. Export OPENAI_API_KEY only after spend
   approval. First CLI invocation: --mode live --i-authorize-paid-api-calls
   (one paid propose). Continuation: add --authorize-continuation. SQLite keeps
-  rewards; model history must not.
+  rewards; model history must not. Matching ceilings: max_output_tokens=800,
+  reasoning_effort=none, max_retries=0, max_cost_usd=0.05.

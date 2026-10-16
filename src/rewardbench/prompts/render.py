@@ -16,14 +16,15 @@ from rewardbench.contracts import (
     RewardFeedback,
 )
 
-PROMPT_TEMPLATE_ID = "rewardbench.prompts.v1"
+PROMPT_TEMPLATE_ID = "rewardbench.prompts.v2"
 
 SYSTEM_PROMPT = """You are proposing a controller for a closed reward-adaptation experiment.
 Revise only the controller. Do not update, train, or fine-tune neural network weights.
 When a numeric reward is shown, it is the environment's own score. A negative number is a penalty from that environment.
 Do not invent a score and do not treat your own judgment as the reward.
 Do not write Python, shell commands, imports, or tool calls.
-Reply with one JSON object and no surrounding prose.
+Do not call tools, browsers, or code interpreters.
+Reply with one compact JSON object and no surrounding prose, markdown fences, or commentary.
 The object must match the controller schema in the user message."""
 
 _NO_FEEDBACK_HEADER = (
@@ -34,8 +35,9 @@ _NUMERICAL_HEADER = (
     "Use those rewards. Do not replace them with your own assessment."
 )
 _OUTPUT_RULE = (
-    "Reply with one JSON object that matches the controller schema. "
-    "Do not include a score of your own."
+    "Reply with one compact JSON object that matches the controller schema. "
+    "Include only schema fields. Do not include a score of your own. "
+    "Prefer the smallest valid controller that satisfies the schema."
 )
 
 
