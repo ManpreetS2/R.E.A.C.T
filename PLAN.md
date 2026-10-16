@@ -33,7 +33,7 @@ Out of v1 scope: credit economy, competition mode, Minecraft, new dashboards.
 | Prior tip before this sprint | `2cd59377d0f1265e85d8c66604532deada726064` |
 | Agent 1 held-out tip merged | `381d3d13f8259ca633820007a349e7d5963ad236` (`work/v1-heldout-evaluation`) |
 | Post-merge integration | `1c1a45e72d95ff229ded7e83f5caebb85c4ff876` |
-| Flagship docs tip | **see final commit after this PLAN update** |
+| Flagship docs tip | **`4c88f2fa234ea2a4ecbacd9fd5998947fad87740`** |
 | Tests | **258** Python passed + Node physics exit 0 |
 | Publish status | Local only — **not pushed / not merged** without owner approval |
 
