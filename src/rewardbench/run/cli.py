@@ -1,13 +1,26 @@
-"""Command-line entry for offline (and future live) experiments.
+"""Command-line entry for offline mock and authorized live experiments.
 
 Examples
 --------
+# Offline infrastructure test (default; no API keys; not LLM learning)
 python -m rewardbench.run --config configs/apollolander_offline_development_numerical.yaml --mode mock
-python -m rewardbench.run --config configs/apollolander_offline_development_nofeedback.yaml --mode mock
+
+# First authorized paid call only (one model request, zero retries)
+python -m rewardbench.run \\
+  --config configs/apollolander_pilot_openai_gpt54mini.yaml \\
+  --mode live \\
+  --i-authorize-paid-api-calls
+
+# Separately approved continuation for the next revision (resume; no repeat of call 1)
+python -m rewardbench.run \\
+  --config configs/apollolander_pilot_openai_gpt54mini.yaml \\
+  --mode live \\
+  --i-authorize-paid-api-calls \\
+  --authorize-continuation
 
 Mock mode drives a scripted feedback-responsive model against real simulator
-physics. It is an infrastructure test, not an LLM learning result. Live mode
-is prepared but disabled and performs no provider API calls.
+physics. Live mode uses ``build_model_client`` only after explicit acknowledgment.
+A paused one-call pilot is never labeled a completed learning experiment.
 """
 
 from __future__ import annotations
@@ -27,6 +40,7 @@ from rewardbench.contracts import (
 from rewardbench.core.ids import experiment_id
 from rewardbench.core.runner import ExperimentRunner
 from rewardbench.run.factory import build_environment, build_model, prepare_config
+from rewardbench.run.live import ACK_CONTINUATION_FLAG, ACK_PAID_FLAG, is_session_pause
 from rewardbench.storage import SqliteStore
 
 _SUCCESS = {ExperimentStatus.COMPLETED}
@@ -37,12 +51,21 @@ _RUN_FAILED = {
 }
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(
+    argv: list[str] | None = None,
+    *,
+    _transport: object | None = None,
+    _api_key: str | None = None,
+    _sleeper: object | None = None,
+) -> int:
+    """CLI entry. ``_transport`` / ``_api_key`` / ``_sleeper`` are test-only hooks."""
+
     parser = argparse.ArgumentParser(
         prog="rewardbench.run",
         description=(
             "Run or resume one RewardBench experiment from a YAML/JSON config. "
-            "Default --mode mock uses a scripted offline model (infrastructure test only)."
+            "Default --mode mock uses a scripted offline model (infrastructure test only). "
+            "Live mode requires explicit paid-call acknowledgment and never defaults on."
         ),
     )
     parser.add_argument("--config", required=True, type=Path, help="path to experiment YAML or JSON")
@@ -50,7 +73,7 @@ def main(argv: list[str] | None = None) -> int:
         "--mode",
         choices=("mock", "live"),
         default="mock",
-        help="mock: scripted offline model (default). live: disabled; refuses without API calls",
+        help="mock: scripted offline model (default). live: real ModelClient after acknowledgment",
     )
     parser.add_argument(
         "--database",
@@ -58,21 +81,62 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="optional SQLite path override (not part of the experiment id)",
     )
+    parser.add_argument(
+        ACK_PAID_FLAG,
+        action="store_true",
+        dest="authorize_paid",
+        help="required for --mode live; acknowledges that propose() may spend money",
+    )
+    parser.add_argument(
+        ACK_CONTINUATION_FLAG,
+        action="store_true",
+        dest="authorize_continuation",
+        help="required to authorize another paid revision after reviewing stored results",
+    )
+    parser.add_argument(
+        "--max-new-paid-calls",
+        type=int,
+        default=1,
+        help="new paid propose() calls allowed in this CLI process (live pilot default: 1)",
+    )
     args = parser.parse_args(argv)
 
+    store: SqliteStore | None = None
+    environment = None
     try:
         config = prepare_config(args.config, database_path=args.database)
         database = Path(config.database_path)
         database.parent.mkdir(parents=True, exist_ok=True)
         exp_id = experiment_id(config)
         overrides = _flight_adapter_overrides(config, experiment_id=exp_id, database=database)
-        model = build_model(config, mode=args.mode)
         environment = build_environment(config, adapter_overrides=overrides)
+
+        store = SqliteStore(database)
+        store.initialize()
+        existing = store.get_experiment(exp_id)
+        resume_selected = 0
+        if existing is not None:
+            resume_selected = sum(1 for item in store.fetch_attempts(exp_id) if item.selected)
+
+        model = build_model(
+            config,
+            mode=args.mode,
+            authorize_paid=args.authorize_paid,
+            authorize_continuation=args.authorize_continuation,
+            resume_selected_attempts=resume_selected,
+            max_new_paid_calls=args.max_new_paid_calls,
+            environment=environment,
+            api_key=_api_key,
+            transport=_transport,
+            sleeper=_sleeper,
+        )
     except ConfigError as exc:
         print(f"error: {exc}", file=sys.stderr)
+        _safe_close(environment, store)
         return 2
     except RewardBenchError as exc:
         print(f"error: {exc}", file=sys.stderr)
+        _safe_close(environment, store)
         return 2
 
     print("rewardbench.run")
@@ -101,8 +165,13 @@ def main(argv: list[str] | None = None) -> int:
             "  note: scripted mock model — infrastructure test only; "
             "not evidence of LLM learning"
         )
+    else:
+        print(f"  paid_authorization: {ACK_PAID_FLAG}")
+        if args.authorize_continuation:
+            print(f"  continuation_authorization: {ACK_CONTINUATION_FLAG}")
+        print(f"  max_new_paid_calls: {args.max_new_paid_calls}")
+        print("  note: live mode may spend money inside propose(); review SQLite after each call")
 
-    store = SqliteStore(database)
     try:
         runner = ExperimentRunner(config, model, environment, store)
         summary = runner.run()
@@ -113,7 +182,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     except ExperimentAborted as exc:
-        _print_summary(exc.summary, database)
+        _print_summary(exc.summary, database, config_num_revisions=config.num_revisions)
         return 1
     except KeyboardInterrupt:
         print("error: interrupted", file=sys.stderr)
@@ -125,14 +194,23 @@ def main(argv: list[str] | None = None) -> int:
         close = getattr(environment, "close", None)
         if callable(close):
             close()
-        store.close()
+        if store is not None:
+            store.close()
 
-    _print_summary(summary, database)
-    if summary.status in _SUCCESS:
+    run_state = _print_summary(summary, database, config_num_revisions=config.num_revisions)
+    if run_state == "completed":
         return 0
-    if summary.status in _RUN_FAILED:
-        return 1
+    if run_state == "paused":
+        return 0
     return 1
+
+
+def _safe_close(environment: object | None, store: SqliteStore | None) -> None:
+    close = getattr(environment, "close", None) if environment is not None else None
+    if callable(close):
+        close()
+    if store is not None:
+        store.close()
 
 
 def _flight_adapter_overrides(config, *, experiment_id: str, database: Path) -> dict[str, Any]:
@@ -150,11 +228,27 @@ def _flight_adapter_overrides(config, *, experiment_id: str, database: Path) -> 
     return overrides
 
 
-def _print_summary(summary, database: Path) -> None:
+def _print_summary(summary, database: Path, *, config_num_revisions: int) -> str:
+    paused = is_session_pause(summary.error, status_value=summary.status.value)
+    incomplete = summary.revisions_completed < config_num_revisions
+    if paused and incomplete:
+        run_state = "paused"
+    elif summary.status is ExperimentStatus.COMPLETED:
+        run_state = "completed"
+    elif summary.status is ExperimentStatus.BUDGET_EXHAUSTED:
+        run_state = "budget-exhausted"
+    elif summary.status is ExperimentStatus.INTERRUPTED:
+        run_state = "interrupted" if not paused else "paused"
+    elif summary.status is ExperimentStatus.FAILED:
+        run_state = "failed"
+    else:
+        run_state = summary.status.value
+
     print("result")
     print(f"  experiment_id: {summary.experiment_id}")
     print(f"  session_id: {summary.session_id}")
     print(f"  status: {summary.status.value}")
+    print(f"  run_state: {run_state}")
     print(f"  revisions_completed: {summary.revisions_completed}")
     print(f"  episodes_recorded: {summary.episodes_recorded}")
     print(f"  invalid_revisions: {summary.invalid_revisions}")
@@ -165,11 +259,17 @@ def _print_summary(summary, database: Path) -> None:
     print(f"  best_reward: {summary.best_reward}")
     if summary.error:
         print(f"  error: {summary.error}")
+    if run_state == "paused":
+        print(
+            "  note: paused one-call/live-session pilot — not a completed learning experiment. "
+            f"Review SQLite, then continue with {ACK_PAID_FLAG} {ACK_CONTINUATION_FLAG}."
+        )
     print(f"  database: {database.resolve()}")
     print(
         "  analysis: "
         f"python -m rewardbench.analysis report --logs {database} --out reports/{summary.experiment_id}"
     )
+    return run_state
 
 
 if __name__ == "__main__":

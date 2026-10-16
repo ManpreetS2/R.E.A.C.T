@@ -78,10 +78,14 @@ def test_prepare_config_rejects_bad_adapter_kwargs(tmp_path: Path) -> None:
         prepare_config(path)
 
 
-def test_live_mode_is_disabled_without_api_calls() -> None:
+def test_live_mode_requires_paid_acknowledgment() -> None:
     config = load_config(NUMERICAL)
-    with pytest.raises(ConfigError, match="disabled"):
-        build_model(config, mode="live")
+    env = build_environment(config)
+    try:
+        with pytest.raises(ConfigError, match="i-authorize-paid-api-calls"):
+            build_model(config, mode="live", environment=env)
+    finally:
+        env.close()
 
 
 def test_adapter_kwargs_reach_research_mode_on_apollo_adapter() -> None:

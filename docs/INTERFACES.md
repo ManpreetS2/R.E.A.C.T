@@ -499,17 +499,54 @@ python -m rewardbench.run --config <config.yaml> --mode mock --database runs/cus
 constructs the environment from ``environment_id``, applies validated
 ``metadata.adapter_kwargs`` to the adapter constructor, opens
 ``SqliteStore(config.database_path)``, and calls ``ExperimentRunner.run``.
-It prints the experiment id, revision and episode counts, status, and output
-paths. Exit status ``0`` means ``completed``; ``1`` means a recorded
-experiment failure or budget stop; ``2`` means configuration or usage errors.
+It prints the experiment id, revision and episode counts, status, output
+paths, and a ``run_state`` of ``completed``, ``paused``, ``failed``,
+``budget-exhausted``, or ``interrupted``. Exit status ``0`` means
+``completed`` or an intentional live-session ``paused`` stop; ``1`` means a
+recorded failure or hard budget stop; ``2`` means configuration or usage
+errors.
 
 Mock mode is an infrastructure test. It is not evidence of LLM learning and
 spends no API money.
 
-``--mode live`` is reserved for a future provider-backed path. It is disabled
-by default, raises ``ConfigError``, and must not open a network socket. When a
-human later enables it, the launcher will call
-``rewardbench.providers.build_model_client`` and only spend inside ``propose``.
+### Live mode (authorized paid calls)
+
+Live mode is off by default. It never runs unless the operator passes
+``--i-authorize-paid-api-calls``. Core builds the client only through
+``rewardbench.providers.build_model_client`` (no duplicated provider logic).
+
+Before the first paid ``propose``, Core fail-closed preflight checks:
+
+- provider is one of ``openai``, ``google``, ``anthropic``, ``xai``
+- model id is present in the pricing catalog
+- worst-case ``quote_call`` is available and ``<= budget.max_cost_usd``
+- API credentials resolve (environment variable or test-injected key)
+- ``max_model_retries == 0``
+- ``budget.max_cost_usd`` and ``budget.max_model_calls`` are set
+- ``model_settings.max_output_tokens`` is set
+- environment ``controller_schema`` is present
+
+Each live CLI process allows **at most one** new paid model request
+(``--max-new-paid-calls`` defaults to 1 and must stay 1 for the pilot). When
+``num_revisions`` is greater than the completed count, the session gate stops
+further ``propose`` calls with ``BudgetExceeded(resource=live_session_model_calls)``.
+The runner records that stop as ``interrupted`` (resumable), not terminal
+``budget_exhausted``. The CLI reports ``run_state: paused`` and must not be
+described as a completed learning experiment.
+
+A second revision is a separately approved continuation:
+
+```bash
+python -m rewardbench.run --config configs/apollolander_pilot_openai_gpt54mini.yaml \
+  --mode live --i-authorize-paid-api-calls
+
+python -m rewardbench.run --config configs/apollolander_pilot_openai_gpt54mini.yaml \
+  --mode live --i-authorize-paid-api-calls --authorize-continuation
+```
+
+Resume reuses the selected attempt for finished revisions and does not repeat
+those paid calls. Held-out rows from other experiments are never loaded into a
+development request.
 
 Paired offline ApolloLander development configs:
 
@@ -518,6 +555,11 @@ Paired offline ApolloLander development configs:
 
 They share seed schedules, revision limits, and simulator parameters. Only
 ``feedback_condition``, experiment names, database paths, and notes differ.
+
+Live pilot config (requires human spend approval before any real key is used):
+
+- ``configs/apollolander_pilot_openai_gpt54mini.yaml``
+- ``configs/apollolander_pilot_openai_gpt54mini_nofeedback.yaml``
 
 ### ``metadata.adapter_kwargs``
 

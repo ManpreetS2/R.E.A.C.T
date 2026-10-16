@@ -84,8 +84,25 @@ def build_environment(
         raise ConfigError(str(exc)) from exc
 
 
-def build_model(config: ExperimentConfig, *, mode: str) -> ModelClient:
-    """Bind the offline scripted model, or refuse live provider execution."""
+def build_model(
+    config: ExperimentConfig,
+    *,
+    mode: str,
+    authorize_paid: bool = False,
+    authorize_continuation: bool = False,
+    resume_selected_attempts: int = 0,
+    max_new_paid_calls: int = 1,
+    api_key: str | None = None,
+    transport: object | None = None,
+    sleeper: object | None = None,
+    environment: EnvironmentAdapter | None = None,
+) -> ModelClient:
+    """Bind the offline scripted model, or an authorized live provider client.
+
+    Live mode uses ``rewardbench.providers.build_model_client`` and never runs
+    unless ``authorize_paid`` is true. Tests may inject ``transport`` and
+    ``api_key`` so no real network or credentials are required.
+    """
 
     normalized = mode.strip().lower()
     if normalized == "mock":
@@ -94,12 +111,31 @@ def build_model(config: ExperimentConfig, *, mode: str) -> ModelClient:
             model_id=config.model_id or SCRIPTED_MODEL_ID,
         )
     if normalized == "live":
-        raise ConfigError(
-            "live provider execution is disabled by default and makes no API calls. "
-            "Use --mode mock for offline infrastructure experiments. "
-            "When a human later enables live mode, this entry point will call "
-            "rewardbench.providers.build_model_client(provider=config.provider, "
-            "model_id=config.model_id, ...) and only spend when propose() runs."
+        from rewardbench.run.live import (
+            build_live_model,
+            preflight_live,
+            validate_live_authorization,
+        )
+
+        validate_live_authorization(
+            authorize_paid=authorize_paid,
+            authorize_continuation=authorize_continuation,
+            resume_selected_attempts=resume_selected_attempts,
+        )
+        if environment is None:
+            raise ConfigError("live mode requires an environment for preflight schema checks")
+        preflight_live(
+            config,
+            environment,
+            max_new_paid_calls=max_new_paid_calls,
+            api_key=api_key,
+        )
+        return build_live_model(
+            config,
+            max_new_paid_calls=max_new_paid_calls,
+            api_key=api_key,
+            transport=transport,
+            sleeper=sleeper,
         )
     raise ConfigError(f"unknown run mode {mode!r}; expected 'mock' or 'live'")
 
