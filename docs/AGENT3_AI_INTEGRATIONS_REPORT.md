@@ -151,7 +151,8 @@ Prints local reservation, mocked constant controller validated against Apollo sc
 
 ## Commit hash
 
- on .
+Work: `bcf5ef333058979046a065ab37051f341f871ff5`  
+Tip: `d2a7e40b2de0aaaa74cb31b50a25540c9e922781` on `work/v1-provider-safety`
 
 ## Approval required before first paid call
 
