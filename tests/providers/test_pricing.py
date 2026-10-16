@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import pytest
+
 from rewardbench.providers.pricing import load_catalog
 
 # One call at 5,000 input and 1,000 output tokens, then 125 calls.
@@ -55,17 +57,43 @@ def test_gemini_reasoning_is_priced_separately_and_openai_reasoning_is_not():
     assert openai.usd == 100 * 4.5 / 1_000_000
 
 
-def test_claude_long_context_is_unpriced_until_a_rate_is_configured():
+def test_claude_long_context_uses_the_verified_higher_rate():
     catalog = load_catalog()
-    estimate = catalog.estimate(
+    short = catalog.estimate(
+        "anthropic",
+        "claude-haiku-5-5",
+        prompt_tokens=100_000,
+        completion_tokens=10,
+        reasoning_tokens=0,
+    )
+    long = catalog.estimate(
         "anthropic",
         "claude-haiku-5-5",
         prompt_tokens=100_001,
         completion_tokens=10,
         reasoning_tokens=0,
     )
-    assert estimate.status == "long_context_rate_unconfigured"
-    assert estimate.usd == 0.0
+    assert short.priced
+    assert long.priced
+    assert short.usd == pytest.approx((100_000 * 0.10 + 10 * 0.50) / 1_000_000)
+    assert long.usd == pytest.approx((100_001 * 0.50 + 10 * 2.50) / 1_000_000)
+
+
+def test_catalog_keeps_cache_rates_null_so_unreserved_cache_stays_rejected():
+    catalog = load_catalog()
+    for key in catalog.rates:
+        rate = catalog.rates[key]
+        assert rate.cache_read_per_million is None
+        assert rate.cache_write_per_million is None
+    estimate = catalog.estimate(
+        "anthropic",
+        "claude-haiku-5-5",
+        prompt_tokens=15,
+        completion_tokens=9,
+        reasoning_tokens=0,
+        cache_read_tokens=4,
+    )
+    assert estimate.status == "cache_rate_unconfigured"
 
 
 def test_unknown_model_id_is_not_given_a_made_up_price():

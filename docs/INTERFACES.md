@@ -486,6 +486,146 @@ Timestamps are UTC ISO-8601 strings with a timezone offset.
 Retries that were replaced stay in the table with `selected=False`.
 Episodes are inserted only for a selected valid controller.
 
+## Command-line experiment entry
+
+Core owns a narrow launcher that does not rewrite ``ExperimentRunner``:
+
+```bash
+python -m rewardbench.run --config <config.yaml> --mode mock
+python -m rewardbench.run --config <config.yaml> --mode mock --database runs/custom.sqlite
+```
+
+``--mode mock`` (default) binds a scripted feedback-responsive offline model,
+constructs the environment from ``environment_id``, applies validated
+``metadata.adapter_kwargs`` to the adapter constructor, opens
+``SqliteStore(config.database_path)``, and calls ``ExperimentRunner.run``.
+It prints the experiment id, revision and episode counts, status, output
+paths, and a ``run_state`` of ``completed``, ``paused``, ``failed``,
+``budget-exhausted``, or ``interrupted``. Exit status ``0`` means
+``completed`` or an intentional live-session ``paused`` stop; ``1`` means a
+recorded failure or hard budget stop; ``2`` means configuration or usage
+errors.
+
+Mock mode is an infrastructure test. It is not evidence of LLM learning and
+spends no API money.
+
+### Live mode (authorized paid calls)
+
+Live mode is off by default. It never runs unless the operator passes
+``--i-authorize-paid-api-calls``. Core builds the client only through
+``rewardbench.providers.build_model_client`` (no duplicated provider logic).
+
+Before the first paid ``propose``, Core fail-closed preflight checks:
+
+- provider is one of ``openai``, ``google``, ``anthropic``, ``xai``
+- model id is present in the pricing catalog
+- worst-case ``quote_call`` is available and ``<= budget.max_cost_usd``
+- API credentials resolve (environment variable or test-injected key)
+- ``max_model_retries == 0``
+- ``budget.max_cost_usd`` and ``budget.max_model_calls`` are set
+- ``model_settings.max_output_tokens`` is set
+- environment ``controller_schema`` is present
+
+Each live CLI process allows **at most one** new paid model request
+(``--max-new-paid-calls`` defaults to 1 and must stay 1 for the pilot). When
+``num_revisions`` is greater than the completed count, the session gate stops
+further ``propose`` calls with ``BudgetExceeded(resource=live_session_model_calls)``.
+The runner records that stop as ``interrupted`` (resumable), not terminal
+``budget_exhausted``. The CLI reports ``run_state: paused`` and must not be
+described as a completed learning experiment.
+
+A second revision is a separately approved continuation:
+
+```bash
+python -m rewardbench.run --config configs/apollolander_pilot_openai_gpt54mini.yaml \
+  --mode live --i-authorize-paid-api-calls
+
+python -m rewardbench.run --config configs/apollolander_pilot_openai_gpt54mini.yaml \
+  --mode live --i-authorize-paid-api-calls --authorize-continuation
+```
+
+Resume reuses the selected attempt for finished revisions and does not repeat
+those paid calls. Held-out rows from other experiments are never loaded into a
+development request.
+
+Paired offline ApolloLander development configs:
+
+- ``configs/apollolander_offline_development_numerical.yaml``
+- ``configs/apollolander_offline_development_nofeedback.yaml``
+
+They share seed schedules, revision limits, and simulator parameters. Only
+``feedback_condition``, experiment names, database paths, and notes differ.
+
+Live pilot config (requires human spend approval before any real key is used):
+
+- ``configs/apollolander_pilot_openai_gpt54mini.yaml``
+- ``configs/apollolander_pilot_openai_gpt54mini_nofeedback.yaml``
+
+### Held-out freeze and evaluation (no model calls)
+
+After a development experiment reaches ``status=completed``, Core can freeze
+one controller and score it on sealed held-out research starts:
+
+```bash
+python -m rewardbench.heldout \
+  --database runs/apollolander_offline_numerical.sqlite \
+  --source-config configs/apollolander_offline_development_numerical.yaml \
+  --selection-rule last_valid_selected
+```
+
+Selection default is ``last_valid_selected``: the selected valid attempt with
+the highest ``(revision_index, call_index)``. Held-out rewards are never used
+to choose the controller.
+
+The freeze records SHA-256 of canonical controller JSON, source experiment id,
+model id, feedback condition, revision, call index, and attempt id. Evaluation
+uses the ApolloLander research-mode adapter and the source config's
+``held_out_seeds`` / ``start_schedule_version``. It never calls
+``ModelClient.propose``.
+
+Results are stored in additive SQLite tables that development history never
+reads: ``frozen_controllers``, ``heldout_evaluations``, ``heldout_episodes``.
+Repeated invocation of the same sealed evaluation fails closed.
+
+Paired numerical and no-feedback development configs must share the same
+held-out seed list so sealed starts are comparable across feedback conditions.
+
+See ``examples/heldout/README.md``.
+
+### ``metadata.adapter_kwargs``
+
+Optional mapping of JSON-serializable constructor arguments for the
+environment adapter. Core validates the mapping and passes accepted keys to
+``make_environment``. Unsupported keys are dropped with a warning so older
+adapters keep working.
+
+### Agent 2 dependency — ApolloLander ``research_mode``
+
+Core forwards ``metadata.adapter_kwargs.research_mode`` when
+``ApolloLanderAdapter.__init__`` accepts that keyword. Agent 2 owns the
+physics meaning. Until the constructor exposes it, offline configs may still
+list ``research_mode: true``; Core warns and continues without changing
+physics.
+
+Agent 2 should expose, without breaking existing callers:
+
+```python
+class ApolloLanderAdapter:
+    def __init__(
+        self,
+        *,
+        max_steps: int = 8000,
+        locked_camera: bool = True,
+        record_dir: str | Path | None = None,
+        record_video: bool = False,
+        research_mode: bool = False,
+    ) -> None: ...
+```
+
+When ``research_mode`` is true, Agent 2's deterministic research starts and
+recording interface apply. Core does not interpret the flag beyond forwarding
+it.
+
 ## Runner
 
 ```python

@@ -129,3 +129,74 @@ SELECT
     error,
     created_at
 FROM episodes;
+
+-- Held-out freeze / evaluation (additive; schema_version stays 1).
+-- These tables are never read into ModelRequest history.
+CREATE TABLE IF NOT EXISTS frozen_controllers (
+    freeze_id TEXT PRIMARY KEY,
+    controller_hash TEXT NOT NULL,
+    parameters_json TEXT NOT NULL,
+    source_experiment_id TEXT NOT NULL REFERENCES experiments(experiment_id),
+    source_attempt_id INTEGER NOT NULL,
+    source_revision_index INTEGER NOT NULL,
+    source_call_index INTEGER NOT NULL,
+    source_session_id TEXT NOT NULL,
+    model_id TEXT NOT NULL,
+    provider TEXT NOT NULL,
+    feedback_condition TEXT NOT NULL,
+    environment_id TEXT NOT NULL,
+    selection_rule TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    UNIQUE (source_experiment_id, selection_rule, controller_hash)
+);
+
+CREATE TABLE IF NOT EXISTS heldout_evaluations (
+    evaluation_id TEXT PRIMARY KEY,
+    freeze_id TEXT NOT NULL REFERENCES frozen_controllers(freeze_id),
+    source_experiment_id TEXT NOT NULL REFERENCES experiments(experiment_id),
+    environment_id TEXT NOT NULL,
+    environment_version TEXT NOT NULL,
+    start_schedule_version TEXT NOT NULL,
+    vary_fuel INTEGER NOT NULL,
+    held_out_seeds_json TEXT NOT NULL,
+    max_episode_steps INTEGER,
+    status TEXT NOT NULL,
+    controller_hash TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    completed_episodes INTEGER NOT NULL DEFAULT 0,
+    error TEXT,
+    UNIQUE (freeze_id, held_out_seeds_json, start_schedule_version, environment_version, vary_fuel, max_episode_steps)
+);
+
+CREATE TABLE IF NOT EXISTS heldout_episodes (
+    heldout_episode_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    evaluation_id TEXT NOT NULL REFERENCES heldout_evaluations(evaluation_id),
+    freeze_id TEXT NOT NULL REFERENCES frozen_controllers(freeze_id),
+    source_experiment_id TEXT NOT NULL,
+    episode_index INTEGER NOT NULL,
+    seed INTEGER NOT NULL,
+    total_reward REAL,
+    success INTEGER,
+    crashed INTEGER,
+    steps INTEGER NOT NULL,
+    terminated INTEGER NOT NULL,
+    truncated INTEGER NOT NULL,
+    elapsed_seconds REAL NOT NULL,
+    metrics_json TEXT NOT NULL,
+    initial_state_json TEXT NOT NULL,
+    replay_path TEXT,
+    error TEXT,
+    created_at TEXT NOT NULL,
+    UNIQUE (evaluation_id, episode_index),
+    UNIQUE (evaluation_id, seed)
+);
+
+CREATE INDEX IF NOT EXISTS idx_frozen_controllers_source
+    ON frozen_controllers (source_experiment_id);
+
+CREATE INDEX IF NOT EXISTS idx_heldout_evaluations_source
+    ON heldout_evaluations (source_experiment_id, freeze_id);
+
+CREATE INDEX IF NOT EXISTS idx_heldout_episodes_evaluation
+    ON heldout_episodes (evaluation_id, episode_index);

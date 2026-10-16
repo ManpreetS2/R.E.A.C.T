@@ -9,6 +9,7 @@ from pathlib import Path
 
 from rewardbench.analysis.diagnostics import fairness_notes, resume_notes, seed_leakage
 from rewardbench.analysis.environments import environment_family, family_display
+from rewardbench.analysis.heldout import heldout_markdown, load_heldout_summaries
 from rewardbench.analysis.plots import (
     plot_improvement_per_dollar,
     plot_initial_vs_final,
@@ -119,6 +120,7 @@ def write_report(
                 "",
             ]
         )
+    lines.extend(heldout_markdown(load_heldout_summaries(bundle.source)))
     lines.extend(_reading_notes(reward_targets))
     text = "\n".join(lines).rstrip() + "\n"
     lowered = text.lower()

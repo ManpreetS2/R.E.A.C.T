@@ -1,0 +1,544 @@
+{
+  "autonomous_learning": false,
+  "controller": {
+    "policy": "constant",
+    "rotation": 0,
+    "thrust": 1.0
+  },
+  "controller_hash": "sha256:633b7800104c4bed46c84b3440b9be91a107ead69298e38fe48b6684da287ff3",
+  "environment_id": "ApolloLander",
+  "environment_version": "apollolander.env.v1",
+  "episode_index": 0,
+  "episode_seed": 2,
+  "experiment_id": "exp_f6d8e0091e67a46641f0",
+  "initial_state": {
+    "fuel": 1000.0,
+    "rotation": -30.0,
+    "scale": 0.25,
+    "vx": 0.6299474791105952,
+    "vy": 0.025970887563390686,
+    "x": 6757.521769264807,
+    "y": 130.87139403500643
+  },
+  "landscape_noise_seed": 12039,
+  "max_steps": 120,
+  "model": "scripted-feedback-responsive",
+  "origin": "unspecified",
+  "replay_tolerances": {
+    "reward_abs": 1e-09,
+    "state_abs": 1e-09,
+    "steps": 0
+  },
+  "research_mode": true,
+  "revision_index": 1,
+  "schema": "rewardbench.apollolander.flight_record.v1",
+  "split": null,
+  "start_schedule_version": "apollolander.starts.v1",
+  "terminal": {
+    "crashed": false,
+    "fuel_penalty": 1.1600000000000947,
+    "fuel_remaining": 976.7999999999982,
+    "fuel_used": 23.20000000000188,
+    "in_landing_zone": false,
+    "landed": false,
+    "reward": -25.901618789944106,
+    "status": "timeout",
+    "steps": 120,
+    "terminal_reward": -25.0,
+    "timed_out": true,
+    "verified": null
+  },
+  "trace": [
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 0,
+      "thrust": 1.0
+    }
+  ],
+  "trace_hash": "sha256:a08e629b3963ae78dc36b4302e2fc03bd1d7a197efd2163bfef32db3c81cc30f",
+  "trace_length": 120,
+  "vary_fuel": false,
+  "video_path": null,
+  "zone": {
+    "index": 885,
+    "width": 179.19999999999982,
+    "x1": 6873.6,
+    "x2": 7052.8,
+    "y": 679.4358077547447
+  }
+}

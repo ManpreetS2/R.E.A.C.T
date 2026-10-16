@@ -2,148 +2,233 @@
 
 **Reward-Enhanced Adaptive Controller Testing**
 
-R.E.A.C.T. measures how a language model changes a controller when it can see numerical rewards and penalties. Adaptation is in-context. Model weights stay fixed. A simulator, not another model, assigns the score.
+R.E.A.C.T. asks a precise question: *when a language model may revise a constrained controller inside a simulator, does seeing numerical rewards change those revisions more than an otherwise identical no-feedback condition?*
 
-The Python package is `rewardbench` 0.1.0. The shared contract is version `1.0.0`. The SQLite schema is version `1`.
+Adaptation is **in-context**. Model weights stay fixed. A physics simulator—not another model—assigns the score. Development revisions and sealed held-out evaluation are separate steps.
 
-**Repository:** https://github.com/ManpreetS2/R.E.A.C.T
-
-This default branch holds the full public tree: the runner, Gymnasium LunarLander-v3, ApolloLander, the four model providers, and the analysis tools. The original workstream branches (`agent/core`, `agent/lunarlander`, `agent/providers`, `agent/analysis`) are still on GitHub if you want the separate histories.
-
-## Where the work stands
-
-This is an engineering snapshot from 15 October 2026. No log in this repository is marked independently validated, so the repository publishes no model ranking and no headline score.
-
-| Area | Location |
+| | |
 | --- | --- |
-| Contract, runner, SQLite log, spending cap | `src/rewardbench/core/`, `src/rewardbench/storage/`, `docs/INTERFACES.md` |
-| Gymnasium LunarLander-v3 | `src/rewardbench/environments/lunarlander/` |
-| ApolloLander | `src/rewardbench/environments/apollolander/`, `frontend/apollolander/` |
-| OpenAI, Gemini, Anthropic, xAI clients | `src/rewardbench/providers/` |
-| Log summaries, figures, reports | `src/rewardbench/analysis/` |
+| Project | **R.E.A.C.T.** |
+| Internal package | **`rewardbench`** |
+| Status | Engineering / research **prototype** (v1) |
+| Validated LLM rankings | **None published** |
+| Repository | https://github.com/ManpreetS2/R.E.A.C.T |
 
-## The question
+```mermaid
+flowchart LR
+  subgraph Dev["Development experiment"]
+    CFG[YAML config] --> CLI["rewardbench.run"]
+    CLI --> PRE[Preflight / mock]
+    PRE --> MOD[ModelClient.propose]
+    MOD --> VAL[Schema validation]
+    VAL --> SIM[ApolloLander / LunarLander]
+    SIM --> SQL[(SQLite)]
+  end
+  subgraph Eval["Sealed held-out evaluation"]
+    SQL --> FRZ["rewardbench.heldout"]
+    FRZ --> FREEZE[Freeze last_valid_selected]
+    FREEZE --> HOSIM[Held-out starts only]
+    HOSIM --> SQL
+  end
+  SQL --> REP["rewardbench.analysis report"]
+  SQL --> FLT[.flight.json replay]
+```
 
-Which model changes its controller more effectively when the prompt includes numerical rewards and penalties, under one fixed protocol?
+## What is proven vs empty
 
-An answer needs repeated runs, a held-out seed split, and logs whose metadata says `independently_validated`. The analysis tools summarize logs that exist. An empty database produces an empty report.
+| Slot | Status |
+| --- | --- |
+| Offline mock numerical vs no-feedback loop | **Proven** (scripted model, real physics) |
+| Research-mode development baselines (0/16 / 16/16) | **Proven** (hand-specified / scripted; not LLM) |
+| Flight manifests + deterministic replay | **Proven** |
+| Freeze → sealed held-out eval (no model call) | **Proven** (offline) |
+| Authorized live CLI + spend gates | **Proven** with mocked HTTP |
+| Real OpenAI / Gemini / Claude / Grok adaptation results | **Empty** — reserved for future owner-approved runs |
+| Independently validated model ranking | **Empty** — not claimed |
 
-## How a run is scored
+Scripted and hand-specified controllers demonstrate the pipeline. They are **not** evidence that a language model learned.
 
-- A controller revision and a simulated episode are stored as different records.
-- Development seeds and held-out seeds stay in different experiments. `SplitGuard` rejects a seed from the other pool.
-- Before a model call, the runner reserves the remaining dollar and token budget. That reservation is shared across overlapping runs and is restored correctly on resume.
-- An adapter rejects an invalid controller. This package does not execute model-authored Python.
-- The primary score is the environment's own reward. Penalties are negative rewards.
-- Gymnasium LunarLander-v3 and ApolloLander are different games. Their scores are never pooled.
+## Architecture
 
-Sample configs live in `configs/` and `examples/`. The development sample caps spend at 2.00 USD.
+| Layer | Role |
+| --- | --- |
+| Contracts | `ModelClient`, `EnvironmentAdapter`, budgets, splits (`docs/INTERFACES.md`) |
+| Runner | Revisions, episodes, resume, SQLite |
+| Environments | Gymnasium LunarLander-v3 · ApolloLander (Seb Lee-Delisle, MIT) |
+| Providers | OpenAI · Google Gemini · Anthropic Claude · xAI Grok (+ mock) |
+| Held-out | Freeze final selected controller; score sealed starts; never `propose` |
+| Analysis | Session stats, figures, markdown reports |
 
-## Install and test
+Controller revisions and simulated episodes are different records. Gymnasium and ApolloLander scores are never pooled.
 
-Python 3.11 or newer. No API key is required for the test suite.
+## Experiment workflow
+
+1. **Development** (matched seeds; numerical **or** no-feedback)  
+2. **Freeze** the last valid selected controller  
+3. **Held-out evaluation** on sealed starts (no model calls; scores never re-enter prompts)  
+4. **Report** from SQLite · **Replay** `.flight.json` manifests  
+
+Paired configs share simulator settings and seed lists; only feedback condition (and names/paths) differ.
+
+## Quick start
+
+Python **3.11+** (3.12 recommended) and Node.js (ApolloLander physics).
 
 ```bash
-python3 -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
-```
-
-On Windows, create the environment with `py -3.11 -m venv .venv` and activate it with `.\.venv\Scripts\Activate.ps1`.
-
-```bash
-python -m pytest tests/core tests/providers tests/prompts -q
-```
-
-Analysis extras (NumPy, SciPy, Matplotlib) and the Gymnasium simulator are optional:
-
-```bash
 python -m pip install -e ".[dev,analysis,environments]"
-MPLBACKEND=Agg python -m pytest tests/analysis tests/environments -q
 ```
 
-`tests/core` uses stand-in models and environments. `tests/providers` uses recorded HTTP replies and the placeholder key `sk-test-secret-value`. Neither path spends money.
-
-## Analysis
-
-Point these commands at a SQLite log written by the experiment runner. The sample configs use `runs/rewardbench.sqlite`.
+### Tests
 
 ```bash
-python -m rewardbench.analysis export --logs runs/rewardbench.sqlite --out exports/run.jsonl
-python -m rewardbench.analysis report --logs runs/rewardbench.sqlite --out reports/run1
+python -m pytest tests -q
+node frontend/apollolander/experiment/physics.test.js
 ```
 
-An empty database produces a report that says no logs were loaded. Reward targets are caller-supplied:
+No API key required.
+
+### Offline demonstration (scripted mock — infrastructure)
 
 ```bash
-python -m rewardbench.analysis report --logs runs/rewardbench.sqlite --out reports/run1 --reward-targets 0,200
+# Matched development arms
+python -m rewardbench.run \
+  --config configs/apollolander_offline_development_numerical.yaml --mode mock
+
+python -m rewardbench.run \
+  --config configs/apollolander_offline_development_nofeedback.yaml --mode mock
+
+# Sealed held-out evaluation (no model calls)
+python -m rewardbench.heldout \
+  --database runs/apollolander_offline_numerical.sqlite \
+  --source-config configs/apollolander_offline_development_numerical.yaml
+
+python -m rewardbench.heldout \
+  --database runs/apollolander_offline_nofeedback.sqlite \
+  --source-config configs/apollolander_offline_development_nofeedback.yaml
+
+# Reports
+python -m rewardbench.analysis report \
+  --logs runs/apollolander_offline_numerical.sqlite --out reports/offline_numerical
+
+python -m rewardbench.analysis report \
+  --logs runs/apollolander_offline_nofeedback.sqlite --out reports/offline_nofeedback
 ```
 
-A log stays preliminary until `metadata.validation_status` is `independently_validated`. Rows in `tests/analysis/fixtures.py` are labeled synthetic fixtures so the figure code can run in tests. They are not results.
+See `examples/heldout/README.md` and `docs/DEMO.md`.
 
-## Keys and cost
+### Launch ApolloLander locally
 
-A live client reads one of these environment variables:
+```bash
+cd frontend/apollolander
+python3 -m http.server 8766
+```
 
-| Provider | Variable |
-| --- | --- |
-| OpenAI | `OPENAI_API_KEY` |
-| Google Gemini | `GEMINI_API_KEY` or `GOOGLE_API_KEY` |
-| Anthropic | `ANTHROPIC_API_KEY` |
-| xAI | `XAI_API_KEY` |
+Open http://localhost:8766/experiment/index.html
 
-Keep keys in the environment of the machine that runs an experiment. This history contains no `.env` file and no live key. Generated logs (`runs/`, `*.sqlite`) are gitignored.
+### Example flight replay
 
-`build_model_client` does not call the network. `propose` does. Use `provider="mock"` for offline work. A live call needs a person who accepts the charge. The sample cap in the YAML files is a ceiling in the config, not permission to start a paid run from this page.
+Tracked sample (scripted mock; verifies):
 
-## Environments
-
-Gymnasium LunarLander-v3 and ApolloLander keep separate environment ids (`lunarlander-v3` and `apollolander`). Reports keep the two families in separate sections.
+`docs/assets/v1-evidence/flights/offline_mock_development_episode.flight.json`
 
 ```python
 from rewardbench.environments import make_environment
 
-gym = make_environment("LunarLander-v3")
-apollo = make_environment("ApolloLander")
+adapter = make_environment("ApolloLander", research_mode=True)
+verified = adapter.verify_flight_record(
+    "docs/assets/v1-evidence/flights/offline_mock_development_episode.flight.json"
+)
+assert verified["matched"] is True
 ```
 
-A hand-specified ApolloLander demonstration controller is a demonstration. Reports that use it keep `origin` as `hand_specified_demonstration`.
+### Evidence figures (scripted offline mock)
+
+![Numerical reward vs revision](docs/assets/v1-evidence/figures/offline_mock_numerical_reward_vs_revision.png)
+
+![No-feedback reward vs revision](docs/assets/v1-evidence/figures/offline_mock_nofeedback_reward_vs_revision.png)
+
+These plots come from real SQLite logs of the **scripted** mock model. They are pipeline evidence, not LLM success.
+
+## Four model providers
+
+| Provider | Typical models | Live path |
+| --- | --- | --- |
+| OpenAI | e.g. `gpt-5.4-mini` | Authorized CLI + preflight |
+| Google | Gemini family | Same contract |
+| Anthropic | Claude family | Same contract |
+| xAI | Grok family | Same contract |
+
+Pilot template (requires owner spend approval; **do not run casually**):
+
+- `configs/apollolander_pilot_openai_gpt54mini.yaml`
+- Companion: `configs/apollolander_pilot_openai_gpt54mini_nofeedback.yaml`
+
+Cost safeguards: explicit `--i-authorize-paid-api-calls`, one new paid `propose` per invocation, `max_model_retries: 0`, software ceiling `$0.05` (**not** a vendor billing guarantee), priced-model preflight, continuation flag for revision 2.
+
+Dry-run without a key:
+
+```bash
+python examples/providers/dry_run_first_call.py
+```
+
+## Reproducibility
+
+| Item | Value (verified on integration tip) |
+| --- | --- |
+| Python | 3.12.x |
+| Node | 22.x (physics tests) |
+| Key packages | PyYAML, pytest, numpy, scipy, matplotlib, gymnasium, imageio |
+| Install | `pip install -e ".[dev,analysis,environments]"` |
+| Apollo schedule | `apollolander.starts.v1` |
+| Apollo env version | `apollolander.env.v1` |
+| Offline numerical config | `configs/apollolander_offline_development_numerical.yaml` |
+| Offline no-feedback config | `configs/apollolander_offline_development_nofeedback.yaml` |
+| Held-out CLI | `python -m rewardbench.heldout ...` |
+
+Pin tip SHA when publishing results. Development and held-out seeds must stay disjoint; held-out scores must never appear in model prompts.
+
+## Testing and cost safeguards
+
+- Full suite: `pytest tests` + Node physics  
+- Live mode refuses without explicit authorization  
+- Missing credentials / unpriced models / budget misconfig refuse before network use  
+- Invalid controllers are not flown  
+- No-feedback history withholds numerical rewards from prompts while SQLite still stores them for analysis  
+- Held-out tables are additive and unread by development history builders  
+
+## Honest limitations
+
+- Average reward change across different research starts alone does **not** prove improvement.  
+- Compare revisions on matched development conditions, then score **frozen** final policies on sealed held-out starts.  
+- Seeds `1000000–1000007` were used in engineering demos — they are **not** untouched final-evaluation evidence. See `docs/FINAL_EVALUATION_PROTOCOL.md`.  
+- This repository currently publishes **no** independently validated LLM ranking.  
+- Software spend caps cannot cap a vendor invoice if keys escape process control.  
+- Credit economy, competition mode, and Minecraft are **out of scope** for v1.
+
+## Documentation map
+
+| Doc | Contents |
+| --- | --- |
+| `docs/DEMO.md` | Short technical demonstration plan |
+| `docs/FINAL_EVALUATION_PROTOCOL.md` | Burned vs reserved final-eval cohorts |
+| `docs/PILOT_CHECKLIST.md` | First paid LLM call checklist |
+| `docs/FIRST_EXPERIMENT_PROTOCOL.md` | Paired LLM study protocol (not executed) |
+| `docs/INTERFACES.md` | Contracts, SQLite, live + held-out CLI |
+| `docs/EXPERIMENTS.md` | Conditions and export |
+| `docs/ANALYSIS.md` | Figures and sessions |
+| `docs/LIMITATIONS.md` | Leakage and fairness |
+| `docs/assets/v1-evidence/` | Tracked figures + sample flight |
+| `PLAN.md` | Engineering roadmap (Agent 4) |
+| `examples/heldout/README.md` | Freeze / held-out commands |
 
 ## Credits
 
-**ApolloLander was created by Seb Lee-Delisle and published under the MIT License.** The snapshot in this repository is upstream commit `0da09dccbadf0d6ee6efcce1f72e9ae206d341d2` (22 June 2017, "changed fonts to Hershey").
-
-- Project: https://github.com/sebleedelisle/apollolander
-- License: https://github.com/sebleedelisle/apollolander/blob/master/LICENSE
-- Local copy: `frontend/apollolander/upstream/LICENSE`
-- Copyright (c) 2017 Seb Lee-Delisle
-
-Keep that notice with any copy of the game. The experiment code around the game is separate from the original MIT grant. Bundled files are listed in `frontend/apollolander/THIRD_PARTY.md`:
-
-| Path | Status |
-| --- | --- |
-| `upstream/perlin.js` | Public domain. Stefan Gustavson, optimisations by Peter Eastman, JavaScript port by Joseph Gentle. Attribution is in the file header. |
-| `upstream/libs/Vector2.js`, `KeyTracker.js`, `TouchController.js` | Covered by the ApolloLander MIT license. |
-| `upstream/libs/rAF.js` | requestAnimationFrame polyfill credited to Erik Möller, Paul Irish, and Tino Zijdel. |
-| `upstream/libs/audio.js`, `jsfx.js`, `jsfxlib.js` | Procedural sound shipped inside the upstream game. Those files have no license header. The experiment simulator does not load them. |
-| `upstream/fonts/avhersheysimplexmedium-webfont.woff` and `.woff2` | Hershey vector fonts are U.S. government work and are public domain. The webfont packaging has no extra license file in the snapshot. |
-
-Gymnasium LunarLander-v3 is a separate project and a separate score.
-
-## Documentation
-
-- `docs/INTERFACES.md` — contract 1.0.0 and SQLite schema version 1
-- `docs/EXPERIMENTS.md` — conditions, logs, and export
-- `docs/ANALYSIS.md` — session statistics and figures
-- `docs/LIMITATIONS.md` — fairness, seed leakage, and judge bias
-- `docs/MINECRAFT.md` — what a later environment must keep stable
-- `docs/PAPER_AND_BLOG_OUTLINE.md` — paper structure, with the results left blank
-- `PLAN.md` — engineering roadmap checked against git on 15 October 2026
-- `docs/HANDOFF.md` — historical transfer note from the analysis worktree
+**ApolloLander was created by Seb Lee-Delisle and published under the MIT License.**  
+Upstream snapshot `0da09dccbadf0d6ee6efcce1f72e9ae206d341d2`. See `frontend/apollolander/upstream/LICENSE` and `frontend/apollolander/THIRD_PARTY.md`.
 
 ## License
 
-The R.E.A.C.T. experiment code in this repository does not yet include a project license. The source is public to read. Reuse of that code waits on a license added by the maintainer.
-
-The ApolloLander game files keep the MIT license above. That license covers the game. It does not by itself license the rest of this repository.
+R.E.A.C.T. experiment code does not yet include a project-wide license. ApolloLander game files keep their MIT license.

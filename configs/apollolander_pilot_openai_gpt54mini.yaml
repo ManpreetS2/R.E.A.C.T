@@ -1,0 +1,74 @@
+# Recommended first paid pilot configuration for OpenAI gpt-5.4-mini.
+# DO NOT run until the owner explicitly approves spending and exports OPENAI_API_KEY.
+# Dry-run without a key:
+#   python examples/providers/dry_run_first_call.py
+#
+# Pricing verified 2026-10-15 (rechecked for v1 provider-safety) against
+# https://developers.openai.com/api/docs/pricing and
+# https://developers.openai.com/api/docs/models/gpt-5.4-mini :
+#   input $0.75 / 1M tokens, cached input $0.075 / 1M (catalog leaves cache null),
+#   output $4.50 / 1M tokens (reasoning billed inside completion tokens).
+#
+# Ceiling guidance:
+#   Compact Apollo constant ~33 tokens; compact guidance ~155 tokens of JSON.
+#   Reasoning tokens COUNT AGAINST max_completion_tokens. With reasoning_effort
+#   other than none, a 400 ceiling can truncate before a full guidance object
+#   is emitted. Recommended first-call ceiling is 800 with reasoning_effort none.
+#   400 remains viable only for compact JSON when reasoning_effort is none.
+#
+# Software caps below are in-process only. They are NOT a provider-side billing
+# guarantee. Parallel processes, retries outside this config, or provider minimum
+# charges can still produce a larger real invoice.
+
+experiment_name: apollolander-pilot-openai-gpt54mini
+environment_id: apollolander
+provider: openai
+model_id: gpt-5.4-mini
+feedback_condition: numerical_reward
+split: development
+seed: 11
+num_revisions: 2
+episodes_per_revision: 1
+history_window: 4
+max_episode_steps: 8000
+max_model_retries: 0
+checkpoint_every: 1
+on_invalid_policy: skip
+on_model_failure: abort
+on_episode_failure: skip
+database_path: runs/apollolander_pilot_openai_gpt54mini.sqlite
+budget:
+  max_cost_usd: 0.05
+  max_tokens: 20000
+  max_wall_seconds: 900
+  max_revisions: 2
+  max_episodes: 2
+  max_model_calls: 2
+development_seeds: [0, 1, 2, 3, 4, 5, 6, 7]
+# Engineering-demo seeds only (already exercised offline). Not the research
+# final-eval cohort — see docs/FINAL_EVALUATION_PROTOCOL.md (2000000–2000015).
+held_out_seeds: [1000000, 1000001, 1000002, 1000003]
+model_settings:
+  max_output_tokens: 800
+  reasoning_effort: none
+  json_mode: true
+metadata:
+  pilot: true
+  agent: agent4-integration
+  approval_required: true
+  recommended_first_policy: constant
+  client_max_spend_usd: 0.05
+  client_max_retries: 0
+  paired_with: apollolander_pilot_openai_gpt54mini_nofeedback.yaml
+notes: >
+  First authorized pilot only. Export OPENAI_API_KEY in the shell; never commit it.
+  Construct RewardModelClient with max_spend_usd=0.05 and max_retries=0 matching this file.
+  Prefer a compact constant controller on the first live call; review SQLite usage before
+  any second call. In-process locks cannot stop a concurrent process or a provider invoice.
+  Exact first-call command (ONE new paid propose per invocation, then pause):
+    python -m rewardbench.run --config configs/apollolander_pilot_openai_gpt54mini.yaml
+      --mode live --i-authorize-paid-api-calls
+  Approved resume for revision 2 (does not repeat call 1):
+    python -m rewardbench.run --config configs/apollolander_pilot_openai_gpt54mini.yaml
+      --mode live --i-authorize-paid-api-calls --authorize-continuation
+  A paused one-call stop is not a completed learning experiment.
