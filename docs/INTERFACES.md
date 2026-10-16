@@ -486,6 +486,73 @@ Timestamps are UTC ISO-8601 strings with a timezone offset.
 Retries that were replaced stay in the table with `selected=False`.
 Episodes are inserted only for a selected valid controller.
 
+## Command-line experiment entry
+
+Core owns a narrow launcher that does not rewrite ``ExperimentRunner``:
+
+```bash
+python -m rewardbench.run --config <config.yaml> --mode mock
+python -m rewardbench.run --config <config.yaml> --mode mock --database runs/custom.sqlite
+```
+
+``--mode mock`` (default) binds a scripted feedback-responsive offline model,
+constructs the environment from ``environment_id``, applies validated
+``metadata.adapter_kwargs`` to the adapter constructor, opens
+``SqliteStore(config.database_path)``, and calls ``ExperimentRunner.run``.
+It prints the experiment id, revision and episode counts, status, and output
+paths. Exit status ``0`` means ``completed``; ``1`` means a recorded
+experiment failure or budget stop; ``2`` means configuration or usage errors.
+
+Mock mode is an infrastructure test. It is not evidence of LLM learning and
+spends no API money.
+
+``--mode live`` is reserved for a future provider-backed path. It is disabled
+by default, raises ``ConfigError``, and must not open a network socket. When a
+human later enables it, the launcher will call
+``rewardbench.providers.build_model_client`` and only spend inside ``propose``.
+
+Paired offline ApolloLander development configs:
+
+- ``configs/apollolander_offline_development_numerical.yaml``
+- ``configs/apollolander_offline_development_nofeedback.yaml``
+
+They share seed schedules, revision limits, and simulator parameters. Only
+``feedback_condition``, experiment names, database paths, and notes differ.
+
+### ``metadata.adapter_kwargs``
+
+Optional mapping of JSON-serializable constructor arguments for the
+environment adapter. Core validates the mapping and passes accepted keys to
+``make_environment``. Unsupported keys are dropped with a warning so older
+adapters keep working.
+
+### Agent 2 dependency — ApolloLander ``research_mode``
+
+Core forwards ``metadata.adapter_kwargs.research_mode`` when
+``ApolloLanderAdapter.__init__`` accepts that keyword. Agent 2 owns the
+physics meaning. Until the constructor exposes it, offline configs may still
+list ``research_mode: true``; Core warns and continues without changing
+physics.
+
+Agent 2 should expose, without breaking existing callers:
+
+```python
+class ApolloLanderAdapter:
+    def __init__(
+        self,
+        *,
+        max_steps: int = 8000,
+        locked_camera: bool = True,
+        record_dir: str | Path | None = None,
+        record_video: bool = False,
+        research_mode: bool = False,
+    ) -> None: ...
+```
+
+When ``research_mode`` is true, Agent 2's deterministic research starts and
+recording interface apply. Core does not interpret the flag beyond forwarding
+it.
+
 ## Runner
 
 ```python
