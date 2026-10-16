@@ -1,0 +1,6 @@
+{
+  "policy": "constant",
+  "rotation": -20,
+  "schema": "rewardbench.apollolander.controller.v1",
+  "thrust": 0.4
+}

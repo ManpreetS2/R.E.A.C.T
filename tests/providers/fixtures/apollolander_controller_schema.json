@@ -1,0 +1,109 @@
+{
+  "commands": {
+    "rotation": {
+      "maximum": 90,
+      "minimum": -90,
+      "step": 10
+    },
+    "thrust": {
+      "maximum": 1,
+      "minimum": 0
+    }
+  },
+  "note": "The reference Gymnasium heuristic is not used here. demonstration_guidance_controller is hand-specified.",
+  "policies": {
+    "constant": {
+      "rotation": [
+        -90,
+        90
+      ],
+      "thrust": [
+        0,
+        1
+      ]
+    },
+    "guidance": {
+      "parameters": {
+        "aligned_dx": {
+          "maximum": 200.0,
+          "minimum": 0.0
+        },
+        "aligned_rotation_gain": {
+          "maximum": 800.0,
+          "minimum": 0.0
+        },
+        "aligned_rotation_limit": {
+          "maximum": 90.0,
+          "minimum": 0.0
+        },
+        "aligned_vx": {
+          "maximum": 0.5,
+          "minimum": 0.0
+        },
+        "altitude_low": {
+          "maximum": 200.0,
+          "minimum": 1.0
+        },
+        "altitude_mid": {
+          "maximum": 400.0,
+          "minimum": 10.0
+        },
+        "altitude_upright": {
+          "maximum": 200.0,
+          "minimum": 1.0
+        },
+        "brake_thrust": {
+          "maximum": 10.0,
+          "minimum": 0.0
+        },
+        "cruise_rotation_limit": {
+          "maximum": 90.0,
+          "minimum": 0.0
+        },
+        "descent_aligned": {
+          "maximum": 0.3,
+          "minimum": 0.0
+        },
+        "descent_cruise": {
+          "maximum": 0.3,
+          "minimum": 0.0
+        },
+        "descent_low": {
+          "maximum": 0.2,
+          "minimum": 0.0
+        },
+        "descent_mid": {
+          "maximum": 0.3,
+          "minimum": 0.0
+        },
+        "hover_thrust": {
+          "maximum": 1.0,
+          "minimum": 0.0
+        },
+        "rotation_gain": {
+          "maximum": 800.0,
+          "minimum": 0.0
+        },
+        "vx_gain": {
+          "maximum": 0.02,
+          "minimum": 0.0
+        },
+        "vx_limit": {
+          "maximum": 0.5,
+          "minimum": 0.01
+        },
+        "vy_gain": {
+          "maximum": 40.0,
+          "minimum": 0.0
+        }
+      }
+    }
+  },
+  "rejected": [
+    "JavaScript",
+    "unknown fields",
+    "non-finite numbers",
+    "values outside bounds"
+  ],
+  "schema": "rewardbench.apollolander.controller.v1"
+}
