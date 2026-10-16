@@ -21,6 +21,17 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
+from rewardbench.environments.apollolander.flight_record import (
+    ENVIRONMENT_VERSION,
+    REPLAY_REWARD_ABS_TOL,
+    REPLAY_STATE_ABS_TOL,
+    autonomous_learning_claimed,
+    build_flight_record,
+    compare_observations,
+    compare_terminal,
+    load_flight_record,
+    write_flight_record,
+)
 from rewardbench.environments.apollolander.recording import write_flight_video
 from rewardbench.environments.apollolander.schema import (
     constant_action,
@@ -214,13 +225,15 @@ class ApolloLanderAdapter:
                 "override or construct the adapter with research_mode=False"
             )
         checked = checked_start(start)
+        learning = autonomous_learning_claimed(origin)
         status = validate_controller(controller)
         if not status.valid:
             return {
                 "environment_id": self.environment_id,
+                "environment_version": ENVIRONMENT_VERSION,
                 "revision": revision,
                 "origin": origin,
-                "autonomous_learning": False,
+                "autonomous_learning": learning,
                 "controller_valid": False,
                 "invalid_reason": status.reason,
                 "research_mode": self.research_mode,
@@ -238,6 +251,7 @@ class ApolloLanderAdapter:
             raise ValueError(f"video seeds {unknown} were not part of this evaluation")
         episodes = []
         video_paths: list[str] = []
+        flight_record_paths: list[str] = []
         for seed in seeds:
             episode = self._run_episode(
                 normalized,
@@ -248,16 +262,21 @@ class ApolloLanderAdapter:
                 record=seed in selected,
                 output=output,
                 model=model,
+                origin=origin,
+                split=split,
             )
             if episode.get("video_path"):
                 video_paths.append(episode["video_path"])
+            if episode.get("flight_record_path"):
+                flight_record_paths.append(episode["flight_record_path"])
             episodes.append(episode)
         rewards = [episode["reward"] for episode in episodes]
         return {
             "environment_id": self.environment_id,
+            "environment_version": ENVIRONMENT_VERSION,
             "revision": revision,
             "origin": origin,
-            "autonomous_learning": False,
+            "autonomous_learning": learning,
             "controller_valid": True,
             "invalid_reason": None,
             "policy": normalized["policy"],
@@ -266,6 +285,7 @@ class ApolloLanderAdapter:
             "landing_count": sum(1 for episode in episodes if episode["landed"]),
             "crash_count": sum(1 for episode in episodes if episode["crashed"]),
             "video_paths": video_paths,
+            "flight_record_paths": flight_record_paths,
             "seed_affects_physics": self.research_mode,
             "research_mode": self.research_mode,
             "start_schedule_version": self.start_schedule_version if self.research_mode else None,
@@ -283,9 +303,10 @@ class ApolloLanderAdapter:
     ) -> dict[str, Any]:
         """Replay an explicit action trace through the same physics process."""
         resolved = self._resolve_start(seed=seed, start=start)
+        applied = resolved if resolved is not None else standard_start().as_dict()
         session = _Session(SESSION)
         try:
-            return session.request(
+            replayed = session.request(
                 {
                     "cmd": "replay",
                     "trace": list(trace),
@@ -299,6 +320,81 @@ class ApolloLanderAdapter:
             )["replay"]
         finally:
             session.close()
+        replayed["start"] = applied
+        replayed["seed"] = seed
+        return replayed
+
+    def verify_flight_record(
+        self,
+        record: Mapping[str, Any] | str | Path,
+        *,
+        reward_tol: float = REPLAY_REWARD_ABS_TOL,
+        state_tol: float = REPLAY_STATE_ABS_TOL,
+    ) -> dict[str, Any]:
+        """Replay a saved manifest and report whether the outcome matches."""
+        if isinstance(record, (str, Path)):
+            payload = load_flight_record(record)
+        else:
+            payload = dict(record)
+        if payload.get("research_mode") and not self.research_mode:
+            raise ValueError("flight record requires research_mode=True on this adapter")
+        if (not payload.get("research_mode")) and self.research_mode:
+            raise ValueError("flight record is fixed-start; construct adapter with research_mode=False")
+        if payload.get("research_mode"):
+            version = payload.get("start_schedule_version")
+            if version != self.start_schedule_version:
+                raise ValueError(
+                    f"start schedule {version!r} does not match adapter {self.start_schedule_version!r}"
+                )
+        seed = int(payload["episode_seed"])
+        trace = list(payload["trace"])
+        # maxSteps must match the original episode so timeouts fire on the same step.
+        original_max = int(payload.get("max_steps") or payload["terminal"]["steps"])
+        replayed = self.replay(
+            trace,
+            seed=seed if payload.get("research_mode") else None,
+            start=None if payload.get("research_mode") else payload["initial_state"],
+            max_steps=original_max,
+        )
+        expected_terminal = {
+            "status": payload["terminal"]["status"],
+            "reward": payload["terminal"]["reward"],
+            "landed": payload["terminal"]["landed"],
+            "crashed": payload["terminal"]["crashed"],
+            "in_landing_zone": payload["terminal"]["in_landing_zone"],
+            "timed_out": payload["terminal"]["timed_out"],
+            "steps": payload["terminal"]["steps"],
+        }
+        observed_result = replayed["result"]
+        observed_terminal = {
+            "status": observed_result["status"],
+            "reward": observed_result["reward"],
+            "landed": observed_result["landed"],
+            "crashed": observed_result["crashed"],
+            "in_landing_zone": observed_result["inLandingZone"],
+            "timed_out": observed_result["timedOut"],
+            "steps": observed_result["steps"],
+        }
+        mismatches = compare_terminal(expected_terminal, observed_terminal, reward_tol=reward_tol)
+        if replayed["frames"]:
+            mismatches.extend(
+                compare_observations(
+                    payload["initial_state"],
+                    {"x": replayed["start"]["x"], "y": replayed["start"]["y"], "vx": replayed["start"]["vx"],
+                     "vy": replayed["start"]["vy"], "rotation": replayed["start"]["rotation"],
+                     "fuel": replayed["start"]["fuel"]},
+                    abs_tol=state_tol,
+                )
+            )
+        return {
+            "matched": not mismatches,
+            "mismatches": mismatches,
+            "trace_hash": payload.get("trace_hash"),
+            "replay_result": observed_terminal,
+            "expected_result": expected_terminal,
+            "reward_tol": reward_tol,
+            "state_tol": state_tol,
+        }
 
     def start_for_seed(self, seed: int) -> dict[str, float]:
         """Public helper for Agent 1 and tests: the start this adapter would use."""
@@ -343,6 +439,8 @@ class ApolloLanderAdapter:
         record: bool,
         output: Path | None,
         model: str,
+        origin: str = "unspecified",
+        split: str | None = None,
     ) -> dict[str, Any]:
         if shutil.which("node") is None:
             raise RuntimeError("ApolloLander requires Node.js to run the vendored physics")
@@ -364,6 +462,7 @@ class ApolloLanderAdapter:
             terrain = opened["map"]["points"]
             zone = opened["map"]["zone"]
             frames: list[dict] = []
+            trace: list[dict[str, float | int]] = []
             fuel_penalty = 0.0
             terminal = 0.0
             observation = opened["observation"]
@@ -372,6 +471,7 @@ class ApolloLanderAdapter:
                 frames.append(_frame(session, observation, session.request({"cmd": "result"})["result"]))
             for _ in range(max_steps):
                 action = _action(controller, observation)
+                trace.append({"thrust": float(action["thrust"]), "rotation": int(action["rotation"])})
                 stepped = session.request({"cmd": "step", "action": action})
                 if not stepped.get("ok", False):
                     raise RuntimeError(stepped.get("error", "physics step failed"))
@@ -389,15 +489,51 @@ class ApolloLanderAdapter:
             session.close()
 
         video_path = None
+        flight_record_path = None
+        stem = f"apollo-{_slug(model)}-revision-{revision}-seed-{seed}"
         if record and output is not None:
-            video_path = output / f"apollo-{_slug(model)}-revision-{revision}-seed-{seed}.mp4"
+            video_file = output / f"{stem}.mp4"
             write_flight_video(
-                video_path,
+                video_file,
                 terrain,
                 frames,
-                hud={"model": model, "revision": "-" if revision is None else str(revision)},
+                hud={
+                    "model": model,
+                    "revision": "-" if revision is None else str(revision),
+                    "origin": origin,
+                    "seed": str(seed),
+                    "mode": "RESEARCH" if self.research_mode else "FIXED MAP",
+                },
             )
-            video_path = str(video_path)
+            video_path = str(video_file)
+
+        flight = build_flight_record(
+            environment_id=self.environment_id,
+            environment_version=ENVIRONMENT_VERSION,
+            research_mode=self.research_mode,
+            start_schedule_version=self.start_schedule_version if self.research_mode else None,
+            vary_fuel=self.vary_fuel,
+            seed=seed,
+            start=applied_start,
+            controller=controller,
+            revision=revision,
+            origin=origin,
+            model=model,
+            split=split,
+            max_steps=max_steps,
+            result=result,
+            zone=zone,
+            trace=trace,
+            fuel_penalty=fuel_penalty,
+            terminal_reward=terminal,
+            video_path=video_path,
+        )
+        if record and output is not None:
+            record_file = output / f"{stem}.flight.json"
+            write_flight_record(record_file, flight)
+            flight_record_path = str(record_file)
+            flight = {**flight, "flight_record_path": flight_record_path}
+
         return {
             "seed": seed,
             "executed": True,
@@ -415,9 +551,19 @@ class ApolloLanderAdapter:
             "fuel_penalty": fuel_penalty,
             "terminal_reward": terminal,
             "video_path": video_path,
+            "flight_record_path": flight_record_path,
+            "flight_record": flight,
+            "trace": trace,
+            "trace_hash": flight["trace_hash"],
+            "controller_hash": flight["controller_hash"],
+            "environment_version": ENVIRONMENT_VERSION,
+            "origin": origin,
+            "model": model,
+            "revision": revision,
             "start": applied_start,
             "identical_start": not self.research_mode and start is None,
             "seed_affects_physics": self.research_mode,
+            "autonomous_learning": autonomous_learning_claimed(origin),
         }
 
 

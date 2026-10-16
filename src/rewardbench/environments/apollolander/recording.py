@@ -101,9 +101,11 @@ def _draw_ship(image: Image.Image, frame: dict, hud: dict[str, str]) -> None:
     observation = frame["observation"]
     result = frame["result"]
     speed = (observation["vx"] ** 2 + observation["vy"] ** 2) ** 0.5
+    mode = hud.get("mode", "FIXED MAP")
     lines = [
-        "APOLLO LANDER  FIXED MAP",
+        f"APOLLO LANDER  {mode}",
         f"MODEL {hud.get('model', 'unspecified')}   REV {hud.get('revision', '-')}",
+        f"ORIGIN {hud.get('origin', 'unspecified')}   SEED {hud.get('seed', '-')}",
         f"REWARD {result['reward']:.1f}   STATUS {result['status']}",
         f"SPEED {speed:.3f}   FUEL {observation['fuel']:.1f}",
     ]
