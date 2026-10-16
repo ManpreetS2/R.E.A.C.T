@@ -242,7 +242,7 @@ Configure Anthropic second if the goal is cost-sensitive JSON-via-prompt checks;
 
 ## Commit hash
 
-Filled after commit on `work/providers-preflight`.
+`fb5d4ca62afb257618c3d6fa05329faf43b58d8a` on `work/providers-preflight`
 
 ## Blockers
 
