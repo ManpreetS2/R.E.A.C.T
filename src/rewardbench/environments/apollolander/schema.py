@@ -7,6 +7,7 @@ not the output of a language model.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 from collections.abc import Mapping
@@ -14,7 +15,8 @@ from dataclasses import dataclass
 from typing import Any
 
 SCHEMA_ID = "rewardbench.apollolander.controller.v1"
-POLICIES = ("guidance", "constant")
+POLICIES = ("guidance", "constant", "random")
+MAX_CONTROLLER_SEED = 2**32 - 1
 
 GUIDANCE_BOUNDS: dict[str, tuple[float, float]] = {
     "vx_gain": (0.0, 0.02),
@@ -88,9 +90,13 @@ def controller_schema_document() -> dict[str, Any]:
                 }
             },
             "constant": {"thrust": [0, 1], "rotation": [-90, 90]},
+            "random": {
+                "seed": [0, MAX_CONTROLLER_SEED],
+                "note": "Deterministic open-loop baseline; mixes controller seed with episode seed and step.",
+            },
         },
         "rejected": ["JavaScript", "unknown fields", "non-finite numbers", "values outside bounds"],
-        "note": "The reference Gymnasium heuristic is not used here. demonstration_guidance_controller is hand-specified.",
+        "note": "The reference Gymnasium heuristic is not used here. demonstration_guidance_controller is hand-specified. random is a scripted baseline, not learning.",
     }
 
 
@@ -109,6 +115,19 @@ def constant_controller(thrust: float, rotation: int) -> dict[str, Any]:
         "thrust": thrust,
         "rotation": rotation,
     }
+
+
+def random_controller(seed: int = 0) -> dict[str, Any]:
+    """Seeded random-policy baseline. Not a learning model.
+
+    The controller seed is mixed with the episode seed and physics step so the
+    same (controller, episode) pair always produces the same action sequence.
+    """
+    if isinstance(seed, bool) or not isinstance(seed, int):
+        raise ValueError("random controller seed must be an integer")
+    if seed < 0 or seed > MAX_CONTROLLER_SEED:
+        raise ValueError(f"random controller seed must be between 0 and {MAX_CONTROLLER_SEED}")
+    return {"schema": SCHEMA_ID, "policy": "random", "seed": seed}
 
 
 def validate_controller(payload: Mapping[str, Any] | str) -> ControllerStatus:
@@ -139,6 +158,8 @@ def normalize_controller(payload: Mapping[str, Any] | str) -> dict[str, Any]:
         raise ControllerRejected(f"unknown controller policy {policy!r}")
     if policy == "guidance":
         return {"policy": "guidance", "parameters": _guidance_parameters(parsed.get("parameters"))}
+    if policy == "random":
+        return {"policy": "random", "seed": _controller_seed(parsed.get("seed"))}
     return {"policy": "constant", "thrust": _thrust(parsed.get("thrust")), "rotation": _rotation(parsed.get("rotation"))}
 
 
@@ -171,6 +192,30 @@ def guidance_action(observation: Mapping[str, float], parameters: Mapping[str, f
 
 def constant_action(controller: Mapping[str, Any]) -> dict[str, float | int]:
     return {"thrust": float(controller["thrust"]), "rotation": int(controller["rotation"])}
+
+
+def random_action(
+    observation: Mapping[str, float],
+    *,
+    controller_seed: int,
+    episode_seed: int,
+) -> dict[str, float | int]:
+    """Deterministic pseudo-random thrust/rotation for baseline comparison."""
+    step = int(observation.get("step", 0))
+    digest = hashlib.sha256(
+        f"apollolander.random.v1:{controller_seed}:{episode_seed}:{step}".encode("utf-8")
+    ).digest()
+    thrust = int.from_bytes(digest[0:2], "big") / 65535.0
+    rotation = ((int.from_bytes(digest[2:4], "big") % 19) - 9) * 10
+    return {"thrust": float(thrust), "rotation": int(rotation)}
+
+
+def _controller_seed(value: Any) -> int:
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise ControllerRejected("random seed must be an integer")
+    if value < 0 or value > MAX_CONTROLLER_SEED:
+        raise ControllerRejected(f"random seed must be between 0 and {MAX_CONTROLLER_SEED}")
+    return value
 
 
 def _guidance_parameters(parameters: Any) -> dict[str, float]:

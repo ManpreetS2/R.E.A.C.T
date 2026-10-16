@@ -216,4 +216,11 @@ Arrow keys rotate, space thrusts, R resets, L and K switch the camera.
 node frontend/apollolander/experiment/physics.test.js
 PYTHONPATH=src .venv/bin/python -m pytest tests/environments -q
 PYTHONPATH=src .venv/bin/python examples/apollolander/run_demonstrations.py
+PYTHONPATH=src .venv/bin/python examples/apollolander/run_research_development_baselines.py
 ```
+
+Development-only research baselines (random / constant / hand-specified guidance)
+write a compact report to
+`examples/apollolander/research_development_baseline/` and recordings under
+`examples/apollolander/output/research_development_baseline/`. Held-out seeds are
+never used by that script.
