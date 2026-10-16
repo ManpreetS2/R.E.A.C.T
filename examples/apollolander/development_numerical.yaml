@@ -29,7 +29,10 @@ model_settings:
 metadata:
   task: apollolander
   terrain: fixed-noise-seed-12039
+  research_mode: false
 notes: >
-  Fixed ApolloLander map. Episode seeds do not move the landscape or the pad.
+  Fixed ApolloLander map (demonstration mode). Episode seeds do not move the
+  landscape, the pad, or the ship. For varied deterministic starts use
+  research_development_numerical.yaml with adapter research_mode=True.
   max_episode_steps is 8000 because a safe descent takes about 5800 physics steps.
   Notes are not part of the experiment id.

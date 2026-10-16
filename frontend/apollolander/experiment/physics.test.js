@@ -49,8 +49,29 @@ const replayed = replaySim.replay(trace);
 assert.strictEqual(replayed.frames.length, 3);
 assert.strictEqual(replayed.frames[2].observation.rotation !== -90, true);
 
+const researchStart = {
+  x: 6963.2 - 200,
+  y: 120,
+  vx: 0.3,
+  vy: 0.01,
+  rotation: -70,
+  fuel: 1000,
+  scale: 0.25,
+};
+const researchReset = createSimulation();
+const researchObs = researchReset.reset({ start: researchStart });
+assert.strictEqual(researchObs.x, researchStart.x);
+assert.strictEqual(researchObs.y, researchStart.y);
+assert.strictEqual(researchObs.rotation, researchStart.rotation);
+assert.notStrictEqual(researchObs.x, first.observation.x);
+const researchA = run(Array.from({ length: 20 }, () => ({ thrust: 0, rotation: -70 })), { start: researchStart });
+const researchB = run(Array.from({ length: 20 }, () => ({ thrust: 0, rotation: -70 })), { start: researchStart });
+assert.deepStrictEqual(researchA.observation, researchB.observation);
+assert.deepStrictEqual(researchA.rewards, researchB.rewards);
+
 console.log(JSON.stringify({
   zone: first.map.zone,
   afterIdle: first.observation,
   reward: first.result.reward,
+  researchStartX: researchA.observation.x,
 }));
