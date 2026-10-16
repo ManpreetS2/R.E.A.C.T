@@ -1,7 +1,7 @@
 # R.E.A.C.T. development plan
 
-Last updated: 2026-10-15 (offline v1 complete on integration branch)  
-Current milestone: **M1 — Verified integrated offline feedback experiment** — **DONE on `work/integration-offline-v1`** (not yet merged to `main`)  
+Last updated: 2026-10-15 (live-pilot worktrees prepared from offline v1)  
+Current milestone: **M1 done locally** → preparing **M2 live-pilot sprint** (no spend yet; no merge/push without owner approval)  
 Maintainer: Agent 4 (Testing & Analytics). Other agents may suggest edits. **Only Agent 4 edits this file.**
 
 Official project name: **R.E.A.C.T. — Reward-Enhanced Adaptive Controller Testing**  
@@ -48,32 +48,42 @@ Order of work:
 
 The four original workstream histories remain on GitHub as `agent/core`, `agent/lunarlander`, `agent/providers`, and `agent/analysis`. They are **already integrated onto `main`**.
 
-### Integration branch (offline v1)
+### Integration branch (offline v1 — verified)
 
 | Item | Value |
 | --- | --- |
 | Worktree | `~/Projects/R.E.A.C.T-worktrees/integration` |
 | Branch | `work/integration-offline-v1` |
+| Verified tip | **`11da2e17b7a26c20d300184f51056b25ae80690e`** |
+| Tests at tip | **221** Python passed + Node physics exit 0 |
 | Status | Local only — **not pushed / not merged to `main`** |
 
-Included agent tips (merge commits preserve history):
+### Live-pilot sprint worktrees (branched from `11da2e1`)
 
-| Agent | Branch | Commit | Content |
+| Agent | Path | Branch | Base |
 | --- | --- | --- | --- |
-| 1 Core | `work/core-offline-loop` | `79ce824` | Offline CLI, paired YAML, `metadata.adapter_kwargs` factory |
-| 2 Environments | `work/environments-variation` | `4f245f6` | Research starts + flight manifests / replay |
-| 3 Providers | `work/providers-preflight` | `cc42041` | Mocked provider Apollo E2E + pilot YAML |
-| 4 Analytics | `work/integration-offline-v1` | *(tip after this PLAN commit)* | Integration fixes, PLAN, offline validation |
+| 1 Core | `~/Projects/R.E.A.C.T-worktrees/live-core` | `work/v1-live-cli` | exact `11da2e1` |
+| 2 Environments | `~/Projects/R.E.A.C.T-worktrees/research-env` | `work/v1-research-validity` | exact `11da2e1` |
+| 3 Providers | `~/Projects/R.E.A.C.T-worktrees/provider-safety` | `work/v1-provider-safety` | exact `11da2e1` |
 
-### Worktrees
+Older offline-agent worktrees were **preserved** (moved, not deleted):
+
+| Path | Branch / state |
+| --- | --- |
+| `…/core-offline-loop` | `work/core-offline-loop` @ `79ce824` |
+| `…/environments-variation` | `work/environments-variation` @ `4f245f6` |
+| `…/providers-preflight` | `work/providers-preflight` @ `cc42041` |
+| `…/core`, `…/environments`, `…/providers` | detached tips of the same offline commits |
+
+### Worktrees (full map)
 
 | Path | Branch |
 | --- | --- |
-| `~/Projects/R.E.A.C.T` | `main` |
-| `~/Projects/R.E.A.C.T-worktrees/core` | `work/core-offline-loop` |
-| `~/Projects/R.E.A.C.T-worktrees/environments` | `work/environments-variation` |
-| `~/Projects/R.E.A.C.T-worktrees/providers` | `work/providers-preflight` |
-| `~/Projects/R.E.A.C.T-worktrees/integration` | `work/integration-offline-v1` |
+| `~/Projects/R.E.A.C.T` | `main` @ `14061991` (= `origin/main`) |
+| `~/Projects/R.E.A.C.T-worktrees/integration` | `work/integration-offline-v1` @ `11da2e1` |
+| `~/Projects/R.E.A.C.T-worktrees/live-core` | `work/v1-live-cli` |
+| `~/Projects/R.E.A.C.T-worktrees/research-env` | `work/v1-research-validity` |
+| `~/Projects/R.E.A.C.T-worktrees/provider-safety` | `work/v1-provider-safety` |
 
 ## 4. Architecture Overview
 
@@ -229,10 +239,28 @@ Provider E2E with **mocked HTTP** through real Apollo physics is green. That doe
 
 ## 11. Immediate next steps
 
-- [ ] **Owner:** review offline v1; approve merge/push of `work/integration-offline-v1` if desired
+- [ ] Agents 1–3 complete live-pilot work on `work/v1-*` branches (no paid calls)
+- [ ] Agent 4 integrates their tips into `work/integration-offline-v1` (or a new integration tip), re-runs full suites, updates this file
+- [ ] **Owner:** review offline v1 / live-pilot readiness; approve merge/push only explicitly
 - [ ] **Owner:** if approving a pilot, set billing limits and authorize a USD ceiling
-- [ ] **Agent 1 + 4:** implement gated `--mode live` only after owner request
 - [ ] **Do not** start credit economy or Minecraft
+
+## 11b. Safe integration → `main` checklist (owner gate)
+
+Do **not** merge or push until the owner explicitly approves.
+
+Pre-flight (checked 2026-10-15):
+
+- [x] `origin/main` == local `main` == `14061991` (no unexpected remote changes after `git fetch`)
+- [x] `origin/main` is an ancestor of integration tip `11da2e1` (fast-forward possible from main’s POV once integration is pushed/merged)
+- [x] Integration is **18 commits** ahead of `origin/main` (11 non-merge + 7 merges); **34 files** changed vs `origin/main...11da2e1`
+- [x] Offline suites at `11da2e1`: 221 passed + Node physics exit 0
+- [ ] Live-pilot agent branches finished and re-integrated; full suite re-run on the combined tip
+- [ ] PLAN.md milestone checklists updated with final SHAs
+- [ ] Owner names the exact ref to push (integration branch and/or PR into `main`)
+- [ ] No force-push; no rewrite of published history; no credentials in the tree
+
+What a push of `11da2e1` (or a later integration tip based on it) would include: offline CLI, research starts, flight manifests, provider E2E/pilot docs, PLAN updates, and related tests — **not** live API spend, **not** credit economy.
 
 ## 12. Safely integrating later agent commits
 
