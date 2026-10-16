@@ -135,6 +135,59 @@ Rules for fair comparisons:
 5. Label hand-written controllers with `origin="hand_specified_demonstration"`;
    `autonomous_learning` stays false.
 
+## Agent 1 — flight records and SQLite hooks
+
+Every executed episode from `evaluate` includes a `flight_record` object (schema
+`rewardbench.apollolander.flight_record.v1`) with:
+
+| Field | Purpose |
+| --- | --- |
+| `environment_id` / `environment_version` | Simulator identity (`apollolander.env.v1`) |
+| `start_schedule_version` | Research schedule id, or null in fixed mode |
+| `episode_seed` / `initial_state` | Exact spawn used |
+| `controller` / `controller_hash` | Parameters submitted |
+| `revision_index` / `origin` / `model` | Provenance |
+| `autonomous_learning` | Always `false` from this adapter for demos/mocks |
+| `max_steps` | Episode step budget (required for timeout-faithful replay) |
+| `terminal.*` | Reward, status, verified landing, steps, fuel |
+| `trace` / `trace_hash` | Action list and replay identifier |
+| `video_path` | Optional MP4 path when `record_video=True` |
+
+When `record_dir` and `record_video=True` are set, the adapter also writes:
+
+- `apollo-<model>-revision-<n>-seed-<s>.mp4`
+- `apollo-<model>-revision-<n>-seed-<s>.flight.json`
+
+Replay check (environment-side, no ExperimentRunner change):
+
+```python
+result = adapter.verify_flight_record(path_to_flight_json)
+assert result["matched"]
+```
+
+Deterministic tolerances are documented on the record as
+`replay_tolerances` (reward/state abs `1e-9`, steps `0`).
+
+**Origin labels** (pass as `evaluate(..., origin=...)`):
+
+- `hand_specified_demonstration` — human-tuned demos
+- `deterministic_mock` — scripted/mock controllers
+- `model_generated` — future LLM controllers
+
+Never treat hand-specified or mock flights as autonomous AI improvement.
+
+**Hook for linking MP4 to an experiment id:** the ExperimentRunner / SQLite layer
+should persist `episodes[].flight_record_path`, `episodes[].video_path`, and
+`episodes[].trace_hash` (or the full `flight_record`) onto the episode row or a
+sidecar table. Environment code does not know the experiment id and does not
+modify the runner. Suggested fields for Agent 1:
+
+```text
+episodes.metrics["trace_hash"]
+episodes.metrics["environment_version"]  # if metrics stay float-only, store paths in attempt/episode JSON blob
+attempt or episode artifact paths: video_path, flight_record_path
+```
+
 ## Programmable API
 
 Node session (`experiment/session.js`), one JSON object per line:
