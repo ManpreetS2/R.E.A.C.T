@@ -1,7 +1,7 @@
 # R.E.A.C.T. development plan
 
-Last updated: 2026-10-15 (live-pilot worktrees prepared from offline v1)  
-Current milestone: **M1 done locally** → preparing **M2 live-pilot sprint** (no spend yet; no merge/push without owner approval)  
+Last updated: 2026-10-15 (final offline+live-pilot integration)  
+Current milestone: **M1 complete** · **M2 software path verified offline** · first paid call **NO-GO until owner spend approval**  
 Maintainer: Agent 4 (Testing & Analytics). Other agents may suggest edits. **Only Agent 4 edits this file.**
 
 Official project name: **R.E.A.C.T. — Reward-Enhanced Adaptive Controller Testing**  
@@ -9,7 +9,7 @@ GitHub: https://github.com/ManpreetS2/R.E.A.C.T
 Internal Python package: `rewardbench` (do not rename in this sprint)  
 Master research plan: [Google Doc](https://docs.google.com/document/d/1fX8ReqGUKCmd_N_cwY6Fa9KfY_P5reKn6jizJcZUDQM/edit) (Section 19 approved staged design)
 
-This is the engineering roadmap. Research protocol details live in the master plan and in `docs/`. Status below was checked against local git and executed offline runs on **2026-10-15**.
+This is the engineering roadmap. Research protocol details live in the master plan and in `docs/`. Status checked against local git and executed offline runs on **2026-10-15**.
 
 ## 1. Project Vision
 
@@ -48,42 +48,37 @@ Order of work:
 
 The four original workstream histories remain on GitHub as `agent/core`, `agent/lunarlander`, `agent/providers`, and `agent/analysis`. They are **already integrated onto `main`**.
 
-### Integration branch (offline v1 — verified)
+### Integration branch (final v1 tip — verified locally)
 
 | Item | Value |
 | --- | --- |
 | Worktree | `~/Projects/R.E.A.C.T-worktrees/integration` |
 | Branch | `work/integration-offline-v1` |
-| Verified tip | **`11da2e17b7a26c20d300184f51056b25ae80690e`** |
-| Tests at tip | **221** Python passed + Node physics exit 0 |
+| Verified tip | post-merge docs tip on this branch (Agents 1–3 merges + README/PLAN); record exact SHA in Agent 4 report |
+| Offline foundation | `11da2e17b7a26c20d300184f51056b25ae80690e` |
+| PLAN sprint prep | `e0f1e83` |
+| Tests at tip | **250** Python passed + Node physics exit 0 |
 | Status | Local only — **not pushed / not merged to `main`** |
 
-### Live-pilot sprint worktrees (branched from `11da2e1`)
+### Merged agent tips (contained in integration history)
 
-| Agent | Path | Branch | Base |
+| Agent | Branch | Tip | Contribution |
 | --- | --- | --- | --- |
-| 1 Core | `~/Projects/R.E.A.C.T-worktrees/live-core` | `work/v1-live-cli` | exact `11da2e1` |
-| 2 Environments | `~/Projects/R.E.A.C.T-worktrees/research-env` | `work/v1-research-validity` | exact `11da2e1` |
-| 3 Providers | `~/Projects/R.E.A.C.T-worktrees/provider-safety` | `work/v1-provider-safety` | exact `11da2e1` |
+| 1 Core | `work/v1-live-cli` | `28497b5` | Live CLI, explicit auth, one-call pause, continuation |
+| 2 Environments | `work/v1-research-validity` | `7618ee9` | Research-mode development baselines, guidance 16/16 |
+| 3 Providers | `work/v1-provider-safety` | `7f599b6` | Prompt v2, pricing preflight, truncation, 800-token pilot |
 
-Older offline-agent worktrees were **preserved** (moved, not deleted):
+Agent branches were **not** reset, force-pushed, overwritten, or deleted.
 
-| Path | Branch / state |
-| --- | --- |
-| `…/core-offline-loop` | `work/core-offline-loop` @ `79ce824` |
-| `…/environments-variation` | `work/environments-variation` @ `4f245f6` |
-| `…/providers-preflight` | `work/providers-preflight` @ `cc42041` |
-| `…/core`, `…/environments`, `…/providers` | detached tips of the same offline commits |
-
-### Worktrees (full map)
+### Worktrees
 
 | Path | Branch |
 | --- | --- |
 | `~/Projects/R.E.A.C.T` | `main` @ `14061991` (= `origin/main`) |
-| `~/Projects/R.E.A.C.T-worktrees/integration` | `work/integration-offline-v1` @ `11da2e1` |
-| `~/Projects/R.E.A.C.T-worktrees/live-core` | `work/v1-live-cli` |
-| `~/Projects/R.E.A.C.T-worktrees/research-env` | `work/v1-research-validity` |
-| `~/Projects/R.E.A.C.T-worktrees/provider-safety` | `work/v1-provider-safety` |
+| `~/Projects/R.E.A.C.T-worktrees/integration` | `work/integration-offline-v1` |
+| `~/Projects/R.E.A.C.T-worktrees/live-core` | `work/v1-live-cli` @ `28497b5` |
+| `~/Projects/R.E.A.C.T-worktrees/research-env` | `work/v1-research-validity` @ `7618ee9` |
+| `~/Projects/R.E.A.C.T-worktrees/provider-safety` | `work/v1-provider-safety` @ `7f599b6` |
 
 ## 4. Architecture Overview
 
@@ -92,12 +87,13 @@ Older offline-agent worktrees were **preserved** (moved, not deleted):
 | Contracts | `ModelClient`, `EnvironmentAdapter`, logs, splits, budgets | `docs/INTERFACES.md`, `src/rewardbench/contracts.py` |
 | Runner | Revisions, episodes, resume, SQLite | `src/rewardbench/core/`, `src/rewardbench/storage/` |
 | Offline CLI | `python -m rewardbench.run --mode mock` | `src/rewardbench/run/` |
+| Live CLI | `--mode live --i-authorize-paid-api-calls` (+ optional continuation) | `src/rewardbench/run/cli.py`, `live.py` |
 | Environments | Gymnasium + ApolloLander (+ research starts, flight records) | `src/rewardbench/environments/` |
-| Providers | OpenAI, Gemini, Anthropic, xAI, mock | `src/rewardbench/providers/` |
+| Providers | OpenAI, Gemini, Anthropic, xAI, mock + preflight | `src/rewardbench/providers/` |
 | Analysis | Session stats, charts, reports | `src/rewardbench/analysis/` |
 | Frontend | ApolloLander physics + fixed-map UI | `frontend/apollolander/` |
 
-Controller revisions and simulated episodes are different records. Development seeds and held-out seeds stay in different experiments.
+Controller revisions and simulated episodes are different records. Development seeds and held-out seeds stay in different experiments (`SplitGuard`).
 
 ## 5. Agent Ownership
 
@@ -117,15 +113,14 @@ Controller revisions and simulated episodes are different records. Development s
 Exit criteria:
 
 - [x] Integration branch based on `main` `14061991`
-- [x] Agent tips `79ce824`, `4f245f6`, `cc42041` contained in history
-- [x] Full `pytest tests` green (**221 passed**, 0 skipped, 0 failed)
+- [x] Offline agent tips `79ce824`, `4f245f6`, `cc42041` contained in history
+- [x] Live-pilot tips `28497b5`, `7618ee9`, `7f599b6` contained in history
+- [x] Full `pytest tests` green (**250 passed**, 0 skipped, 0 failed)
 - [x] Node ApolloLander `physics.test.js` green
 - [x] CLI mock numerical + no-feedback paired runs complete
+- [x] Research-mode development baselines: random/coast/hover **0/16** landings; hand-specified guidance **16/16**
 - [x] `metadata.adapter_kwargs.research_mode` reaches the adapter (fail-closed if unsupported)
-- [x] Research starts vary by seed; matching seeds match across conditions; schedules disjoint
-- [x] Scripted model revises under numerical feedback; stays put under no-feedback
-- [x] SQLite attempts/episodes recorded; analysis report generated
-- [x] Flight manifests (`.flight.json`) linked to experiment id / revision / episode / seed; replay verified
+- [x] Flight manifests (`.flight.json`) with replay verification
 - [x] No paid API call required
 - [ ] Owner approval to merge/push to `main`
 
@@ -135,16 +130,37 @@ Exit criteria:
 
 Exit criteria:
 
-- [ ] Explicit human approval + USD ceiling
-- [ ] CLI `--mode live` implemented with opt-in (currently **disabled** / fail-closed)
-- [ ] Keys only in operator shell env
-- [ ] Known pricing + reservation/settlement
-- [ ] At least one capped pilot SQLite session
+- [x] CLI `--mode live` with `--i-authorize-paid-api-calls` (fail-closed without flag)
+- [x] Session gate: at most one **new** paid `propose` per CLI invocation; pause ≠ completed
+- [x] Continuation flag required when selected attempts already exist
+- [x] Preflight: credentials, priced model, budget, retries=0, schema, output ceiling
+- [x] Pilot YAML: OpenAI `gpt-5.4-mini`, `max_output_tokens: 800`, `reasoning_effort: none`, `max_model_retries: 0`, `max_cost_usd: 0.05`
+- [x] OpenAI request body transmits `max_completion_tokens=800` and `reasoning_effort=none` (mocked transport tests)
+- [x] Software budget wired from YAML (in-process only — **not** a vendor billing guarantee)
+- [ ] Explicit human approval + USD ceiling + vendor account billing limits
+- [ ] Keys only in operator shell env (never commit)
+- [ ] At least one capped pilot SQLite session on a real key
 - [ ] No public ranking from a single pilot
+
+**Ambiguous-resume risk (documented):** If a process crashes after the provider accepts a paid request but before the selected attempt is persisted, resume cannot prove whether the call already billed. Software cannot guarantee exactly-once billing across that window. On ambiguous resume, **stop and require manual SQLite / provider-dashboard review** before re-authorizing continuation. Do not blindly re-run.
 
 ### M3 — Repeated GPT / Gemini / Claude / Grok with held-out evaluation
 
-Not started.
+**Research blocker (explicit):** Average reward change across different research starts does **not**, by itself, prove controller improvement. The study design must (1) evaluate successive controller revisions on **matched development conditions**, then (2) test **final policies** on a **sealed held-out set** with no further learning.
+
+What exists today:
+
+- [x] Disjoint `development_seeds` / `held_out_seeds` in configs
+- [x] `SplitGuard` refuses cross-split seed use in a single experiment
+- [x] Separate held-out experiment configs (analysis/diagnostics flag development seeds appearing in held-out pools)
+- [x] Development baselines never consumed held-out starts
+
+What is **missing** (do not consume held-out during tuning):
+
+- [ ] Automated “freeze final selected controller → evaluate on sealed held-out without another model `propose`” CLI/workflow
+- [ ] Documented operator checklist that held-out remains untouched until final freeze
+
+Until that freeze-and-held-out-eval path is wired and offline-tested, treat M3 held-out claims as **blocked**. Do not invent rankings from development-only logs.
 
 ### M4 — Independent result validation, charts, and recordings
 
@@ -171,78 +187,66 @@ Deferred.
 - [x] Research-mode starts + fail-closed adapter kwargs
 - [x] Flight manifests with deterministic replay verification
 - [x] Mocked provider → runner → Apollo physics → SQLite E2E tests
-- [x] Pilot YAML draft `configs/apollolander_pilot_openai_gpt54mini.yaml` (**documentation only**)
-- [x] Executed local offline infrastructure experiments (scripted mock — **not LLM learning**)
+- [x] Authorized live CLI + SessionPaidCallGate + continuation
+- [x] Provider preflight, truncation detection, prompt v2
+- [x] Research development baselines (scripted — **not** LLM learning)
+- [x] Integrated pilot YAML `configs/apollolander_pilot_openai_gpt54mini.yaml` (+ nofeedback twin)
+- [x] README documents install, tests, offline twins, reports, replay, dry-run, live requirements
 
 ## 8. Offline v1 execution record (scripted mock)
 
 **Label:** offline scripted mock — infrastructure verification. **Not** an AI research finding.
-
-Commands:
-
-```bash
-python -m rewardbench.run --config configs/apollolander_offline_development_numerical.yaml --mode mock --database runs/offline_v1/numerical.sqlite
-python -m rewardbench.run --config configs/apollolander_offline_development_nofeedback.yaml --mode mock --database runs/offline_v1/nofeedback.sqlite
-python -m rewardbench.analysis report --logs runs/offline_v1/numerical.sqlite --out reports/offline_v1/numerical
-python -m rewardbench.analysis report --logs runs/offline_v1/nofeedback.sqlite --out reports/offline_v1/nofeedback
-```
 
 | Field | Numerical | No-feedback |
 | --- | --- | --- |
 | Experiment ID | `exp_f6d8e0091e67a46641f0` | `exp_3fcd0197614c53ce8d67` |
 | Status | completed | completed |
 | Revisions | 2 | 2 |
-| Episodes | 2 | 2 |
 | Selected controllers | thrust 0/−90 → 1.0/0 | thrust 0/−90 → 0/−90 (unchanged) |
-| Rewards by revision | −24.9176, −25.9016 | −24.9176, −25.1920 |
-| Research mode | true (adapter confirmed) | true |
+| Research mode | true | true |
 | Start schedule | `apollolander.starts.v1` | `apollolander.starts.v1` |
-| Seed 5 start_x (rev0) | 6873.194… | 6873.194… (identical) |
-| Seed 2 start_x (rev1) | 6757.522… | 6757.522… (identical; ≠ seed 5) |
-| Flight manifests | `runs/offline_v1/flights/<exp_id>/*.flight.json` | same pattern |
-| Report | `reports/offline_v1/numerical/report.md` | `reports/offline_v1/nofeedback/report.md` |
 
-Demonstration flight manifests (hand-specified / deterministic mock; replay matched):
+### Research development baselines (Agent 2; held-out unused)
 
-| Flight | Origin | Outcome | Reward |
-| --- | --- | --- | --- |
-| constant-coast | `hand_specified_demonstration` | crashed | −98.8164 |
-| hand-specified-guidance | `hand_specified_demonstration` | landed | +83.4238 |
-| research-mock seed 9 | `deterministic_mock` | timeout (short cap) | −24.8291 |
+| Baseline | Landings / 16 |
+| --- | ---: |
+| random_seed0 | **0/16** |
+| constant_coast | **0/16** |
+| constant_hover_upright | **0/16** |
+| hand_specified_guidance | **16/16** |
 
-Paths under `examples/apollolander/output/offline_v1/` (gitignored).
+Source: `examples/apollolander/research_development_baseline/DEVELOPMENT_BASELINE_REPORT.md`
 
 ## 9. Integration fixes applied by Agent 4
 
-1. **Fail-closed adapter kwargs** in `rewardbench.run.factory` — unsupported `metadata.adapter_kwargs` raise `ConfigError` (no silent fixed-start downgrade).
-2. **CLI research/flight linkage** — runtime `adapter_overrides` stamp `experiment_id` and optional `record_dir` without changing the hashed experiment id; `mappingproxy` metadata handled.
-3. **Flight JSON without HD video** — `.flight.json` written whenever `record_dir` is set; video remains opt-in.
-4. **Flight provenance fields** — optional `experiment_id` / `episode_index` on manifests.
-5. Offline configs enable `record_flights` + explicit schedule kwargs.
-6. Ignore generated `reports/`.
+1. **Fail-closed adapter kwargs** (earlier offline sprint).
+2. **CLI research/flight linkage** without changing hashed experiment id.
+3. **Flight JSON without HD video** by default.
+4. **Pilot YAML merge conflict** (Agent 1 × Agent 3): keep `num_revisions: 2` + one-call pause/continuation; set `max_output_tokens: 800`, `reasoning_effort: none`, `max_model_retries: 0`, `max_cost_usd: 0.05`.
+5. README + PLAN updates for verified live-pilot soft path and held-out eval blocker.
 
 ## 10. Blockers for the first tiny paid pilot (M2)
 
-**Verdict: NO-GO until the checklist below is green and the owner approves spend.**
+**Software path: ready (mocked).** **Spend: NO-GO until owner approval.**
 
-- [ ] Implement CLI `--mode live` (currently refuses with ConfigError; no network)
-- [ ] Wire `build_model_client(..., max_spend_usd=..., max_retries=...)` from YAML budget
-- [ ] Require explicit opt-in flag (e.g. `--i-approve-spend`) in addition to `--mode live`
-- [ ] Confirm `OPENAI_API_KEY` (or other) present in shell only — never commit
-- [ ] Confirm provider account billing limits set by the human
-- [ ] Use pilot YAML ceiling (`max_cost_usd: 0.05`, `max_model_calls: 2`) or tighter
-- [ ] Research-mode + flight recording on for the pilot path
-- [ ] Abort after first revision for human SQLite review before second call
+Remaining human gates:
+
+- [ ] Explicit owner approval to spend (USD ceiling)
+- [ ] Vendor account billing limits set by the human
+- [ ] `export OPENAI_API_KEY=...` in local shell only — never commit
+- [ ] Run exactly one authorized invocation; review SQLite before continuation
+- [ ] On any ambiguous interrupted outcome, manual review before retry
 - [ ] No ranking / no publication from the pilot
 
 Provider E2E with **mocked HTTP** through real Apollo physics is green. That does **not** authorize spend.
 
 ## 11. Immediate next steps
 
-- [ ] Agents 1–3 complete live-pilot work on `work/v1-*` branches (no paid calls)
-- [ ] Agent 4 integrates their tips into `work/integration-offline-v1` (or a new integration tip), re-runs full suites, updates this file
-- [ ] **Owner:** review offline v1 / live-pilot readiness; approve merge/push only explicitly
+- [x] Agents 1–3 complete live-pilot work on `work/v1-*` branches (no paid calls)
+- [x] Agent 4 integrates tips into `work/integration-offline-v1`, re-runs full suites, updates this file
+- [ ] **Owner:** review integration tip; approve merge/push only explicitly
 - [ ] **Owner:** if approving a pilot, set billing limits and authorize a USD ceiling
+- [ ] Agent 4 (later sprint): narrow freeze → sealed held-out eval CLI for M3
 - [ ] **Do not** start credit economy or Minecraft
 
 ## 11b. Safe integration → `main` checklist (owner gate)
@@ -251,22 +255,38 @@ Do **not** merge or push until the owner explicitly approves.
 
 Pre-flight (checked 2026-10-15):
 
-- [x] `origin/main` == local `main` == `14061991` (no unexpected remote changes after `git fetch`)
-- [x] `origin/main` is an ancestor of integration tip `11da2e1` (fast-forward possible from main’s POV once integration is pushed/merged)
-- [x] Integration is **18 commits** ahead of `origin/main` (11 non-merge + 7 merges); **34 files** changed vs `origin/main...11da2e1`
-- [x] Offline suites at `11da2e1`: 221 passed + Node physics exit 0
-- [ ] Live-pilot agent branches finished and re-integrated; full suite re-run on the combined tip
-- [ ] PLAN.md milestone checklists updated with final SHAs
+- [x] `origin/main` == local `main` == `14061991`
+- [x] `origin/main` is an ancestor of the integration tip (fast-forward possible from main’s POV once pushed/merged)
+- [x] Live-pilot agent branches merged; full suite green (250 passed + Node exit 0)
+- [x] PLAN.md / README updated for final SHAs and pilot config
 - [ ] Owner names the exact ref to push (integration branch and/or PR into `main`)
 - [ ] No force-push; no rewrite of published history; no credentials in the tree
 
-What a push of `11da2e1` (or a later integration tip based on it) would include: offline CLI, research starts, flight manifests, provider E2E/pilot docs, PLAN updates, and related tests — **not** live API spend, **not** credit economy.
+### Exact commands after owner approval (DO NOT RUN without approval)
+
+```bash
+# From the integration worktree, after owner names this tip:
+cd ~/Projects/R.E.A.C.T-worktrees/integration
+git push -u origin work/integration-offline-v1
+
+# Option A — merge locally into main (owner-approved):
+cd ~/Projects/R.E.A.C.T
+git checkout main
+git pull --ff-only origin main
+git merge --ff-only work/integration-offline-v1
+git push origin main
+
+# Option B — GitHub PR:
+# gh pr create --base main --head work/integration-offline-v1 \
+#   --title "Integrate offline v1 + authorized live-pilot path" \
+#   --body "..."
+```
 
 ## 12. Safely integrating later agent commits
 
 1. Confirm agent worktrees clean/idle.
 2. Record tip SHAs here before merging.
-3. Merge one agent at a time into this branch (or a new `work/integration-offline-v2`).
+3. Merge one agent at a time into this branch.
 4. Re-run full pytest + Node physics + offline CLI paired smoke.
 5. Update this file only after green results.
 6. Push/merge to `main` only when the owner requests it.
@@ -276,11 +296,12 @@ What a push of `11da2e1` (or a later integration tip based on it) would include:
 - In-context rewards only. No weight updates.
 - Gymnasium and ApolloLander scores never pooled.
 - Development logs are not held-out evidence.
-- Scripted/mock controllers are infrastructure tests, not model learning.
+- Scripted/mock / hand-specified controllers are infrastructure or difficulty baselines, not model learning.
 - Native simulator reward stays separate from any 100-point mission-quality index.
 - Do not invent rankings or pilot outcomes.
 - Do not call a paid API without an approved cap.
 - Do not implement the credit economy in this sprint.
+- Matched development comparison + sealed held-out final eval are required before claiming adaptation success.
 
 ## 14. Third-party credits
 
@@ -290,11 +311,11 @@ What a push of `11da2e1` (or a later integration tip based on it) would include:
 - Local: `frontend/apollolander/upstream/LICENSE`
 - Upstream snapshot: `0da09dccbadf0d6ee6efcce1f72e9ae206d341d2`
 
-## 15. Test matrix (offline v1 tip before final PLAN commit)
+## 15. Test matrix (final integration tip)
 
 | Suite | Result |
 | --- | --- |
-| `python -m pytest tests -q` | **221 passed**, 0 skipped, 0 failed |
+| `python -m pytest tests -q` | **250 passed**, 0 skipped, 0 failed |
 | `node frontend/apollolander/experiment/physics.test.js` | **exit 0** |
 | Paid API calls | **none** |
 
