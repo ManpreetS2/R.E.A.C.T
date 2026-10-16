@@ -30,6 +30,8 @@ budget:
   max_episodes: 2
   max_model_calls: 2
 development_seeds: [0, 1, 2, 3, 4, 5, 6, 7]
+# Engineering-demo seeds only (already exercised offline). Not the research
+# final-eval cohort — see docs/FINAL_EVALUATION_PROTOCOL.md (2000000–2000015).
 held_out_seeds: [1000000, 1000001, 1000002, 1000003]
 model_settings:
   max_output_tokens: 800

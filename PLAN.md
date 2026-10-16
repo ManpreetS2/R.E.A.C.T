@@ -79,10 +79,11 @@ Deferred (validation, economy, competition/Minecraft).
 
 ## 5. Minimal remaining launch gates (owner)
 
-1. Approve merge/push of integration tip to GitHub (`main` or PR).  
-2. Optional: set project-wide LICENSE.  
-3. Optional: approve first `$0.05` software-capped live pilot (separate from publish).  
-4. Do **not** invent LLM rankings from scripted evidence.
+1. Approve push of `work/integration-offline-v1` and PR merge into `main`.  
+2. Optional: set project-wide LICENSE (do not invent one).  
+3. Optional: follow `docs/PILOT_CHECKLIST.md` for one paid connectivity call.  
+4. For a real paired study: `docs/FIRST_EXPERIMENT_PROTOCOL.md` + `docs/FINAL_EVALUATION_PROTOCOL.md` (cohort `2000000–2000015`; burned `1000000–1000007`).  
+5. Do **not** invent LLM rankings from scripted evidence.
 
 ## 6. Safe publish commands (DO NOT RUN without approval)
 

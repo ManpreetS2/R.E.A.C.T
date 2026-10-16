@@ -203,6 +203,7 @@ Pin tip SHA when publishing results. Development and held-out seeds must stay di
 
 - Average reward change across different research starts alone does **not** prove improvement.  
 - Compare revisions on matched development conditions, then score **frozen** final policies on sealed held-out starts.  
+- Seeds `1000000–1000007` were used in engineering demos — they are **not** untouched final-evaluation evidence. See `docs/FINAL_EVALUATION_PROTOCOL.md`.  
 - This repository currently publishes **no** independently validated LLM ranking.  
 - Software spend caps cannot cap a vendor invoice if keys escape process control.  
 - Credit economy, competition mode, and Minecraft are **out of scope** for v1.
@@ -212,6 +213,9 @@ Pin tip SHA when publishing results. Development and held-out seeds must stay di
 | Doc | Contents |
 | --- | --- |
 | `docs/DEMO.md` | Short technical demonstration plan |
+| `docs/FINAL_EVALUATION_PROTOCOL.md` | Burned vs reserved final-eval cohorts |
+| `docs/PILOT_CHECKLIST.md` | First paid LLM call checklist |
+| `docs/FIRST_EXPERIMENT_PROTOCOL.md` | Paired LLM study protocol (not executed) |
 | `docs/INTERFACES.md` | Contracts, SQLite, live + held-out CLI |
 | `docs/EXPERIMENTS.md` | Conditions and export |
 | `docs/ANALYSIS.md` | Figures and sessions |
