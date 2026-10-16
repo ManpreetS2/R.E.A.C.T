@@ -18,9 +18,13 @@ environment-specific controller fields. The spending lock is in-process only.
 
 from rewardbench.providers.capabilities import PROVIDER_DIFFERENCES
 from rewardbench.providers.client import RewardModelClient, build_model_client
+from rewardbench.providers.preflight import FirstCallPreflight, preflight_first_call, require_preflight_ok
 
 __all__ = [
     "PROVIDER_DIFFERENCES",
+    "FirstCallPreflight",
     "RewardModelClient",
     "build_model_client",
+    "preflight_first_call",
+    "require_preflight_ok",
 ]

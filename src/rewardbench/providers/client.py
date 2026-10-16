@@ -193,6 +193,17 @@ class RewardModelClient:
             cache_write_tokens=cache_write,
         )
         parameters, parse_error = parse_controller(completion.text)
+        truncated = _is_truncated(completion.finish_reason)
+        if truncated and parse_error:
+            parse_error = (
+                f"{parse_error}; response finish_reason={completion.finish_reason!r} "
+                "(output may have been cut by max_output_tokens or reasoning budget)"
+            )
+        elif truncated and parameters is None:
+            parse_error = (
+                f"response finish_reason={completion.finish_reason!r} with no controller JSON; "
+                "output may have been cut by max_output_tokens or reasoning budget"
+            )
         usage = _usage_payload(
             provider=self.provider,
             attempts=attempts,
@@ -204,6 +215,8 @@ class RewardModelClient:
             cap_usd=self._spending.max_spend_usd,
             quote=quote,
         )
+        usage = dict(usage)
+        usage["truncated"] = truncated
         self._remember(attempts, error=parse_error)
         return ModelResponse(
             raw_text=completion.text,
@@ -588,3 +601,9 @@ def _redact(text: str | None, secrets: Sequence[str]) -> str:
         if secret:
             redacted = redacted.replace(secret, "[REDACTED]")
     return redacted
+
+
+def _is_truncated(finish_reason: str | None) -> bool:
+    if not finish_reason:
+        return False
+    return finish_reason.lower() in {"length", "max_tokens", "max_output_tokens"}

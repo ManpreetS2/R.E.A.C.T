@@ -11,9 +11,11 @@ PROVIDER_DIFFERENCES: dict[str, tuple[str, ...]] = {
         "Chat Completions at a configurable endpoint. The default output cap field is max_completion_tokens, not max_tokens.",
         "temperature, top_p, and seed are sent only when those keys are set.",
         "top_k is ignored.",
-        "When reasoning_effort is set, temperature and top_p are omitted because OpenAI reasoning models reject those sampling parameters.",
+        "When reasoning_effort is set (including none), temperature and top_p are omitted because OpenAI reasoning models reject those sampling parameters.",
+        "gpt-5.4-mini documents reasoning_effort values none (default), low, medium, high, and xhigh. Reasoning tokens count against max_completion_tokens and can truncate the visible JSON if the ceiling is tight.",
         "reasoning_tokens are read from completion_tokens_details.reasoning_tokens and are already included in completion_tokens, so the bill does not add them again.",
         "response_format json_object is requested by default. Some models reject it; set json_mode false to omit it.",
+        "No tools, web_search, or code_interpreter fields are sent.",
     ),
     "google": (
         "generateContent. The system prompt is systemInstruction, not a chat role.",

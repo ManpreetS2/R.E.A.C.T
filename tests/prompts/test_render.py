@@ -68,7 +68,7 @@ def test_both_modes_share_rules_schema_and_validation_errors():
         assert "rewardbench.lunarlander.controller.v1" in user
         assert "0 idle, 1 left engine, 2 main engine, 3 right engine" in user
         assert "missing heuristic parameter" in user
-        assert "Reply with one JSON object" in user
+        assert "Reply with one compact JSON object" in user
     assert "reward=-87.5" in num_user
     assert "fuel_used" in num_user
     assert "reward=" not in no_user

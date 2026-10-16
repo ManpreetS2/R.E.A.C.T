@@ -1,11 +1,20 @@
 # Recommended first paid pilot configuration for OpenAI gpt-5.4-mini.
 # DO NOT run until the owner explicitly approves spending and exports OPENAI_API_KEY.
-# This file is documentation for Agent 3. It is not executed by default CI.
+# Dry-run without a key:
+#   python examples/providers/dry_run_first_call.py
 #
-# Pricing verified 2026-10-15 against https://developers.openai.com/api/docs/pricing
-# and https://developers.openai.com/api/docs/models/gpt-5.4-mini :
+# Pricing verified 2026-10-15 (rechecked for v1 provider-safety) against
+# https://developers.openai.com/api/docs/pricing and
+# https://developers.openai.com/api/docs/models/gpt-5.4-mini :
 #   input $0.75 / 1M tokens, cached input $0.075 / 1M (catalog leaves cache null),
 #   output $4.50 / 1M tokens (reasoning billed inside completion tokens).
+#
+# Ceiling guidance:
+#   Compact Apollo constant ~33 tokens; compact guidance ~155 tokens of JSON.
+#   Reasoning tokens COUNT AGAINST max_completion_tokens. With reasoning_effort
+#   other than none, a 400 ceiling can truncate before a full guidance object
+#   is emitted. Recommended first-call ceiling is 800 with reasoning_effort none.
+#   400 remains viable only for compact JSON when reasoning_effort is none.
 #
 # Software caps below are in-process only. They are NOT a provider-side billing
 # guarantee. Parallel processes, retries outside this config, or provider minimum
@@ -18,7 +27,7 @@ model_id: gpt-5.4-mini
 feedback_condition: numerical_reward
 split: development
 seed: 11
-num_revisions: 2
+num_revisions: 1
 episodes_per_revision: 1
 history_window: 4
 max_episode_steps: 8000
@@ -32,21 +41,25 @@ budget:
   max_cost_usd: 0.05
   max_tokens: 20000
   max_wall_seconds: 900
-  max_revisions: 2
-  max_episodes: 2
-  max_model_calls: 2
+  max_revisions: 1
+  max_episodes: 1
+  max_model_calls: 1
 development_seeds: [0, 1, 2, 3, 4, 5, 6, 7]
 held_out_seeds: [1000000, 1000001, 1000002, 1000003]
 model_settings:
-  temperature: 0
-  max_output_tokens: 400
+  max_output_tokens: 800
+  reasoning_effort: none
   json_mode: true
 metadata:
   pilot: true
   agent: agent3
   approval_required: true
+  recommended_first_policy: constant
+  client_max_spend_usd: 0.05
+  client_max_retries: 0
 notes: >
   First authorized pilot only. Export OPENAI_API_KEY in the shell; never commit it.
-  Client construction should also pass max_spend_usd matching budget.max_cost_usd
-  and max_retries matching max_model_retries. Review SQLite usage after the first
-  revision before allowing a second call.
+  Construct RewardModelClient with max_spend_usd=0.05 and max_retries=0 matching this file.
+  Agent 1 should pass the same ceilings into the runner budget and the model client.
+  Prefer a compact constant controller on the first live call; review SQLite usage before
+  any second call. In-process locks cannot stop a concurrent process or a provider invoice.

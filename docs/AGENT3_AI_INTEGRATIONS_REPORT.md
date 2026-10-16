@@ -1,9 +1,9 @@
 # Agent 3 — AI Integrations Report
 
-**Branch:** `work/providers-preflight`  
-**Worktree:** `/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/providers`  
-**Previous tip:** `0f234eb`  
-**Constraint honored:** no real API calls, no keys installed, no spending, no `PLAN.md` edits, no edits to Agent 1/2 production packages (merged `main` read-only for Apollo + runner).
+**Branch:** `work/v1-provider-safety`  
+**Worktree:** `~/Projects/R.E.A.C.T-worktrees/provider-safety`  
+**Base:** offline v1 `11da2e1`  
+**Constraint:** no real provider requests, no credentials inspected/created, no credit purchase, no PLAN.md edits, no core/runner edits, no push/merge.
 
 ---
 
@@ -11,208 +11,148 @@
 
 | Gate | Verdict |
 | --- | --- |
-| Mocked provider → parse → Apollo validate → real physics → SQLite | **GO** |
-| Four-provider usage accounting (mocked authentic shapes) | **GO** |
-| Fail-closed unknown model / missing pricing / unbounded Gemini reasoning | **GO** |
-| No-feedback reward isolation in next provider request | **GO** |
-| Live paid pilot today | **NO-GO** until owner exports one key, sets vendor billing limits, and gives explicit spend approval |
+| Mocked provider suite + first-call safety | **GO** |
+| Source-verified `gpt-5.4-mini` pricing / Chat Completions support | **GO** |
+| Recommended first-call ceiling with `reasoning_effort: none` | **GO** (`800`) |
+| Keyless dry-run example | **GO** (`examples/providers/dry_run_first_call.py`) |
+| Live paid call today | **NO-GO** until explicit owner approval + vendor billing limits + shell key export |
 
-**Summary:** The provider-to-controller boundary is ready for a **small, explicitly authorized** real-model pilot. Software caps are **not** a billing guarantee. Do not treat `$0.05` as a hard maximum real charge.
-
----
-
-## Executive status
-
-| Item | Status |
-| --- | --- |
-| ModelClient contract vs four adapters | Compatible |
-| End-to-end mocked flow with real Apollo physics | Passing |
-| Numerical reward history in next request | Passing |
-| No-feedback never leaks rewards to provider | Passing |
-| Malformed / wrong schema / missing fields | Validated, not flown |
-| API errors / 429 retries / exhaustion | Passing |
-| Pricing catalog vs official docs (2026-10-15) | Base rates verified; cache intentionally null |
-| Recommended pilot config | `configs/apollolander_pilot_openai_gpt54mini.yaml` (not invoked) |
-| API keys present | No (by design) |
+**A software `$0.05` cap is not a provider-side billing guarantee.** Concurrent processes, reservation underestimates, and invoice discrepancies can exceed it.
 
 ---
 
-## 1. Contract recheck
+## 1. Adapter recheck vs official docs (2026-10-15, rechecked this pass)
 
-`RewardModelClient.propose(ModelRequest) -> ModelResponse` implements `ModelClient`.
+| Provider | Model id | Endpoint used | Env var | JSON handling | Reasoning |
+| --- | --- | --- | --- | --- | --- |
+| OpenAI | `gpt-5.4-mini` | Chat Completions `v1/chat/completions` | `OPENAI_API_KEY` | `response_format: json_object` by default | `reasoning_effort`: none/low/medium/high/xhigh; tokens count against `max_completion_tokens` |
+| Google | `gemini-3.1-flash-lite` | `generateContent` | `GEMINI_API_KEY` / `GOOGLE_API_KEY` | `responseMimeType: application/json` | `thinkingBudget`; thoughts billed at output rate |
+| Anthropic | `claude-haiku-5-5` | Messages `v1/messages` | `ANTHROPIC_API_KEY` | prompt-only JSON (no json_object field) | `anthropic_thinking_budget_tokens` wired; effort not wired |
+| xAI | `grok-4.3` | Chat Completions `api.x.ai/v1/chat/completions` | `XAI_API_KEY` | json_object requested, not guaranteed | `grok_reasoning_effort`; Responses API not implemented |
 
-Every live adapter receives the same rendered prompt pair from `rewardbench.prompts.render_messages`:
+Sources:  
+https://developers.openai.com/api/docs/models/gpt-5.4-mini  
+https://developers.openai.com/api/docs/pricing  
+https://developers.openai.com/api/docs/guides/reasoning  
+https://ai.google.dev/gemini-api/docs/pricing  
+https://platform.claude.com/docs/en/about-claude/pricing  
+https://docs.x.ai/developers/pricing  
 
-1. Environment description  
-2. Controller schema  
-3. Prior attempts  
-4. Numerical rewards only under `FeedbackCondition.NUMERICAL_REWARD`  
-5. Instruction to revise controller parameters as one JSON object  
-
-`ExperimentRunner` then: interpret/parse → `environment.validate_policy` → `run_episode` → SQLite. Providers never run physics.
-
-| Provider | Adapter | Endpoint | Env var |
-| --- | --- | --- | --- |
-| OpenAI | `OpenAIBackend` | `https://api.openai.com/v1/chat/completions` | `OPENAI_API_KEY` |
-| Google | `GeminiBackend` | `…/generateContent` | `GEMINI_API_KEY` or `GOOGLE_API_KEY` |
-| Anthropic | `AnthropicBackend` | `https://api.anthropic.com/v1/messages` | `ANTHROPIC_API_KEY` |
-| xAI | `GrokBackend` | `https://api.x.ai/v1/chat/completions` | `XAI_API_KEY` |
+Catalog `pricing_2026-10-14.json` base rates unchanged and still match those pages. Cache rates remain intentionally null so unexpected cache usage fails closed after one live response and blocks further calls in-process.
 
 ---
 
-## 2. End-to-end mocked proof
+## 2. Can 400 output tokens produce a valid ApolloLander controller?
 
-Suite: `tests/providers/test_e2e_apollolander.py` (+ `e2e_helpers.py`).
+Measured compact JSON (separators, sorted keys):
 
-Flow exercised with **FakeTransport only**:
+| Controller | Chars | ~Tokens (chars/3) |
+| --- | --- | --- |
+| `constant` | ~99 | ~33 |
+| `guidance` (demo) | ~467 | ~155 |
 
-`build_model_client` / `RewardModelClient` → shared prompts → JSON parse → Apollo `validate_policy` → **real Node ApolloLander physics** → `SqliteStore`.
+**Yes, if reasoning does not consume the budget.**  
+OpenAI reasoning tokens count against `max_completion_tokens`. With `reasoning_effort` other than `none`, a **400** ceiling can truncate before a full guidance object is emitted (e.g. 300 reasoning + incomplete JSON → `finish_reason=length`).
 
-Covered cases:
+**Recommended first-call ceiling: `max_output_tokens: 800` with `reasoning_effort: none`.**  
+Prefer a compact **constant** controller on the first live call. 400 remains a minimum only for compact JSON under `reasoning_effort: none`.
 
-| Test | What it proves |
-| --- | --- |
-| `test_numerical_two_revisions_flow_through_physics_and_sqlite` | ≥2 valid revisions; SQLite rewards appear in revision-1 provider history |
-| `test_nofeedback_never_puts_rewards_in_the_next_provider_request` | Rewards stored in SQLite but absent from next HTTP/user prompt |
-| `test_malformed_wrong_schema_and_missing_fields_are_validated_not_flown` | Bad JSON / wrong schema / missing fields → no episodes |
-| `test_rate_limit_retries_then_exhaustion_aborts` | 429 retries then FAILED run, zero episodes |
-| `test_transport_timeout_is_retryable_and_exhausts` | Retryable transport errors exhaust client retries |
-| `test_four_providers_usage_accounting_with_authentic_shapes` | OpenAI/Gemini/Anthropic/xAI token + cost conventions |
-| `test_anthropic_cache_charge_fails_closed_and_blocks_followup` | Unpriced cache blocks further live calls |
-| `test_unknown_model_and_gemini_without_reasoning_ceiling_fail_before_http` | Fail closed with zero HTTP |
-| `test_pilot_quote_for_gpt54mini_is_bounded_before_any_call` | Pilot YAML loads; reservation under software target |
-| `test_guidance_controller_from_mocked_provider_can_complete_a_short_episode` | Real Apollo guidance object executes physics |
+Pilot config updated accordingly: `configs/apollolander_pilot_openai_gpt54mini.yaml` (1 revision, 800 out, reasoning none, `$0.05` software target). Local reserved quote for Apollo schema ≈ **$0.0057** (estimate, not an invoice).
 
-Command:
+---
+
+## 3. Prompt / parsing / payload improvements
+
+- Prompt template bumped to `rewardbench.prompts.v2`: compact JSON, no markdown fences, no tool/browser/code-interpreter calls; no-feedback still never prints rewards.
+- `RewardModelClient` records `usage["truncated"]` and explains `finish_reason=length` in `parse_error` when JSON is incomplete.
+- OpenAI payloads continue to send explicit `model`, `max_completion_tokens`, no `tools` / `web_search`.
+- Offline `preflight_first_call` / `require_preflight_ok` refuse unsafe local quotes before any transport is used.
+
+---
+
+## 4. Tests
 
 ```bash
-cd /Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/providers
-.venv/bin/python -m pytest tests/providers -q
+cd ~/Projects/R.E.A.C.T-worktrees/provider-safety
+.venv/bin/python -m pytest tests/providers tests/prompts -q
 ```
 
----
+New/updated coverage in `tests/providers/test_first_call_safety.py`:
 
-## 3. Usage accounting (mocked authentic shapes)
-
-| Provider | Prompt | Completion | Reasoning | Cost rule in catalog |
-| --- | --- | --- | --- | --- |
-| OpenAI | `prompt_tokens` | `completion_tokens` | in `completion_tokens_details`; **not** double-billed | input + completion |
-| Gemini | `promptTokenCount` | `candidatesTokenCount` | `thoughtsTokenCount` separate | thoughts billed at output rate |
-| Anthropic | `input_tokens` | `output_tokens` | thinking tokens if present | input + output; cache null → reject |
-| xAI | OpenAI-shaped chat usage | same | reasoning in completion when reported | input + completion |
-
-Retry charges: failed attempt token usage is retained and summed into the successful bill when present.
+- Apollo controller size vs 400/800 ceilings  
+- OpenAI bounded payload + no tools  
+- Truncated `finish_reason=length`  
+- Budget / unknown-price refuse before HTTP  
+- Preflight OK / fail-closed mismatch  
+- No-feedback isolation after v2  
+- Keyless dry-run subprocess  
 
 ---
 
-## 4. Pricing verification (sources + effective check date)
+## 5. Real-money risks that in-process locks cannot prevent
 
-Checked **2026-10-15** (and reconfirmed for this E2E pass):
+1. Concurrent processes each with their own `$0.05` cap.  
+2. Reservation underestimate (tokenizer emits more tokens than UTF-8 byte ceiling).  
+3. Provider bills reasoning/partial/failed attempts differently than the catalog.  
+4. Account-level minimums, retries outside this config, or dashboard lag.  
+5. A truncated call can still charge input + reasoning with no usable controller.  
+6. Cache tokens (if ever returned) cost a live round-trip before fail-closed stop.
 
-| Source | URL |
-| --- | --- |
-| OpenAI pricing | https://developers.openai.com/api/docs/pricing |
-| OpenAI gpt-5.4-mini | https://developers.openai.com/api/docs/models/gpt-5.4-mini |
-| Gemini pricing | https://ai.google.dev/gemini-api/docs/pricing |
-| Anthropic pricing | https://platform.claude.com/docs/en/about-claude/pricing |
-| xAI pricing | https://docs.x.ai/developers/pricing |
-
-| Catalog key | Input / output USD per 1M | Notes |
-| --- | --- | --- |
-| `openai:gpt-5.4-mini` | **0.75 / 4.50** | Verified. Official cached input 0.075 left **null** |
-| `openai:gpt-5.4` | **2.50 / 15.00** | Verified; long-context >272K filled |
-| `google:gemini-3.1-flash-lite` | **0.25 / 1.50** | Verified; thoughts at output rate |
-| `anthropic:claude-haiku-5-5` | **0.10 / 0.50** (≤100K); **0.50 / 2.50** (>100K) | Verified; cache rates left null |
-| `xai:grok-4.3` | **1.25 / 2.50**; ≥200K **2.50 / 5.00** | Verified; cache null |
-
-Cache rates stay null **on purpose** so unexpected cache usage fails closed instead of billing without a reservation.
+**Do not claim a `$1` or `$0.05` software cap makes a larger real charge impossible.**
 
 ---
 
-## 5. First real-model pilot — safe launch requirements
+## 6. Coordination for Agent 1 (interfaces; no core edits made)
 
-**Recommended config file (not executed):** `configs/apollolander_pilot_openai_gpt54mini.yaml`
+Agent 1 should wire the first live run so that:
 
-| Requirement | Value |
-| --- | --- |
-| Environment variable | `OPENAI_API_KEY` only (shell export; never commit) |
-| Model id | `gpt-5.4-mini` |
-| Cost per 1M input tokens | **$0.75** |
-| Cost per 1M output tokens | **$4.50** |
-| Cached input (official) | $0.075 / 1M — **not** in catalog; unexpected cache fails closed |
-| Output-token ceiling | `max_output_tokens: 400` |
-| Client retry ceiling | `max_retries: 0` (match `max_model_retries: 0`) |
-| Runner revisions | 2 × 1 episode (review after first) |
-| Software spend target | `max_spend_usd` / `budget.max_cost_usd` = **$0.05** |
-| Estimated reservation (Apollo schema, 400 out, 1 attempt) | ~**$0.003** (UTF-8 ceiling math; not an invoice) |
-| Estimated maximum software exposure | **$0.05 per process** if caps hold |
-| Required approval | **Explicit user approval before any live `propose`** |
+1. `ExperimentConfig.budget.max_cost_usd` equals the client `max_spend_usd` (pilot: `0.05`).  
+2. `max_model_retries` equals client `max_retries` (pilot: `0`).  
+3. `model_settings` include `max_output_tokens: 800` and `reasoning_effort: none`.  
+4. Call `preflight_first_call` / `require_preflight_ok` before constructing a live transport when possible.  
+5. Abort after one revision until SQLite usage is reviewed.  
+6. Do not treat runner `BudgetLimiter` alone as a provider hard stop.
 
-### Hard-stop limitations (must read)
+No changes were made under `src/rewardbench/core/`.
 
-1. **In-process only.** `SpendingGuard` does not bind other processes, machines, or the OpenAI account.  
-2. **A $0.05 software cap does not make a larger real charge impossible.** Reservation underestimates, provider billing quirks, dashboard lag, or a second process can exceed it.  
-3. **Runner outer retries** are separate from client HTTP retries; keep both at 0 for the pilot.  
-4. **Set provider-side billing limits / alerts** in the OpenAI console before the first call.  
-5. **No key printing.** Logs redact secrets held by the client; still do not paste keys into chat or commits.
+---
 
-### Owner checklist before first paid call
+## 7. First-call preflight checklist
 
 - [ ] Explicit written approval to spend  
-- [ ] OpenAI account hard limit / alert configured  
+- [ ] OpenAI account billing hard limit / alert set outside this repo  
 - [ ] `export OPENAI_API_KEY=…` in a local shell only  
-- [ ] Construct client with `max_spend_usd=0.05`, `max_retries=0`, `model_settings.max_output_tokens=400`  
-- [ ] Run **one** revision, inspect SQLite usage + cost, then decide on a second call  
-- [ ] Abort on any unpriced / blocked / BudgetExceeded signal  
+- [ ] Run keyless dry-run: `python examples/providers/dry_run_first_call.py`  
+- [ ] `build_model_client("openai", "gpt-5.4-mini", max_spend_usd=0.05, max_retries=0, …)`  
+- [ ] Keep `reasoning_effort=none`, `max_output_tokens=800`  
+- [ ] One revision only; inspect SQLite before any second call  
+- [ ] Stop on BudgetExceeded / unpriced / truncated / blocked  
 
----
+### Dry-run (no key, no network)
 
-## 6. Reasoning-control capabilities (future economy; not implemented)
-
-| Provider | Wired today | Limitation |
-| --- | --- | --- |
-| OpenAI | `reasoning_effort` | Sampling params omitted when set |
-| Gemini | `gemini_thinking_budget` / `max_reasoning_tokens` | Required for capped/live calls; separate bill |
-| Anthropic | `anthropic_thinking_budget_tokens` | Must be `< max_tokens`; Haiku 5.5 **effort** not wired |
-| xAI | `grok_reasoning_effort` on Chat Completions | Responses API `reasoning.effort` not implemented |
-
-Purchased extra reasoning, extra sims, and parallel proposals are **out of scope**.
-
----
-
-## 7. Outstanding risks
-
-1. Software spend caps ≠ provider invoices.  
-2. Parallel experiment processes can each reserve/spend independently.  
-3. Catalog UTF-8 byte ceiling assumes ≤1 token per message byte.  
-4. Anthropic / OpenAI / Gemini / xAI cache prices exist officially but are omitted; a provider that returns cache tokens still burns a live call before fail-closed stop.  
-5. Example YAML on main still lists `gpt-4.1` for Apollo (`examples/apollolander/development_numerical.yaml`) — that id fails closed against this catalog; use the Agent 3 pilot config instead.  
-6. Full 8000-step Apollo episodes are expensive in wall time; E2E tests use short `max_episode_steps`.
-
----
-
-## 8. Files changed (this E2E pass)
-
-- `docs/AGENT3_AI_INTEGRATIONS_REPORT.md` — this report  
-- `configs/apollolander_pilot_openai_gpt54mini.yaml` — recommended pilot (not invoked)  
-- `tests/providers/e2e_helpers.py` — E2E helpers  
-- `tests/providers/test_e2e_apollolander.py` — end-to-end mocked suite  
-- Merge of `origin/main` into `work/providers-preflight` for Apollo + runner availability (no Agent 1/2 package edits)
-
-Prior commits on branch retained: pricing verification, Apollo schema fixtures, capabilities notes.
-
-## Tests
-
-```text
-.venv/bin/python -m pytest tests/providers -q
+```bash
+python examples/providers/dry_run_first_call.py
 ```
 
-All provider tests passing (including E2E).
+Prints local reservation, mocked constant controller validated against Apollo schema, and the owner checklist.
+
+---
+
+## Files changed
+
+- `src/rewardbench/prompts/render.py` — v2 compact/no-tools instructions  
+- `src/rewardbench/providers/client.py` — truncation accounting  
+- `src/rewardbench/providers/preflight.py` — offline first-call quote helper  
+- `src/rewardbench/providers/__init__.py` / `capabilities.py` — exports + OpenAI reasoning notes  
+- `configs/apollolander_pilot_openai_gpt54mini.yaml` — 800 / none / single revision  
+- `examples/providers/dry_run_first_call.py` — keyless dry-run  
+- `tests/providers/test_first_call_safety.py` (+ e2e/prompt assertion updates)  
+- `docs/AGENT3_AI_INTEGRATIONS_REPORT.md` — this report  
 
 ## Commit hash
 
-`dccaa66abab025c089b95053a42e3a0ecd1d5cb3` on `work/providers-preflight`.
+Filled after commit.
 
-## What user approval is needed
+## Approval required before first paid call
 
-Before the first paid call: **explicit approval to spend**, confirmation that **OpenAI account billing limits** are set, and agreement to start with **`OPENAI_API_KEY` + `gpt-5.4-mini`** under the pilot YAML ceilings. Agent 3 will not install, create, test, or print a live credential.
+Explicit spend approval, vendor billing limits, and agreement to start with **`OPENAI_API_KEY` + `gpt-5.4-mini`** under **800 output tokens**, **`reasoning_effort: none`**, **`max_retries=0`**, **`max_spend_usd=0.05`**.
