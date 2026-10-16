@@ -2,6 +2,14 @@
 
 Drives the vendored game's deterministic physics through Node. It does not
 replace the Gymnasium LunarLander adapter and it does not execute model JavaScript.
+
+Two modes:
+
+* **Demonstration / fixed-start (default).** Every seed uses the original
+  spawn. Episode seeds name matched trials only.
+* **Research mode (opt-in).** Initial conditions are derived from the episode
+  seed via ``apollolander.starts`` while the terrain, pad, and verifier stay
+  fixed. Development and held-out seed pools induce disjoint start schedules.
 """
 
 from __future__ import annotations
@@ -21,6 +29,13 @@ from rewardbench.environments.apollolander.schema import (
     normalize_controller,
     validate_controller,
 )
+from rewardbench.environments.apollolander.starts import (
+    START_SCHEDULE_VERSION,
+    checked_start,
+    derive_start,
+    schedule_document,
+    standard_start,
+)
 from rewardbench.environments.lunarlander.seeds import validate_seed_split
 from rewardbench.environments.protocol import adapter_error, load_contracts
 
@@ -30,7 +45,7 @@ SESSION = Path(__file__).resolve().parents[4] / "frontend" / "apollolander" / "e
 
 
 class ApolloLanderAdapter:
-    """One fixed map, explicit starts, and numerical rewards from the JS physics."""
+    """Fixed lunar map with optional seed-derived research starts."""
 
     environment_id = ENVIRONMENT_ID
 
@@ -41,11 +56,19 @@ class ApolloLanderAdapter:
         locked_camera: bool = True,
         record_dir: str | Path | None = None,
         record_video: bool = False,
+        research_mode: bool = False,
+        start_schedule_version: str = START_SCHEDULE_VERSION,
+        vary_fuel: bool = False,
     ) -> None:
         self.max_steps = max_steps
         self.locked_camera = locked_camera
         self.record_dir = Path(record_dir) if record_dir is not None else None
         self.record_video = record_video
+        self.research_mode = bool(research_mode)
+        self.start_schedule_version = start_schedule_version
+        self.vary_fuel = bool(vary_fuel)
+        # Validate the schedule version at construction time.
+        schedule_document(self.start_schedule_version)
 
     def validate_controller(self, controller: Mapping[str, Any] | str):
         return validate_controller(controller)
@@ -56,16 +79,27 @@ class ApolloLanderAdapter:
     def describe(self):
         """Runner-facing description. The id matches an experiment config exactly."""
         contracts = _contracts()
-        return contracts.EnvironmentSpec(
-            environment_id=CONTRACT_ENVIRONMENT_ID,
-            display_name="ApolloLander",
-            task_description=(
+        if self.research_mode:
+            task = (
+                "Land the Apollo lander upright on the single designated pad of one "
+                "fixed lunar map. Research mode varies starting position, altitude, "
+                f"velocities, rotation, and optionally fuel from schedule "
+                f"{self.start_schedule_version}. Terrain and pad stay fixed. The same "
+                "episode seed always yields the same start so models can be compared "
+                "fairly. Submit a controller object, not JavaScript."
+            )
+        else:
+            task = (
                 "Land the Apollo lander upright on the single designated pad of one "
                 "fixed lunar map. Every controlled trial starts at the same position, "
                 "velocity, rotation, and fuel. Episode seeds name the trial and do not "
                 "move the terrain, the pad, or the ship. Submit a controller object, "
                 "not JavaScript."
-            ),
+            )
+        return contracts.EnvironmentSpec(
+            environment_id=CONTRACT_ENVIRONMENT_ID,
+            display_name="ApolloLander",
+            task_description=task,
             controller_schema=controller_schema_document(),
             action_space_summary="thrust from 0 to 1 and rotation in 10 degree steps from -90 to 90",
             observation_space_summary=(
@@ -94,8 +128,8 @@ class ApolloLanderAdapter:
     ):
         """Run one fixed-map flight and return the shared episode record.
 
-        The seed is stored on the result. It does not resample the landscape
-        or the landing zone.
+        In demonstration mode the seed is stored only. In research mode it also
+        selects the starting state from the versioned schedule.
         """
         import time
 
@@ -128,8 +162,13 @@ class ApolloLanderAdapter:
             "fuel_remaining": float(episode["fuel_remaining"]),
             "in_landing_zone": 1.0 if episode["in_landing_zone"] else 0.0,
             "physics_seconds": episode["steps"] / 60.0,
-            "seed_affects_physics": 0.0,
+            "seed_affects_physics": 1.0 if self.research_mode else 0.0,
+            "research_mode": 1.0 if self.research_mode else 0.0,
         }
+        start = episode.get("start") or {}
+        for key in ("x", "y", "vx", "vy", "rotation", "fuel"):
+            if isinstance(start.get(key), (int, float)) and not isinstance(start.get(key), bool):
+                metrics[f"start_{key}"] = float(start[key])
         if isinstance(vertical_speed, (int, float)) and not isinstance(vertical_speed, bool):
             metrics["vertical_speed"] = float(vertical_speed)
         zone = episode.get("zone") or {}
@@ -169,7 +208,12 @@ class ApolloLanderAdapter:
         validate_seed_split(seeds, split)
         if revision is not None and revision < 1:
             raise ValueError("controller revision must start at 1")
-        checked_start = _checked_start(start)
+        if self.research_mode and start is not None:
+            raise ValueError(
+                "research mode derives starts from episode seeds; omit the explicit start "
+                "override or construct the adapter with research_mode=False"
+            )
+        checked = checked_start(start)
         status = validate_controller(controller)
         if not status.valid:
             return {
@@ -179,6 +223,8 @@ class ApolloLanderAdapter:
                 "autonomous_learning": False,
                 "controller_valid": False,
                 "invalid_reason": status.reason,
+                "research_mode": self.research_mode,
+                "start_schedule_version": self.start_schedule_version if self.research_mode else None,
                 "episodes": [
                     {"seed": seed, "executed": False, "landed": False, "crashed": False, "reward": None}
                     for seed in seeds
@@ -198,7 +244,7 @@ class ApolloLanderAdapter:
                 seed=seed,
                 revision=revision,
                 max_steps=max_steps or self.max_steps,
-                start=checked_start,
+                start=checked,
                 record=seed in selected,
                 output=output,
                 model=model,
@@ -219,13 +265,24 @@ class ApolloLanderAdapter:
             "mean_reward": sum(rewards) / len(rewards),
             "landing_count": sum(1 for episode in episodes if episode["landed"]),
             "crash_count": sum(1 for episode in episodes if episode["crashed"]),
-        "video_paths": video_paths,
-        "seed_affects_physics": False,
-        "episodes": episodes,
-    }
+            "video_paths": video_paths,
+            "seed_affects_physics": self.research_mode,
+            "research_mode": self.research_mode,
+            "start_schedule_version": self.start_schedule_version if self.research_mode else None,
+            "start_schedule": schedule_document(self.start_schedule_version) if self.research_mode else None,
+            "episodes": episodes,
+        }
 
-    def replay(self, trace: Sequence[Mapping[str, Any]], *, max_steps: int | None = None) -> dict[str, Any]:
+    def replay(
+        self,
+        trace: Sequence[Mapping[str, Any]],
+        *,
+        max_steps: int | None = None,
+        seed: int | None = None,
+        start: Mapping[str, float] | None = None,
+    ) -> dict[str, Any]:
         """Replay an explicit action trace through the same physics process."""
+        resolved = self._resolve_start(seed=seed, start=start)
         session = _Session(SESSION)
         try:
             return session.request(
@@ -236,11 +293,44 @@ class ApolloLanderAdapter:
                         "maxSteps": max_steps or self.max_steps,
                         "lockedCamera": self.locked_camera,
                         "bonuses": False,
+                        **({} if resolved is None else {"start": resolved}),
                     },
                 }
             )["replay"]
         finally:
             session.close()
+
+    def start_for_seed(self, seed: int) -> dict[str, float]:
+        """Public helper for Agent 1 and tests: the start this adapter would use."""
+        if not self.research_mode:
+            return standard_start().as_dict()
+        return derive_start(
+            seed,
+            version=self.start_schedule_version,
+            vary_fuel=self.vary_fuel,
+        ).as_dict()
+
+    def _resolve_start(
+        self,
+        *,
+        seed: int | None,
+        start: Mapping[str, float] | None,
+    ) -> dict[str, float] | None:
+        if start is not None:
+            if self.research_mode:
+                raise ValueError(
+                    "research mode derives starts from episode seeds; omit the explicit start override"
+                )
+            return checked_start(start)
+        if self.research_mode:
+            if seed is None:
+                raise ValueError("research mode requires an episode seed to derive the start")
+            return derive_start(
+                seed,
+                version=self.start_schedule_version,
+                vary_fuel=self.vary_fuel,
+            ).as_dict()
+        return None
 
     def _run_episode(
         self,
@@ -256,6 +346,8 @@ class ApolloLanderAdapter:
     ) -> dict[str, Any]:
         if shutil.which("node") is None:
             raise RuntimeError("ApolloLander requires Node.js to run the vendored physics")
+        resolved = self._resolve_start(seed=seed, start=start)
+        applied_start = resolved if resolved is not None else standard_start().as_dict()
         session = _Session(SESSION)
         try:
             opened = session.request(
@@ -265,7 +357,7 @@ class ApolloLanderAdapter:
                         "maxSteps": max_steps,
                         "lockedCamera": self.locked_camera,
                         "bonuses": False,
-                        **({} if start is None else {"start": dict(start)}),
+                        **({} if resolved is None else {"start": dict(resolved)}),
                     },
                 }
             )
@@ -323,7 +415,9 @@ class ApolloLanderAdapter:
             "fuel_penalty": fuel_penalty,
             "terminal_reward": terminal,
             "video_path": video_path,
-            "identical_start": True,
+            "start": applied_start,
+            "identical_start": not self.research_mode and start is None,
+            "seed_affects_physics": self.research_mode,
         }
 
 
@@ -331,33 +425,7 @@ def _contracts():
     return load_contracts()
 
 
-def _contracts():
-    return load_contracts()
-
-
-def _checked_start(start: Mapping[str, float] | None) -> dict[str, float] | None:
-    if start is None:
-        return None
-    allowed = {"x", "y", "vx", "vy", "rotation", "fuel", "scale"}
-    extra = sorted(set(start) - allowed)
-    if extra:
-        raise ValueError(f"unknown start field {extra[0]!r}")
-    missing = sorted(allowed - set(start))
-    if missing:
-        raise ValueError(f"missing start field {missing[0]!r}")
-    parsed: dict[str, float] = {}
-    for key in allowed:
-        value = start[key]
-        if isinstance(value, bool) or not isinstance(value, (int, float)):
-            raise ValueError(f"start.{key} must be a finite number")
-        number = float(value)
-        if number != number or number in {float("inf"), float("-inf")}:
-            raise ValueError(f"start.{key} must be a finite number")
-        parsed[key] = number
-    return parsed
-
-
-def _frame(session: _Session, observation: Mapping[str, Any], result: Mapping[str, Any]) -> dict[str, Any]:
+def _frame(session: "_Session", observation: Mapping[str, Any], result: Mapping[str, Any]) -> dict[str, Any]:
     geometry = session.request({"cmd": "geometry"})
     return {
         "camera": geometry["frame"]["camera"],
@@ -375,12 +443,6 @@ def _slug(value: str) -> str:
 
 
 def _action(controller: dict[str, Any], observation: Mapping[str, float]) -> dict[str, float | int]:
-    if controller["policy"] == "guidance":
-        return guidance_action(observation, controller["parameters"])
-    return constant_action(controller)
-    if controller["policy"] == "guidance":
-        return guidance_action(observation, controller["parameters"])
-    return constant_action(controller)
     if controller["policy"] == "guidance":
         return guidance_action(observation, controller["parameters"])
     return constant_action(controller)

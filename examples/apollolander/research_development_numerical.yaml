@@ -1,0 +1,43 @@
+experiment_name: apollolander-research-development-numerical
+environment_id: apollolander
+provider: openai
+model_id: gpt-4.1
+feedback_condition: numerical_reward
+split: development
+seed: 12345
+num_revisions: 5
+episodes_per_revision: 4
+history_window: 4
+max_episode_steps: 8000
+max_model_retries: 2
+checkpoint_every: 1
+on_invalid_policy: skip
+on_model_failure: abort
+on_episode_failure: skip
+database_path: runs/rewardbench.sqlite
+budget:
+  max_cost_usd: 2.0
+  max_tokens: 200000
+  max_wall_seconds: 3600
+  max_revisions: 5
+  max_episodes: 20
+  max_model_calls: 20
+development_seeds: [0, 1, 2, 3, 4, 5, 6, 7]
+held_out_seeds: [1000000, 1000001, 1000002, 1000003, 1000004, 1000005, 1000006, 1000007]
+model_settings:
+  temperature: 0
+metadata:
+  task: apollolander
+  terrain: fixed-noise-seed-12039
+  research_mode: true
+  start_schedule_version: apollolander.starts.v1
+  vary_fuel: false
+  adapter_kwargs:
+    research_mode: true
+    start_schedule_version: apollolander.starts.v1
+    vary_fuel: false
+notes: >
+  Research-mode ApolloLander. Terrain and pad stay fixed. Episode seeds select
+  starting x, y, vx, vy, and rotation from apollolander.starts.v1. Construct the
+  adapter with research_mode=True (see frontend/apollolander/IMPLEMENTATION.md).
+  Development seeds stay below 1_000_000. Notes are not part of the experiment id.
