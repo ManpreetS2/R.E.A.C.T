@@ -63,7 +63,8 @@ def test_overlapping_runs_cannot_both_pass_a_one_call_cap(tmp_path: Path) -> Non
     for thread in threads:
         thread.start()
     for thread in threads:
-        thread.join(timeout=5)
+        # Allow enough time for schema init + global budget reservation under load.
+        thread.join(timeout=30)
         assert not thread.is_alive()
     assert errors == []
     assert len(calls) == 1

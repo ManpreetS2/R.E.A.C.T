@@ -561,6 +561,37 @@ Live pilot config (requires human spend approval before any real key is used):
 - ``configs/apollolander_pilot_openai_gpt54mini.yaml``
 - ``configs/apollolander_pilot_openai_gpt54mini_nofeedback.yaml``
 
+### Held-out freeze and evaluation (no model calls)
+
+After a development experiment reaches ``status=completed``, Core can freeze
+one controller and score it on sealed held-out research starts:
+
+```bash
+python -m rewardbench.heldout \
+  --database runs/apollolander_offline_numerical.sqlite \
+  --source-config configs/apollolander_offline_development_numerical.yaml \
+  --selection-rule last_valid_selected
+```
+
+Selection default is ``last_valid_selected``: the selected valid attempt with
+the highest ``(revision_index, call_index)``. Held-out rewards are never used
+to choose the controller.
+
+The freeze records SHA-256 of canonical controller JSON, source experiment id,
+model id, feedback condition, revision, call index, and attempt id. Evaluation
+uses the ApolloLander research-mode adapter and the source config's
+``held_out_seeds`` / ``start_schedule_version``. It never calls
+``ModelClient.propose``.
+
+Results are stored in additive SQLite tables that development history never
+reads: ``frozen_controllers``, ``heldout_evaluations``, ``heldout_episodes``.
+Repeated invocation of the same sealed evaluation fails closed.
+
+Paired numerical and no-feedback development configs must share the same
+held-out seed list so sealed starts are comparable across feedback conditions.
+
+See ``examples/heldout/README.md``.
+
 ### ``metadata.adapter_kwargs``
 
 Optional mapping of JSON-serializable constructor arguments for the
