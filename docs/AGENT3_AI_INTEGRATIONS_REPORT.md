@@ -151,7 +151,7 @@ Prints local reservation, mocked constant controller validated against Apollo sc
 
 ## Commit hash
 
-Filled after commit.
+ on .
 
 ## Approval required before first paid call
 
