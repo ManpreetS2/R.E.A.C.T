@@ -15,6 +15,7 @@ from rewardbench.environments.apollolander.schema import (
     constant_controller,
     controller_schema_document,
     demonstration_guidance_controller,
+    random_controller,
     validate_controller,
 )
 from rewardbench.environments.apollolander.starts import (
@@ -45,6 +46,7 @@ __all__ = [
     "development_start_catalog",
     "held_out_start_catalog",
     "load_flight_record",
+    "random_controller",
     "schedule_document",
     "standard_start",
     "trace_hash",

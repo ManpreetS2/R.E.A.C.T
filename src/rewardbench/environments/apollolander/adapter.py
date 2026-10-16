@@ -38,6 +38,7 @@ from rewardbench.environments.apollolander.schema import (
     controller_schema_document,
     guidance_action,
     normalize_controller,
+    random_action,
     validate_controller,
 )
 from rewardbench.environments.apollolander.starts import (
@@ -474,7 +475,7 @@ class ApolloLanderAdapter:
             if record:
                 frames.append(_frame(session, observation, session.request({"cmd": "result"})["result"]))
             for _ in range(max_steps):
-                action = _action(controller, observation)
+                action = _action(controller, observation, episode_seed=seed)
                 trace.append({"thrust": float(action["thrust"]), "rotation": int(action["rotation"])})
                 stepped = session.request({"cmd": "step", "action": action})
                 if not stepped.get("ok", False):
@@ -597,9 +598,20 @@ def _slug(value: str) -> str:
     return cleaned or "flight"
 
 
-def _action(controller: dict[str, Any], observation: Mapping[str, float]) -> dict[str, float | int]:
+def _action(
+    controller: dict[str, Any],
+    observation: Mapping[str, float],
+    *,
+    episode_seed: int = 0,
+) -> dict[str, float | int]:
     if controller["policy"] == "guidance":
         return guidance_action(observation, controller["parameters"])
+    if controller["policy"] == "random":
+        return random_action(
+            observation,
+            controller_seed=int(controller["seed"]),
+            episode_seed=episode_seed,
+        )
     return constant_action(controller)
 
 

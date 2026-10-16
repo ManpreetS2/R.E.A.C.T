@@ -1,0 +1,1625 @@
+{
+  "title": "ApolloLander research-mode development baseline",
+  "schedule_version": "apollolander.starts.v1",
+  "environment_version": "apollolander.env.v1",
+  "split": "development",
+  "held_out_seeds_used": false,
+  "development_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "max_steps": 8000,
+  "starts": {
+    "0": {
+      "x": 6764.4493324166615,
+      "y": 133.89215061208716,
+      "vx": 0.4626299171192345,
+      "vy": 0.026482772057057104,
+      "rotation": -40.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "1": {
+      "x": 6868.206247869069,
+      "y": 143.30822657654267,
+      "vx": 0.5063077028987322,
+      "vy": -0.0057101073003417435,
+      "rotation": -60.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "2": {
+      "x": 6757.521769264807,
+      "y": 130.87139403500643,
+      "vx": 0.6299474791105952,
+      "vy": 0.025970887563390686,
+      "rotation": -30.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "3": {
+      "x": 6770.783090068069,
+      "y": 180.5227888289943,
+      "vx": 0.38123755065453996,
+      "vy": -0.03410191143900377,
+      "rotation": -90.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "4": {
+      "x": 6787.316108628077,
+      "y": 175.32182158985094,
+      "vx": 0.5979696073239773,
+      "vy": 0.01422102837631755,
+      "rotation": -60.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "5": {
+      "x": 6873.194482472407,
+      "y": 175.15267482077846,
+      "vx": 0.43966799280603286,
+      "vy": 0.05340655913638898,
+      "rotation": -90.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "6": {
+      "x": 6863.032897923276,
+      "y": 128.35800339349447,
+      "vx": 0.27038808582894647,
+      "vy": 0.017336291217615103,
+      "rotation": -80.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "7": {
+      "x": 6736.781101434725,
+      "y": 130.85880219296996,
+      "vx": 0.23354771881917527,
+      "vy": -0.036320291078251334,
+      "rotation": -30.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "8": {
+      "x": 6801.4290623880715,
+      "y": 170.11436179173756,
+      "vx": 0.21664557917875862,
+      "vy": 0.05520853609950813,
+      "rotation": -90.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "9": {
+      "x": 6742.673248926856,
+      "y": 166.52939156318467,
+      "vx": 0.5470768875065251,
+      "vy": -0.02211402691276568,
+      "rotation": -70.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "10": {
+      "x": 6801.655381104556,
+      "y": 166.41044871093882,
+      "vx": 0.4231459867874777,
+      "vy": 0.034522504522760254,
+      "rotation": -80.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "11": {
+      "x": 6796.317154687631,
+      "y": 167.35627438428295,
+      "vx": 0.34332030294812904,
+      "vy": 0.04603843491356572,
+      "rotation": -90.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "12": {
+      "x": 6824.5052087372715,
+      "y": 158.57987140512705,
+      "vx": 0.4042486451160363,
+      "vy": -0.027497661238455394,
+      "rotation": -80.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "13": {
+      "x": 6825.798339520555,
+      "y": 115.12401704441785,
+      "vx": 0.5246954002807543,
+      "vy": 0.0177400759684938,
+      "rotation": -60.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "14": {
+      "x": 6842.160556338136,
+      "y": 143.2438048334295,
+      "vx": 0.26108619783835685,
+      "vy": -0.033324301121684885,
+      "rotation": -60.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "15": {
+      "x": 6869.428143992338,
+      "y": 183.82769677790492,
+      "vx": 0.4151858480083742,
+      "vy": 0.013919133624770055,
+      "rotation": -60.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    }
+  },
+  "baselines": [
+    {
+      "name": "random_seed0",
+      "mode": "research",
+      "note": "Deterministic pseudo-random open-loop baseline.",
+      "n_episodes": 16,
+      "landing_count": 0,
+      "crash_count": 0,
+      "timeout_count": 16,
+      "landing_rate": 0.0,
+      "crash_rate": 0.0,
+      "timeout_rate": 1.0,
+      "mean_reward": -94.87452786886264,
+      "reward_stdev": 1.2806143378872064,
+      "mean_fuel_used": 798.4955952776527,
+      "mean_steps": 8000.0,
+      "touchdowns": [],
+      "episode_status": [
+        {
+          "seed": 0,
+          "status": "timeout",
+          "reward": -94.12580164099582,
+          "fuel_used": 794.8318842536195,
+          "steps": 8000,
+          "start": {
+            "x": 6764.4493324166615,
+            "y": 133.89215061208716,
+            "vx": 0.4626299171192345,
+            "vy": 0.026482772057057104,
+            "rotation": -40.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:f9a4c8db8381c27f506c05c3ace28965e64ab65046199943e3d39de77fab7f14",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 1,
+          "status": "timeout",
+          "reward": -95.14599214246346,
+          "fuel_used": 795.6058963398795,
+          "steps": 8000,
+          "start": {
+            "x": 6868.206247869069,
+            "y": 143.30822657654267,
+            "vx": 0.5063077028987322,
+            "vy": -0.0057101073003417435,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:cad0f22f6a2b0077a10a9097667903aeaa420f0ea951f71826ae42336522426b",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 2,
+          "status": "timeout",
+          "reward": -94.43966181451623,
+          "fuel_used": 795.7555960519772,
+          "steps": 8000,
+          "start": {
+            "x": 6757.521769264807,
+            "y": 130.87139403500643,
+            "vx": 0.6299474791105952,
+            "vy": 0.025970887563390686,
+            "rotation": -30.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:c3abcaae210d6da84df5002291d9a14084e127c15427bfd290b98a7d3d799022",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 3,
+          "status": "timeout",
+          "reward": -96.53502388138922,
+          "fuel_used": 799.8081316856196,
+          "steps": 8000,
+          "start": {
+            "x": 6770.783090068069,
+            "y": 180.5227888289943,
+            "vx": 0.38123755065453996,
+            "vy": -0.03410191143900377,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:1445a075f8ba537f349da3926321c6cfd721650906d0a02c8617c0e1546ecfe0",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 4,
+          "status": "timeout",
+          "reward": -95.11022291744054,
+          "fuel_used": 797.8173438624702,
+          "steps": 8000,
+          "start": {
+            "x": 6787.316108628077,
+            "y": 175.32182158985094,
+            "vx": 0.5979696073239773,
+            "vy": 0.01422102837631755,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:28a6a8e15b6bdefe0f62f83973e5450decfedea57462d24f4ead624701d31e7c",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 5,
+          "status": "timeout",
+          "reward": -93.44822389488081,
+          "fuel_used": 795.5768049980874,
+          "steps": 8000,
+          "start": {
+            "x": 6873.194482472407,
+            "y": 175.15267482077846,
+            "vx": 0.43966799280603286,
+            "vy": 0.05340655913638898,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:978577127b9dce53a9f5d88a15a732c1e27fd6c16140a90b36acac6080b9a746",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 6,
+          "status": "timeout",
+          "reward": -93.66368518558804,
+          "fuel_used": 797.2887049937277,
+          "steps": 8000,
+          "start": {
+            "x": 6863.032897923276,
+            "y": 128.35800339349447,
+            "vx": 0.27038808582894647,
+            "vy": 0.017336291217615103,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:63a0c0903397f0f01f5f2926fa76596ec743b651429c6a5e7cb8cc03fbca9601",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 7,
+          "status": "timeout",
+          "reward": -96.29287563073854,
+          "fuel_used": 801.2616219343029,
+          "steps": 8000,
+          "start": {
+            "x": 6736.781101434725,
+            "y": 130.85880219296996,
+            "vx": 0.23354771881917527,
+            "vy": -0.036320291078251334,
+            "rotation": -30.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:644e8c6ea2f5abf59a35eb28a92d0ef8ae0796cc223c1eb499ed5f0c1b69bf85",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 8,
+          "status": "timeout",
+          "reward": -93.11360286319177,
+          "fuel_used": 799.7820586015162,
+          "steps": 8000,
+          "start": {
+            "x": 6801.4290623880715,
+            "y": 170.11436179173756,
+            "vx": 0.21664557917875862,
+            "vy": 0.05520853609950813,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:7f2000944591859358af3728ce3d283a8174879abafe28dfc4435955cabf228b",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 9,
+          "status": "timeout",
+          "reward": -96.27413084625864,
+          "fuel_used": 797.1195888013825,
+          "steps": 8000,
+          "start": {
+            "x": 6742.673248926856,
+            "y": 166.52939156318467,
+            "vx": 0.5470768875065251,
+            "vy": -0.02211402691276568,
+            "rotation": -70.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:11fc6d0e1e99f60a257b8e24babc9d809c86c4b0145600539eb6dd4d39c0c3bd",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 10,
+          "status": "timeout",
+          "reward": -93.3886702927997,
+          "fuel_used": 795.0290507204143,
+          "steps": 8000,
+          "start": {
+            "x": 6801.655381104556,
+            "y": 166.41044871093882,
+            "vx": 0.4231459867874777,
+            "vy": 0.034522504522760254,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:4417dc45edc80dab53a67f726a2d2ee41f96264abfc12626a3ba0dc597fb4ed4",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 11,
+          "status": "timeout",
+          "reward": -93.58740092192524,
+          "fuel_used": 798.6483290227956,
+          "steps": 8000,
+          "start": {
+            "x": 6796.317154687631,
+            "y": 167.35627438428295,
+            "vx": 0.34332030294812904,
+            "vy": 0.04603843491356572,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:756bc9371d7e0e51f368911e88eed009f1aa03724f99bea38a4d1c86d95287bc",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 12,
+          "status": "timeout",
+          "reward": -96.56799723865839,
+          "fuel_used": 803.8935955371838,
+          "steps": 8000,
+          "start": {
+            "x": 6824.5052087372715,
+            "y": 158.57987140512705,
+            "vx": 0.4042486451160363,
+            "vy": -0.027497661238455394,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:b158af25d532105c3747d784a6764aa81b9538513db3555640062d088aa1b4a7",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 13,
+          "status": "timeout",
+          "reward": -96.51087463718687,
+          "fuel_used": 805.0138248198609,
+          "steps": 8000,
+          "start": {
+            "x": 6825.798339520555,
+            "y": 115.12401704441785,
+            "vx": 0.5246954002807543,
+            "vy": 0.0177400759684938,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:e9e9a0336f228f51e220738eab1db50d934f2d3966593816fb506be8079c9a98",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 14,
+          "status": "timeout",
+          "reward": -96.03885317993516,
+          "fuel_used": 797.4429954618389,
+          "steps": 8000,
+          "start": {
+            "x": 6842.160556338136,
+            "y": 143.2438048334295,
+            "vx": 0.26108619783835685,
+            "vy": -0.033324301121684885,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:0d845d49b9651413432649950d97ed00041dcbc947e9b622c40c35353eb3e785",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        },
+        {
+          "seed": 15,
+          "status": "timeout",
+          "reward": -93.74942881383376,
+          "fuel_used": 801.0540973577663,
+          "steps": 8000,
+          "start": {
+            "x": 6869.428143992338,
+            "y": 183.82769677790492,
+            "vx": 0.4151858480083742,
+            "vy": 0.013919133624770055,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:1e393931dab513d012933b98823b5e96dae8ccad1ef9b0e4d93859c1b958608e",
+          "controller_hash": "sha256:26732da22876a92364a9338325fb5c988c0dc13147a4e236b35c8d168172e88b"
+        }
+      ],
+      "replay_verified": true,
+      "replay_mismatches": [],
+      "sample_flight_record_path": "/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/research-env/examples/apollolander/output/research_development_baseline/apollo-baseline-random-0-revision-1-ep-seed-0.flight.json",
+      "sample_video_path": "/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/research-env/examples/apollolander/output/research_development_baseline/apollo-baseline-random-0-revision-1-ep-seed-0.mp4",
+      "sample_trace_hash": "sha256:f9a4c8db8381c27f506c05c3ace28965e64ab65046199943e3d39de77fab7f14",
+      "autonomous_learning": false,
+      "origin": "deterministic_mock"
+    },
+    {
+      "name": "constant_coast",
+      "mode": "research",
+      "note": "Zero thrust, nose left; expected crash/timeout floor.",
+      "n_episodes": 16,
+      "landing_count": 0,
+      "crash_count": 16,
+      "timeout_count": 0,
+      "landing_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "mean_reward": -98.8815754775495,
+      "reward_stdev": 0.6260407065350683,
+      "mean_fuel_used": 0.0,
+      "mean_steps": 1185.4375,
+      "touchdowns": [],
+      "episode_status": [
+        {
+          "seed": 0,
+          "status": "crashed",
+          "reward": -98.95340911497044,
+          "fuel_used": 0,
+          "steps": 1115,
+          "start": {
+            "x": 6764.4493324166615,
+            "y": 133.89215061208716,
+            "vx": 0.4626299171192345,
+            "vy": 0.026482772057057104,
+            "rotation": -40.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:c799f0469afbe82cddb2a0436f7c209d85b49fcaad61116f637f964129c46849",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 1,
+          "status": "crashed",
+          "reward": -99.69811407783041,
+          "fuel_used": 0,
+          "steps": 1152,
+          "start": {
+            "x": 6868.206247869069,
+            "y": 143.30822657654267,
+            "vx": 0.5063077028987322,
+            "vy": -0.0057101073003417435,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:11b8d9c18ab2d117352f55b4b0d691ac385324c95a31d0a13457a06c2e4b314c",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 2,
+          "status": "crashed",
+          "reward": -99.62776242841286,
+          "fuel_used": 0,
+          "steps": 1123,
+          "start": {
+            "x": 6757.521769264807,
+            "y": 130.87139403500643,
+            "vx": 0.6299474791105952,
+            "vy": 0.025970887563390686,
+            "rotation": -30.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:70b12eff243ba9efb5f3313d1d203ea18d097372f04b16e3f8ba9e32e126bd1e",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 3,
+          "status": "crashed",
+          "reward": -98.59673581200865,
+          "fuel_used": 0,
+          "steps": 1255,
+          "start": {
+            "x": 6770.783090068069,
+            "y": 180.5227888289943,
+            "vx": 0.38123755065453996,
+            "vy": -0.03410191143900377,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:ae56668a7cf534e8e15726ef7f18a6a67fb5ad6b32cc4d3b19b7a1942772083e",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 4,
+          "status": "crashed",
+          "reward": -99.61657313074923,
+          "fuel_used": 0,
+          "steps": 1075,
+          "start": {
+            "x": 6787.316108628077,
+            "y": 175.32182158985094,
+            "vx": 0.5979696073239773,
+            "vy": 0.01422102837631755,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:d62e3eedcf0bbc5368fd8a0db36111569a02e535dc4ceb5572ee503544641eed",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 5,
+          "status": "crashed",
+          "reward": -99.22256020222947,
+          "fuel_used": 0,
+          "steps": 943,
+          "start": {
+            "x": 6873.194482472407,
+            "y": 175.15267482077846,
+            "vx": 0.43966799280603286,
+            "vy": 0.05340655913638898,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:d0d4e764e183890545adc99bf341895491eed386f8e8a86a8013c177ef2663c5",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 6,
+          "status": "crashed",
+          "reward": -98.3611617652663,
+          "fuel_used": 0,
+          "steps": 1285,
+          "start": {
+            "x": 6863.032897923276,
+            "y": 128.35800339349447,
+            "vx": 0.27038808582894647,
+            "vy": 0.017336291217615103,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:3e4bfc1ed0e72fbccb51285eab416a691a1eca181354af246388ab89b84d93be",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 7,
+          "status": "crashed",
+          "reward": -97.68340756751678,
+          "fuel_used": 0,
+          "steps": 1552,
+          "start": {
+            "x": 6736.781101434725,
+            "y": 130.85880219296996,
+            "vx": 0.23354771881917527,
+            "vy": -0.036320291078251334,
+            "rotation": -30.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:8cee738f63dea093642bb93197d8e93a0d5ef52cbb160329c70c7d45c469d786",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 8,
+          "status": "crashed",
+          "reward": -97.69877845351004,
+          "fuel_used": 0,
+          "steps": 1318,
+          "start": {
+            "x": 6801.4290623880715,
+            "y": 170.11436179173756,
+            "vx": 0.21664557917875862,
+            "vy": 0.05520853609950813,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:45d6c6f11b9cbeea454e48bfdd767b360fd74385012fffc94a8efc77a15a33ac",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 9,
+          "status": "crashed",
+          "reward": -99.19307983757791,
+          "fuel_used": 0,
+          "steps": 1152,
+          "start": {
+            "x": 6742.673248926856,
+            "y": 166.52939156318467,
+            "vx": 0.5470768875065251,
+            "vy": -0.02211402691276568,
+            "rotation": -70.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:11b8d9c18ab2d117352f55b4b0d691ac385324c95a31d0a13457a06c2e4b314c",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 10,
+          "status": "crashed",
+          "reward": -98.83109423961447,
+          "fuel_used": 0,
+          "steps": 1088,
+          "start": {
+            "x": 6801.655381104556,
+            "y": 166.41044871093882,
+            "vx": 0.4231459867874777,
+            "vy": 0.034522504522760254,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:39174b860344d793045e7d900dc07ac55a5bd9584159bd40983b385d203c14a9",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 11,
+          "status": "crashed",
+          "reward": -98.3285178448691,
+          "fuel_used": 0,
+          "steps": 1195,
+          "start": {
+            "x": 6796.317154687631,
+            "y": 167.35627438428295,
+            "vx": 0.34332030294812904,
+            "vy": 0.04603843491356572,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:b722e64591b64a3a204c981fe1ac0560f1db7ee4caba3a8ce8ce9886c577f27e",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 12,
+          "status": "crashed",
+          "reward": -99.04753831802364,
+          "fuel_used": 0,
+          "steps": 1153,
+          "start": {
+            "x": 6824.5052087372715,
+            "y": 158.57987140512705,
+            "vx": 0.4042486451160363,
+            "vy": -0.027497661238455394,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:c2e05ea390d747f7e02eb1c2b4032ef0a3787afb8f852c38c9acead49bc487e8",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 13,
+          "status": "crashed",
+          "reward": -99.4148504235315,
+          "fuel_used": 0,
+          "steps": 1168,
+          "start": {
+            "x": 6825.798339520555,
+            "y": 115.12401704441785,
+            "vx": 0.5246954002807543,
+            "vy": 0.0177400759684938,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:bb9edfaac65541aced009c5c8e0233c1684ac0be857f6cb5f6089cb6c5d2e43d",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 14,
+          "status": "crashed",
+          "reward": -98.42624935152772,
+          "fuel_used": 0,
+          "steps": 1393,
+          "start": {
+            "x": 6842.160556338136,
+            "y": 143.2438048334295,
+            "vx": 0.26108619783835685,
+            "vy": -0.033324301121684885,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:8f6a3dd7332f8158633b27de0f4a4da03923aa39aafb7e943dbeada6bab7bd9a",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        },
+        {
+          "seed": 15,
+          "status": "crashed",
+          "reward": -99.4053750731535,
+          "fuel_used": 0,
+          "steps": 1000,
+          "start": {
+            "x": 6869.428143992338,
+            "y": 183.82769677790492,
+            "vx": 0.4151858480083742,
+            "vy": 0.013919133624770055,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:20ae4520d4ae5085c57a6d9f2f7e434feecd1a30eb88c755194634cf138751b9",
+          "controller_hash": "sha256:e131f6d30b8e38870af3e46f02ffb2a2e467d866a6f4ea192511327f5de38185"
+        }
+      ],
+      "replay_verified": true,
+      "replay_mismatches": [],
+      "sample_flight_record_path": "/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/research-env/examples/apollolander/output/research_development_baseline/apollo-baseline-constant-coast-revision-1-ep-seed-0.flight.json",
+      "sample_video_path": "/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/research-env/examples/apollolander/output/research_development_baseline/apollo-baseline-constant-coast-revision-1-ep-seed-0.mp4",
+      "sample_trace_hash": "sha256:c799f0469afbe82cddb2a0436f7c209d85b49fcaad61116f637f964129c46849",
+      "autonomous_learning": false,
+      "origin": "deterministic_mock"
+    },
+    {
+      "name": "constant_hover_upright",
+      "mode": "research",
+      "note": "Near-hover thrust, upright; weak scripted control.",
+      "n_episodes": 16,
+      "landing_count": 0,
+      "crash_count": 3,
+      "timeout_count": 13,
+      "landing_rate": 0.0,
+      "crash_rate": 0.1875,
+      "timeout_rate": 0.8125,
+      "mean_reward": -66.99005866313516,
+      "reward_stdev": 25.00466150318779,
+      "mean_fuel_used": 500.73209999996146,
+      "mean_steps": 7522.5,
+      "touchdowns": [],
+      "episode_status": [
+        {
+          "seed": 0,
+          "status": "timeout",
+          "reward": -54.70426120313911,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6764.4493324166615,
+            "y": 133.89215061208716,
+            "vx": 0.4626299171192345,
+            "vy": 0.026482772057057104,
+            "rotation": -40.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 1,
+          "status": "timeout",
+          "reward": -56.274646018090934,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6868.206247869069,
+            "y": 143.30822657654267,
+            "vx": 0.5063077028987322,
+            "vy": -0.0057101073003417435,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 2,
+          "status": "timeout",
+          "reward": -57.18753322065436,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6757.521769264807,
+            "y": 130.87139403500643,
+            "vx": 0.6299474791105952,
+            "vy": 0.025970887563390686,
+            "rotation": -30.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 3,
+          "status": "timeout",
+          "reward": -54.52345738171864,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6770.783090068069,
+            "y": 180.5227888289943,
+            "vx": 0.38123755065453996,
+            "vy": -0.03410191143900377,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 4,
+          "status": "timeout",
+          "reward": -56.99621140489917,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6787.316108628077,
+            "y": 175.32182158985094,
+            "vx": 0.5979696073239773,
+            "vy": 0.01422102837631755,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 5,
+          "status": "crashed",
+          "reward": -116.35131001594794,
+          "fuel_used": 287.5121999999806,
+          "steps": 4321,
+          "start": {
+            "x": 6873.194482472407,
+            "y": 175.15267482077846,
+            "vx": 0.43966799280603286,
+            "vy": 0.05340655913638898,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:ac6a8513c310672adefeec731af9816973256a9d2e4e658a9d4922fbab0efd47",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 6,
+          "status": "timeout",
+          "reward": -52.44776798771527,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6863.032897923276,
+            "y": 128.35800339349447,
+            "vx": 0.27038808582894647,
+            "vy": 0.017336291217615103,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 7,
+          "status": "timeout",
+          "reward": -53.206297206766294,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6736.781101434725,
+            "y": 130.85880219296996,
+            "vx": 0.23354771881917527,
+            "vy": -0.036320291078251334,
+            "rotation": -30.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 8,
+          "status": "crashed",
+          "reward": -115.91535071226318,
+          "fuel_used": 336.3299999999762,
+          "steps": 5054,
+          "start": {
+            "x": 6801.4290623880715,
+            "y": 170.11436179173756,
+            "vx": 0.21664557917875862,
+            "vy": 0.05520853609950813,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:9cec848b7947e8bed266fb2dbd75f3520476040a3d4278db1ad116cdf2ee429e",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 9,
+          "status": "timeout",
+          "reward": -56.34934225261124,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6742.673248926856,
+            "y": 166.52939156318467,
+            "vx": 0.5470768875065251,
+            "vy": -0.02211402691276568,
+            "rotation": -70.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 10,
+          "status": "timeout",
+          "reward": -54.18296901184017,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6801.655381104556,
+            "y": 166.41044871093882,
+            "vx": 0.4231459867874777,
+            "vy": 0.034522504522760254,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 11,
+          "status": "crashed",
+          "reward": -124.30856635664645,
+          "fuel_used": 464.93459999996463,
+          "steps": 6985,
+          "start": {
+            "x": 6796.317154687631,
+            "y": 167.35627438428295,
+            "vx": 0.34332030294812904,
+            "vy": 0.04603843491356572,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:7b17ea9f35c46e8d72698b2158457df16a2f5e9e4169634e6652addc93e8898b",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 12,
+          "status": "timeout",
+          "reward": -54.97285871028241,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6824.5052087372715,
+            "y": 158.57987140512705,
+            "vx": 0.4042486451160363,
+            "vy": -0.027497661238455394,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 13,
+          "status": "timeout",
+          "reward": -55.90837520791426,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6825.798339520555,
+            "y": 115.12401704441785,
+            "vx": 0.5246954002807543,
+            "vy": 0.0177400759684938,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 14,
+          "status": "timeout",
+          "reward": -53.659687302183954,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6842.160556338136,
+            "y": 143.2438048334295,
+            "vx": 0.26108619783835685,
+            "vy": -0.033324301121684885,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        },
+        {
+          "seed": 15,
+          "status": "timeout",
+          "reward": -54.85230461748908,
+          "fuel_used": 532.5335999999586,
+          "steps": 8000,
+          "start": {
+            "x": 6869.428143992338,
+            "y": 183.82769677790492,
+            "vx": 0.4151858480083742,
+            "vy": 0.013919133624770055,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+          "controller_hash": "sha256:8cce1bcdb51c81d1946fd7e2ed6a4306ca67c9a80af103f66ec0c2b3dc42b088"
+        }
+      ],
+      "replay_verified": true,
+      "replay_mismatches": [],
+      "sample_flight_record_path": "/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/research-env/examples/apollolander/output/research_development_baseline/apollo-baseline-constant-hover-revision-1-ep-seed-0.flight.json",
+      "sample_video_path": "/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/research-env/examples/apollolander/output/research_development_baseline/apollo-baseline-constant-hover-revision-1-ep-seed-0.mp4",
+      "sample_trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1",
+      "autonomous_learning": false,
+      "origin": "deterministic_mock"
+    },
+    {
+      "name": "hand_specified_guidance",
+      "mode": "research",
+      "note": "Tuned on the fixed demonstration start; not an LLM.",
+      "n_episodes": 16,
+      "landing_count": 16,
+      "crash_count": 0,
+      "timeout_count": 0,
+      "landing_rate": 1.0,
+      "crash_rate": 0.0,
+      "timeout_rate": 0.0,
+      "mean_reward": 83.2948482192804,
+      "reward_stdev": 0.9464547779396429,
+      "mean_fuel_used": 395.9252315500153,
+      "mean_steps": 5680.3125,
+      "touchdowns": [
+        {
+          "seed": 0,
+          "vy": 0.04003768033258082,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 1,
+          "vy": 0.04003767111286749,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 2,
+          "vy": 0.04003767111172386,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 3,
+          "vy": 0.04003767111256258,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 4,
+          "vy": 0.04003768033343174,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 5,
+          "vy": 0.04003768033258082,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 6,
+          "vy": 0.04003767111256258,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 7,
+          "vy": 0.04003768033258525,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 8,
+          "vy": 0.04003768033372886,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 9,
+          "vy": 0.04003767111172386,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 10,
+          "vy": 0.04003767111172386,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 11,
+          "vy": 0.04003767111256264,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 12,
+          "vy": 0.04003768033343174,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 13,
+          "vy": 0.04003768033343174,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 14,
+          "vy": 0.04003768033343176,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        },
+        {
+          "seed": 15,
+          "vy": 0.04003768033343174,
+          "rotation": 0,
+          "perfect": true,
+          "designated": true
+        }
+      ],
+      "episode_status": [
+        {
+          "seed": 0,
+          "status": "landed",
+          "reward": 82.50830262234281,
+          "fuel_used": 411.7468277856155,
+          "steps": 5914,
+          "start": {
+            "x": 6764.4493324166615,
+            "y": 133.89215061208716,
+            "vx": 0.4626299171192345,
+            "vy": 0.026482772057057104,
+            "rotation": -40.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:ef977141ff899799029520c5aeec34759433ee14b27a2b93605a3a7cd18ab456",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 1,
+          "status": "landed",
+          "reward": 81.32998935559905,
+          "fuel_used": 433.91635795458905,
+          "steps": 5999,
+          "start": {
+            "x": 6868.206247869069,
+            "y": 143.30822657654267,
+            "vx": 0.5063077028987322,
+            "vy": -0.0057101073003417435,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:023c9954967a17aa2b67828e6d81b57087a4121fa17205aabc277469c6fd4b42",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 2,
+          "status": "landed",
+          "reward": 81.74300937103885,
+          "fuel_used": 426.58655304370126,
+          "steps": 5844,
+          "start": {
+            "x": 6757.521769264807,
+            "y": 130.87139403500643,
+            "vx": 0.6299474791105952,
+            "vy": 0.025970887563390686,
+            "rotation": -30.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:8fc2d9b24f1af95b758574425f14febfc57c17e29863c5ea86c5d8054b339aae",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 3,
+          "status": "landed",
+          "reward": 84.19141507026862,
+          "fuel_used": 379.0490326561535,
+          "steps": 5628,
+          "start": {
+            "x": 6770.783090068069,
+            "y": 180.5227888289943,
+            "vx": 0.38123755065453996,
+            "vy": -0.03410191143900377,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:996d135036f49080e0bb72080f9013e2ba6f69447e9e43cde215f4f921714daa",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 4,
+          "status": "landed",
+          "reward": 82.6715001061716,
+          "fuel_used": 406.22222836315325,
+          "steps": 5545,
+          "start": {
+            "x": 6787.316108628077,
+            "y": 175.32182158985094,
+            "vx": 0.5979696073239773,
+            "vy": 0.01422102837631755,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:9e1c1fc56cdb32a248963c6ee75c126c46099d8cb020fd52ee43924e5ce09956",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 5,
+          "status": "landed",
+          "reward": 83.78937479460615,
+          "fuel_used": 384.89725387038027,
+          "steps": 5353,
+          "start": {
+            "x": 6873.194482472407,
+            "y": 175.15267482077846,
+            "vx": 0.43966799280603286,
+            "vy": 0.05340655913638898,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:08e6e4bc9c2f6779d8a6f6f75eaadd1edd51b5a094ed036cd5fb9f05030e3c5f",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 6,
+          "status": "landed",
+          "reward": 83.58160344301378,
+          "fuel_used": 392.67210678115714,
+          "steps": 5800,
+          "start": {
+            "x": 6863.032897923276,
+            "y": 128.35800339349447,
+            "vx": 0.27038808582894647,
+            "vy": 0.017336291217615103,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:72883d9208ca3c60a39328e819ed41e2aa1155400405ff6b30dbc21451065d9c",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 7,
+          "status": "landed",
+          "reward": 83.83922457521219,
+          "fuel_used": 385.3032084559673,
+          "steps": 5872,
+          "start": {
+            "x": 6736.781101434725,
+            "y": 130.85880219296996,
+            "vx": 0.23354771881917527,
+            "vy": -0.036320291078251334,
+            "rotation": -30.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:5782076bf33e0b9c975ce8b33c3494c69c2696441b518b9f42f1c8d8aad84b7b",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 8,
+          "status": "landed",
+          "reward": 84.93375025616562,
+          "fuel_used": 364.1668767217197,
+          "steps": 5369,
+          "start": {
+            "x": 6801.4290623880715,
+            "y": 170.11436179173756,
+            "vx": 0.21664557917875862,
+            "vy": 0.05520853609950813,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:e5a6cff33ec7731916a79ae86e046a03fdffd510a0b4599a5d13a4c47dfff078",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 9,
+          "status": "landed",
+          "reward": 83.12446667437494,
+          "fuel_used": 400.52670714256993,
+          "steps": 5689,
+          "start": {
+            "x": 6742.673248926856,
+            "y": 166.52939156318467,
+            "vx": 0.5470768875065251,
+            "vy": -0.02211402691276568,
+            "rotation": -70.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:967e3385f47fc9702582a4a77c74ae2dc590b46b7f49d438aa1ccfc3ab289bcb",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 10,
+          "status": "landed",
+          "reward": 83.60721102532716,
+          "fuel_used": 389.93739709844806,
+          "steps": 5592,
+          "start": {
+            "x": 6801.655381104556,
+            "y": 166.41044871093882,
+            "vx": 0.4231459867874777,
+            "vy": 0.034522504522760254,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:424c59bc201d9a110e1b041989fda729de9bacfe51da4f148f8114836839fe8b",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 11,
+          "status": "landed",
+          "reward": 83.85058364000737,
+          "fuel_used": 386.2563665542651,
+          "steps": 5629,
+          "start": {
+            "x": 6796.317154687631,
+            "y": 167.35627438428295,
+            "vx": 0.34332030294812904,
+            "vy": 0.04603843491356572,
+            "rotation": -90.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:e2756c0fbfb8afcc219956b7a56f8b98058afc0e89a181bf56bb9b7b0b0cd651",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 12,
+          "status": "landed",
+          "reward": 83.6580792533919,
+          "fuel_used": 389.15723642736134,
+          "steps": 5657,
+          "start": {
+            "x": 6824.5052087372715,
+            "y": 158.57987140512705,
+            "vx": 0.4042486451160363,
+            "vy": -0.027497661238455394,
+            "rotation": -80.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:6f316a548fc5b0e29783482f8d43bee8ef654617da6430d71f64d2dec93cd6ea",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 13,
+          "status": "landed",
+          "reward": 82.03794471964656,
+          "fuel_used": 423.64073656062993,
+          "steps": 5887,
+          "start": {
+            "x": 6825.798339520555,
+            "y": 115.12401704441785,
+            "vx": 0.5246954002807543,
+            "vy": 0.0177400759684938,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:3730bf19989e2991306aac68634fd27a322a0e98f67d0347a2cc8866029d33c2",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 14,
+          "status": "landed",
+          "reward": 83.90828454013555,
+          "fuel_used": 382.87943185497136,
+          "steps": 5769,
+          "start": {
+            "x": 6842.160556338136,
+            "y": 143.2438048334295,
+            "vx": 0.26108619783835685,
+            "vy": -0.033324301121684885,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:346d2d629de92b041776f08ae1993306495712b4e0dde0320e2bc40e66ff9483",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        },
+        {
+          "seed": 15,
+          "status": "landed",
+          "reward": 83.94283206118423,
+          "fuel_used": 377.84538352956264,
+          "steps": 5338,
+          "start": {
+            "x": 6869.428143992338,
+            "y": 183.82769677790492,
+            "vx": 0.4151858480083742,
+            "vy": 0.013919133624770055,
+            "rotation": -60.0,
+            "fuel": 1000.0,
+            "scale": 0.25
+          },
+          "trace_hash": "sha256:7498c8cabaf5bfa4e922d85d03371ed8214cdd1c999eec8b6c5656b0090d25de",
+          "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+        }
+      ],
+      "replay_verified": true,
+      "replay_mismatches": [],
+      "sample_flight_record_path": "/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/research-env/examples/apollolander/output/research_development_baseline/apollo-hand-specified-guidance-revision-1-ep-seed-0.flight.json",
+      "sample_video_path": "/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/research-env/examples/apollolander/output/research_development_baseline/apollo-hand-specified-guidance-revision-1-ep-seed-0.mp4",
+      "sample_trace_hash": "sha256:ef977141ff899799029520c5aeec34759433ee14b27a2b93605a3a7cd18ab456",
+      "autonomous_learning": false,
+      "origin": "hand_specified_demonstration"
+    }
+  ],
+  "fixed_start_control": {
+    "name": "hand_specified_guidance_fixed_start",
+    "mode": "fixed_start",
+    "note": "Control: same guidance on the original fixed spawn.",
+    "n_episodes": 1,
+    "landing_count": 1,
+    "crash_count": 0,
+    "timeout_count": 0,
+    "landing_rate": 1.0,
+    "crash_rate": 0.0,
+    "timeout_rate": 0.0,
+    "mean_reward": 83.42380160701299,
+    "reward_stdev": 0.0,
+    "mean_fuel_used": 396.23765624836824,
+    "mean_steps": 5748.0,
+    "touchdowns": [
+      {
+        "seed": 0,
+        "vy": 0.04003768033343174,
+        "rotation": 0,
+        "perfect": true,
+        "designated": true
+      }
+    ],
+    "episode_status": [
+      {
+        "seed": 0,
+        "status": "landed",
+        "reward": 83.42380160701299,
+        "fuel_used": 396.23765624836824,
+        "steps": 5748,
+        "start": {
+          "x": 6803.200000000001,
+          "y": 150.0,
+          "vx": 0.415,
+          "vy": 0.0,
+          "rotation": -90.0,
+          "fuel": 1000.0,
+          "scale": 0.25
+        },
+        "trace_hash": "sha256:a42b66acbcf93ce0d5af7693c3b693cc217bb57585ac1674957fad4bef77f579",
+        "controller_hash": "sha256:4e905b988d6b3537ae794d9e3759ae4f7d2b6f9f6cca22be395b8677c88dc8dd"
+      }
+    ],
+    "replay_verified": true,
+    "replay_mismatches": [],
+    "sample_flight_record_path": "/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/research-env/examples/apollolander/output/research_development_baseline/apollo-hand-specified-guidance-fixed-revision-1-ep-seed-0.flight.json",
+    "sample_video_path": "/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/research-env/examples/apollolander/output/research_development_baseline/apollo-hand-specified-guidance-fixed-revision-1-ep-seed-0.mp4"
+  },
+  "reproducibility_spot_check": {
+    "seed": 7,
+    "starts_equal": true,
+    "rewards_equal": true,
+    "trace_hashes_equal": true,
+    "model_names_differ": true
+  },
+  "assessment": {
+    "difficulty": "achievable_with_current_guidance",
+    "rationale": "Hand-specified guidance verified landing rate on development research starts is 1.000 (mean reward 83.29; 16 designated perfect touchdowns). Weak scripted baselines do not land. A first LLM pilot on apollolander.starts.v1 is credible; no easier tier is required from this evidence.",
+    "recommended_difficulty_tier": null,
+    "v1_schedule_unchanged": true,
+    "fixed_start_guidance_lands": true,
+    "research_guidance_landing_rate": 1.0,
+    "research_random_landing_rate": 0.0,
+    "research_coast_crash_or_timeout_rate": 1.0,
+    "pilot_seeds_suggestion": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "pilot_note": "Use the same eight development seeds as research_development_numerical.yaml for a matched first LLM pilot; keep held-out seeds sealed.",
+    "research_guidance_perfect_touchdown_rate": 1.0,
+    "research_guidance_mean_touchdown_vy": 0.040037676299022586
+  },
+  "elapsed_seconds": 225.5759259580027,
+  "autonomous_learning": false,
+  "note": "All controllers are scripted baselines. None are evidence of in-context learning."
+}
