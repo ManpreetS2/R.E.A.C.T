@@ -70,6 +70,7 @@ class ApolloLanderAdapter:
         research_mode: bool = False,
         start_schedule_version: str = START_SCHEDULE_VERSION,
         vary_fuel: bool = False,
+        experiment_id: str | None = None,
     ) -> None:
         self.max_steps = max_steps
         self.locked_camera = locked_camera
@@ -78,6 +79,7 @@ class ApolloLanderAdapter:
         self.research_mode = bool(research_mode)
         self.start_schedule_version = start_schedule_version
         self.vary_fuel = bool(vary_fuel)
+        self.experiment_id = experiment_id
         # Validate the schedule version at construction time.
         schedule_document(self.start_schedule_version)
 
@@ -164,6 +166,7 @@ class ApolloLanderAdapter:
             record=self.record_video and self.record_dir is not None,
             output=self.record_dir,
             model=getattr(policy, "model_id", None) or "unspecified",
+            episode_index=episode_index,
         )
         elapsed = time.perf_counter() - started
         verified = episode.get("verified") or {}
@@ -441,6 +444,7 @@ class ApolloLanderAdapter:
         model: str,
         origin: str = "unspecified",
         split: str | None = None,
+        episode_index: int | None = None,
     ) -> dict[str, Any]:
         if shutil.which("node") is None:
             raise RuntimeError("ApolloLander requires Node.js to run the vendored physics")
@@ -490,7 +494,8 @@ class ApolloLanderAdapter:
 
         video_path = None
         flight_record_path = None
-        stem = f"apollo-{_slug(model)}-revision-{revision}-seed-{seed}"
+        episode_tag = f"ep-{episode_index}" if episode_index is not None else "ep"
+        stem = f"apollo-{_slug(model)}-revision-{revision}-{episode_tag}-seed-{seed}"
         if record and output is not None:
             video_file = output / f"{stem}.mp4"
             write_flight_video(
@@ -527,8 +532,12 @@ class ApolloLanderAdapter:
             fuel_penalty=fuel_penalty,
             terminal_reward=terminal,
             video_path=video_path,
+            experiment_id=self.experiment_id,
+            episode_index=episode_index,
         )
-        if record and output is not None:
+        # Flight manifests are written whenever an output directory is set.
+        # Video frames remain opt-in via record_video to avoid long HD captures.
+        if output is not None:
             record_file = output / f"{stem}.flight.json"
             write_flight_record(record_file, flight)
             flight_record_path = str(record_file)

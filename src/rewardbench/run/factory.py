@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import inspect
-import warnings
 from collections.abc import Mapping
 from dataclasses import replace
 from pathlib import Path
@@ -15,7 +14,16 @@ from rewardbench.run.mock_model import SCRIPTED_MODEL_ID, SCRIPTED_PROVIDER, Scr
 
 # Forward-compatible ApolloLander constructor keys owned by Agent 2.
 # When the adapter accepts them, metadata.adapter_kwargs values are passed through.
-AGENT2_APOLLO_KWARGS = ("research_mode", "max_steps", "locked_camera", "record_dir", "record_video")
+AGENT2_APOLLO_KWARGS = (
+    "research_mode",
+    "max_steps",
+    "locked_camera",
+    "record_dir",
+    "record_video",
+    "start_schedule_version",
+    "vary_fuel",
+    "experiment_id",
+)
 
 
 def prepare_config(
@@ -33,12 +41,26 @@ def prepare_config(
     return config
 
 
-def build_environment(config: ExperimentConfig) -> EnvironmentAdapter:
-    """Construct the configured adapter, applying validated ``metadata.adapter_kwargs``."""
+def build_environment(
+    config: ExperimentConfig,
+    *,
+    adapter_overrides: Mapping[str, Any] | None = None,
+) -> EnvironmentAdapter:
+    """Construct the configured adapter, applying validated ``metadata.adapter_kwargs``.
+
+    ``adapter_overrides`` are runtime-only (for example ``experiment_id`` and an
+    absolute ``record_dir``). They are not written back into the hashed config.
+    """
 
     from rewardbench.environments import make_environment
 
     kwargs = adapter_kwargs_from_metadata(config.metadata)
+    if adapter_overrides:
+        for key, value in adapter_overrides.items():
+            if not isinstance(key, str) or not key or key.startswith("_"):
+                raise ConfigError(f"invalid adapter override key {key!r}")
+            _reject_non_jsonable(value, path=f"adapter_overrides.{key}")
+            kwargs[key] = value
     if (
         config.max_episode_steps is not None
         and "max_steps" not in kwargs
@@ -48,15 +70,11 @@ def build_environment(config: ExperimentConfig) -> EnvironmentAdapter:
         kwargs["max_steps"] = config.max_episode_steps
     accepted, dropped = _filter_adapter_kwargs(config.environment_id, kwargs)
     if dropped:
-        warnings.warn(
-            (
-                f"adapter for {config.environment_id!r} ignored unsupported kwargs {sorted(dropped)}. "
-                "Agent 2 must expose these on the adapter constructor before they take effect. "
-                "For ApolloLander, expected forward-compatible keys include "
-                f"{list(AGENT2_APOLLO_KWARGS)}."
-            ),
-            UserWarning,
-            stacklevel=2,
+        # Fail closed: never silently downgrade a research YAML to fixed-start physics.
+        raise ConfigError(
+            f"adapter for {config.environment_id!r} does not accept metadata.adapter_kwargs "
+            f"{sorted(dropped)}. Refusing to run with silently ignored settings. "
+            f"Known ApolloLander forward-compatible keys include {list(AGENT2_APOLLO_KWARGS)}."
         )
     try:
         return make_environment(config.environment_id, **accepted)

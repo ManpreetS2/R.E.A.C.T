@@ -84,16 +84,48 @@ def test_live_mode_is_disabled_without_api_calls() -> None:
         build_model(config, mode="live")
 
 
-def test_adapter_kwargs_include_research_mode_and_filter_when_unavailable() -> None:
+def test_adapter_kwargs_reach_research_mode_on_apollo_adapter() -> None:
     config = load_config(NUMERICAL)
     kwargs = adapter_kwargs_from_metadata(config.metadata)
     assert kwargs["research_mode"] is True
     assert kwargs["max_steps"] == 120
-    with pytest.warns(UserWarning, match="research_mode"):
-        env = build_environment(config)
+    assert kwargs["start_schedule_version"] == "apollolander.starts.v1"
+    env = build_environment(config)
     assert env.describe().environment_id == "apollolander"
     assert env.max_steps == 120
+    assert env.research_mode is True
+    assert env.start_schedule_version == "apollolander.starts.v1"
     env.close()
+
+
+def test_unsupported_adapter_kwargs_fail_closed(tmp_path: Path) -> None:
+    payload = yaml.safe_load(NUMERICAL.read_text(encoding="utf-8"))
+    payload["metadata"]["adapter_kwargs"]["not_a_real_kwarg"] = True
+    path = tmp_path / "bad-research.yaml"
+    path.write_text(yaml.safe_dump(payload), encoding="utf-8")
+    config = prepare_config(path)
+    with pytest.raises(ConfigError, match="does not accept metadata.adapter_kwargs"):
+        build_environment(config)
+
+
+def test_record_flights_override_does_not_change_experiment_id(tmp_path: Path) -> None:
+    from rewardbench.run.cli import _flight_adapter_overrides
+
+    database = tmp_path / "numerical.sqlite"
+    config = prepare_config(NUMERICAL, database_path=database)
+    before = experiment_id(config)
+    overrides = _flight_adapter_overrides(config, experiment_id=before, database=database)
+    assert overrides["experiment_id"] == before
+    assert Path(overrides["record_dir"]).is_dir()
+    assert overrides.get("record_video") is False
+    env = build_environment(config, adapter_overrides=overrides)
+    try:
+        assert env.research_mode is True
+        assert env.experiment_id == before
+        assert env.record_dir == Path(overrides["record_dir"])
+    finally:
+        env.close()
+    assert experiment_id(config) == before
 
 
 def test_mock_cli_runs_numerical_and_nofeedback(tmp_path: Path) -> None:

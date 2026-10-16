@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
+from typing import Any
 
 from rewardbench.contracts import (
     ConfigError,
@@ -61,18 +62,18 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         config = prepare_config(args.config, database_path=args.database)
+        database = Path(config.database_path)
+        database.parent.mkdir(parents=True, exist_ok=True)
+        exp_id = experiment_id(config)
+        overrides = _flight_adapter_overrides(config, experiment_id=exp_id, database=database)
         model = build_model(config, mode=args.mode)
-        environment = build_environment(config)
+        environment = build_environment(config, adapter_overrides=overrides)
     except ConfigError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     except RewardBenchError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
-
-    database = Path(config.database_path)
-    database.parent.mkdir(parents=True, exist_ok=True)
-    exp_id = experiment_id(config)
 
     print("rewardbench.run")
     print(f"  mode: {args.mode}")
@@ -83,6 +84,18 @@ def main(argv: list[str] | None = None) -> int:
     print(f"  split: {config.split.value}")
     print(f"  provider/model: {config.provider}/{config.model_id}")
     print(f"  database: {database.resolve()}")
+    adapter_kwargs = dict(config.metadata.get("adapter_kwargs") or {})
+    if adapter_kwargs.get("research_mode") or overrides.get("research_mode"):
+        print(f"  research_mode: {overrides.get('research_mode', adapter_kwargs.get('research_mode'))}")
+        print(
+            "  start_schedule_version: "
+            f"{adapter_kwargs.get('start_schedule_version', 'apollolander.starts.v1')}"
+        )
+    if overrides.get("record_dir") or adapter_kwargs.get("record_dir"):
+        print(f"  flight_records: {overrides.get('record_dir', adapter_kwargs.get('record_dir'))}")
+    if getattr(environment, "research_mode", False):
+        print(f"  adapter.research_mode: {environment.research_mode}")
+        print(f"  adapter.start_schedule_version: {environment.start_schedule_version}")
     if args.mode == "mock":
         print(
             "  note: scripted mock model — infrastructure test only; "
@@ -120,6 +133,21 @@ def main(argv: list[str] | None = None) -> int:
     if summary.status in _RUN_FAILED:
         return 1
     return 1
+
+
+def _flight_adapter_overrides(config, *, experiment_id: str, database: Path) -> dict[str, Any]:
+    """Runtime-only adapter kwargs that must not alter the hashed experiment id."""
+
+    overrides: dict[str, Any] = {"experiment_id": experiment_id}
+    metadata = dict(config.metadata or {})
+    raw_kwargs = metadata.get("adapter_kwargs") or {}
+    adapter_kwargs = dict(raw_kwargs)
+    if metadata.get("record_flights") and "record_dir" not in adapter_kwargs:
+        flights = database.parent / "flights" / experiment_id
+        flights.mkdir(parents=True, exist_ok=True)
+        overrides["record_dir"] = str(flights)
+        overrides.setdefault("record_video", False)
+    return overrides
 
 
 def _print_summary(summary, database: Path) -> None:

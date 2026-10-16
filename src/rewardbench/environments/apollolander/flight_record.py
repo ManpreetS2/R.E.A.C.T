@@ -93,6 +93,8 @@ def build_flight_record(
     fuel_penalty: float,
     terminal_reward: float,
     video_path: str | None = None,
+    experiment_id: str | None = None,
+    episode_index: int | None = None,
 ) -> dict[str, Any]:
     """Assemble the inspectable, replayable episode manifest."""
     actions = [dict(action) for action in trace]
@@ -104,7 +106,9 @@ def build_flight_record(
         "research_mode": bool(research_mode),
         "start_schedule_version": start_schedule_version if research_mode else None,
         "vary_fuel": bool(vary_fuel) if research_mode else False,
+        "experiment_id": experiment_id,
         "episode_seed": int(seed),
+        "episode_index": episode_index,
         "initial_state": {key: float(start[key]) for key in ("x", "y", "vx", "vy", "rotation", "fuel", "scale")},
         "controller": dict(controller),
         "controller_hash": controller_hash(controller),

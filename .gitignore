@@ -8,6 +8,7 @@ venv/
 dist/
 *.egg-info/
 runs/
+reports/
 *.sqlite
 *.sqlite3
 *.db

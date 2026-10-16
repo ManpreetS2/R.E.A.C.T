@@ -31,10 +31,13 @@ metadata:
   purpose: offline_infrastructure_test
   not_llm_learning: true
   terrain: fixed-noise-seed-12039
+  record_flights: true
   adapter_kwargs:
     research_mode: true
     max_steps: 120
     locked_camera: true
+    start_schedule_version: apollolander.starts.v1
+    vary_fuel: false
 notes: >
   Offline mock experiment with rewards withheld from the model. Uses a
   scripted feedback-responsive model against real ApolloLander physics. This
@@ -42,4 +45,4 @@ notes: >
   apollolander_offline_development_numerical.yaml (same seeds, revisions, and
   simulator parameters; only feedback_condition and names differ). SQLite
   still stores complete episode rewards. metadata.adapter_kwargs.research_mode
-  is forwarded when Agent 2's adapter accepts that constructor argument.
+  is required and must reach the adapter; unsupported adapter kwargs fail closed.
