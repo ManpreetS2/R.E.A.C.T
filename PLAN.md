@@ -1,7 +1,7 @@
 # R.E.A.C.T. development plan
 
-Last updated: 2026-10-15  
-Current milestone: **M1 — Verified integrated offline feedback experiment**  
+Last updated: 2026-10-15 (integration validation recorded)  
+Current milestone: **M1 — Verified integrated offline feedback experiment** (offline suites green; YAML→adapter wiring still open)  
 Maintainer: Agent 4 (Testing & Analytics). Other agents may suggest edits. **Only Agent 4 edits this file.**
 
 Official project name: **R.E.A.C.T. — Reward-Enhanced Adaptive Controller Testing**  
@@ -106,18 +106,19 @@ Do **not** mark a milestone done until every exit checkbox is verified on the in
 
 Exit criteria:
 
-- [ ] Integration branch `work/integration-offline-v1` exists and is based on `main` `14061991`
-- [ ] Pinned commits `acda700`, `c0114b6`, and `0f234eb` are contained in the integration history
-- [ ] `pytest` core, providers, prompts, analysis, and environments are green
-- [ ] Node ApolloLander `physics.test.js` is green
-- [ ] Mock model completes ≥2 ApolloLander revisions with real physics; numerical feedback reaches the next revision
-- [ ] No-feedback condition hides rewards in history while SQLite still stores them
-- [ ] Attempts and episodes are recorded in SQLite
-- [ ] Research-mode / seed-derived starts and separate development vs held-out schedules are covered by tests where Agent 2 shipped them
-- [ ] Deterministic repeatability and budget/resume behavior remain covered
-- [ ] Replay/recording smoke tests pass
-- [ ] No paid API call was required
-- [ ] Results recorded in this file
+- [x] Integration branch `work/integration-offline-v1` exists and is based on `main` `14061991`
+- [x] Pinned commits `acda700`, `c0114b6`, and `0f234eb` are contained in the integration history
+- [x] `pytest` core, providers, prompts, analysis, and environments are green (**194** passed, 0 skipped, 0 failed on `9f08b71`)
+- [x] Node ApolloLander `physics.test.js` is green
+- [x] Mock model completes ≥2 ApolloLander revisions with real physics; numerical feedback reaches the next revision (`tests/core/test_offline_loop.py`, analysis Apollo integration)
+- [x] No-feedback condition hides rewards in history while SQLite still stores them
+- [x] Attempts and episodes are recorded in SQLite
+- [x] Research-mode / seed-derived starts and separate development vs held-out schedules are covered by Agent 2 tests (`test_research_mode_*`, research YAML configs present)
+- [x] Deterministic repeatability and budget/resume behavior remain covered
+- [x] Replay/recording smoke tests pass
+- [x] No paid API call was required
+- [x] Results recorded in this file
+- [ ] **Still open for full M1 command-path closure:** `metadata.adapter_kwargs` is **not** applied when loading research YAML without Agent 1's later `rewardbench.run` factory (`79ce824`). Adapter supports `research_mode=True`; naive `make_environment(config.environment_id)` leaves `research_mode=False`.
 
 ### M2 — Capped real-model pilot
 
@@ -186,10 +187,10 @@ Exit criteria:
 
 ## 8. In progress — integration sprint
 
-- [ ] Merge pinned Agent 1–3 commits into `work/integration-offline-v1`
-- [ ] Re-run full suites on the combined tree
-- [ ] Confirm `metadata.adapter_kwargs` / research-mode wiring end-to-end when launching from YAML (**note:** full CLI forwarding landed in Agent 1 commit `79ce824`, *after* the pinned `acda700`; treat as a gap for the next integration round if absent after this pass)
-- [ ] Record integrated commit hash and remaining blockers here
+- [x] Merge pinned Agent 1–3 commits into `work/integration-offline-v1`
+- [x] Re-run full suites on the combined tree
+- [ ] Confirm `metadata.adapter_kwargs` / research-mode wiring end-to-end when launching from YAML — **blocked on next Agent 1 pin `79ce824`** (`src/rewardbench/run/` absent on this baseline)
+- [x] Record integrated commit hash and remaining blockers here (see §15)
 
 ## 9. Blockers and risks
 
@@ -214,12 +215,12 @@ Exit criteria:
 
 - [x] `main` contains runner, providers, environments, analysis
 - [x] Mock / recorded HTTP provider tests exist (no live spend)
-- [ ] Combined suites green on `work/integration-offline-v1` after merges
-- [ ] Offline ApolloLander multi-revision numerical + no-feedback isolation
-- [ ] Research starts + held-out schedules (Agent 2)
-- [ ] Recording / replay smoke
-- [ ] Budget / resume coverage still green
-- [ ] YAML → adapter research-mode path verified or explicitly listed as blocked
+- [x] Combined suites green on `work/integration-offline-v1` after merges
+- [x] Offline ApolloLander multi-revision numerical + no-feedback isolation
+- [x] Research starts + held-out schedules (Agent 2) — via adapter kwargs / tests; not via YAML CLI yet
+- [x] Recording / replay smoke
+- [x] Budget / resume coverage still green
+- [x] YAML → adapter research-mode path **explicitly listed as blocked** pending Agent 1 `79ce824`
 - [ ] GitHub Actions not yet claimed green from this machine
 
 ## 12. Research methodology and constraints
@@ -256,10 +257,41 @@ Gymnasium LunarLander-v3 is a separate project and a separate score.
 6. Only after green tests, update the milestone checklists in this file.
 7. Push / merge to `main` only when the project owner requests it.
 
-## 15. Integration results (filled after Phase C)
+## 15. Integration results (Phase C / D — 15 October 2026)
 
-- Integrated commit: *(pending)*
-- Suites: *(pending)*
-- Gaps: *(pending)*
+### Verified baseline
+
+| Item | Value |
+| --- | --- |
+| Worktree | `~/Projects/R.E.A.C.T-worktrees/integration` |
+| Branch | `work/integration-offline-v1` |
+| PLAN update commit | `0e6c8223958752f971f770a7d11eb2fd8df37ec0` |
+| Integrated tip (post-merge) | `9f08b71a7c5ec381a510b1cf477bd800d57ab948` |
+| Parent `main` | `14061991e839409d8f0b4718eef91ed45a1116c7` |
+| Merged pins | `acda700` (Agent 1), `c0114b6` (Agent 2), `0f234eb` (Agent 3, includes `fb5d4ca`) |
+| Not merged (next round) | Agent 1 `79ce824`; Agent 3 `5dac743` |
+| Push / merge to `main` | **Not done** (owner must request) |
+
+### Exact local test results on `9f08b71`
+
+| Suite | Result |
+| --- | --- |
+| `tests/core` + `tests/providers` + `tests/prompts` + `tests/analysis` | **128 passed**, 0 skipped, 0 failed |
+| `tests/environments` | **66 passed**, 0 skipped, 0 failed |
+| Full `pytest tests` | **194 passed**, 0 skipped, 0 failed |
+| `node frontend/apollolander/experiment/physics.test.js` | **exit 0** |
+| Paid API calls | **none** |
+
+### Gaps before a complete offline experiment from one command
+
+1. **YAML → adapter research mode:** `examples/apollolander/research_*.yaml` store `metadata.adapter_kwargs`, but this tree has no `src/rewardbench/run/` factory/CLI. Loading the config and calling `make_environment(environment_id)` alone leaves `research_mode=False`. Manual `make_environment(..., **adapter_kwargs)` works. **Owner: Agent 1 (`79ce824`).**
+2. **Single-command offline entrypoint:** no integrated `python -m rewardbench.run ... --mode mock` on this baseline.
+3. **Experiment ID ↔ recording ↔ analysis:** SQLite + analysis loaders work; tying video/replay artifacts automatically to the same experiment ID through the CLI path is not closed until the run package lands.
+4. **M2 blockers:** no API keys; live mode must stay disabled until human-approved USD cap; Agent 3 readiness docs exist (`docs/AGENT3_AI_INTEGRATIONS_REPORT.md`) but do not authorize spend.
+5. **Credit economy:** deferred (Section 19 / M5–M6).
+
+### Integration fixes in this pass
+
+None required. All three pinned merges applied cleanly (ort strategy; Agent 3 `pyproject.toml` package-data line already matched `main`).
 
 Scope changes to this plan need approval from the project owner.
