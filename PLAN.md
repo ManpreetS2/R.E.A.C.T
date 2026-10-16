@@ -34,6 +34,7 @@ Out of v1 scope: credit economy, competition mode, Minecraft, new dashboards.
 | Agent 1 held-out tip merged | `381d3d13f8259ca633820007a349e7d5963ad236` (`work/v1-heldout-evaluation`) |
 | Post-merge integration | `1c1a45e72d95ff229ded7e83f5caebb85c4ff876` |
 | Flagship docs tip | **`4c88f2fa234ea2a4ecbacd9fd5998947fad87740`** |
+| Release-audit tip | **`89f006de563396c0e9f9f7010dbc388b24d596ed`** |
 | Tests | **258** Python passed + Node physics exit 0 |
 | Publish status | Local only — **not pushed / not merged** without owner approval |
 
