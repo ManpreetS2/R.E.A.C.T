@@ -24,6 +24,13 @@ from tests.providers.conftest import FakeTransport, http_json
 from tests.providers.test_adapters import _anthropic, _chat, _client, _gemini
 
 _SETTINGS = {"max_output_tokens": 400, "max_reasoning_tokens": 16}
+_FIXTURES = Path(__file__).resolve().parent / "fixtures"
+_APOLLO_SCHEMA = json.loads(
+    (_FIXTURES / "apollolander_controller_schema.json").read_text(encoding="utf-8")
+)
+_APOLLO_CONSTANT = json.loads(
+    (_FIXTURES / "apollolander_constant_controller.json").read_text(encoding="utf-8")
+)
 
 _ENVIRONMENTS = {
     "lunarlander-v3": EnvironmentSpec(
@@ -41,17 +48,18 @@ _ENVIRONMENTS = {
     "apollolander": EnvironmentSpec(
         environment_id="apollolander",
         display_name="ApolloLander",
-        task_description="Land on the designated pad with bounded thrust and rotation.",
-        controller_schema={
-            "schema": "rewardbench.apollolander.controller.v1",
-            "commands": {
-                "thrust": {"minimum": 0, "maximum": 1},
-                "rotation": {"minimum": -90, "maximum": 90, "step": 10},
-            },
-            "policies": ["guidance", "constant"],
-        },
+        task_description=(
+            "Land the Apollo lander upright on the single designated pad of one "
+            "fixed lunar map. Every controlled trial starts at the same position, "
+            "velocity, rotation, and fuel. Episode seeds name the trial and do not "
+            "move the terrain, the pad, or the ship. Submit a controller object, "
+            "not JavaScript."
+        ),
+        controller_schema=_APOLLO_SCHEMA,
         action_space_summary="thrust from 0 to 1 and rotation in 10 degree steps from -90 to 90",
-        observation_space_summary="x, y, vx, vy, rotation, fuel, altitude, and horizontal offset from the pad",
+        observation_space_summary=(
+            "x, y, vx, vy, rotation, fuel, altitude, and horizontal offset from the pad center"
+        ),
     ),
 }
 
@@ -61,12 +69,7 @@ _PROPOSALS = {
         "policy": "linear",
         "parameters": {"weights": [0.1, -0.2]},
     },
-    "apollolander": {
-        "schema": "rewardbench.apollolander.controller.v1",
-        "policy": "constant",
-        "thrust": 2.0,
-        "rotation": -20,
-    },
+    "apollolander": dict(_APOLLO_CONSTANT),
 }
 
 _MODELS = (
@@ -137,6 +140,15 @@ def test_provider_package_does_not_hardcode_either_controller():
     assert "not a provider-side spending cap" in joined
 
 
+def test_actual_apollolander_schema_fixture_matches_environment_document():
+    assert _APOLLO_SCHEMA["schema"] == "rewardbench.apollolander.controller.v1"
+    assert set(_APOLLO_SCHEMA["policies"]) == {"guidance", "constant"}
+    assert "vx_gain" in _APOLLO_SCHEMA["policies"]["guidance"]["parameters"]
+    assert _APOLLO_SCHEMA["commands"]["rotation"]["step"] == 10
+    assert _APOLLO_CONSTANT["policy"] == "constant"
+    assert 0 <= _APOLLO_CONSTANT["thrust"] <= 1
+
+
 def test_four_providers_propose_either_environment_without_validating_it():
     seen: dict[str, set[str]] = {environment_id: set() for environment_id in _ENVIRONMENTS}
     for environment_id in _ENVIRONMENTS:
@@ -146,6 +158,10 @@ def test_four_providers_propose_either_environment_without_validating_it():
         other = "apollolander" if environment_id == "lunarlander-v3" else "lunarlander"
         assert _ENVIRONMENTS[environment_id].controller_schema["schema"] in expected_user
         assert other not in expected_user.lower()
+        if environment_id == "apollolander":
+            assert '"vx_gain"' in expected_user
+            assert '"guidance"' in expected_user
+            assert "not JavaScript" in expected_user
         proposal = _PROPOSALS[environment_id]
         for provider, model_id in _MODELS:
             transport = FakeTransport([http_json(_payload(provider, json.dumps(proposal)))])
@@ -153,7 +169,8 @@ def test_four_providers_propose_either_environment_without_validating_it():
             assert response.parse_error is None
             assert dict(response.parameters) == proposal
             if environment_id == "apollolander":
-                assert response.parameters["thrust"] == 2.0
+                assert response.parameters["thrust"] == 0.4
+                assert response.parameters["rotation"] == -20
             else:
                 assert response.parameters["parameters"]["weights"] == [0.1, -0.2]
             system, user = _instruction(provider, json.loads(transport.requests[0].body))

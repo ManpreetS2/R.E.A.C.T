@@ -20,7 +20,7 @@ dev = [
 where = ["src"]
 
 [tool.setuptools.package-data]
-rewardbench = ["py.typed", "storage/schema.sql"]
+rewardbench = ["py.typed", "storage/schema.sql", "providers/data/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

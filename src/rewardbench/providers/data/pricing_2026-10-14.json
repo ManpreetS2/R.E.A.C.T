@@ -1,42 +1,56 @@
 {
   "version": "2026-10-14",
   "currency": "USD",
-  "source": "Planning list prices from the 14 October 2026 master plan. Verify against the provider on the day of a paid run. This file is not an invoice.",
+  "source": "Base input/output rates verified against official provider pricing pages on 2026-10-15 (OpenAI developers.openai.com/api/docs/pricing, Google ai.google.dev/gemini-api/docs/pricing, Anthropic platform.claude.com/docs/en/about-claude/pricing and Anthropic List Prices 2026-10-07, xAI docs.x.ai/developers/pricing). Cache rates are intentionally omitted so an unexpected cache charge stays unpriced and blocks further live calls. This file is not an invoice.",
   "models": {
     "openai:gpt-5.4-mini": {
       "input_per_million": 0.75,
       "output_per_million": 4.5,
       "reasoning_included_in_output": true,
-      "note": "Reasoning tokens are billed inside output tokens when the API includes them in completion_tokens."
+      "cache_read_per_million": null,
+      "cache_write_per_million": null,
+      "note": "Verified 2026-10-15: $0.75 / $4.50 per 1M input/output. Official cached input is $0.075/1M but left null here so unreserved cache usage is rejected. Reasoning tokens are billed inside completion_tokens."
     },
     "openai:gpt-5.4": {
       "input_per_million": 2.5,
       "output_per_million": 15.0,
       "reasoning_included_in_output": true,
-      "note": "Optional teacher model in the master plan. Not a student-cohort default."
+      "cache_read_per_million": null,
+      "cache_write_per_million": null,
+      "long_context_threshold_tokens": 272000,
+      "long_context_input_per_million": 5.0,
+      "long_context_output_per_million": 22.5,
+      "note": "Verified 2026-10-15 teacher/reference model: $2.50 / $15 short context; prompts above 272K use 2x input and 1.5x output. Cached input $0.25/1M left null for the same unreserved-cache guard. Not a student-cohort default."
     },
     "google:gemini-3.1-flash-lite": {
       "input_per_million": 0.25,
       "output_per_million": 1.5,
       "reasoning_included_in_output": false,
-      "note": "thoughtsTokenCount is separate from candidatesTokenCount and is priced here at the output rate."
+      "cache_read_per_million": null,
+      "cache_write_per_million": null,
+      "note": "Verified 2026-10-15: $0.25 / $1.50 per 1M text input/output. Official output price includes thinking tokens; thoughtsTokenCount is not inside candidatesTokenCount, so this catalog bills thoughts at the output rate. Context-cache list price exists but is left null."
     },
     "anthropic:claude-haiku-5-5": {
       "input_per_million": 0.1,
       "output_per_million": 0.5,
       "reasoning_included_in_output": true,
       "long_context_threshold_tokens": 100000,
-      "long_context_input_per_million": null,
-      "long_context_output_per_million": null,
+      "long_context_input_per_million": 0.5,
+      "long_context_output_per_million": 2.5,
       "cache_read_per_million": null,
       "cache_write_per_million": null,
-      "note": "Rates apply to prompts up to 100000 tokens. The master plan says the price is higher above that and does not publish the higher rate. Cache reads and writes are not priced, so a response that reports them is rejected."
+      "note": "Verified 2026-10-15: $0.10 / $0.50 through 100K prompt tokens; $0.50 / $2.50 above that. Official cache read/write rates exist ($0.01 read and $0.125/$0.20 write for short prompts) but are left null so unreserved cache usage is rejected. Adapters do not send cache breakpoints."
     },
     "xai:grok-4.3": {
       "input_per_million": 1.25,
       "output_per_million": 2.5,
       "reasoning_included_in_output": true,
-      "note": "Short-context list price. Grok 4.3 is a cross-tier reference, not a like-priced match for the other student models. Grok 4.1 Fast is retired and intentionally absent."
+      "long_context_threshold_tokens": 200000,
+      "long_context_input_per_million": 2.5,
+      "long_context_output_per_million": 5.0,
+      "cache_read_per_million": null,
+      "cache_write_per_million": null,
+      "note": "Verified 2026-10-15 short-context list price $1.25 / $2.50; long context at or above 200K is $2.50 / $5.00. Official cached input $0.20/$0.40 left null. Cross-tier reference relative to the other student models. Grok 4.1 Fast remains intentionally absent."
     }
   }
 }
