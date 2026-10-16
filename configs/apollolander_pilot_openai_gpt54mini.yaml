@@ -43,10 +43,16 @@ model_settings:
   json_mode: true
 metadata:
   pilot: true
-  agent: agent3
+  agent: agent1
   approval_required: true
+  paired_with: apollolander_pilot_openai_gpt54mini_nofeedback.yaml
 notes: >
   First authorized pilot only. Export OPENAI_API_KEY in the shell; never commit it.
-  Client construction should also pass max_spend_usd matching budget.max_cost_usd
-  and max_retries matching max_model_retries. Review SQLite usage after the first
-  revision before allowing a second call.
+  Exact first-call command:
+    python -m rewardbench.run --config configs/apollolander_pilot_openai_gpt54mini.yaml
+      --mode live --i-authorize-paid-api-calls
+  That process allows ONE paid propose (max_model_retries=0) then pauses.
+  Approved resume for revision 2 (does not repeat call 1):
+    python -m rewardbench.run --config configs/apollolander_pilot_openai_gpt54mini.yaml
+      --mode live --i-authorize-paid-api-calls --authorize-continuation
+  A paused one-call stop is not a completed learning experiment.

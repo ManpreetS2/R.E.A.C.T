@@ -1,0 +1,45 @@
+# No-feedback twin of apollolander_pilot_openai_gpt54mini.yaml.
+# Same seeds, revisions, retries, cost ceiling, and simulator settings.
+# Only feedback_condition / names / database path differ.
+# DO NOT run until the owner explicitly approves spending and exports OPENAI_API_KEY.
+
+experiment_name: apollolander-pilot-openai-gpt54mini-nofeedback
+environment_id: apollolander
+provider: openai
+model_id: gpt-5.4-mini
+feedback_condition: no_feedback
+split: development
+seed: 11
+num_revisions: 2
+episodes_per_revision: 1
+history_window: 4
+max_episode_steps: 8000
+max_model_retries: 0
+checkpoint_every: 1
+on_invalid_policy: skip
+on_model_failure: abort
+on_episode_failure: skip
+database_path: runs/apollolander_pilot_openai_gpt54mini_nofeedback.sqlite
+budget:
+  max_cost_usd: 0.05
+  max_tokens: 20000
+  max_wall_seconds: 900
+  max_revisions: 2
+  max_episodes: 2
+  max_model_calls: 2
+development_seeds: [0, 1, 2, 3, 4, 5, 6, 7]
+held_out_seeds: [1000000, 1000001, 1000002, 1000003]
+model_settings:
+  temperature: 0
+  max_output_tokens: 400
+  json_mode: true
+metadata:
+  pilot: true
+  agent: agent1
+  approval_required: true
+  paired_with: apollolander_pilot_openai_gpt54mini.yaml
+notes: >
+  Authorized live no-feedback pilot twin. Export OPENAI_API_KEY only after spend
+  approval. First CLI invocation: --mode live --i-authorize-paid-api-calls
+  (one paid propose). Continuation: add --authorize-continuation. SQLite keeps
+  rewards; model history must not.
