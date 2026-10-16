@@ -46,6 +46,24 @@ def test_negative_charge_is_rejected() -> None:
         limiter.charge(cost_usd=-1)
 
 
+def test_dollar_cap_does_not_block_an_already_purchased_episode() -> None:
+    limiter = BudgetLimiter(BudgetLimits(max_cost_usd=1, max_episodes=2))
+    limiter.charge(cost_usd=1)
+    limiter.ensure_can_start(episode=True)
+    with pytest.raises(BudgetExceeded) as caught:
+        limiter.ensure_can_start(model_call=True)
+    assert caught.value.resource == "max_cost_usd"
+
+
+def test_recorded_spend_is_counted_once() -> None:
+    limiter = BudgetLimiter(BudgetLimits(max_cost_usd=1))
+    limiter.commit_once("attempt-1", cost_usd=0.4, tokens=5, model_calls=1)
+    limiter.commit_once("attempt-1", cost_usd=0.4, tokens=5, model_calls=1)
+    assert limiter.cost_usd == pytest.approx(0.4)
+    assert limiter.model_calls == 1
+    assert limiter.tokens == 5
+
+
 def test_zero_or_negative_limits_are_rejected() -> None:
     with pytest.raises(ConfigError):
         BudgetLimits(max_episodes=0)

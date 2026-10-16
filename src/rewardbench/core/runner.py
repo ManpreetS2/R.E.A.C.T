@@ -16,6 +16,7 @@ import time
 import traceback
 from collections.abc import Callable, Mapping
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 from rewardbench.contracts import (
@@ -26,6 +27,7 @@ from rewardbench.contracts import (
     ConfigError,
     EnvironmentAdapter,
     EnvironmentAdapterError,
+    EnvironmentSpec,
     EpisodeResult,
     ErrorPhase,
     ExperimentAborted,
@@ -45,10 +47,12 @@ from rewardbench.contracts import (
     StoredEpisode,
     StoredError,
 )
-from rewardbench.core.budget import BudgetLimiter
+from rewardbench.core.budget import BudgetLimiter, _SpendHold
 from rewardbench.core.evaluation import SplitGuard
 from rewardbench.core.history import HistoryBuilder, RevisionHistoryEntry
 from rewardbench.core.ids import canonical_config, config_hash, experiment_id, new_session_id
+from rewardbench.core.isolation import model_history
+from rewardbench.core.locking import ExperimentRunLock
 from rewardbench.core.seeds import build_seed_schedule
 
 logger = logging.getLogger("rewardbench.runner")
@@ -102,9 +106,21 @@ class ExperimentRunner:
                 self.split_guard.check(seed)
         self._session_id = ""
         self._session_open = False
+        self._spec: EnvironmentSpec | None = None
 
     def run(self) -> ExperimentSummary:
+        with ExperimentRunLock(self.experiment_id, self._lock_directory()):
+            return self._run_locked()
+
+    def _lock_directory(self) -> Path | None:
+        store_path = getattr(self.store, "path", None)
+        if store_path is None:
+            return None
+        return Path(store_path).parent / "locks"
+
+    def _run_locked(self) -> ExperimentSummary:
         self.store.initialize()
+        self._spec = self.environment.describe()
         self._check_environment()
         existing = self.store.get_experiment(self.experiment_id)
         if existing is not None:
@@ -144,7 +160,7 @@ class ExperimentRunner:
             raise ExperimentAborted(str(exc), summary) from exc
 
     def _check_environment(self) -> None:
-        spec = self.environment.describe()
+        spec = self._environment_spec()
         if spec.environment_id != self.config.environment_id:
             raise ConfigError(
                 f"environment id {spec.environment_id!r} does not match "
@@ -232,57 +248,82 @@ class ExperimentRunner:
             if len(existing) >= max_calls:
                 return self._give_up_model(revision, last_message)
             call_index = len(existing)
-            self._block_if_needed(model_call=True, revision=call_index == 0)
+            new_revision = call_index == 0
+            self._block_if_needed(model_call=True, revision=new_revision)
             request = self._request(revision)
+            hold = self._begin_global(
+                key=f"{self.experiment_id}:attempt:{revision}:{call_index}",
+                model_call=True,
+                revision=new_revision,
+            )
+            if hold is None and self._shared_budget() is not None:
+                chosen = [item for item in self._attempts_for(revision) if item.selected]
+                if chosen:
+                    return chosen[-1]
+                if len(self._attempts_for(revision)) == len(existing):
+                    return self._give_up_model(revision, "stored spend could not be resumed")
+                continue
+            settled = False
             try:
-                response = self.model.propose(request)
-            except ModelClientError as exc:
-                last_message = str(exc)
-                give_up = (not exc.retryable) or (call_index + 1 >= max_calls)
+                try:
+                    response = self.model.propose(request)
+                except ModelClientError as exc:
+                    last_message = str(exc)
+                    give_up = (not exc.retryable) or (call_index + 1 >= max_calls)
+                    self._insert_attempt(
+                        revision=revision,
+                        call_index=call_index,
+                        selected=give_up,
+                        parameters={},
+                        raw_response="",
+                        valid=False,
+                        validation_error=str(exc),
+                        response=None,
+                        error=str(exc),
+                    )
+                    self._settle_global(
+                        hold,
+                        model_calls=1,
+                        revisions=1 if new_revision else 0,
+                    )
+                    settled = True
+                    if give_up:
+                        return self._give_up_model(revision, str(exc))
+                    self._record_error(ErrorPhase.MODEL, str(exc), revision=revision, exc=exc)
+                    continue
+                parameters, valid, error = self._interpret(response)
+                is_last = call_index + 1 >= max_calls
                 self._insert_attempt(
                     revision=revision,
                     call_index=call_index,
-                    selected=give_up,
-                    parameters={},
-                    raw_response="",
-                    valid=False,
-                    validation_error=str(exc),
-                    response=None,
-                    error=str(exc),
+                    selected=valid or is_last,
+                    parameters=parameters,
+                    raw_response=response.raw_text,
+                    valid=valid,
+                    validation_error=error,
+                    response=response,
+                    error=None if valid else error,
                 )
-                self._charge_global(model_calls=1, revisions=1 if call_index == 0 else 0)
-                if give_up:
-                    return self._give_up_model(revision, str(exc))
-                self._record_error(ErrorPhase.MODEL, str(exc), revision=revision, exc=exc)
-                continue
-            parameters, valid, error = self._interpret(response)
-            is_last = call_index + 1 >= max_calls
-            self._insert_attempt(
-                revision=revision,
-                call_index=call_index,
-                selected=valid or is_last,
-                parameters=parameters,
-                raw_response=response.raw_text,
-                valid=valid,
-                validation_error=error,
-                response=response,
-                error=None if valid else error,
-            )
-            self._charge_global(
-                cost_usd=response.estimated_cost_usd,
-                tokens=response.charged_tokens,
-                model_calls=1,
-                revisions=1 if call_index == 0 else 0,
-            )
-            self._stop_if_over_budget()
-            if valid:
-                return [item for item in self._attempts_for(revision) if item.selected][-1]
-            message = error or "invalid controller"
-            if is_last:
-                if self.config.on_invalid_policy is FailurePolicy.SKIP:
-                    self._record_error(ErrorPhase.VALIDATION, message, revision=revision)
-                return self._give_up_policy(revision, message)
-            self._record_error(ErrorPhase.VALIDATION, message, revision=revision)
+                self._settle_global(
+                    hold,
+                    cost_usd=response.estimated_cost_usd,
+                    tokens=response.charged_tokens,
+                    model_calls=1,
+                    revisions=1 if new_revision else 0,
+                )
+                settled = True
+                self._stop_if_over_budget()
+                if valid:
+                    return [item for item in self._attempts_for(revision) if item.selected][-1]
+                message = error or "invalid controller"
+                if is_last:
+                    if self.config.on_invalid_policy is FailurePolicy.SKIP:
+                        self._record_error(ErrorPhase.VALIDATION, message, revision=revision)
+                    return self._give_up_policy(revision, message)
+                self._record_error(ErrorPhase.VALIDATION, message, revision=revision)
+            finally:
+                if not settled:
+                    self._cancel_global(hold)
 
     def _give_up_model(self, revision: int, message: str) -> StoredAttempt:
         if self.config.on_model_failure is FailurePolicy.ABORT:
@@ -311,38 +352,52 @@ class ExperimentRunner:
                 continue
             self.split_guard.check(seed)
             self._block_if_needed(episode=True)
+            hold = self._begin_global(
+                key=f"{self.experiment_id}:episode:{revision}:{episode_index}",
+                episode=True,
+            )
+            if hold is None and self._shared_budget() is not None:
+                continue
             try:
-                result = self.environment.run_episode(
-                    policy,
-                    seed=seed,
-                    episode_index=episode_index,
-                    revision_index=revision,
-                    max_steps=self.config.max_episode_steps,
-                )
-                checked = self._checked_episode(result, seed, episode_index, revision)
-            except Exception as exc:
-                self._insert_failed_episode(revision, episode_index, seed, exc)
-                self._charge_global(episodes=1)
-                self._stop_if_over_budget()
-                if self.config.on_episode_failure is FailurePolicy.ABORT:
-                    raise self._fail(
+                try:
+                    result = self.environment.run_episode(
+                        policy,
+                        seed=seed,
+                        episode_index=episode_index,
+                        revision_index=revision,
+                        max_steps=self.config.max_episode_steps,
+                    )
+                    checked = self._checked_episode(result, seed, episode_index, revision)
+                except Exception as exc:
+                    self._insert_failed_episode(revision, episode_index, seed, exc)
+                    self._settle_global(hold, episodes=1)
+                    self._stop_if_over_budget()
+                    if self.config.on_episode_failure is FailurePolicy.ABORT:
+                        raise self._fail(
+                            ErrorPhase.EPISODE,
+                            str(exc),
+                            revision=revision,
+                            episode=episode_index,
+                            exc=exc,
+                        ) from exc
+                    self._record_error(
                         ErrorPhase.EPISODE,
                         str(exc),
                         revision=revision,
                         episode=episode_index,
                         exc=exc,
-                    ) from exc
-                self._record_error(
-                    ErrorPhase.EPISODE,
-                    str(exc),
-                    revision=revision,
-                    episode=episode_index,
-                    exc=exc,
-                )
-                continue
-            self._insert_episode(checked)
-            self._charge_global(episodes=1)
-            self._stop_if_over_budget()
+                    )
+                    continue
+                self._insert_episode(checked)
+                self._settle_global(hold, episodes=1)
+                self._stop_if_over_budget()
+            except BudgetExceeded:
+                raise
+            except ExperimentAborted:
+                raise
+            except BaseException:
+                self._cancel_global(hold)
+                raise
 
     def _interpret(self, response: ModelResponse) -> tuple[dict[str, Any], bool, str | None]:
         if response.parse_error:
@@ -427,8 +482,8 @@ class ExperimentRunner:
             revision_index=revision,
             feedback_condition=self.config.feedback_condition,
             split=self.config.split,
-            environment=self.environment.describe(),
-            history=self.history.build(entries),
+            environment=self._environment_spec(),
+            history=model_history(self.history, entries, self.split_guard.allowed_seeds()),
             model_settings=dict(self.config.model_settings),
         )
 
@@ -517,6 +572,11 @@ class ExperimentRunner:
             )
         )
 
+    def _environment_spec(self) -> EnvironmentSpec:
+        if self._spec is None:
+            self._spec = self.environment.describe()
+        return self._spec
+
     def _block_if_needed(
         self,
         *,
@@ -526,37 +586,69 @@ class ExperimentRunner:
     ) -> None:
         self._sync_experiment_budget()
         self.budget.ensure_can_start(model_call=model_call, episode=episode, revision=revision)
-        if self.global_budget is not None and self.global_budget is not self.budget:
-            self.global_budget.ensure_can_start(
-                model_call=model_call,
-                episode=episode,
-                revision=revision,
-            )
 
     def _stop_if_over_budget(self) -> None:
         self._sync_experiment_budget()
         self.budget.ensure_within_limits()
-        if self.global_budget is not None and self.global_budget is not self.budget:
-            self.global_budget.ensure_within_limits()
 
-    def _charge_global(
+    def _shared_budget(self) -> BudgetLimiter | None:
+        if self.global_budget is None or self.global_budget is self.budget:
+            return None
+        return self.global_budget
+
+    def _account_global(self) -> None:
+        limiter = self._shared_budget()
+        if limiter is None:
+            return
+        seen_revisions: set[int] = set()
+        for attempt in self.store.fetch_attempts(self.experiment_id):
+            revision_charge = 0
+            if attempt.revision_index not in seen_revisions:
+                seen_revisions.add(attempt.revision_index)
+                revision_charge = 1
+            limiter.commit_once(
+                f"{self.experiment_id}:attempt:{attempt.revision_index}:{attempt.call_index}",
+                cost_usd=attempt.estimated_cost_usd,
+                tokens=attempt.total_tokens,
+                model_calls=1,
+                revisions=revision_charge,
+            )
+        for episode in self.store.fetch_episodes(self.experiment_id):
+            limiter.commit_once(
+                f"{self.experiment_id}:episode:{episode.revision_index}:{episode.episode_index}",
+                episodes=1,
+            )
+
+    def _begin_global(
         self,
         *,
-        cost_usd: float = 0.0,
-        tokens: int = 0,
-        episodes: int = 0,
-        revisions: int = 0,
-        model_calls: int = 0,
-    ) -> None:
-        if self.global_budget is None or self.global_budget is self.budget:
-            return
-        self.global_budget.charge(
-            cost_usd=cost_usd,
-            tokens=tokens,
-            episodes=episodes,
-            revisions=revisions,
-            model_calls=model_calls,
+        key: str,
+        model_call: bool = False,
+        episode: bool = False,
+        revision: bool = False,
+    ) -> _SpendHold | None:
+        if self._shared_budget() is None:
+            return None
+        self._account_global()
+        assert self.global_budget is not None
+        return self.global_budget.begin(
+            key=key,
+            model_call=model_call,
+            episode=episode,
+            revision=revision,
         )
+
+    def _settle_global(self, hold: _SpendHold | None, **kwargs: float) -> None:
+        if hold is None or self._shared_budget() is None:
+            return
+        assert self.global_budget is not None
+        self.global_budget.settle(hold, **kwargs)
+
+    def _cancel_global(self, hold: _SpendHold | None) -> None:
+        if hold is None or self._shared_budget() is None:
+            return
+        assert self.global_budget is not None
+        self.global_budget.cancel(hold)
 
     def _sync_experiment_budget(self) -> None:
         attempts = self.store.fetch_attempts(self.experiment_id)

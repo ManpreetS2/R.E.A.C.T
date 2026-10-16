@@ -15,6 +15,17 @@ dependencies = [
 dev = [
     "pytest>=8.0",
 ]
+analysis = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "matplotlib>=3.8",
+]
+environments = [
+    "gymnasium[box2d]>=1.0",
+    "numpy>=1.26",
+    "imageio>=2.34",
+    "imageio-ffmpeg>=0.5",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -24,5 +35,5 @@ rewardbench = ["py.typed", "storage/schema.sql", "providers/data/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src", "tests/core"]
-addopts = "-q"
+pythonpath = ["src", "tests/core", "tests/analysis"]
+addopts = "-q --import-mode=importlib"

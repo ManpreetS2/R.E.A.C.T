@@ -1,0 +1,36 @@
+name: analysis-checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  integrated:
+    name: integrated (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install the package and test tools
+        run: python -m pip install --upgrade pip && python -m pip install -e ".[dev,analysis]"
+      - name: Run core, provider, and analysis tests
+        run: python -m pytest tests/core tests/providers tests/prompts tests/analysis -q
+        env:
+          PYTHONPATH: src
+          MPLBACKEND: Agg
+      - name: Install simulator dependencies when environment tests exist
+        if: hashFiles('tests/environments/**/*.py') != ''
+        run: python -m pip install -e ".[environments]"
+      - name: Run environment tests when they are on this branch
+        if: hashFiles('tests/environments/**/*.py') != ''
+        run: python -m pytest tests/environments -q
+        env:
+          PYTHONPATH: src
+          MPLBACKEND: Agg
