@@ -1,0 +1,52 @@
+# Recommended first paid pilot configuration for OpenAI gpt-5.4-mini.
+# DO NOT run until the owner explicitly approves spending and exports OPENAI_API_KEY.
+# This file is documentation for Agent 3. It is not executed by default CI.
+#
+# Pricing verified 2026-10-15 against https://developers.openai.com/api/docs/pricing
+# and https://developers.openai.com/api/docs/models/gpt-5.4-mini :
+#   input $0.75 / 1M tokens, cached input $0.075 / 1M (catalog leaves cache null),
+#   output $4.50 / 1M tokens (reasoning billed inside completion tokens).
+#
+# Software caps below are in-process only. They are NOT a provider-side billing
+# guarantee. Parallel processes, retries outside this config, or provider minimum
+# charges can still produce a larger real invoice.
+
+experiment_name: apollolander-pilot-openai-gpt54mini
+environment_id: apollolander
+provider: openai
+model_id: gpt-5.4-mini
+feedback_condition: numerical_reward
+split: development
+seed: 11
+num_revisions: 2
+episodes_per_revision: 1
+history_window: 4
+max_episode_steps: 8000
+max_model_retries: 0
+checkpoint_every: 1
+on_invalid_policy: skip
+on_model_failure: abort
+on_episode_failure: skip
+database_path: runs/apollolander_pilot_openai_gpt54mini.sqlite
+budget:
+  max_cost_usd: 0.05
+  max_tokens: 20000
+  max_wall_seconds: 900
+  max_revisions: 2
+  max_episodes: 2
+  max_model_calls: 2
+development_seeds: [0, 1, 2, 3, 4, 5, 6, 7]
+held_out_seeds: [1000000, 1000001, 1000002, 1000003]
+model_settings:
+  temperature: 0
+  max_output_tokens: 400
+  json_mode: true
+metadata:
+  pilot: true
+  agent: agent3
+  approval_required: true
+notes: >
+  First authorized pilot only. Export OPENAI_API_KEY in the shell; never commit it.
+  Client construction should also pass max_spend_usd matching budget.max_cost_usd
+  and max_retries matching max_model_retries. Review SQLite usage after the first
+  revision before allowing a second call.

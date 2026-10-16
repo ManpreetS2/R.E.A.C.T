@@ -1,9 +1,23 @@
 # Agent 3 — AI Integrations Report
 
 **Branch:** `work/providers-preflight`  
-**Worktree:** `~/Projects/R.E.A.C.T-worktrees/providers`  
-**Scope:** OpenAI, Google Gemini, Anthropic Claude, xAI Grok readiness for the first reward-feedback experiment.  
-**Constraint honored:** no real API calls, no key purchase, no spending, no `PLAN.md` edits, no physics/runner edits.
+**Worktree:** `/Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/providers`  
+**Previous tip:** `0f234eb`  
+**Constraint honored:** no real API calls, no keys installed, no spending, no `PLAN.md` edits, no edits to Agent 1/2 production packages (merged `main` read-only for Apollo + runner).
+
+---
+
+## GO / NO-GO
+
+| Gate | Verdict |
+| --- | --- |
+| Mocked provider → parse → Apollo validate → real physics → SQLite | **GO** |
+| Four-provider usage accounting (mocked authentic shapes) | **GO** |
+| Fail-closed unknown model / missing pricing / unbounded Gemini reasoning | **GO** |
+| No-feedback reward isolation in next provider request | **GO** |
+| Live paid pilot today | **NO-GO** until owner exports one key, sets vendor billing limits, and gives explicit spend approval |
+
+**Summary:** The provider-to-controller boundary is ready for a **small, explicitly authorized** real-model pilot. Software caps are **not** a billing guarantee. Do not treat `$0.05` as a hard maximum real charge.
 
 ---
 
@@ -11,246 +25,194 @@
 
 | Item | Status |
 | --- | --- |
-| Four-provider ModelClient compatibility | Ready (mocked) |
-| Controller JSON parse safety | Ready |
-| Spending reservations / overrun stop | Ready (in-process only) |
-| API key handling (env only, redacted logs) | Ready |
-| ApolloLander schema presentation | Ready (fixture from real environment document) |
-| Pricing catalog vs official pages | Base rates verified 2026-10-15; cache intentionally unpriced |
-| Live paid pilot | **Not ready until owner configures one key and approves capped calls** |
-| API setup ready? | **No** — keys unset by design; mocked path only |
+| ModelClient contract vs four adapters | Compatible |
+| End-to-end mocked flow with real Apollo physics | Passing |
+| Numerical reward history in next request | Passing |
+| No-feedback never leaks rewards to provider | Passing |
+| Malformed / wrong schema / missing fields | Validated, not flown |
+| API errors / 429 retries / exhaustion | Passing |
+| Pricing catalog vs official docs (2026-10-15) | Base rates verified; cache intentionally null |
+| Recommended pilot config | `configs/apollolander_pilot_openai_gpt54mini.yaml` (not invoked) |
+| API keys present | No (by design) |
 
 ---
 
-## 1. Four-provider compatibility
+## 1. Contract recheck
 
-All four live adapters implement the shared `ModelClient.propose(ModelRequest) -> ModelResponse` contract via `RewardModelClient`:
+`RewardModelClient.propose(ModelRequest) -> ModelResponse` implements `ModelClient`.
 
-| Provider | Adapter | Endpoint | Env key(s) |
+Every live adapter receives the same rendered prompt pair from `rewardbench.prompts.render_messages`:
+
+1. Environment description  
+2. Controller schema  
+3. Prior attempts  
+4. Numerical rewards only under `FeedbackCondition.NUMERICAL_REWARD`  
+5. Instruction to revise controller parameters as one JSON object  
+
+`ExperimentRunner` then: interpret/parse → `environment.validate_policy` → `run_episode` → SQLite. Providers never run physics.
+
+| Provider | Adapter | Endpoint | Env var |
 | --- | --- | --- | --- |
 | OpenAI | `OpenAIBackend` | `https://api.openai.com/v1/chat/completions` | `OPENAI_API_KEY` |
-| Google | `GeminiBackend` | `…/v1beta/models/{id}:generateContent` | `GEMINI_API_KEY` or `GOOGLE_API_KEY` |
+| Google | `GeminiBackend` | `…/generateContent` | `GEMINI_API_KEY` or `GOOGLE_API_KEY` |
 | Anthropic | `AnthropicBackend` | `https://api.anthropic.com/v1/messages` | `ANTHROPIC_API_KEY` |
 | xAI | `GrokBackend` | `https://api.x.ai/v1/chat/completions` | `XAI_API_KEY` |
 
-`build_model_client` resolves keys from the environment (or an explicit test `api_key`). It does not open a socket. Only `propose` talks to the transport.
-
-### Prompt payload every provider receives
-
-`rewardbench.prompts.render_messages` builds one system + one user string for all adapters:
-
-1. Environment description (`display_name`, `task_description`, action/observation summaries)
-2. Controller schema JSON from `EnvironmentSpec.controller_schema`
-3. Prior attempts (valid/invalid + optional validation error)
-4. Numerical reward feedback only when `FeedbackCondition.NUMERICAL_REWARD`
-5. Instruction to revise the controller and reply with one JSON object
-
-Adapters differ only in wire format (chat messages vs Anthropic `system` vs Gemini `systemInstruction`). The wording is identical.
-
-### Sampling / reasoning knobs (not interchangeable)
-
-Documented in `PROVIDER_DIFFERENCES`. Highlights for the future resource economy (document only; not implemented):
-
-| Provider | Reasoning control today | Limitation |
-| --- | --- | --- |
-| OpenAI | `reasoning_effort` | When set, temperature/top_p omitted. Reasoning tokens inside `completion_tokens`. |
-| Gemini | `gemini_thinking_budget` / `max_reasoning_tokens` → `thinkingBudget` | Thoughts billed separately at output rate; live/capped calls refused without a ceiling. |
-| Anthropic | `anthropic_thinking_budget_tokens` → `thinking.budget_tokens` | Must be `< max_output_tokens`. Haiku 5.5 docs also describe adaptive **effort**; adapter does not send effort yet. |
-| xAI | `grok_reasoning_effort` on Chat Completions | Newer docs emphasize Responses API `reasoning.effort`; Responses not wired. |
-
-Parallel proposals, purchased extra reasoning, and purchased extra simulation attempts are **not** implemented.
-
 ---
 
-## 2. Model response parser
+## 2. End-to-end mocked proof
 
-`parse_controller` returns `(parameters | None, parse_error | None)` and never raises for bad model text.
+Suite: `tests/providers/test_e2e_apollolander.py` (+ `e2e_helpers.py`).
+
+Flow exercised with **FakeTransport only**:
+
+`build_model_client` / `RewardModelClient` → shared prompts → JSON parse → Apollo `validate_policy` → **real Node ApolloLander physics** → `SqliteStore`.
 
 Covered cases:
 
-- Plain JSON object and fenced ` ```json ` object
-- Prose / arrays / trailing junk → parse_error, parameters `None`
-- Forbidden code-like keys (`code`, `exec`, `import`, …)
-- Non-finite numbers, oversized strings/lists, deep nesting
+| Test | What it proves |
+| --- | --- |
+| `test_numerical_two_revisions_flow_through_physics_and_sqlite` | ≥2 valid revisions; SQLite rewards appear in revision-1 provider history |
+| `test_nofeedback_never_puts_rewards_in_the_next_provider_request` | Rewards stored in SQLite but absent from next HTTP/user prompt |
+| `test_malformed_wrong_schema_and_missing_fields_are_validated_not_flown` | Bad JSON / wrong schema / missing fields → no episodes |
+| `test_rate_limit_retries_then_exhaustion_aborts` | 429 retries then FAILED run, zero episodes |
+| `test_transport_timeout_is_retryable_and_exhausts` | Retryable transport errors exhaust client retries |
+| `test_four_providers_usage_accounting_with_authentic_shapes` | OpenAI/Gemini/Anthropic/xAI token + cost conventions |
+| `test_anthropic_cache_charge_fails_closed_and_blocks_followup` | Unpriced cache blocks further live calls |
+| `test_unknown_model_and_gemini_without_reasoning_ceiling_fail_before_http` | Fail closed with zero HTTP |
+| `test_pilot_quote_for_gpt54mini_is_bounded_before_any_call` | Pilot YAML loads; reservation under software target |
+| `test_guidance_controller_from_mocked_provider_can_complete_a_short_episode` | Real Apollo guidance object executes physics |
 
-Invalid JSON is a scored revision failure path for the runner, not an HTTP retry trigger.
-
----
-
-## 3. Mocked integration tests
-
-Command (Python ≥ 3.11):
+Command:
 
 ```bash
-cd ~/Projects/R.E.A.C.T-worktrees/providers
-python3.12 -m venv .venv && .venv/bin/pip install -e '.[dev]'
-.venv/bin/python -m pytest tests/providers tests/prompts -q
+cd /Users/manpreetsingh/Projects/R.E.A.C.T-worktrees/providers
+.venv/bin/python -m pytest tests/providers -q
 ```
 
-**Result:** all provider + prompt tests passing (see commit message / local run). Suites covered:
-
-- `test_adapters.py` — four interchangeable providers, sampling differences, retries, redaction, caps
-- `test_compatibility.py` — LunarLander + **real ApolloLander schema**, overrun/failure billing stop
-- `test_reliability.py` — quote-before-call, Gemini reasoning ceiling, malformed payloads
-- `test_parsing.py` — valid/invalid controller JSON
-- `test_pricing.py` — catalog math, long-context Claude rates, cache-null guard
-- `tests/prompts/test_render.py` — reward isolation in prompts
-
-No sockets to provider hosts are opened; `FakeTransport` / `mock` only.
-
 ---
 
-## 4. Pricing and model-support findings (verified 2026-10-15)
+## 3. Usage accounting (mocked authentic shapes)
 
-Catalog file: `src/rewardbench/providers/data/pricing_2026-10-14.json`  
-Sources checked: OpenAI API pricing, Gemini Developer API pricing, Anthropic pricing / Haiku 5.5 docs, xAI pricing.
-
-| Catalog key | Input / output (USD per 1M) | Verification | Gaps / intentional omissions |
-| --- | --- | --- | --- |
-| `openai:gpt-5.4-mini` | 0.75 / 4.50 | **Verified** | Official cached input 0.075 left **null** |
-| `openai:gpt-5.4` | 2.50 / 15.00 | **Verified** | Long-context >272K rates filled; cached input null |
-| `google:gemini-3.1-flash-lite` | 0.25 / 1.50 | **Verified** | Thoughts billed at output rate; cache null |
-| `anthropic:claude-haiku-5-5` | 0.10 / 0.50 (≤100K) | **Verified** | >100K now **0.50 / 2.50** (was previously unpriced). Cache rates published by Anthropic but left **null** |
-| `xai:grok-4.3` | 1.25 / 2.50 | **Verified** | ≥200K long-context **2.50 / 5.00** filled; cached input null |
-
-**Why cache stays null:** adapters never send cache breakpoints. If a response still reports cache tokens, an unpriced status records the known non-cache portion and **blocks further live calls** in-process. Putting official cache rates into the catalog without a reservation would allow unreserved cache charges through.
-
-Retired / absent by design: `grok-4.1-fast`.
-
----
-
-## 5. Token accounting
-
-| Provider | Prompt | Completion | Reasoning | Cached input |
+| Provider | Prompt | Completion | Reasoning | Cost rule in catalog |
 | --- | --- | --- | --- | --- |
-| OpenAI | `prompt_tokens` | `completion_tokens` | `completion_tokens_details.reasoning_tokens` (included in completion; not double-billed) | Supported by API; catalog null |
-| Gemini | `promptTokenCount` | `candidatesTokenCount` | `thoughtsTokenCount` (separate; billed at output) | Catalog null |
-| Anthropic | `input_tokens` | `output_tokens` | `thinking_tokens` if present; thinking blocks ignored for text | Recorded; catalog null → reject |
-| xAI | Chat Completions usage (OpenAI-shaped) | same | reasoning in completion when reported | Catalog null |
+| OpenAI | `prompt_tokens` | `completion_tokens` | in `completion_tokens_details`; **not** double-billed | input + completion |
+| Gemini | `promptTokenCount` | `candidatesTokenCount` | `thoughtsTokenCount` separate | thoughts billed at output rate |
+| Anthropic | `input_tokens` | `output_tokens` | thinking tokens if present | input + output; cache null → reject |
+| xAI | OpenAI-shaped chat usage | same | reasoning in completion when reported | input + completion |
 
-Reservation before a live call: UTF-8 byte ceiling + framing for input, `max_output_tokens` for output, Gemini/Anthropic reasoning ceilings when billed separately, times (`max_retries + 1`) attempts.
-
----
-
-## 6. Retries, rate limits, spending safeguards
-
-Confirmed in code + tests:
-
-1. **Pre-call quote** — unpriced / unbounded reasoning / missing catalog rate → `ModelClientError`, **zero HTTP requests**.
-2. **Reservation** — `SpendingGuard.reserve` under a process-local lock; concurrent double-spend blocked.
-3. **Retries** — only retryable HTTP/transport errors; 401/auth not retried; Retry-After honored.
-4. **Failed attempt usage** — billed tokens from failed tries are kept, not released.
-5. **Over-reservation bill** — actual spend recorded; `BudgetExceeded` / non-retryable error; next `propose` stops via `blocked_reason`.
-6. **Unpriced live charge** (e.g. cache) — known portion recorded; process blocked.
-7. **Scope limit** — spending lock is **in-process only**, not a provider-side hard cap and not cross-process.
-
-Known limitations:
-
-- Runner `max_model_retries` is a separate outer loop; each `propose` reserves only its own HTTP retries.
-- No provider dashboard hard stop; owner must also set account limits at the vendor.
-- Catalog UTF-8 byte ceiling assumes ≤1 token/byte for message text.
+Retry charges: failed attempt token usage is retained and summed into the successful bill when present.
 
 ---
 
-## 7. API key safety
+## 4. Pricing verification (sources + effective check date)
 
-- Keys read only from env vars listed above (or explicit test injection).
-- Gemini key sent as `x-goog-api-key` header; URL placement refused.
-- Logs and `ModelClientError` strings pass through `_redact` with the live key.
-- Package docstring: do not commit keys or `.env`.
+Checked **2026-10-15** (and reconfirmed for this E2E pass):
 
----
+| Source | URL |
+| --- | --- |
+| OpenAI pricing | https://developers.openai.com/api/docs/pricing |
+| OpenAI gpt-5.4-mini | https://developers.openai.com/api/docs/models/gpt-5.4-mini |
+| Gemini pricing | https://ai.google.dev/gemini-api/docs/pricing |
+| Anthropic pricing | https://platform.claude.com/docs/en/about-claude/pricing |
+| xAI pricing | https://docs.x.ai/developers/pricing |
 
-## 8. ApolloLander controller schema
+| Catalog key | Input / output USD per 1M | Notes |
+| --- | --- | --- |
+| `openai:gpt-5.4-mini` | **0.75 / 4.50** | Verified. Official cached input 0.075 left **null** |
+| `openai:gpt-5.4` | **2.50 / 15.00** | Verified; long-context >272K filled |
+| `google:gemini-3.1-flash-lite` | **0.25 / 1.50** | Verified; thoughts at output rate |
+| `anthropic:claude-haiku-5-5` | **0.10 / 0.50** (≤100K); **0.50 / 2.50** (>100K) | Verified; cache rates left null |
+| `xai:grok-4.3` | **1.25 / 2.50**; ≥200K **2.50 / 5.00** | Verified; cache null |
 
-Frozen fixture exported from main’s `controller_schema_document()`:
-
-- `tests/providers/fixtures/apollolander_controller_schema.json`
-- `tests/providers/fixtures/apollolander_constant_controller.json`
-
-All four providers receive the full schema (including guidance bounds such as `vx_gain`) in the user prompt. Providers do **not** environment-validate controllers; invalid numeric bounds remain the environment adapter’s job after parse.
-
-This worktree still lacks the Apollo physics package (lives on `main`). Schema presentation is verified without importing simulation code.
-
----
-
-## 9. First paid-pilot checklist
-
-Do nothing below until the owner explicitly approves spending.
-
-### Pre-flight (offline)
-
-- [ ] Confirm this branch’s mocked tests are green locally.
-- [ ] Choose **one** provider key (recommendation below).
-- [ ] Export only that key in the shell (not in git).
-- [ ] Set a process cap: `max_spend_usd` tight enough for ≤2 calls (suggest **$0.05** for gpt-5.4-mini pilot).
-- [ ] Set `max_output_tokens` ≤ 400 and `max_retries` ≤ 1 for the pilot client.
-- [ ] For Gemini only: set `max_reasoning_tokens` or `gemini_thinking_budget` or the call is refused.
-- [ ] Prepare one ApolloLander (or LunarLander) `ModelRequest` with numerical reward history disabled or enabled as intended.
-- [ ] Confirm vendor account billing alerts / hard limits are set outside this repo.
-
-### Live sequence (owner-approved)
-
-1. Build client for the single chosen provider + catalog model id.
-2. Call `propose` **once**; record `usage`, token fields, `estimated_cost_usd`, `parse_error`, parameters.
-3. If structure validates against the environment adapter, run **one** objective simulator episode on that controller (outside this agent’s edits).
-4. Record real usage vs estimate; stop.
-5. Optional second call only after reviewing step 4 and remaining cap.
-6. Do **not** proceed to other providers in the same session without a fresh review.
-
-### Abort conditions
-
-- Any `BudgetExceeded` or “blocked in this process”
-- Unpriced / cache / long-context surprise
-- Key appearing in logs
-- Parse success but environment validation failure rate unexpected — pause before more spend
+Cache rates stay null **on purpose** so unexpected cache usage fails closed instead of billing without a reservation.
 
 ---
 
-## 10. Recommendation: configure OpenAI first
+## 5. First real-model pilot — safe launch requirements
 
-**First key / model:** `OPENAI_API_KEY` + `gpt-5.4-mini`
+**Recommended config file (not executed):** `configs/apollolander_pilot_openai_gpt54mini.yaml`
 
-Reasons (not “cheapest wins”):
+| Requirement | Value |
+| --- | --- |
+| Environment variable | `OPENAI_API_KEY` only (shell export; never commit) |
+| Model id | `gpt-5.4-mini` |
+| Cost per 1M input tokens | **$0.75** |
+| Cost per 1M output tokens | **$4.50** |
+| Cached input (official) | $0.075 / 1M — **not** in catalog; unexpected cache fails closed |
+| Output-token ceiling | `max_output_tokens: 400` |
+| Client retry ceiling | `max_retries: 0` (match `max_model_retries: 0`) |
+| Runner revisions | 2 × 1 episode (review after first) |
+| Software spend target | `max_spend_usd` / `budget.max_cost_usd` = **$0.05** |
+| Estimated reservation (Apollo schema, 400 out, 1 attempt) | ~**$0.003** (UTF-8 ceiling math; not an invoice) |
+| Estimated maximum software exposure | **$0.05 per process** if caps hold |
+| Required approval | **Explicit user approval before any live `propose`** |
 
-1. **Already the sample-config default** (`configs/lunarlander_*.yaml`), so pilot wiring matches existing experiment configs.
-2. **Clearest spending math** for reasoning: reasoning tokens are inside completion tokens; no separate unbounded thought stream unless you opt into Gemini-style budgets.
-3. **Verified list price** and mature Chat Completions path used by the adapter; json_object response format available.
-4. **Mid cost**, not the cheapest: Claude Haiku 5.5 is cheaper per token but lacks `json_object`, has cache-rejection edge cases, and an incomplete effort-parameter wiring vs current Haiku 5.5 docs.
-5. **Gemini** is cheaper than OpenAI mini but requires an explicit thinking ceiling before any capped call — good safety, more moving parts for the first two live calls.
-6. **Grok 4.3** is a cross-tier reference (higher short-context output relative to the student cohort) and Responses-API reasoning is not yet adapted.
+### Hard-stop limitations (must read)
 
-Configure Anthropic second if the goal is cost-sensitive JSON-via-prompt checks; Gemini second if the goal is separate reasoning-token accounting; xAI later once Responses vs Chat Completions policy is decided.
+1. **In-process only.** `SpendingGuard` does not bind other processes, machines, or the OpenAI account.  
+2. **A $0.05 software cap does not make a larger real charge impossible.** Reservation underestimates, provider billing quirks, dashboard lag, or a second process can exceed it.  
+3. **Runner outer retries** are separate from client HTTP retries; keep both at 0 for the pilot.  
+4. **Set provider-side billing limits / alerts** in the OpenAI console before the first call.  
+5. **No key printing.** Logs redact secrets held by the client; still do not paste keys into chat or commits.
+
+### Owner checklist before first paid call
+
+- [ ] Explicit written approval to spend  
+- [ ] OpenAI account hard limit / alert configured  
+- [ ] `export OPENAI_API_KEY=…` in a local shell only  
+- [ ] Construct client with `max_spend_usd=0.05`, `max_retries=0`, `model_settings.max_output_tokens=400`  
+- [ ] Run **one** revision, inspect SQLite usage + cost, then decide on a second call  
+- [ ] Abort on any unpriced / blocked / BudgetExceeded signal  
 
 ---
 
-## Files changed (this agent pass)
+## 6. Reasoning-control capabilities (future economy; not implemented)
 
-- `src/rewardbench/providers/data/pricing_2026-10-14.json` — verified notes, Anthropic/xAI/OpenAI long-context where published, cache remains null
-- `src/rewardbench/providers/capabilities.py` — reasoning/API limitations updated
-- `pyproject.toml` — include `providers/data/*.json` in package data
-- `tests/providers/fixtures/apollolander_*.json` — real Apollo schema + constant controller
-- `tests/providers/test_compatibility.py` — Apollo fixture presentation across four providers
-- `tests/providers/test_pricing.py` — long-context + cache-null guards
-- `docs/AGENT3_AI_INTEGRATIONS_REPORT.md` — this report
+| Provider | Wired today | Limitation |
+| --- | --- | --- |
+| OpenAI | `reasoning_effort` | Sampling params omitted when set |
+| Gemini | `gemini_thinking_budget` / `max_reasoning_tokens` | Required for capped/live calls; separate bill |
+| Anthropic | `anthropic_thinking_budget_tokens` | Must be `< max_tokens`; Haiku 5.5 **effort** not wired |
+| xAI | `grok_reasoning_effort` on Chat Completions | Responses API `reasoning.effort` not implemented |
+
+Purchased extra reasoning, extra sims, and parallel proposals are **out of scope**.
+
+---
+
+## 7. Outstanding risks
+
+1. Software spend caps ≠ provider invoices.  
+2. Parallel experiment processes can each reserve/spend independently.  
+3. Catalog UTF-8 byte ceiling assumes ≤1 token per message byte.  
+4. Anthropic / OpenAI / Gemini / xAI cache prices exist officially but are omitted; a provider that returns cache tokens still burns a live call before fail-closed stop.  
+5. Example YAML on main still lists `gpt-4.1` for Apollo (`examples/apollolander/development_numerical.yaml`) — that id fails closed against this catalog; use the Agent 3 pilot config instead.  
+6. Full 8000-step Apollo episodes are expensive in wall time; E2E tests use short `max_episode_steps`.
+
+---
+
+## 8. Files changed (this E2E pass)
+
+- `docs/AGENT3_AI_INTEGRATIONS_REPORT.md` — this report  
+- `configs/apollolander_pilot_openai_gpt54mini.yaml` — recommended pilot (not invoked)  
+- `tests/providers/e2e_helpers.py` — E2E helpers  
+- `tests/providers/test_e2e_apollolander.py` — end-to-end mocked suite  
+- Merge of `origin/main` into `work/providers-preflight` for Apollo + runner availability (no Agent 1/2 package edits)
+
+Prior commits on branch retained: pricing verification, Apollo schema fixtures, capabilities notes.
 
 ## Tests
 
 ```text
-.venv/bin/python -m pytest tests/providers tests/prompts -q
+.venv/bin/python -m pytest tests/providers -q
 ```
+
+All provider tests passing (including E2E).
 
 ## Commit hash
 
-`fb5d4ca62afb257618c3d6fa05329faf43b58d8a` on `work/providers-preflight`
+Filled after commit on `work/providers-preflight`.
 
-## Blockers
+## What user approval is needed
 
-1. No API keys configured (intentional).
-2. Worktree based on `origin/agent/providers` — Apollo **physics** not present here; schema fixture only. Full episode pilot needs `main` (or a merge) for environments.
-3. Owner approval required before any paid call.
-4. In-process spend cap is not a vendor hard stop.
-
-## API setup ready?
-
-**No for live calls. Yes for mocked preflight.** After owner sets `OPENAI_API_KEY` and a tight `max_spend_usd`, OpenAI gpt-5.4-mini is the recommended first live configuration.
+Before the first paid call: **explicit approval to spend**, confirmation that **OpenAI account billing limits** are set, and agreement to start with **`OPENAI_API_KEY` + `gpt-5.4-mini`** under the pilot YAML ceilings. Agent 3 will not install, create, test, or print a live credential.
