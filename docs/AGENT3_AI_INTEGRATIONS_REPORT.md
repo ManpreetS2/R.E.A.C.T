@@ -211,7 +211,7 @@ All provider tests passing (including E2E).
 
 ## Commit hash
 
-Filled after commit on `work/providers-preflight`.
+`dccaa66abab025c089b95053a42e3a0ecd1d5cb3` on `work/providers-preflight`.
 
 ## What user approval is needed
 
