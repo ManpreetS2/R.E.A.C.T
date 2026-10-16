@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import sqlite3
 import threading
+from collections.abc import Mapping, Sequence
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -429,6 +430,269 @@ class SqliteStore:
                 (experiment_id,),
             ).fetchall()
         return [dict(row) for row in rows]
+
+    # --- Held-out freeze / evaluation (not part of ModelRequest history) ---
+
+    def insert_frozen_controller(self, record: Any) -> None:
+        with self._lock:
+            try:
+                self._conn.execute(
+                    """
+                    INSERT INTO frozen_controllers (
+                        freeze_id, controller_hash, parameters_json, source_experiment_id,
+                        source_attempt_id, source_revision_index, source_call_index,
+                        source_session_id, model_id, provider, feedback_condition,
+                        environment_id, selection_rule, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        record.freeze_id,
+                        record.controller_hash,
+                        _dump(dict(record.parameters)),
+                        record.source_experiment_id,
+                        record.source_attempt_id,
+                        record.source_revision_index,
+                        record.source_call_index,
+                        record.source_session_id,
+                        record.model_id,
+                        record.provider,
+                        record.feedback_condition.value,
+                        record.environment_id,
+                        record.selection_rule,
+                        record.created_at or utc_now(),
+                    ),
+                )
+            except sqlite3.IntegrityError as exc:
+                raise ResumeError(f"frozen controller already exists: {exc}") from exc
+            self._conn.commit()
+
+    def get_frozen_controller(self, freeze_id: str) -> Any | None:
+        from rewardbench.core.heldout import FrozenController
+
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT * FROM frozen_controllers WHERE freeze_id = ?",
+                (freeze_id,),
+            ).fetchone()
+        if row is None:
+            return None
+        return FrozenController(
+            freeze_id=row["freeze_id"],
+            controller_hash=row["controller_hash"],
+            parameters=_load(row["parameters_json"]),
+            source_experiment_id=row["source_experiment_id"],
+            source_attempt_id=row["source_attempt_id"],
+            source_revision_index=row["source_revision_index"],
+            source_call_index=row["source_call_index"],
+            source_session_id=row["source_session_id"],
+            model_id=row["model_id"],
+            provider=row["provider"],
+            feedback_condition=FeedbackCondition(row["feedback_condition"]),
+            environment_id=row["environment_id"],
+            selection_rule=row["selection_rule"],
+            created_at=row["created_at"],
+        )
+
+    def insert_heldout_evaluation(self, record: Mapping[str, Any]) -> None:
+        with self._lock:
+            try:
+                self._conn.execute(
+                    """
+                    INSERT INTO heldout_evaluations (
+                        evaluation_id, freeze_id, source_experiment_id, environment_id,
+                        environment_version, start_schedule_version, vary_fuel,
+                        held_out_seeds_json, max_episode_steps, status, controller_hash,
+                        created_at, updated_at, completed_episodes, error
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        record["evaluation_id"],
+                        record["freeze_id"],
+                        record["source_experiment_id"],
+                        record["environment_id"],
+                        record["environment_version"],
+                        record["start_schedule_version"],
+                        1 if record["vary_fuel"] else 0,
+                        _dump(list(record["held_out_seeds"])),
+                        record.get("max_episode_steps"),
+                        record["status"],
+                        record["controller_hash"],
+                        record["created_at"],
+                        record["updated_at"],
+                        int(record.get("completed_episodes", 0)),
+                        record.get("error"),
+                    ),
+                )
+            except sqlite3.IntegrityError as exc:
+                raise ResumeError(f"held-out evaluation already exists: {exc}") from exc
+            self._conn.commit()
+
+    def get_heldout_evaluation(self, evaluation_id: str) -> dict[str, Any] | None:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT * FROM heldout_evaluations WHERE evaluation_id = ?",
+                (evaluation_id,),
+            ).fetchone()
+        if row is None:
+            return None
+        return _heldout_evaluation_from_row(row)
+
+    def find_heldout_evaluation(
+        self,
+        *,
+        freeze_id: str,
+        held_out_seeds: Sequence[int],
+        start_schedule_version: str,
+        environment_version: str,
+        vary_fuel: bool,
+        max_episode_steps: int | None,
+    ) -> dict[str, Any] | None:
+        with self._lock:
+            row = self._conn.execute(
+                """
+                SELECT * FROM heldout_evaluations
+                WHERE freeze_id = ?
+                  AND held_out_seeds_json = ?
+                  AND start_schedule_version = ?
+                  AND environment_version = ?
+                  AND vary_fuel = ?
+                  AND (
+                    (max_episode_steps IS NULL AND ? IS NULL)
+                    OR max_episode_steps = ?
+                  )
+                """,
+                (
+                    freeze_id,
+                    _dump(list(held_out_seeds)),
+                    start_schedule_version,
+                    environment_version,
+                    1 if vary_fuel else 0,
+                    max_episode_steps,
+                    max_episode_steps,
+                ),
+            ).fetchone()
+        if row is None:
+            return None
+        return _heldout_evaluation_from_row(row)
+
+    def update_heldout_evaluation(
+        self,
+        evaluation_id: str,
+        *,
+        status: str,
+        completed_episodes: int | None = None,
+        error: str | None = None,
+    ) -> None:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT evaluation_id FROM heldout_evaluations WHERE evaluation_id = ?",
+                (evaluation_id,),
+            ).fetchone()
+            if row is None:
+                raise ResumeError(f"held-out evaluation {evaluation_id} was not found")
+            fields = ["status = ?", "updated_at = ?", "error = ?"]
+            values: list[Any] = [status, utc_now(), error]
+            if completed_episodes is not None:
+                fields.append("completed_episodes = ?")
+                values.append(int(completed_episodes))
+            values.append(evaluation_id)
+            self._conn.execute(
+                f"UPDATE heldout_evaluations SET {', '.join(fields)} WHERE evaluation_id = ?",
+                values,
+            )
+            self._conn.commit()
+
+    def insert_heldout_episode(self, record: Mapping[str, Any]) -> None:
+        with self._lock:
+            try:
+                self._conn.execute(
+                    """
+                    INSERT INTO heldout_episodes (
+                        evaluation_id, freeze_id, source_experiment_id, episode_index,
+                        seed, total_reward, success, crashed, steps, terminated,
+                        truncated, elapsed_seconds, metrics_json, initial_state_json,
+                        replay_path, error, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        record["evaluation_id"],
+                        record["freeze_id"],
+                        record["source_experiment_id"],
+                        record["episode_index"],
+                        record["seed"],
+                        record.get("total_reward"),
+                        None if record.get("success") is None else int(bool(record["success"])),
+                        None if record.get("crashed") is None else int(bool(record["crashed"])),
+                        record["steps"],
+                        int(bool(record["terminated"])),
+                        int(bool(record["truncated"])),
+                        record["elapsed_seconds"],
+                        _dump(dict(record.get("metrics") or {})),
+                        _dump(dict(record.get("initial_state") or {})),
+                        record.get("replay_path"),
+                        record.get("error"),
+                        record.get("created_at") or utc_now(),
+                    ),
+                )
+            except sqlite3.IntegrityError as exc:
+                raise ResumeError(f"held-out episode already exists: {exc}") from exc
+            self._conn.commit()
+
+    def fetch_heldout_episodes(self, evaluation_id: str) -> list[dict[str, Any]]:
+        with self._lock:
+            rows = self._conn.execute(
+                """
+                SELECT * FROM heldout_episodes
+                WHERE evaluation_id = ?
+                ORDER BY episode_index
+                """,
+                (evaluation_id,),
+            ).fetchall()
+        result: list[dict[str, Any]] = []
+        for row in rows:
+            result.append(
+                {
+                    "heldout_episode_id": row["heldout_episode_id"],
+                    "evaluation_id": row["evaluation_id"],
+                    "freeze_id": row["freeze_id"],
+                    "source_experiment_id": row["source_experiment_id"],
+                    "episode_index": row["episode_index"],
+                    "seed": row["seed"],
+                    "total_reward": row["total_reward"],
+                    "success": _optional_bool(row["success"]),
+                    "crashed": _optional_bool(row["crashed"]),
+                    "steps": row["steps"],
+                    "terminated": bool(row["terminated"]),
+                    "truncated": bool(row["truncated"]),
+                    "elapsed_seconds": row["elapsed_seconds"],
+                    "metrics": _load(row["metrics_json"]),
+                    "initial_state": _load(row["initial_state_json"]),
+                    "replay_path": row["replay_path"],
+                    "error": row["error"],
+                    "created_at": row["created_at"],
+                }
+            )
+        return result
+
+
+def _heldout_evaluation_from_row(row: sqlite3.Row) -> dict[str, Any]:
+    return {
+        "evaluation_id": row["evaluation_id"],
+        "freeze_id": row["freeze_id"],
+        "source_experiment_id": row["source_experiment_id"],
+        "environment_id": row["environment_id"],
+        "environment_version": row["environment_version"],
+        "start_schedule_version": row["start_schedule_version"],
+        "vary_fuel": bool(row["vary_fuel"]),
+        "held_out_seeds": tuple(_load(row["held_out_seeds_json"])),
+        "max_episode_steps": row["max_episode_steps"],
+        "status": row["status"],
+        "controller_hash": row["controller_hash"],
+        "created_at": row["created_at"],
+        "updated_at": row["updated_at"],
+        "completed_episodes": row["completed_episodes"],
+        "error": row["error"],
+    }
 
 
 def _experiment_from_row(row: sqlite3.Row) -> ExperimentRecord:
