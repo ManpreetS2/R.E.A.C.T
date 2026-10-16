@@ -54,7 +54,7 @@ The four original workstream histories remain on GitHub as `agent/core`, `agent/
 | --- | --- |
 | Worktree | `~/Projects/R.E.A.C.T-worktrees/integration` |
 | Branch | `work/integration-offline-v1` |
-| Verified tip | post-merge docs tip on this branch (Agents 1–3 merges + README/PLAN); record exact SHA in Agent 4 report |
+| Verified tip | **`f82a7dad985530e81e997378c0c2379fea4b0a0a`** (Agents 1–3 merges + README/PLAN) |
 | Offline foundation | `11da2e17b7a26c20d300184f51056b25ae80690e` |
 | PLAN sprint prep | `e0f1e83` |
 | Tests at tip | **250** Python passed + Node physics exit 0 |
