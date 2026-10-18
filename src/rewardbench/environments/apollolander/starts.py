@@ -33,6 +33,8 @@ START_SCHEDULE_VERSION = "apollolander.starts.v1"
 PAD_X1 = 6873.6
 PAD_X2 = 7052.8
 PAD_MID_X = (PAD_X1 + PAD_X2) / 2.0
+# Primary landable pad Y for the same fixed landscape (measured via upstream host).
+PAD_Y = 679.4358077547447
 
 # Original demonstration / fixed-mode start (IMPLEMENTATION.md).
 STANDARD_START: dict[str, float] = {
@@ -59,6 +61,8 @@ ROTATION_CHOICES: tuple[float, ...] = (-90.0, -80.0, -70.0, -60.0, -50.0, -40.0,
 FUEL_MIN = 850.0
 FUEL_MAX = 1000.0
 PHYSICS_SCALE = 0.25
+# Lander bottom offset at collision scale: bottom = y + 13 * scale.
+LANDER_BOTTOM_OFFSET = 13.0 * PHYSICS_SCALE
 
 START_FIELDS = ("x", "y", "vx", "vy", "rotation", "fuel", "scale")
 
@@ -106,7 +110,97 @@ SCHEDULE_V1 = StartScheduleSpec(
     vary_fuel_default=False,
 )
 
-_SCHEDULES: dict[str, StartScheduleSpec] = {SCHEDULE_V1.version: SCHEDULE_V1}
+# Curriculum aid ONLY (Family D). Nearer / more upright starts. Not proof of
+# skill on the real start distribution — final eval always uses v1 / held-out.
+SCHEDULE_CURRICULUM_EASY = StartScheduleSpec(
+    version="apollolander.starts.curriculum_easy_v1",
+    dx_from_pad=(-60.0, -20.0),
+    y=(500.0, 620.0),
+    vx=(0.0, 0.08),
+    vy=(0.0, 0.05),
+    rotations=(-20.0, -10.0, 0.0, 10.0, 20.0),
+    fuel=(FUEL_MIN, FUEL_MAX),
+    scale=PHYSICS_SCALE,
+    vary_fuel_default=False,
+)
+
+# Progressive curriculum v3 levels (physically legitimate in-world states).
+# y ranges are lander.pos.y; approximate altitude ≈ PAD_Y - y - LANDER_BOTTOM_OFFSET.
+# Final judgment always uses apollolander.starts.v1 / held-out seeds.
+SCHEDULE_CURRICULUM_L0 = StartScheduleSpec(
+    version="apollolander.starts.curriculum_l0_v3",
+    dx_from_pad=(-8.0, 8.0),
+    y=(PAD_Y - 18.0, PAD_Y - 12.0),  # ~9–15 px above pad
+    vx=(-0.01, 0.01),
+    vy=(0.01, 0.035),
+    rotations=(0.0,),
+    fuel=(FUEL_MIN, FUEL_MAX),
+    scale=PHYSICS_SCALE,
+    vary_fuel_default=False,
+)
+SCHEDULE_CURRICULUM_L1 = StartScheduleSpec(
+    version="apollolander.starts.curriculum_l1_v3",
+    dx_from_pad=(-40.0, 40.0),
+    y=(PAD_Y - 80.0, PAD_Y - 40.0),  # ~37–77 px
+    vx=(-0.04, 0.04),
+    vy=(0.0, 0.05),
+    rotations=(-10.0, 0.0, 10.0),
+    fuel=(FUEL_MIN, FUEL_MAX),
+    scale=PHYSICS_SCALE,
+    vary_fuel_default=False,
+)
+SCHEDULE_CURRICULUM_L2 = StartScheduleSpec(
+    version="apollolander.starts.curriculum_l2_v3",
+    dx_from_pad=(-100.0, 20.0),
+    y=(PAD_Y - 200.0, PAD_Y - 100.0),  # ~97–197 px
+    vx=(-0.05, 0.12),
+    vy=(-0.02, 0.06),
+    rotations=(-30.0, -20.0, -10.0, 0.0, 10.0, 20.0),
+    fuel=(FUEL_MIN, FUEL_MAX),
+    scale=PHYSICS_SCALE,
+    vary_fuel_default=False,
+)
+SCHEDULE_CURRICULUM_L3 = StartScheduleSpec(
+    version="apollolander.starts.curriculum_l3_v3",
+    dx_from_pad=(-180.0, -40.0),
+    y=(PAD_Y - 400.0, PAD_Y - 220.0),  # ~217–397 px
+    vx=(0.05, 0.35),
+    vy=(-0.03, 0.06),
+    rotations=(-60.0, -50.0, -40.0, -30.0, -20.0, -10.0, 0.0),
+    fuel=(FUEL_MIN, FUEL_MAX),
+    scale=PHYSICS_SCALE,
+    vary_fuel_default=False,
+)
+# L4 == normal research-mode start distribution (alias of v1).
+SCHEDULE_CURRICULUM_L4 = StartScheduleSpec(
+    version="apollolander.starts.curriculum_l4_v3",
+    dx_from_pad=SCHEDULE_V1.dx_from_pad,
+    y=SCHEDULE_V1.y,
+    vx=SCHEDULE_V1.vx,
+    vy=SCHEDULE_V1.vy,
+    rotations=SCHEDULE_V1.rotations,
+    fuel=SCHEDULE_V1.fuel,
+    scale=PHYSICS_SCALE,
+    vary_fuel_default=False,
+)
+
+CURRICULUM_V3_LEVELS: tuple[str, ...] = (
+    SCHEDULE_CURRICULUM_L0.version,
+    SCHEDULE_CURRICULUM_L1.version,
+    SCHEDULE_CURRICULUM_L2.version,
+    SCHEDULE_CURRICULUM_L3.version,
+    SCHEDULE_CURRICULUM_L4.version,
+)
+
+_SCHEDULES: dict[str, StartScheduleSpec] = {
+    SCHEDULE_V1.version: SCHEDULE_V1,
+    SCHEDULE_CURRICULUM_EASY.version: SCHEDULE_CURRICULUM_EASY,
+    SCHEDULE_CURRICULUM_L0.version: SCHEDULE_CURRICULUM_L0,
+    SCHEDULE_CURRICULUM_L1.version: SCHEDULE_CURRICULUM_L1,
+    SCHEDULE_CURRICULUM_L2.version: SCHEDULE_CURRICULUM_L2,
+    SCHEDULE_CURRICULUM_L3.version: SCHEDULE_CURRICULUM_L3,
+    SCHEDULE_CURRICULUM_L4.version: SCHEDULE_CURRICULUM_L4,
+}
 
 
 def schedule_spec(version: str = START_SCHEDULE_VERSION) -> StartScheduleSpec:

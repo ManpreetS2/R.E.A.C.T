@@ -1,0 +1,7 @@
+{
+  "tag": "final",
+  "path": "/workspace/examples/apollolander/rl_clean_v4/results/CLEAN_L0_s21/checkpoints/final.pt",
+  "sha256": "4725d1a989b3946d1232dd98fbeafcb4b1df6b2077fe4a7fa057a512ea805449",
+  "global_step": 250368,
+  "level": "apollolander.starts.curriculum_l0_v3"
+}

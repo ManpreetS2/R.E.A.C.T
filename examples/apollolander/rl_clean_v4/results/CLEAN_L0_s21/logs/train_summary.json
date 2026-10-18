@@ -1,0 +1,243 @@
+{
+  "run_id": "CLEAN_L0_s21",
+  "physics_frames": 250368,
+  "policy_decisions": 250368,
+  "updates": 489,
+  "level": "apollolander.starts.curriculum_l0_v3",
+  "first_landing_frames": {
+    "apollolander.starts.curriculum_l0_v3": null
+  },
+  "train_landing_episodes": 0,
+  "wall_seconds": 126.032217502594,
+  "early_stop_reason": null,
+  "budget": 250000,
+  "diagnostic_budget": {
+    "hard_cap": 400000,
+    "spent": 147737,
+    "remaining": 252263,
+    "ledger": [
+      {
+        "reason": "step0_det",
+        "frames": 7345,
+        "spent_after": 7345
+      },
+      {
+        "reason": "step0_sto",
+        "frames": 13657,
+        "spent_after": 21002
+      },
+      {
+        "reason": "random_baseline",
+        "frames": 14783,
+        "spent_after": 35785
+      },
+      {
+        "reason": "ckpt_det:step50176",
+        "frames": 7296,
+        "spent_after": 43081
+      },
+      {
+        "reason": "ckpt_sto:step50176",
+        "frames": 7527,
+        "spent_after": 50608
+      },
+      {
+        "reason": "ckpt_det:step100352",
+        "frames": 16000,
+        "spent_after": 66608
+      },
+      {
+        "reason": "ckpt_sto:step100352",
+        "frames": 10731,
+        "spent_after": 77339
+      },
+      {
+        "reason": "ckpt_det:step150016",
+        "frames": 16000,
+        "spent_after": 93339
+      },
+      {
+        "reason": "ckpt_sto:step150016",
+        "frames": 13532,
+        "spent_after": 106871
+      },
+      {
+        "reason": "ckpt_det:step200192",
+        "frames": 7316,
+        "spent_after": 114187
+      },
+      {
+        "reason": "ckpt_sto:step200192",
+        "frames": 11886,
+        "spent_after": 126073
+      },
+      {
+        "reason": "ckpt_det:step250368",
+        "frames": 7339,
+        "spent_after": 133412
+      },
+      {
+        "reason": "ckpt_sto:step250368",
+        "frames": 14325,
+        "spent_after": 147737
+      }
+    ]
+  },
+  "learning_claimed": false,
+  "integrity_passed": false,
+  "init_scheme": "orthogonal_zero_bias",
+  "resume_preserved": {},
+  "best_checkpoint_eval": {
+    "tag": "step0",
+    "global_step": 0,
+    "deterministic": {
+      "mode": "deterministic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -103.66627771313631,
+      "mean_duration": 183.625,
+      "diagnostic_frames": 7345,
+      "global_step_at_eval": 0,
+      "diagnostic_budget_spent": 7345
+    },
+    "stochastic": {
+      "mode": "stochastic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 23,
+        "timeout": 17
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -106.93258741910047,
+      "mean_duration": 341.425,
+      "diagnostic_frames": 13657,
+      "global_step_at_eval": 0,
+      "diagnostic_budget_spent": 21002
+    },
+    "vs_step0_deterministic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    },
+    "vs_step0_stochastic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    }
+  },
+  "step0_baselines": {
+    "deterministic": {
+      "mode": "deterministic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -103.66627771313631,
+      "mean_duration": 183.625,
+      "diagnostic_frames": 7345,
+      "global_step_at_eval": 0,
+      "diagnostic_budget_spent": 7345
+    },
+    "stochastic": {
+      "mode": "stochastic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 23,
+        "timeout": 17
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -106.93258741910047,
+      "mean_duration": 341.425,
+      "diagnostic_frames": 13657,
+      "global_step_at_eval": 0,
+      "diagnostic_budget_spent": 21002
+    },
+    "random": {
+      "mode": "random",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 13,
+        "timeout": 27
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -107.497089230859,
+      "mean_duration": 369.575,
+      "diagnostic_frames": 14783,
+      "global_step_at_eval": 0,
+      "diagnostic_budget_spent": 35785
+    }
+  },
+  "step0_equivalence": {
+    "step0_path": "/workspace/examples/apollolander/rl_clean_v4/results/CLEAN_L0_s21/checkpoints/step0.pt",
+    "step0_sha256": "90c5c1e10b648bbe03735619bc00d93dd6536e58f9df686ca32fbb2c34747fa4",
+    "batch_size": 64,
+    "obs_seed": 12345,
+    "max_abs_diff": 0.0,
+    "diffs": {
+      "thrust_mean": 0.0,
+      "thrust_std": 0.0,
+      "rotation_logits": 0.0,
+      "value": 0.0,
+      "det_thrust": 0.0,
+      "det_rotation_idx": 0.0
+    },
+    "bit_exact": true,
+    "passed": true
+  },
+  "claim_rule": "Wilson non-overlap vs step-0 OR two-proportion p<0.01 on fixed val set; never from one stochastic landing or shaped reward"
+}

@@ -1,0 +1,359 @@
+{
+  "generated_at": "2026-10-18T15:07:39Z",
+  "diagnostic_physics_frames": 36674,
+  "note": "REFERENCE/PARITY ONLY. Traces from hand-tuned guidance or scripted open-loop controllers. Never used to train the neural network.",
+  "categories": {
+    "perfect_landing": [
+      {
+        "path": "results/parity_traces/perfect_landing_00.json",
+        "status": "landed",
+        "steps": 235,
+        "nativeScore": 100,
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": true,
+          "hard": false,
+          "nativePoints": 100,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.059941549062125746,
+          "rotation": 0
+        },
+        "policy": "soft_drop",
+        "seed": 900100,
+        "name": null,
+        "physics_frames": 235
+      },
+      {
+        "path": "results/parity_traces/perfect_landing_01.json",
+        "status": "landed",
+        "steps": 269,
+        "nativeScore": 100,
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": true,
+          "hard": false,
+          "nativePoints": 100,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.05996048725275324,
+          "rotation": 0
+        },
+        "policy": "soft_drop",
+        "seed": 900101,
+        "name": null,
+        "physics_frames": 269
+      },
+      {
+        "path": "results/parity_traces/perfect_landing_02.json",
+        "status": "landed",
+        "steps": 202,
+        "nativeScore": 100,
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": true,
+          "hard": false,
+          "nativePoints": 100,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.05864500000000008,
+          "rotation": 0
+        },
+        "policy": "soft_drop",
+        "seed": 900102,
+        "name": null,
+        "physics_frames": 202
+      },
+      {
+        "path": "results/parity_traces/perfect_landing_03.json",
+        "status": "landed",
+        "steps": 252,
+        "nativeScore": 100,
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": true,
+          "hard": false,
+          "nativePoints": 100,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.05996213385055845,
+          "rotation": 0
+        },
+        "policy": "soft_drop",
+        "seed": 900103,
+        "name": null,
+        "physics_frames": 252
+      },
+      {
+        "path": "results/parity_traces/perfect_landing_04.json",
+        "status": "landed",
+        "steps": 5827,
+        "nativeScore": 100,
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": true,
+          "hard": false,
+          "nativePoints": 100,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.04003767111172386,
+          "rotation": 0
+        },
+        "policy": "guidance",
+        "seed": 42,
+        "name": null,
+        "physics_frames": 5827
+      },
+      {
+        "path": "results/parity_traces/perfect_landing_05.json",
+        "status": "landed",
+        "steps": 6025,
+        "nativeScore": 100,
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": true,
+          "hard": false,
+          "nativePoints": 100,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.0400376803348931,
+          "rotation": 0
+        },
+        "policy": "guidance",
+        "seed": 77,
+        "name": null,
+        "physics_frames": 6025
+      }
+    ],
+    "hard_landing": [
+      {
+        "path": "results/parity_traces/hard_landing_00.json",
+        "status": "hard_landing",
+        "steps": 158,
+        "nativeScore": 30,
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": false,
+          "hard": true,
+          "nativePoints": 30,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.1374200000000001,
+          "rotation": 0
+        },
+        "policy": "hard_drop",
+        "seed": 900200,
+        "name": null,
+        "physics_frames": 158
+      },
+      {
+        "path": "results/parity_traces/hard_landing_01.json",
+        "status": "hard_landing",
+        "steps": 148,
+        "nativeScore": 30,
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": false,
+          "hard": true,
+          "nativePoints": 30,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.13988736576493255,
+          "rotation": 0
+        },
+        "policy": "hard_drop",
+        "seed": 900201,
+        "name": null,
+        "physics_frames": 148
+      },
+      {
+        "path": "results/parity_traces/hard_landing_02.json",
+        "status": "hard_landing",
+        "steps": 140,
+        "nativeScore": 30,
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": false,
+          "hard": true,
+          "nativePoints": 30,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.13995742417271478,
+          "rotation": 0
+        },
+        "policy": "hard_drop",
+        "seed": 900202,
+        "name": null,
+        "physics_frames": 140
+      },
+      {
+        "path": "results/parity_traces/hard_landing_03.json",
+        "status": "hard_landing",
+        "steps": 164,
+        "nativeScore": 30,
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": false,
+          "hard": true,
+          "nativePoints": 30,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.13380000000000017,
+          "rotation": 0
+        },
+        "policy": "hard_drop",
+        "seed": 900203,
+        "name": null,
+        "physics_frames": 164
+      }
+    ],
+    "crash": [
+      {
+        "path": "results/parity_traces/crash_00.json",
+        "status": "crashed",
+        "steps": 221,
+        "nativeScore": 0,
+        "nativeOutcome": {
+          "kind": "crashed",
+          "perfect": false,
+          "hard": false,
+          "nativePoints": 0,
+          "multiplier": 1,
+          "designated": false,
+          "vy": 0.16231087310681744,
+          "rotation": 0
+        },
+        "policy": "tilt_crash",
+        "seed": 900300,
+        "name": "tilt_on_pad",
+        "physics_frames": 221
+      },
+      {
+        "path": "results/parity_traces/crash_01.json",
+        "status": "crashed",
+        "steps": 154,
+        "nativeScore": 0,
+        "nativeOutcome": {
+          "kind": "crashed",
+          "perfect": false,
+          "hard": false,
+          "nativePoints": 0,
+          "multiplier": 1,
+          "designated": false,
+          "vy": 0.17700000000000007,
+          "rotation": 0
+        },
+        "policy": "coast_crash",
+        "seed": 900301,
+        "name": "near_left_boundary",
+        "physics_frames": 154
+      },
+      {
+        "path": "results/parity_traces/crash_02.json",
+        "status": "crashed",
+        "steps": 140,
+        "nativeScore": 0,
+        "nativeOutcome": {
+          "kind": "crashed",
+          "perfect": false,
+          "hard": false,
+          "nativePoints": 0,
+          "multiplier": 1,
+          "designated": false,
+          "vy": 0.17000000000000007,
+          "rotation": 0
+        },
+        "policy": "coast_crash",
+        "seed": 900302,
+        "name": "near_right_boundary",
+        "physics_frames": 140
+      },
+      {
+        "path": "results/parity_traces/crash_03.json",
+        "status": "crashed",
+        "steps": 144,
+        "nativeScore": 0,
+        "nativeOutcome": {
+          "kind": "crashed",
+          "perfect": false,
+          "hard": false,
+          "nativePoints": 0,
+          "multiplier": 1,
+          "designated": false,
+          "vy": 0.29200000000000004,
+          "rotation": 0
+        },
+        "policy": "coast_crash",
+        "seed": 900303,
+        "name": "fast_upright",
+        "physics_frames": 144
+      },
+      {
+        "path": "results/parity_traces/crash_04.json",
+        "status": "crashed",
+        "steps": 1,
+        "nativeScore": 0,
+        "nativeOutcome": {
+          "kind": "crashed",
+          "perfect": false,
+          "hard": false,
+          "nativePoints": 0,
+          "multiplier": 1,
+          "designated": false,
+          "vy": 0.1505,
+          "rotation": 0
+        },
+        "policy": "coast_crash",
+        "seed": 900304,
+        "name": "terrain_left",
+        "physics_frames": 1
+      }
+    ],
+    "timeout": [
+      {
+        "path": "results/parity_traces/timeout_00.json",
+        "status": "timeout",
+        "steps": 200,
+        "nativeScore": 0,
+        "nativeOutcome": null,
+        "policy": "hover_timeout",
+        "seed": 900400,
+        "name": null,
+        "physics_frames": 200
+      },
+      {
+        "path": "results/parity_traces/timeout_01.json",
+        "status": "timeout",
+        "steps": 400,
+        "nativeScore": 0,
+        "nativeOutcome": null,
+        "policy": "hover_timeout",
+        "seed": 900401,
+        "name": null,
+        "physics_frames": 400
+      },
+      {
+        "path": "results/parity_traces/timeout_02.json",
+        "status": "timeout",
+        "steps": 800,
+        "nativeScore": 0,
+        "nativeOutcome": null,
+        "policy": "hover_timeout",
+        "seed": 900402,
+        "name": null,
+        "physics_frames": 800
+      },
+      {
+        "path": "results/parity_traces/timeout_03.json",
+        "status": "timeout",
+        "steps": 4000,
+        "nativeScore": 0,
+        "nativeOutcome": null,
+        "policy": "hover_timeout",
+        "seed": 900410,
+        "name": null,
+        "physics_frames": 4000
+      }
+    ]
+  }
+}

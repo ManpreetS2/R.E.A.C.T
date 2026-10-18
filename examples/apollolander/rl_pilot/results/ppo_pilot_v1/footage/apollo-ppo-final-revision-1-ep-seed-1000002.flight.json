@@ -1,0 +1,10414 @@
+{
+  "autonomous_learning": false,
+  "controller": {
+    "n_actions": 95,
+    "note": "state-observation RL pilot, not visual learning",
+    "policy": "neural_ppo",
+    "schema": "rewardbench.apollolander.rl_policy.v1"
+  },
+  "controller_hash": "sha256:08bb84305ceb50c0e7dde916d6c2ca074c198d4a458a78dbe813c258be14b7be",
+  "environment_id": "ApolloLander",
+  "environment_version": "apollolander.env.v1",
+  "episode_index": null,
+  "episode_seed": 1000002,
+  "experiment_id": null,
+  "initial_state": {
+    "fuel": 1000.0,
+    "rotation": -70.0,
+    "scale": 0.25,
+    "vx": 0.40135536342002337,
+    "vy": 0.046329191870694196,
+    "x": 6811.907776690269,
+    "y": 102.39280899863488
+  },
+  "landscape_noise_seed": 12039,
+  "max_steps": 8000,
+  "model": "ppo-final",
+  "origin": "rl_ppo_footage",
+  "replay_tolerances": {
+    "reward_abs": 1e-09,
+    "state_abs": 1e-09,
+    "steps": 0
+  },
+  "research_mode": true,
+  "revision_index": 1,
+  "schema": "rewardbench.apollolander.flight_record.v1",
+  "split": null,
+  "start_schedule_version": "apollolander.starts.v1",
+  "terminal": {
+    "crashed": true,
+    "fuel_penalty": 10.99453820511628,
+    "fuel_remaining": 780.1092358977359,
+    "fuel_used": 219.89076410232073,
+    "in_landing_zone": false,
+    "landed": false,
+    "reward": -108.43173849236483,
+    "status": "crashed",
+    "steps": 2585,
+    "terminal_reward": -100.0,
+    "timed_out": false,
+    "verified": {
+      "bottom": 679.4596204064812,
+      "kind": "crashed",
+      "left": 6897.657212901089,
+      "lineIndex": 885,
+      "reason": "attitude_or_speed",
+      "right": 6902.657212901089,
+      "rotation": 88.77532290845552,
+      "vy": 0.32670069209350194
+    }
+  },
+  "trace": [
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    },
+    {
+      "rotation": 90,
+      "thrust": 0.75
+    }
+  ],
+  "trace_hash": "sha256:5502d8bdad28820a2a30469e9dd2ea2c9b0ba53de189f61d8e06325582bbfa04",
+  "trace_length": 2585,
+  "vary_fuel": false,
+  "video_path": "examples/apollolander/rl_pilot/results/ppo_pilot_v1/footage/apollo-ppo-final-revision-1-ep-seed-1000002.mp4",
+  "zone": {
+    "index": 885,
+    "width": 179.19999999999982,
+    "x1": 6873.6,
+    "x2": 7052.8,
+    "y": 679.4358077547447
+  }
+}

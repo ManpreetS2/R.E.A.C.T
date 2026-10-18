@@ -1,0 +1,50 @@
+{
+  "total_env_steps": 5005312,
+  "updates": 611,
+  "update_epochs_per_update": 4,
+  "total_optimizer_epochs": 976,
+  "total_minibatch_grad_steps": 3904,
+  "minibatch_size": 1024,
+  "rollout_steps": 256,
+  "n_envs": 16,
+  "wall_seconds": 154.36553431099992,
+  "steps_per_sec_effective": 32425.0618659202,
+  "env_config_hash": "33f72bf37844c9d11c07b18f99371024f1cb547a75e48ea311a2618180ce9fc1",
+  "observation_disclosure": "numerical state observations with shaped rewards (progress/potential term + fuel penalty); NOT screenshots",
+  "simulator_label": "custom Node ApolloLander simulator (frontend/apollolander/experiment/physics.js); Python-port equivalence is port-vs-Node only, not upstream-game parity",
+  "total_minibatch_grad_steps_logged": 3904,
+  "total_minibatch_grad_steps_estimated_including_pre_log": 9776,
+  "prior_phase_updates_without_grad_logging": 367,
+  "prior_phase_estimated_minibatch_grad_steps": 5872,
+  "continued_phase_minibatch_grad_steps": 3904,
+  "prior_phase_wall_seconds": 232.17637193400003,
+  "prior_phase_env_steps": 3006464,
+  "continued_phase_wall_seconds": 154.36553431099992,
+  "continued_phase_env_steps": 1998848,
+  "continued_phase_steps_per_sec": 12948.797209958313,
+  "combined_wall_seconds": 386.54190624499995,
+  "combined_steps_per_sec": 12948.950473761848,
+  "measured_throughput_before_training": {
+    "python_single": {
+      "backend": "python_port_single",
+      "physics_steps": 20000,
+      "wall_seconds": 1.1989159770000697,
+      "steps_per_sec": 16681.736154725408
+    },
+    "python_vectorized": {
+      "backend": "python_port_vectorized",
+      "n_envs": 16,
+      "action_repeat": 4,
+      "physics_steps": 50048,
+      "wall_seconds": 3.3165022140000247,
+      "steps_per_sec": 15090.597494170594
+    },
+    "node_ipc": {
+      "backend": "node_json_ipc_single",
+      "physics_steps": 10000,
+      "wall_seconds": 0.40500308599996515,
+      "steps_per_sec": 24691.169884075553
+    }
+  },
+  "note": "1-5M target is aspirational not required. Actual achieved total_env_steps recorded here. Grad-step counters were added mid-pilot; prior phase grads estimated as 16/update."
+}

@@ -1,0 +1,32 @@
+{
+  "run": "C_step_cost_s6",
+  "episodes": 500,
+  "physics_frames_span": [
+    32000.0,
+    4000000.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 100,
+    "land_rate": 0.0,
+    "crash_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_steps": 8000.0,
+    "mean_return": -180.00000000000125,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "late": {
+    "n": 100,
+    "land_rate": 0.0,
+    "crash_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_steps": 8000.0,
+    "mean_return": -180.00000000000125,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve",
+  "failure_modes_declined": false
+}

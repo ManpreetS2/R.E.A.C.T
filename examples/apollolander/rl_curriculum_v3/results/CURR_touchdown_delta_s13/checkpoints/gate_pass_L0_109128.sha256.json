@@ -1,0 +1,8 @@
+{
+  "tag": "gate_pass_L0_109128",
+  "path": "/workspace/examples/apollolander/rl_curriculum_v3/results/CURR_touchdown_delta_s13/checkpoints/gate_pass_L0_109128.pt",
+  "sha256": "72b447b6df9d8e33484a2dd903db47ff7c3b3949622f1fa1aa978da05364fa8a",
+  "global_step": 109128,
+  "level": "apollolander.starts.curriculum_l0_v3",
+  "level_idx": 0
+}

@@ -1,0 +1,109 @@
+Training CURR_touchdown_delta_s12 budget 1499264
+GATE level=apollolander.starts.curriculum_l0_v3 land=0.000 CI=[0.0, 0.08762453925039232] passed=False
+GATE level=apollolander.starts.curriculum_l0_v3 land=0.000 CI=[0.0, 0.08762453925039232] passed=False
+GATE level=apollolander.starts.curriculum_l0_v3 land=0.000 CI=[0.0, 0.08762453925039232] passed=False
+GATE level=apollolander.starts.curriculum_l0_v3 land=0.000 CI=[0.0, 0.08762453925039232] passed=False
+L0 learning check: {
+  "level": "apollolander.starts.curriculum_l0_v3",
+  "n": 40,
+  "seed_start": 420000,
+  "deterministic": true,
+  "counts": {
+    "perfect": 0,
+    "hard": 0,
+    "crash": 40,
+    "timeout": 0
+  },
+  "landing_rate": 0.0,
+  "landing_wilson95": [
+    0.0,
+    0.08762453925039232
+  ],
+  "mean_return": -103.85246377325248,
+  "median_return": -103.77433856835226,
+  "mean_fuel": 14.962251406155293,
+  "mean_duration": 193.25,
+  "diagnostic_frames": 7750,
+  "global_step_at_eval": 400384,
+  "event": "l0_basic_learning_check",
+  "baseline_random": {
+    "level": "apollolander.starts.curriculum_l0_v3",
+    "mode": "random",
+    "n": 200,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 0,
+      "timeout": 0,
+      "other": 0
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "perfect_rate": 0.0,
+    "perfect_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "hard_rate": 0.0,
+    "hard_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "partial": true
+  },
+  "baseline_untrained": {
+    "level": "apollolander.starts.curriculum_l0_v3",
+    "mode": "untrained",
+    "n": 200,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 0,
+      "timeout": 0,
+      "other": 0
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "perfect_rate": 0.0,
+    "perfect_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "hard_rate": 0.0,
+    "hard_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "partial": true
+  },
+  "passed": false,
+  "reasons": [
+    "not_above_random",
+    "not_above_untrained"
+  ]
+}
+{
+  "run_id": "CURR_touchdown_delta_s12",
+  "physics_frames": 400384,
+  "policy_decisions": 200192,
+  "updates": 391,
+  "highest_level_idx": 0,
+  "highest_level": "apollolander.starts.curriculum_l0_v3",
+  "first_landing_frames": {
+    "apollolander.starts.curriculum_l0_v3": null,
+    "apollolander.starts.curriculum_l1_v3": null,
+    "apollolander.starts.curriculum_l2_v3": null,
+    "apollolander.starts.curriculum_l3_v3": null,
+    "apollolander.starts.curriculum_l4_v3": null
+  },
+  "gate_checks": 4,
+  "wall_seconds": 114.54515147209167,
+  "early_stop_reason": "l0_basic_learning_check_failed",
+  "budget": 1499264
+}

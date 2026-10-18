@@ -1,0 +1,7 @@
+{
+  "tag": "step100352",
+  "path": "/workspace/examples/apollolander/rl_clean_v4/results/CLEAN_L0_s21/checkpoints/step100352.pt",
+  "sha256": "1e7066c2d32130e9101205848023c159674e9816cd95de73090677aefcf125da",
+  "global_step": 100352,
+  "level": "apollolander.starts.curriculum_l0_v3"
+}
