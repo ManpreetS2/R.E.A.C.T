@@ -106,7 +106,24 @@ SCHEDULE_V1 = StartScheduleSpec(
     vary_fuel_default=False,
 )
 
-_SCHEDULES: dict[str, StartScheduleSpec] = {SCHEDULE_V1.version: SCHEDULE_V1}
+# Curriculum aid ONLY (Family D). Nearer / more upright starts. Not proof of
+# skill on the real start distribution — final eval always uses v1 / held-out.
+SCHEDULE_CURRICULUM_EASY = StartScheduleSpec(
+    version="apollolander.starts.curriculum_easy_v1",
+    dx_from_pad=(-60.0, -20.0),
+    y=(500.0, 620.0),
+    vx=(0.0, 0.08),
+    vy=(0.0, 0.05),
+    rotations=(-20.0, -10.0, 0.0, 10.0, 20.0),
+    fuel=(FUEL_MIN, FUEL_MAX),
+    scale=PHYSICS_SCALE,
+    vary_fuel_default=False,
+)
+
+_SCHEDULES: dict[str, StartScheduleSpec] = {
+    SCHEDULE_V1.version: SCHEDULE_V1,
+    SCHEDULE_CURRICULUM_EASY.version: SCHEDULE_CURRICULUM_EASY,
+}
 
 
 def schedule_spec(version: str = START_SCHEDULE_VERSION) -> StartScheduleSpec:

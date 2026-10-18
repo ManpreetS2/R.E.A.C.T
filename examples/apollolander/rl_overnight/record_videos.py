@@ -53,8 +53,8 @@ def collect_trace(ckpt: Path | None, seed: int, random_policy: bool = False) -> 
                 idx = int(np.random.randint(0, 95))
             else:
                 with torch.no_grad():
-                    logits, _ = policy.forward(torch.as_tensor(obs).unsqueeze(0))
-                    idx = int(torch.argmax(logits, dim=-1).item())
+                    dist, _ = policy.forward(torch.as_tensor(obs).unsqueeze(0))
+                    idx = int(torch.argmax(dist.probs, dim=-1).item())
             cmd = decode_action(idx)
             # Expand action-repeat into per-physics-frame commands for faithful replay.
             for _ in range(2):

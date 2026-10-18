@@ -1,0 +1,12 @@
+{
+  "tag": "step2000000",
+  "path": "examples/apollolander/rl_overnight/results/D_curriculum_easy_s7/checkpoints/step2000000.pt",
+  "sha256": "ead6be63beaadecb5250930c6f15a289a1ce499eeaad6bb429e105afd3df814e",
+  "global_step": 2000896,
+  "physics_frames": 2000896,
+  "policy_decisions": 1000448,
+  "update_idx": 977,
+  "reward_mode": "step_cost",
+  "family": "D",
+  "backend": "upstream_vm_host"
+}

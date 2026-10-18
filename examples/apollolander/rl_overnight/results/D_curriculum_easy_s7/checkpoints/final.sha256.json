@@ -1,0 +1,12 @@
+{
+  "tag": "final",
+  "path": "examples/apollolander/rl_overnight/results/D_curriculum_easy_s7/checkpoints/final.pt",
+  "sha256": "2891133a617d79109f0b448073b4c92e5ff6cd7937cff73b3cf66a3250cb5cbd",
+  "global_step": 3000320,
+  "physics_frames": 3000320,
+  "policy_decisions": 1500160,
+  "update_idx": 1465,
+  "reward_mode": "step_cost",
+  "family": "D",
+  "backend": "upstream_vm_host"
+}

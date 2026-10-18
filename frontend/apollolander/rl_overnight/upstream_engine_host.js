@@ -460,13 +460,14 @@ function createEngine() {
     let fuelPenalty = burned * RESEARCH_REWARD.fuelPerUnit;
     if (
       config.rewardMode === "sparse_terminal_only" ||
-      config.rewardMode === "timeout_eq_crash"
+      config.rewardMode === "timeout_eq_crash" ||
+      config.rewardMode === "step_cost"
     ) {
       fuelPenalty = 0;
     }
-    if (config.rewardMode === "no_shaping_keep_fuel") {
-      // fuel penalty kept; shaping forced 0 above when mode matches
-    }
+    // Family C: small constant per-physics-frame cost to remove hover incentive.
+    const stepCost =
+      config.rewardMode === "step_cost" ? 0.01 : 0;
 
     let terminal = 0;
     if (contact && status === "flying") {
@@ -506,9 +507,15 @@ function createEngine() {
     if (
       config.rewardMode === "sparse_terminal_only" ||
       config.rewardMode === "timeout_eq_crash" ||
-      config.rewardMode === "no_shaping_keep_fuel"
+      config.rewardMode === "no_shaping_keep_fuel" ||
+      config.rewardMode === "step_cost"
     ) {
       shaped = 0;
+    }
+
+    // Equalize timeout/crash under step_cost so neither is a cheap escape.
+    if (config.rewardMode === "step_cost" && status === "timeout") {
+      terminal = RESEARCH_REWARD.crash;
     }
 
     const reward =
@@ -519,7 +526,7 @@ function createEngine() {
             : status === "crashed"
               ? RESEARCH_REWARD.crash
               : 0)
-        : shaped - fuelPenalty + terminal;
+        : shaped - fuelPenalty - stepCost + terminal;
 
     totalReward += reward;
     return {

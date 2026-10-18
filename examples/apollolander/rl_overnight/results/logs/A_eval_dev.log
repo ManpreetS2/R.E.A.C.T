@@ -1,1 +1,7 @@
 baseline: random open-loop
+baseline: untrained net
+eval step0
+  land=0.000 CI=[0.0, 0.1071827150573635] crash=1.000 timeout=0.000
+eval final
+  land=0.000 CI=[0.0, 0.1071827150573635] crash=1.000 timeout=0.000
+Wrote examples/apollolander/rl_overnight/results/A_reproduce_upstream_s0/evaluation/dev_validation_results.json

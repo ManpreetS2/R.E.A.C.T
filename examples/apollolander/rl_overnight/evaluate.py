@@ -51,9 +51,9 @@ def run_policy(
             else:
                 assert policy is not None
                 with torch.no_grad():
-                    logits, _ = policy.forward(torch.as_tensor(obs, dtype=torch.float32).unsqueeze(0))
-                    action = int(torch.argmax(logits, dim=-1).item()) if deterministic else int(
-                        torch.distributions.Categorical(logits=logits).sample().item()
+                    dist, _ = policy.forward(torch.as_tensor(obs, dtype=torch.float32).unsqueeze(0))
+                    action = int(torch.argmax(dist.probs, dim=-1).item()) if deterministic else int(
+                        dist.sample().item()
                     )
             obs, reward, terminated, truncated, step_info = env.step(action)
             total_r += float(reward)
