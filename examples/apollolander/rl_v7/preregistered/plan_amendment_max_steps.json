@@ -1,0 +1,13 @@
+{
+  "created_utc": "2026-10-18T22:40:00Z",
+  "amends": "plan.json / seeds.json eval_shrinkage_plan",
+  "reason": "Raw and translated expert require ~5500–6500 physics frames on apollolander.starts.v1; max_steps=3000 falsely times out every episode.",
+  "max_steps_v1": 8000,
+  "max_steps_l0_near": 400,
+  "feasibility_n": 12,
+  "fidelity_n": 4,
+  "demo_budget_note": "V1 success costs ~12k frames (attempt+replay). Under 300k demo/feas/replay cap, keep a small v1 primary set and fill 50–100 with L0-near if feasibility L0 landing rate >= 0.8.",
+  "eval_note": "Attempt all 100 preregistered v1 eval seeds with max_steps=8000; DiagnosticBudget.require stops early when remaining < max_steps. L0-near 40-seed eval is primary cheap surface when L0 demos are used.",
+  "seeds_sha256_unchanged": "5a9f330be4d55473bbe77f5d3fa739f7a92e7225d31add5725decfe5d3ea6134",
+  "label": "demonstration-assisted"
+}
