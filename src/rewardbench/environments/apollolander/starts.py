@@ -138,6 +138,19 @@ SCHEDULE_CURRICULUM_L0 = StartScheduleSpec(
     scale=PHYSICS_SCALE,
     vary_fuel_default=False,
 )
+# V5/V6 L0-near: ~3–6 px above pad (y = PAD_Y−9…PAD_Y−6), upright, low velocity.
+# Physically legitimate in-world states a player/soft-drop can reach.
+SCHEDULE_L0_NEAR_V6 = StartScheduleSpec(
+    version="apollolander.starts.l0_near_v6",
+    dx_from_pad=(-2.0, 2.0),
+    y=(PAD_Y - 9.0, PAD_Y - 6.0),
+    vx=(-0.005, 0.005),
+    vy=(0.01, 0.02),
+    rotations=(0.0,),
+    fuel=(FUEL_MIN, FUEL_MAX),
+    scale=PHYSICS_SCALE,
+    vary_fuel_default=False,
+)
 SCHEDULE_CURRICULUM_L1 = StartScheduleSpec(
     version="apollolander.starts.curriculum_l1_v3",
     dx_from_pad=(-40.0, 40.0),
@@ -200,6 +213,7 @@ _SCHEDULES: dict[str, StartScheduleSpec] = {
     SCHEDULE_CURRICULUM_L2.version: SCHEDULE_CURRICULUM_L2,
     SCHEDULE_CURRICULUM_L3.version: SCHEDULE_CURRICULUM_L3,
     SCHEDULE_CURRICULUM_L4.version: SCHEDULE_CURRICULUM_L4,
+    SCHEDULE_L0_NEAR_V6.version: SCHEDULE_L0_NEAR_V6,
 }
 
 

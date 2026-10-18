@@ -1,0 +1,86 @@
+{
+  "created_utc": "2026-10-18T18:46:02Z",
+  "title": "V6 preregistered evaluation plan \u2014 committed BEFORE any eval",
+  "training_hard_cap": 250000,
+  "diagnostic_hard_cap": 100000,
+  "max_steps": 400,
+  "action_repeat": 8,
+  "start_schedule": "apollolander.starts.l0_near_v6",
+  "rotation_mode": "delta",
+  "thrust": "continuous",
+  "primary_metric": "deterministic_frozen_landing_vs_step0_paired_McNemar",
+  "worst_case_total_diagnostic_frames": 98000,
+  "fits_cap": true,
+  "items": [
+    {
+      "name": "step0_deterministic",
+      "n": 100,
+      "seeds": "val_full",
+      "worst_case_frames": 40000,
+      "required": true
+    },
+    {
+      "name": "intermediate_50k",
+      "n": 10,
+      "seeds": "intermediate_subset",
+      "worst_case_frames": 4000,
+      "required": false
+    },
+    {
+      "name": "intermediate_100k",
+      "n": 10,
+      "seeds": "intermediate_subset",
+      "worst_case_frames": 4000,
+      "required": false
+    },
+    {
+      "name": "intermediate_150k",
+      "n": 10,
+      "seeds": "intermediate_subset",
+      "worst_case_frames": 4000,
+      "required": false
+    },
+    {
+      "name": "intermediate_200k",
+      "n": 10,
+      "seeds": "intermediate_subset",
+      "worst_case_frames": 4000,
+      "required": false
+    },
+    {
+      "name": "final_deterministic",
+      "n": 100,
+      "seeds": "val_full",
+      "worst_case_frames": 40000,
+      "required": true
+    },
+    {
+      "name": "contingency_reverify_footage",
+      "n": 5,
+      "seeds": "ad_hoc_landing_only",
+      "worst_case_frames": 2000,
+      "required": false,
+      "note": "Only if a trained landing occurs; re-verify + spare"
+    }
+  ],
+  "shrinkage": {
+    "full_intermediate_on_100_seeds_worst_case": 200000,
+    "chosen_intermediate_n": 10,
+    "chosen_intermediate_checkpoints": [
+      50000,
+      100000,
+      150000,
+      200000
+    ],
+    "skipped_intermediate_at_250k": "final_deterministic evaluates the \u2264250k final checkpoint on all 100 seeds",
+    "stochastic_step0": "OMITTED \u2014 would add another 40k worst-case; deterministic is primary",
+    "reason": "Fit step0(100)+final(100)+4*intermediate(10)+contingency(5) at max_steps=400 into 100k"
+  },
+  "val_seeds_sha256": "df12cd0c69196d3e1e85e230099cef8a17d4993d006cf796f77856a9e387e06f",
+  "integrity_required_before_train": [
+    "soft_thrust_prior==false",
+    "hold_attitude_prior==false",
+    "init_scheme==orthogonal_zero_bias",
+    "identical obs/action/horizon/action_repeat/start for step0 and train"
+  ]
+}

@@ -28,8 +28,23 @@ class DiagnosticBudget:
     def can_afford(self, frames: int) -> bool:
         return int(self.spent) + int(frames) <= int(self.hard_cap)
 
+    def require(self, frames: int, *, reason: str) -> None:
+        """Pre-step guard: raise before any physics if ``frames`` would overshoot."""
+        frames = int(frames)
+        if frames < 0:
+            raise ValueError("diagnostic frames must be non-negative")
+        if not self.can_afford(frames):
+            raise DiagnosticBudgetExhausted(
+                f"diagnostic hard cap {self.hard_cap} would be exceeded BEFORE step: "
+                f"spent={self.spent}, requested={frames}, remaining={self.remaining()}, "
+                f"reason={reason!r}"
+            )
+
     def charge(self, frames: int, *, reason: str) -> int:
-        """Charge ``frames`` or raise if the spend would exceed the cap."""
+        """Charge ``frames`` or raise if the spend would exceed the cap.
+
+        Call ``require`` before stepping; ``charge`` after counting actual frames.
+        """
         frames = int(frames)
         if frames < 0:
             raise ValueError("diagnostic frames must be non-negative")
