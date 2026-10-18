@@ -1,0 +1,118 @@
+{
+  "real_run": "A_reproduce_upstream_s0",
+  "control_run": "CTRL_zero_reward_s0",
+  "control_label": "constant_zero reward (physics unchanged)",
+  "real": {
+    "run": "A_reproduce_upstream_s0",
+    "episodes": 2535,
+    "physics_frames_span": [
+      32000.0,
+      6992944.0
+    ],
+    "first_landing_episode": null,
+    "first_landing_frames": null,
+    "early": {
+      "n": 507,
+      "land_rate": 0.0,
+      "crash_rate": 0.9881656804733728,
+      "timeout_rate": 0.011834319526627219,
+      "mean_steps": 1652.5798816568047,
+      "mean_return": -101.61595175689315,
+      "mean_terminal_vy": NaN,
+      "mean_terminal_dist": NaN
+    },
+    "late": {
+      "n": 507,
+      "land_rate": 0.0,
+      "crash_rate": 0.7159763313609467,
+      "timeout_rate": 0.28402366863905326,
+      "mean_steps": 4222.090729783037,
+      "mean_return": -94.14344182306299,
+      "mean_terminal_vy": -0.009374801142512176,
+      "mean_terminal_dist": 813.0871223130987
+    },
+    "learning_from_experience_verdict": "landing rate did NOT rise; crash rate declined; mean episode length rose (1653\u21924222) \u2014 survival longer, not proof of landing skill; terminal contact metrics did NOT improve",
+    "failure_modes_declined": false
+  },
+  "control": {
+    "run": "CTRL_zero_reward_s0",
+    "episodes": 533,
+    "physics_frames_span": [
+      32000.0,
+      2998744.0
+    ],
+    "first_landing_episode": null,
+    "first_landing_frames": null,
+    "early": {
+      "n": 106,
+      "land_rate": 0.0,
+      "crash_rate": 0.0,
+      "timeout_rate": 1.0,
+      "mean_steps": 8000.0,
+      "mean_return": 0.0,
+      "mean_terminal_vy": -2.170118363712077,
+      "mean_terminal_dist": 17245.950306349958
+    },
+    "late": {
+      "n": 106,
+      "land_rate": 0.0,
+      "crash_rate": 0.44339622641509435,
+      "timeout_rate": 0.5566037735849056,
+      "mean_steps": 5762.38679245283,
+      "mean_return": 0.0,
+      "mean_terminal_vy": -0.5734631969557478,
+      "mean_terminal_dist": 3553.333473378123
+    },
+    "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve; terminal vy and/or pad distance improved",
+    "failure_modes_declined": true
+  },
+  "comparison": {
+    "real_steps_delta": 2569.5108481262323,
+    "ctrl_steps_delta": -2237.6132075471696,
+    "real_crash_delta": -0.2721893491124261,
+    "ctrl_crash_delta": 0.44339622641509435,
+    "interpretation": "If real-reward run shows larger structured behavioral change (e.g. longer flights / mode shift) than the zero-reward control on the same seed/config/budget, that supports reward causality. If both look similar, changes may be entropy drift / noise."
+  },
+  "matched_budget_comparison": {
+    "A_phase1_3M_shaped": {
+      "early": {
+        "crash": 0.9787985865724381,
+        "timeout": 0.02120141342756184,
+        "steps": 1630.9363957597172
+      },
+      "late": {
+        "crash": 0.954225352112676,
+        "timeout": 0.045774647887323945,
+        "steps": 2977.6971830985917
+      },
+      "n": 1416
+    },
+    "CTRL_3M_zero_reward": {
+      "early": {
+        "crash": 0.0,
+        "timeout": 1.0,
+        "steps": 8000.0
+      },
+      "late": {
+        "crash": 0.4392523364485981,
+        "timeout": 0.5607476635514018,
+        "steps": 5783.2990654205605
+      },
+      "n": 533
+    },
+    "A_post_resume_additional": {
+      "early": {
+        "crash": 0.968609865470852,
+        "timeout": 0.03139013452914798,
+        "steps": 2711.7354260089687
+      },
+      "late": {
+        "crash": 0.7142857142857143,
+        "timeout": 0.2857142857142857,
+        "steps": 4163.638392857143
+      },
+      "n": 1119
+    },
+    "finding": "Shaped-reward A (phase1) stayed crash-dominated while mean flight length rose. Zero-reward CTRL on the same seed/config started timeout-dominated then mixed in crashes. Trajectories differ \u2192 reward signal changes behavior. Neither produced landings; A continuous phase increased timeouts/hover (not pad approach)."
+  }
+}

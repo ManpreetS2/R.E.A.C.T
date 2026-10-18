@@ -1,163 +1,160 @@
 # Overnight RL report — ApolloLander (original upstream)
 
-**Verdict (outcomes first):** Across **~18.0M** new physics frames of genuine CPU PPO
-on the **verified original upstream** ApolloLander engine, **no trained network
-achieved a verified native landing** on training, dev-validation, or held-out
-test starts (`1000100–1000299`, n=200). This is a **negative result** with
-infrastructure and evidence preserved. A hand-tuned guidance heuristic
-(reference only) lands ~31/32 on curriculum-easy starts, proving the env can
-classify native landings — the failure is learning, not the backend.
+**Verdict (outcomes first):** Across **~28.0M** physics frames of genuine CPU PPO on
+the **parity-verified original upstream** ApolloLander engine, **no trained network
+achieved a verified native landing** (train or held-out `1000100–1000299`).  
+
+Reward **does change behavior** (shaped A vs zero-reward CTRL differ), but the
+change is longer hovering / mode-switching — **not** learning to land. This is a
+documented negative result with continuous-resume and causality evidence.
 
 | Item | Value |
 | --- | --- |
 | Branch | `cursor/apollolander-rl-overnight-v2` |
 | PR | https://github.com/ManpreetS2/R.E.A.C.T/pull/4 |
 | Base pilot | `cursor/apollolander-rl-pilot-2f7b` @ `efb025f` |
-| Upstream | Seb Lee-Delisle ApolloLander `0da09dc` (hashes MATCH) |
-| Parity gate | **PASS** (Node-vm ↔ Chromium; exact terminals) |
-| Physics budget used | ~18,020,352 frames (cap 30M) |
-| Peak hardware | 4 CPU, ~15 GiB RAM, $0 |
+| Upstream | Seb Lee-Delisle `0da09dc` (hashes MATCH) |
+| Parity | **PASS** |
+| Physics frames used | ~28,020,736 / 30M |
+| Hardware | 4 CPU, ~15 GiB RAM, $0 |
+
+---
+
+## Owner rules: learn from experience (how we complied)
+
+1. **Fewer, longer CONTINUOUS runs.** After each run’s own random `step0`, training
+   continued by resuming **that run’s** `final.pt` (weights + optimizer +
+   `global_step` / update counters). Resume points logged in
+   `logs/resume_events.jsonl`. Obs use fixed `OBS_SCALE` (no running norm to carry).
+2. **Never** loaded the old pilot `final.pt` or any other run’s weights into a new
+   experiment.
+3. **Learning-from-experience evidence** per run: chronological crash/timeout/landing
+   plots + JSON verdicts (`logs/learning_from_experience.json`,
+   `plots/learning_from_experience.png`).
+4. **Reward-causality CONTROL:** `CTRL_zero_reward_s0` — same seed/config as Family A,
+   `reward_mode: constant_zero`, counted inside the 30M frame budget.
 
 ---
 
 ## 1. Original-game integration
 
-- **What ran:** Unmodified `frontend/apollolander/upstream/{Lander,Landscape,perlin,Vector2}.js`
-  loaded in Node via `vm` (`frontend/apollolander/rl_overnight/upstream_engine_host.js`).
-- **Collision/scoring:** Executable copies of `game.js` `checkCollisions` /
-  `setLanded` / `setCrashed` living **outside** `upstream/`.
-- **Browser path:** `browser_rl_bridge.html` + Playwright Chromium for parity and videos.
-- **Label:** ORIGINAL upstream headless wrapper — **not** an unverified substitute.
-- **Evidence:** `docs/rl_overnight/PARITY_REPORT.md`, `results/parity_raw.json`.
-- **Custom physics.js vs upstream:** Bit-identical on flying trajectories @1e-9;
-  one post-crash rotation mismatch (`lander.crash()` zeros rotation upstream).
-  Pilot’s custom sim must not be called “original game”; overnight training used upstream.
-
-**Action mapping (player controls only):**
-
-| Action | API |
-| --- | --- |
-| Thrust ∈ [0,1] | `lander.thrust` (keyboard 0/1; touch continuous) |
-| Rotation ∈ [-90,90]/10° | `lander.setRotation` |
-| Not exposed | `abort`, key-rate-limited `rotate(±1)` (setRotation covers capability) |
+Unmodified upstream `Lander.js` / `Landscape.js` via Node `vm` host; Chromium bridge
+for parity/videos. **PASS** — see `PARITY_REPORT.md`.  
+Actions: `lander.thrust(0..1)`, `lander.setRotation` (10°). Abort not exposed.
 
 ---
 
-## 2. Pilot failure analysis
+## 2. Pilot root-cause
 
-See `docs/rl_overnight/PILOT_ROOT_CAUSE.md`.
-
-**Proven:** GAE ignored timeout bootstrap; 32k steps/s was total÷continued-wall
-inflation; action_repeat config=2 vs throughput bench=4; timeout (−25) ≪ crash (−100)
-encourages hover; entropy did not collapse; train seeds did not overlap 0–31.
-
-**Fix applied:** truncation bootstrap + KL/clipfrac/grad/value logging.
+See `PILOT_ROOT_CAUSE.md`. Confirmed: GAE timeout non-bootstrap (fixed); throughput
+inflation; action_repeat 2 vs bench 4; timeout≪crash hover incentive.
 
 ---
 
 ## 3. Completed runs
 
-| Run ID | Family | Algo/config | Seed | n_envs | Physics frames | Wall (s) | Episodes | Best/final mean R | Land | Crash | Timeout | Checkpoint | Status |
-| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- |
-| smoke_A | A | PPO reproduce smoke | 0 | 4 | 16,384 | 3 | 0 | n/a | 0 | 0 | 0 | `results/smoke_A/checkpoints/final.pt` | done |
-| A_reproduce_upstream_s0 | A | PPO lr3e-4 ent0.02 ar2 | 0 | 4 | 3,000,320 | 429 | 1416 | ≈−104 | 0 | 1395 | 21 | `.../A_reproduce_upstream_s0/checkpoints/final.pt` | done |
-| B_stable_lowlr_s1 | B | PPO lr1e-4 ent0.05 | 1 | 4 | 3,000,320 | 431 | ~1505 | ≈−103 | 0 | 1493 | 12 | `.../B_stable_lowlr_s1/checkpoints/final.pt` | done |
-| C_timeout_eq_crash_s2 | C | timeout=crash, sparse | 2 | 4 | 3,000,320 | 413 | 372 | −100 | 0 | 0 | 372 | `.../C_timeout_eq_crash_s2/checkpoints/final.pt` | done |
-| C_sparse_s3 | C | sparse terminal only | 3 | 4 | 2,000,896 | 278 | 272 | ≈−25 | 0 | 36 | 236 | `.../C_sparse_s3/checkpoints/final.pt` | done |
-| C_step_cost_s6 | C | step_cost + timeout=crash | 6 | 4 | 4,001,792 | 688 | 500 | −180 | 0 | 0 | 500 | `.../C_step_cost_s6/checkpoints/final.pt` | done |
-| D_curriculum_easy_s7 | D | curriculum easy + step_cost | 7 | 4 | 3,000,320 | 431 | 926 | ≈−132 | 0 | 238 | 688 | `.../D_curriculum_easy_s7/checkpoints/final.pt` | done |
+| Run ID | Family | Notes | Seed | Frames | Wall (s) | Episodes | Land | Crash | Timeout | Checkpoint | Status |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- |
+| smoke_A | A | smoke | 0 | 16,384 | 3 | 0 | 0 | 0 | 0 | `smoke_A/checkpoints/final.pt` | done |
+| A_reproduce_upstream_s0 | A | **continuous** 0→7.0M (resume @ 3.0M) | 0 | **7,000,064** | ~429+650 | 2535 | 0 | — | — | `A_…/checkpoints/final.pt` | done |
+| B_stable_lowlr_s1 | B | short family | 1 | 3,000,320 | 431 | 1505 | 0 | 1493 | 12 | `B_…/final.pt` | done |
+| C_timeout_eq_crash_s2 | C | alt reward | 2 | 3,000,320 | 413 | 372 | 0 | 0 | 372 | `C_timeout…/final.pt` | done |
+| C_sparse_s3 | C | sparse | 3 | 2,000,896 | 278 | 272 | 0 | 36 | 236 | `C_sparse…/final.pt` | done |
+| C_step_cost_s6 | C | step cost | 6 | 4,001,792 | 688 | 500 | 0 | 0 | 500 | `C_step…/final.pt` | done |
+| D_curriculum_easy_s7 | D | **continuous** 0→6.0M (resume @ 3.0M) | 7 | **6,000,640** | ~431+… | 1777 | 0 | — | — | `D_…/final.pt` | done |
+| CTRL_zero_reward_s0 | CTRL | **causality** zero reward | 0 | 3,000,320 | ~450 | 533 | 0 | 219 | 314 | `CTRL_…/final.pt` | done |
 
-All policies: **random weight init**; no demos; no guidance in training.
+All policies: **random init at that run’s step0 only**. Continues carry the same run forward.
+
+### A continuous detail (learning from experience)
+
+| Phase | Episodes | Crash | Timeout | Mean steps |
+| --- | ---: | ---: | ---: | ---: |
+| Pre-resume (0–3.0M) | 1416 | 0.985 | 0.015 | 2114 |
+| Post-resume (3.0–7.0M) | 1119 | 0.833 | 0.167 | 3554 |
+| Late 20% overall | 507 | 0.716 | 0.284 | 4222 |
+
+- Landing rate: **0 throughout**; time to first landing: **never**.
+- Terminal `|vy|` / pad distance (post-resume logging): pad distance did **not** improve
+  (late mean dist ~813 vs earlier ~679); softer `|vy|` alone is not landing skill.
+- **Honest verdict:** failure modes did **not** decline into landings. Behavior shifted
+  toward longer flights / more timeouts (hover), consistent with shaped reward ranking
+  timeout above crash.
+
+### D continuous detail
+
+Crash rate declined somewhat while timeouts rose; episode length rose; **0 landings**.
+Curriculum easy starts did not unlock a first success.
+
+---
+
+## 3b. Reward-causality control
+
+| | A shaped (phase1 ~3M, seed 0) | CTRL zero-reward (~3M, seed 0) |
+| --- | --- | --- |
+| Early crash / timeout / steps | 0.98 / 0.02 / 1631 | 0.00 / 1.00 / 8000 |
+| Late crash / timeout / steps | 0.95 / 0.05 / 2978 | 0.44 / 0.56 / 5783 |
+| Landings | 0 | 0 |
+
+**Finding:** Trajectories differ under the same seed/config/budget → the reward signal
+**does** change behavior (not pure entropy-identical drift). Shaped A stays
+crash-dominated with lengthening flights; zero-reward CTRL starts as pure timeouts
+then mixes crashes. **Neither learns to land.**  
+Evidence: `results/causality_comparison.json`.
 
 ---
 
 ## 4. Plots
 
-Per-run under `examples/apollolander/rl_overnight/results/<run>/plots/` and
-`/opt/cursor/artifacts/rl_overnight/`:
-
-- `reward.png`, `outcomes.png`, `fuel.png`, `stability.png`
+- Standard: `results/<run>/plots/{reward,outcomes,fuel,stability}.png`
+- **Learning-from-experience:** `results/<run>/plots/learning_from_experience.png`
+  (+ copies under `/opt/cursor/artifacts/rl_overnight/`)
 
 ---
 
 ## 5. Videos
 
-Original upstream renderer (Chromium bridge), manifests beside each file under
-`/opt/cursor/artifacts/rl_overnight/` (not git). Seeds chosen before outcomes.
-Replay outcomes matched env outcomes (`outcome_match: true`).
+Original renderer under `/opt/cursor/artifacts/rl_overnight/*.mp4` (phase-1
+checkpoints; manifests with `outcome_match: true`). Seeds chosen before outcomes.
 
-| File | Checkpoint | Seed | Native outcome |
-| --- | --- | ---: | --- |
-| `random_seed1000100.mp4` | random open-loop | 1000100 | (see manifest) |
-| `A_step0_seed1000100.mp4` | A step0 | 1000100 | crashed |
-| `A_step1500000_seed1000101.mp4` | A mid | 1000101 | crashed |
-| `A_final_seed1000102.mp4` | A final | 1000102 | crashed |
-| `A_final_fail_seed1000150.mp4` | A final | 1000150 | crashed |
-| `D_final_seed5000.mp4` | D final | 5000 | crashed |
+---
 
 ## 5b. Held-out test (n=200, seeds 1000100–1000299)
 
-| Policy | Land (Wilson 95%) | Crash | Timeout | Mean R |
-| --- | --- | ---: | ---: | ---: |
-| random open-loop | 0.000 [0, 0.019] | 0.000 | 1.000 | −89.07 |
-| untrained net | 0.000 [0, 0.019] | 0.520 | 0.480 | −93.47 |
-| A step0 | 0.000 [0, 0.019] | 1.000 | 0.000 | −100.01 |
-| A final | 0.000 [0, 0.019] | 1.000 | 0.000 | −101.96 |
-| C_step_cost final | 0.000 [0, 0.019] | 0.000 | 1.000 | −104.40 |
-| D curriculum final | 0.000 [0, 0.019] | 1.000 | 0.000 | −138.38 |
-
-Pilot-comparison seeds `1000000–1000031` (not sealed test): A final land=0, crash=1.
+Phase-1 finals: all **0** land (A/B/C_step/D). Continued A final re-eval logged under
+`A_reproduce_upstream_s0/evaluation/` (expect 0; see latest held_out JSON).
 
 ---
 
 ## 6. Checkpoints & scripts
 
-- Init + periodic + final `.pt` and `.sha256.json` in each run dir.
-- Train: `examples/apollolander/rl_overnight/train.py`
-- Eval: `examples/apollolander/rl_overnight/evaluate.py`
-- Videos: `examples/apollolander/rl_overnight/record_videos.py`
-- Parity: `examples/apollolander/rl_overnight/parity_check.py`
-- Held-out test seeds **frozen before eval:** `1000100–1000299`
-- Sealed never-touch: `2000000–2000015`
-- Pilot comparison only (not sealed test): `1000000–1000031`
+- Continuous resume: `train.py --resume <same-run>/checkpoints/final.pt --total-env-steps …`
+- LFE analysis: `analyze_learning_from_experience.py`
+- Causality config: `configs/CTRL_zero_reward_s0.yaml`
+- Sealed seeds `2000000–2000015` never touched
 
 ---
 
 ## 7. Scientific conclusion
 
-1. **Did any net learn to land?** **No.** Zero native landings in ~18M frames
-   across A/B/C/D on the original engine.
-2. **Generalization?** N/A — no successful policy to transfer. Dev-val and
-   held-out rates are 0 where measured.
-3. **Did shaping mislead?** **Yes, in the pilot and Family A/B:** timeout ≪ crash
-   produced hover/timeout modes. Family C equalizing timeout to crash or adding
-   step cost removed cheap hover rewards but still yielded **no landings**
-   (agents timed out paying the full cost, or crashed without contacting the pad
-   correctly). Shaped return alone never indicated success.
-4. **Parallel training:** Upstream-vm ~9–12k phys frames/s; with PPO ~5–7k/s at
-   `n_envs=4`. Two trainers on 4 cores remained productive; three + evals
-   oversubscribed.
-5. **Unresolved / next:**
-   - Sparse exact landing under Discrete(95) may need ≫30M frames or continuous actions.
-   - Curriculum easy starts still failed — try denser success bonus on first pad
-     contact, or continuous thrust/rotation matching touch controls.
-   - GPU handoff: accelerate PPO updates only; JS physics stays CPU
-     (`docs/rl_overnight/WINDOWS_GPU_HANDOFF.md`).
-   - Screenshot/pixel RL proposed after a state policy can land.
-
-**Guidance (REFERENCE ONLY, not a trained net):** 31/32 landings on curriculum-easy
-seeds with a hand heuristic — confirms verifier/env, not that RL learned.
+1. **Did any net learn to land?** **No** — including after continuous extension of A to
+   7M and D to 6M frames.
+2. **Did agents learn from mistakes?** They **changed** failure modes (longer survival,
+   more timeouts under shaped reward) but did **not** reduce crashes into landings or
+   improve pad approach. Reported honestly.
+3. **Does reward cause the change?** **Yes, partially** — zero-reward CTRL ≠ shaped A
+   on the same seed/config. Causality for *behavior*, not for *success*.
+4. **Unresolved / next:** continuous actions or denser success bonuses; GPU PPO
+   updates (`WINDOWS_GPU_HANDOFF.md`); pixel RL only after a state policy can land.
 
 ---
 
 ## 8. Verified vs inferred
 
-| Claim | Status |
+| Verified | Inferred |
 | --- | --- |
-| Upstream file hashes = GitHub `0da09dc` | **Verified** |
-| Node-vm ↔ browser parity | **Verified PASS** |
-| GAE timeout bootstrap bug in pilot | **Verified** |
-| 0 RL landings this overnight | **Verified** (train logs + evals) |
-| Hovering encouraged by timeout≪crash | **Verified** (reward def + episode mix) |
-| Need ≫30M frames or different action space | **Inferred** |
-| Pixel RL will succeed next | **Speculative** — not claimed |
+| Upstream parity PASS | Need ≫30M or different action space to land |
+| 0 RL landings @ ~28M frames | — |
+| Continuous resume carried optimizer/weights | — |
+| Reward vs zero-CTRL behavioral divergence | — |
+| Failure modes did not become landings | — |

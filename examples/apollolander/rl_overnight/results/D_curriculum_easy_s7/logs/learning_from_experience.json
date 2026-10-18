@@ -1,32 +1,32 @@
 {
   "run": "D_curriculum_easy_s7",
-  "episodes": 926,
+  "episodes": 1777,
   "physics_frames_span": [
     16000.0,
-    2995640.0
+    5997208.0
   ],
   "first_landing_episode": null,
   "first_landing_frames": null,
   "early": {
-    "n": 185,
+    "n": 355,
     "land_rate": 0.0,
-    "crash_rate": 0.0,
-    "timeout_rate": 1.0,
-    "mean_steps": 4000.0,
-    "mean_return": -140.00000000000068,
+    "crash_rate": 0.352112676056338,
+    "timeout_rate": 0.647887323943662,
+    "mean_steps": 2830.4901408450705,
+    "mean_return": -128.30490140845112,
     "mean_terminal_vy": NaN,
     "mean_terminal_dist": NaN
   },
   "late": {
-    "n": 185,
+    "n": 355,
     "land_rate": 0.0,
-    "crash_rate": 0.10810810810810811,
-    "timeout_rate": 0.8918918918918919,
-    "mean_steps": 3672.2432432432433,
-    "mean_return": -136.722432432433,
-    "mean_terminal_vy": NaN,
-    "mean_terminal_dist": NaN
+    "crash_rate": 0.1352112676056338,
+    "timeout_rate": 0.8647887323943662,
+    "mean_steps": 3692.287323943662,
+    "mean_return": -136.92287323943717,
+    "mean_terminal_vy": -1.3064905950955932,
+    "mean_terminal_dist": 2916.5110246189406
   },
-  "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve",
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash rate declined; mean episode length rose (2830\u21923692) \u2014 survival longer, not proof of landing skill; terminal contact metrics did NOT improve",
   "failure_modes_declined": false
 }
