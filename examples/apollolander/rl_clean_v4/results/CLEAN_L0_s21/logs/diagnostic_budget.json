@@ -1,0 +1,12 @@
+{
+  "hard_cap": 400000,
+  "spent": 198786,
+  "remaining": 201214,
+  "ledger": [
+    {
+      "reason": "probe:L0_random_binary_thrust_delta",
+      "frames": 8001,
+      "spent_after": 198786
+    }
+  ]
+}
