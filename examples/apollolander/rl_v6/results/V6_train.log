@@ -1,0 +1,1449 @@
+STEP0 eval deterministic on 100 val seeds…
+step0 land={'perfect': 0, 'hard': 0, 'crash': 100, 'timeout': 0} rate=0.000 frames=16256 diag_spent=16256
+INTERMEDIATE EVAL mark=50000 step=53248
+  land={'perfect': 0, 'hard': 0, 'crash': 0, 'timeout': 10} mcnemar={'b': 0, 'c': 0, 'n_discordant': 0, 'p_value': 1.0, 'method': 'exact_none'} div={'kl_thrust_mean': 0.02080780640244484, 'kl_rotation_mean': 0.00976552627980709, 'det_rotation_agreement': 0.7578125, 'mean_det_thrust': 0.5121135115623474, 'mean_det_thrust_step0': 0.49724918603897095, 'mean_abs_value_diff': 3.242180347442627}
+INTERMEDIATE EVAL mark=100000 step=102400
+  land={'perfect': 0, 'hard': 0, 'crash': 10, 'timeout': 0} mcnemar={'b': 0, 'c': 0, 'n_discordant': 0, 'p_value': 1.0, 'method': 'exact_none'} div={'kl_thrust_mean': 0.19053277373313904, 'kl_rotation_mean': 0.08807442337274551, 'det_rotation_agreement': 0.3515625, 'mean_det_thrust': 0.5392373204231262, 'mean_det_thrust_step0': 0.49724918603897095, 'mean_abs_value_diff': 8.042657852172852}
+INTERMEDIATE EVAL mark=150000 step=151552
+  land={'perfect': 0, 'hard': 0, 'crash': 0, 'timeout': 10} mcnemar={'b': 0, 'c': 0, 'n_discordant': 0, 'p_value': 1.0, 'method': 'exact_none'} div={'kl_thrust_mean': 0.2982984483242035, 'kl_rotation_mean': 0.08604633808135986, 'det_rotation_agreement': 0.421875, 'mean_det_thrust': 0.5488511919975281, 'mean_det_thrust_step0': 0.49724918603897095, 'mean_abs_value_diff': 11.871044158935547}
+INTERMEDIATE EVAL mark=200000 step=200704
+  land={'perfect': 0, 'hard': 0, 'crash': 10, 'timeout': 0} mcnemar={'b': 0, 'c': 0, 'n_discordant': 0, 'p_value': 1.0, 'method': 'exact_none'} div={'kl_thrust_mean': 0.1487511396408081, 'kl_rotation_mean': 0.01598401367664337, 'det_rotation_agreement': 0.67578125, 'mean_det_thrust': 0.5356602668762207, 'mean_det_thrust_step0': 0.49724918603897095, 'mean_abs_value_diff': 15.271139144897461}
+FINAL eval deterministic on 100 val seeds…
+SUMMARY {
+  "run_id": "V6_L0near_s31",
+  "result_headline": "NO_TRAINED_LANDINGS_AND_NO_IMPROVEMENT_OVER_STEP0",
+  "physics_frames_train": 249856,
+  "physics_frames_diagnostic": 44450,
+  "train_budget": {
+    "hard_cap": 250000,
+    "spent": 249856,
+    "remaining": 144,
+    "ledger_tail": [
+      {
+        "reason": "rollout_u60_t108",
+        "frames": 32,
+        "spent_after": 249248
+      },
+      {
+        "reason": "rollout_u60_t109",
+        "frames": 32,
+        "spent_after": 249280
+      },
+      {
+        "reason": "rollout_u60_t110",
+        "frames": 32,
+        "spent_after": 249312
+      },
+      {
+        "reason": "rollout_u60_t111",
+        "frames": 32,
+        "spent_after": 249344
+      },
+      {
+        "reason": "rollout_u60_t112",
+        "frames": 32,
+        "spent_after": 249376
+      },
+      {
+        "reason": "rollout_u60_t113",
+        "frames": 32,
+        "spent_after": 249408
+      },
+      {
+        "reason": "rollout_u60_t114",
+        "frames": 32,
+        "spent_after": 249440
+      },
+      {
+        "reason": "rollout_u60_t115",
+        "frames": 32,
+        "spent_after": 249472
+      },
+      {
+        "reason": "rollout_u60_t116",
+        "frames": 32,
+        "spent_after": 249504
+      },
+      {
+        "reason": "rollout_u60_t117",
+        "frames": 32,
+        "spent_after": 249536
+      },
+      {
+        "reason": "rollout_u60_t118",
+        "frames": 32,
+        "spent_after": 249568
+      },
+      {
+        "reason": "rollout_u60_t119",
+        "frames": 32,
+        "spent_after": 249600
+      },
+      {
+        "reason": "rollout_u60_t120",
+        "frames": 32,
+        "spent_after": 249632
+      },
+      {
+        "reason": "rollout_u60_t121",
+        "frames": 32,
+        "spent_after": 249664
+      },
+      {
+        "reason": "rollout_u60_t122",
+        "frames": 32,
+        "spent_after": 249696
+      },
+      {
+        "reason": "rollout_u60_t123",
+        "frames": 32,
+        "spent_after": 249728
+      },
+      {
+        "reason": "rollout_u60_t124",
+        "frames": 32,
+        "spent_after": 249760
+      },
+      {
+        "reason": "rollout_u60_t125",
+        "frames": 32,
+        "spent_after": 249792
+      },
+      {
+        "reason": "rollout_u60_t126",
+        "frames": 32,
+        "spent_after": 249824
+      },
+      {
+        "reason": "rollout_u60_t127",
+        "frames": 32,
+        "spent_after": 249856
+      }
+    ],
+    "ledger_len": 7808
+  },
+  "diagnostic_budget": {
+    "hard_cap": 100000,
+    "spent": 44450,
+    "remaining": 55550,
+    "ledger": [
+      {
+        "reason": "step0_deterministic:seed610000",
+        "frames": 161,
+        "spent_after": 161
+      },
+      {
+        "reason": "step0_deterministic:seed610001",
+        "frames": 129,
+        "spent_after": 290
+      },
+      {
+        "reason": "step0_deterministic:seed610002",
+        "frames": 172,
+        "spent_after": 462
+      },
+      {
+        "reason": "step0_deterministic:seed610003",
+        "frames": 188,
+        "spent_after": 650
+      },
+      {
+        "reason": "step0_deterministic:seed610004",
+        "frames": 135,
+        "spent_after": 785
+      },
+      {
+        "reason": "step0_deterministic:seed610005",
+        "frames": 135,
+        "spent_after": 920
+      },
+      {
+        "reason": "step0_deterministic:seed610006",
+        "frames": 170,
+        "spent_after": 1090
+      },
+      {
+        "reason": "step0_deterministic:seed610007",
+        "frames": 172,
+        "spent_after": 1262
+      },
+      {
+        "reason": "step0_deterministic:seed610008",
+        "frames": 160,
+        "spent_after": 1422
+      },
+      {
+        "reason": "step0_deterministic:seed610009",
+        "frames": 159,
+        "spent_after": 1581
+      },
+      {
+        "reason": "step0_deterministic:seed610010",
+        "frames": 165,
+        "spent_after": 1746
+      },
+      {
+        "reason": "step0_deterministic:seed610011",
+        "frames": 153,
+        "spent_after": 1899
+      },
+      {
+        "reason": "step0_deterministic:seed610012",
+        "frames": 177,
+        "spent_after": 2076
+      },
+      {
+        "reason": "step0_deterministic:seed610013",
+        "frames": 178,
+        "spent_after": 2254
+      },
+      {
+        "reason": "step0_deterministic:seed610014",
+        "frames": 135,
+        "spent_after": 2389
+      },
+      {
+        "reason": "step0_deterministic:seed610015",
+        "frames": 147,
+        "spent_after": 2536
+      },
+      {
+        "reason": "step0_deterministic:seed610016",
+        "frames": 145,
+        "spent_after": 2681
+      },
+      {
+        "reason": "step0_deterministic:seed610017",
+        "frames": 176,
+        "spent_after": 2857
+      },
+      {
+        "reason": "step0_deterministic:seed610018",
+        "frames": 195,
+        "spent_after": 3052
+      },
+      {
+        "reason": "step0_deterministic:seed610019",
+        "frames": 146,
+        "spent_after": 3198
+      },
+      {
+        "reason": "step0_deterministic:seed610020",
+        "frames": 162,
+        "spent_after": 3360
+      },
+      {
+        "reason": "step0_deterministic:seed610021",
+        "frames": 150,
+        "spent_after": 3510
+      },
+      {
+        "reason": "step0_deterministic:seed610022",
+        "frames": 175,
+        "spent_after": 3685
+      },
+      {
+        "reason": "step0_deterministic:seed610023",
+        "frames": 153,
+        "spent_after": 3838
+      },
+      {
+        "reason": "step0_deterministic:seed610024",
+        "frames": 185,
+        "spent_after": 4023
+      },
+      {
+        "reason": "step0_deterministic:seed610025",
+        "frames": 179,
+        "spent_after": 4202
+      },
+      {
+        "reason": "step0_deterministic:seed610026",
+        "frames": 173,
+        "spent_after": 4375
+      },
+      {
+        "reason": "step0_deterministic:seed610027",
+        "frames": 185,
+        "spent_after": 4560
+      },
+      {
+        "reason": "step0_deterministic:seed610028",
+        "frames": 157,
+        "spent_after": 4717
+      },
+      {
+        "reason": "step0_deterministic:seed610029",
+        "frames": 185,
+        "spent_after": 4902
+      },
+      {
+        "reason": "step0_deterministic:seed610030",
+        "frames": 161,
+        "spent_after": 5063
+      },
+      {
+        "reason": "step0_deterministic:seed610031",
+        "frames": 182,
+        "spent_after": 5245
+      },
+      {
+        "reason": "step0_deterministic:seed610032",
+        "frames": 177,
+        "spent_after": 5422
+      },
+      {
+        "reason": "step0_deterministic:seed610033",
+        "frames": 158,
+        "spent_after": 5580
+      },
+      {
+        "reason": "step0_deterministic:seed610034",
+        "frames": 188,
+        "spent_after": 5768
+      },
+      {
+        "reason": "step0_deterministic:seed610035",
+        "frames": 154,
+        "spent_after": 5922
+      },
+      {
+        "reason": "step0_deterministic:seed610036",
+        "frames": 170,
+        "spent_after": 6092
+      },
+      {
+        "reason": "step0_deterministic:seed610037",
+        "frames": 169,
+        "spent_after": 6261
+      },
+      {
+        "reason": "step0_deterministic:seed610038",
+        "frames": 162,
+        "spent_after": 6423
+      },
+      {
+        "reason": "step0_deterministic:seed610039",
+        "frames": 183,
+        "spent_after": 6606
+      },
+      {
+        "reason": "step0_deterministic:seed610040",
+        "frames": 177,
+        "spent_after": 6783
+      },
+      {
+        "reason": "step0_deterministic:seed610041",
+        "frames": 129,
+        "spent_after": 6912
+      },
+      {
+        "reason": "step0_deterministic:seed610042",
+        "frames": 157,
+        "spent_after": 7069
+      },
+      {
+        "reason": "step0_deterministic:seed610043",
+        "frames": 191,
+        "spent_after": 7260
+      },
+      {
+        "reason": "step0_deterministic:seed610044",
+        "frames": 153,
+        "spent_after": 7413
+      },
+      {
+        "reason": "step0_deterministic:seed610045",
+        "frames": 159,
+        "spent_after": 7572
+      },
+      {
+        "reason": "step0_deterministic:seed610046",
+        "frames": 173,
+        "spent_after": 7745
+      },
+      {
+        "reason": "step0_deterministic:seed610047",
+        "frames": 141,
+        "spent_after": 7886
+      },
+      {
+        "reason": "step0_deterministic:seed610048",
+        "frames": 141,
+        "spent_after": 8027
+      },
+      {
+        "reason": "step0_deterministic:seed610049",
+        "frames": 175,
+        "spent_after": 8202
+      },
+      {
+        "reason": "step0_deterministic:seed610050",
+        "frames": 167,
+        "spent_after": 8369
+      },
+      {
+        "reason": "step0_deterministic:seed610051",
+        "frames": 169,
+        "spent_after": 8538
+      },
+      {
+        "reason": "step0_deterministic:seed610052",
+        "frames": 157,
+        "spent_after": 8695
+      },
+      {
+        "reason": "step0_deterministic:seed610053",
+        "frames": 176,
+        "spent_after": 8871
+      },
+      {
+        "reason": "step0_deterministic:seed610054",
+        "frames": 168,
+        "spent_after": 9039
+      },
+      {
+        "reason": "step0_deterministic:seed610055",
+        "frames": 163,
+        "spent_after": 9202
+      },
+      {
+        "reason": "step0_deterministic:seed610056",
+        "frames": 163,
+        "spent_after": 9365
+      },
+      {
+        "reason": "step0_deterministic:seed610057",
+        "frames": 170,
+        "spent_after": 9535
+      },
+      {
+        "reason": "step0_deterministic:seed610058",
+        "frames": 168,
+        "spent_after": 9703
+      },
+      {
+        "reason": "step0_deterministic:seed610059",
+        "frames": 169,
+        "spent_after": 9872
+      },
+      {
+        "reason": "step0_deterministic:seed610060",
+        "frames": 183,
+        "spent_after": 10055
+      },
+      {
+        "reason": "step0_deterministic:seed610061",
+        "frames": 173,
+        "spent_after": 10228
+      },
+      {
+        "reason": "step0_deterministic:seed610062",
+        "frames": 182,
+        "spent_after": 10410
+      },
+      {
+        "reason": "step0_deterministic:seed610063",
+        "frames": 157,
+        "spent_after": 10567
+      },
+      {
+        "reason": "step0_deterministic:seed610064",
+        "frames": 153,
+        "spent_after": 10720
+      },
+      {
+        "reason": "step0_deterministic:seed610065",
+        "frames": 142,
+        "spent_after": 10862
+      },
+      {
+        "reason": "step0_deterministic:seed610066",
+        "frames": 156,
+        "spent_after": 11018
+      },
+      {
+        "reason": "step0_deterministic:seed610067",
+        "frames": 141,
+        "spent_after": 11159
+      },
+      {
+        "reason": "step0_deterministic:seed610068",
+        "frames": 141,
+        "spent_after": 11300
+      },
+      {
+        "reason": "step0_deterministic:seed610069",
+        "frames": 138,
+        "spent_after": 11438
+      },
+      {
+        "reason": "step0_deterministic:seed610070",
+        "frames": 134,
+        "spent_after": 11572
+      },
+      {
+        "reason": "step0_deterministic:seed610071",
+        "frames": 174,
+        "spent_after": 11746
+      },
+      {
+        "reason": "step0_deterministic:seed610072",
+        "frames": 188,
+        "spent_after": 11934
+      },
+      {
+        "reason": "step0_deterministic:seed610073",
+        "frames": 141,
+        "spent_after": 12075
+      },
+      {
+        "reason": "step0_deterministic:seed610074",
+        "frames": 168,
+        "spent_after": 12243
+      },
+      {
+        "reason": "step0_deterministic:seed610075",
+        "frames": 166,
+        "spent_after": 12409
+      },
+      {
+        "reason": "step0_deterministic:seed610076",
+        "frames": 147,
+        "spent_after": 12556
+      },
+      {
+        "reason": "step0_deterministic:seed610077",
+        "frames": 167,
+        "spent_after": 12723
+      },
+      {
+        "reason": "step0_deterministic:seed610078",
+        "frames": 159,
+        "spent_after": 12882
+      },
+      {
+        "reason": "step0_deterministic:seed610079",
+        "frames": 167,
+        "spent_after": 13049
+      },
+      {
+        "reason": "step0_deterministic:seed610080",
+        "frames": 147,
+        "spent_after": 13196
+      },
+      {
+        "reason": "step0_deterministic:seed610081",
+        "frames": 184,
+        "spent_after": 13380
+      },
+      {
+        "reason": "step0_deterministic:seed610082",
+        "frames": 135,
+        "spent_after": 13515
+      },
+      {
+        "reason": "step0_deterministic:seed610083",
+        "frames": 142,
+        "spent_after": 13657
+      },
+      {
+        "reason": "step0_deterministic:seed610084",
+        "frames": 139,
+        "spent_after": 13796
+      },
+      {
+        "reason": "step0_deterministic:seed610085",
+        "frames": 148,
+        "spent_after": 13944
+      },
+      {
+        "reason": "step0_deterministic:seed610086",
+        "frames": 172,
+        "spent_after": 14116
+      },
+      {
+        "reason": "step0_deterministic:seed610087",
+        "frames": 124,
+        "spent_after": 14240
+      },
+      {
+        "reason": "step0_deterministic:seed610088",
+        "frames": 170,
+        "spent_after": 14410
+      },
+      {
+        "reason": "step0_deterministic:seed610089",
+        "frames": 186,
+        "spent_after": 14596
+      },
+      {
+        "reason": "step0_deterministic:seed610090",
+        "frames": 161,
+        "spent_after": 14757
+      },
+      {
+        "reason": "step0_deterministic:seed610091",
+        "frames": 171,
+        "spent_after": 14928
+      },
+      {
+        "reason": "step0_deterministic:seed610092",
+        "frames": 129,
+        "spent_after": 15057
+      },
+      {
+        "reason": "step0_deterministic:seed610093",
+        "frames": 158,
+        "spent_after": 15215
+      },
+      {
+        "reason": "step0_deterministic:seed610094",
+        "frames": 177,
+        "spent_after": 15392
+      },
+      {
+        "reason": "step0_deterministic:seed610095",
+        "frames": 179,
+        "spent_after": 15571
+      },
+      {
+        "reason": "step0_deterministic:seed610096",
+        "frames": 192,
+        "spent_after": 15763
+      },
+      {
+        "reason": "step0_deterministic:seed610097",
+        "frames": 174,
+        "spent_after": 15937
+      },
+      {
+        "reason": "step0_deterministic:seed610098",
+        "frames": 162,
+        "spent_after": 16099
+      },
+      {
+        "reason": "step0_deterministic:seed610099",
+        "frames": 157,
+        "spent_after": 16256
+      },
+      {
+        "reason": "intermediate_50000:seed610000",
+        "frames": 400,
+        "spent_after": 16656
+      },
+      {
+        "reason": "intermediate_50000:seed610001",
+        "frames": 400,
+        "spent_after": 17056
+      },
+      {
+        "reason": "intermediate_50000:seed610002",
+        "frames": 400,
+        "spent_after": 17456
+      },
+      {
+        "reason": "intermediate_50000:seed610003",
+        "frames": 400,
+        "spent_after": 17856
+      },
+      {
+        "reason": "intermediate_50000:seed610004",
+        "frames": 400,
+        "spent_after": 18256
+      },
+      {
+        "reason": "intermediate_50000:seed610005",
+        "frames": 400,
+        "spent_after": 18656
+      },
+      {
+        "reason": "intermediate_50000:seed610006",
+        "frames": 400,
+        "spent_after": 19056
+      },
+      {
+        "reason": "intermediate_50000:seed610007",
+        "frames": 400,
+        "spent_after": 19456
+      },
+      {
+        "reason": "intermediate_50000:seed610008",
+        "frames": 400,
+        "spent_after": 19856
+      },
+      {
+        "reason": "intermediate_50000:seed610009",
+        "frames": 400,
+        "spent_after": 20256
+      },
+      {
+        "reason": "intermediate_100000:seed610000",
+        "frames": 186,
+        "spent_after": 20442
+      },
+      {
+        "reason": "intermediate_100000:seed610001",
+        "frames": 153,
+        "spent_after": 20595
+      },
+      {
+        "reason": "intermediate_100000:seed610002",
+        "frames": 197,
+        "spent_after": 20792
+      },
+      {
+        "reason": "intermediate_100000:seed610003",
+        "frames": 213,
+        "spent_after": 21005
+      },
+      {
+        "reason": "intermediate_100000:seed610004",
+        "frames": 160,
+        "spent_after": 21165
+      },
+      {
+        "reason": "intermediate_100000:seed610005",
+        "frames": 161,
+        "spent_after": 21326
+      },
+      {
+        "reason": "intermediate_100000:seed610006",
+        "frames": 194,
+        "spent_after": 21520
+      },
+      {
+        "reason": "intermediate_100000:seed610007",
+        "frames": 196,
+        "spent_after": 21716
+      },
+      {
+        "reason": "intermediate_100000:seed610008",
+        "frames": 186,
+        "spent_after": 21902
+      },
+      {
+        "reason": "intermediate_100000:seed610009",
+        "frames": 182,
+        "spent_after": 22084
+      },
+      {
+        "reason": "intermediate_150000:seed610000",
+        "frames": 400,
+        "spent_after": 22484
+      },
+      {
+        "reason": "intermediate_150000:seed610001",
+        "frames": 400,
+        "spent_after": 22884
+      },
+      {
+        "reason": "intermediate_150000:seed610002",
+        "frames": 400,
+        "spent_after": 23284
+      },
+      {
+        "reason": "intermediate_150000:seed610003",
+        "frames": 400,
+        "spent_after": 23684
+      },
+      {
+        "reason": "intermediate_150000:seed610004",
+        "frames": 400,
+        "spent_after": 24084
+      },
+      {
+        "reason": "intermediate_150000:seed610005",
+        "frames": 400,
+        "spent_after": 24484
+      },
+      {
+        "reason": "intermediate_150000:seed610006",
+        "frames": 400,
+        "spent_after": 24884
+      },
+      {
+        "reason": "intermediate_150000:seed610007",
+        "frames": 400,
+        "spent_after": 25284
+      },
+      {
+        "reason": "intermediate_150000:seed610008",
+        "frames": 400,
+        "spent_after": 25684
+      },
+      {
+        "reason": "intermediate_150000:seed610009",
+        "frames": 400,
+        "spent_after": 26084
+      },
+      {
+        "reason": "intermediate_200000:seed610000",
+        "frames": 178,
+        "spent_after": 26262
+      },
+      {
+        "reason": "intermediate_200000:seed610001",
+        "frames": 145,
+        "spent_after": 26407
+      },
+      {
+        "reason": "intermediate_200000:seed610002",
+        "frames": 189,
+        "spent_after": 26596
+      },
+      {
+        "reason": "intermediate_200000:seed610003",
+        "frames": 205,
+        "spent_after": 26801
+      },
+      {
+        "reason": "intermediate_200000:seed610004",
+        "frames": 152,
+        "spent_after": 26953
+      },
+      {
+        "reason": "intermediate_200000:seed610005",
+        "frames": 152,
+        "spent_after": 27105
+      },
+      {
+        "reason": "intermediate_200000:seed610006",
+        "frames": 187,
+        "spent_after": 27292
+      },
+      {
+        "reason": "intermediate_200000:seed610007",
+        "frames": 188,
+        "spent_after": 27480
+      },
+      {
+        "reason": "intermediate_200000:seed610008",
+        "frames": 177,
+        "spent_after": 27657
+      },
+      {
+        "reason": "intermediate_200000:seed610009",
+        "frames": 174,
+        "spent_after": 27831
+      },
+      {
+        "reason": "final_deterministic:seed610000",
+        "frames": 165,
+        "spent_after": 27996
+      },
+      {
+        "reason": "final_deterministic:seed610001",
+        "frames": 132,
+        "spent_after": 28128
+      },
+      {
+        "reason": "final_deterministic:seed610002",
+        "frames": 176,
+        "spent_after": 28304
+      },
+      {
+        "reason": "final_deterministic:seed610003",
+        "frames": 192,
+        "spent_after": 28496
+      },
+      {
+        "reason": "final_deterministic:seed610004",
+        "frames": 138,
+        "spent_after": 28634
+      },
+      {
+        "reason": "final_deterministic:seed610005",
+        "frames": 139,
+        "spent_after": 28773
+      },
+      {
+        "reason": "final_deterministic:seed610006",
+        "frames": 174,
+        "spent_after": 28947
+      },
+      {
+        "reason": "final_deterministic:seed610007",
+        "frames": 176,
+        "spent_after": 29123
+      },
+      {
+        "reason": "final_deterministic:seed610008",
+        "frames": 164,
+        "spent_after": 29287
+      },
+      {
+        "reason": "final_deterministic:seed610009",
+        "frames": 162,
+        "spent_after": 29449
+      },
+      {
+        "reason": "final_deterministic:seed610010",
+        "frames": 168,
+        "spent_after": 29617
+      },
+      {
+        "reason": "final_deterministic:seed610011",
+        "frames": 157,
+        "spent_after": 29774
+      },
+      {
+        "reason": "final_deterministic:seed610012",
+        "frames": 180,
+        "spent_after": 29954
+      },
+      {
+        "reason": "final_deterministic:seed610013",
+        "frames": 182,
+        "spent_after": 30136
+      },
+      {
+        "reason": "final_deterministic:seed610014",
+        "frames": 139,
+        "spent_after": 30275
+      },
+      {
+        "reason": "final_deterministic:seed610015",
+        "frames": 151,
+        "spent_after": 30426
+      },
+      {
+        "reason": "final_deterministic:seed610016",
+        "frames": 148,
+        "spent_after": 30574
+      },
+      {
+        "reason": "final_deterministic:seed610017",
+        "frames": 179,
+        "spent_after": 30753
+      },
+      {
+        "reason": "final_deterministic:seed610018",
+        "frames": 199,
+        "spent_after": 30952
+      },
+      {
+        "reason": "final_deterministic:seed610019",
+        "frames": 150,
+        "spent_after": 31102
+      },
+      {
+        "reason": "final_deterministic:seed610020",
+        "frames": 165,
+        "spent_after": 31267
+      },
+      {
+        "reason": "final_deterministic:seed610021",
+        "frames": 154,
+        "spent_after": 31421
+      },
+      {
+        "reason": "final_deterministic:seed610022",
+        "frames": 178,
+        "spent_after": 31599
+      },
+      {
+        "reason": "final_deterministic:seed610023",
+        "frames": 157,
+        "spent_after": 31756
+      },
+      {
+        "reason": "final_deterministic:seed610024",
+        "frames": 189,
+        "spent_after": 31945
+      },
+      {
+        "reason": "final_deterministic:seed610025",
+        "frames": 183,
+        "spent_after": 32128
+      },
+      {
+        "reason": "final_deterministic:seed610026",
+        "frames": 176,
+        "spent_after": 32304
+      },
+      {
+        "reason": "final_deterministic:seed610027",
+        "frames": 188,
+        "spent_after": 32492
+      },
+      {
+        "reason": "final_deterministic:seed610028",
+        "frames": 161,
+        "spent_after": 32653
+      },
+      {
+        "reason": "final_deterministic:seed610029",
+        "frames": 189,
+        "spent_after": 32842
+      },
+      {
+        "reason": "final_deterministic:seed610030",
+        "frames": 165,
+        "spent_after": 33007
+      },
+      {
+        "reason": "final_deterministic:seed610031",
+        "frames": 186,
+        "spent_after": 33193
+      },
+      {
+        "reason": "final_deterministic:seed610032",
+        "frames": 180,
+        "spent_after": 33373
+      },
+      {
+        "reason": "final_deterministic:seed610033",
+        "frames": 162,
+        "spent_after": 33535
+      },
+      {
+        "reason": "final_deterministic:seed610034",
+        "frames": 192,
+        "spent_after": 33727
+      },
+      {
+        "reason": "final_deterministic:seed610035",
+        "frames": 158,
+        "spent_after": 33885
+      },
+      {
+        "reason": "final_deterministic:seed610036",
+        "frames": 174,
+        "spent_after": 34059
+      },
+      {
+        "reason": "final_deterministic:seed610037",
+        "frames": 172,
+        "spent_after": 34231
+      },
+      {
+        "reason": "final_deterministic:seed610038",
+        "frames": 165,
+        "spent_after": 34396
+      },
+      {
+        "reason": "final_deterministic:seed610039",
+        "frames": 187,
+        "spent_after": 34583
+      },
+      {
+        "reason": "final_deterministic:seed610040",
+        "frames": 180,
+        "spent_after": 34763
+      },
+      {
+        "reason": "final_deterministic:seed610041",
+        "frames": 133,
+        "spent_after": 34896
+      },
+      {
+        "reason": "final_deterministic:seed610042",
+        "frames": 160,
+        "spent_after": 35056
+      },
+      {
+        "reason": "final_deterministic:seed610043",
+        "frames": 194,
+        "spent_after": 35250
+      },
+      {
+        "reason": "final_deterministic:seed610044",
+        "frames": 157,
+        "spent_after": 35407
+      },
+      {
+        "reason": "final_deterministic:seed610045",
+        "frames": 162,
+        "spent_after": 35569
+      },
+      {
+        "reason": "final_deterministic:seed610046",
+        "frames": 177,
+        "spent_after": 35746
+      },
+      {
+        "reason": "final_deterministic:seed610047",
+        "frames": 145,
+        "spent_after": 35891
+      },
+      {
+        "reason": "final_deterministic:seed610048",
+        "frames": 144,
+        "spent_after": 36035
+      },
+      {
+        "reason": "final_deterministic:seed610049",
+        "frames": 179,
+        "spent_after": 36214
+      },
+      {
+        "reason": "final_deterministic:seed610050",
+        "frames": 171,
+        "spent_after": 36385
+      },
+      {
+        "reason": "final_deterministic:seed610051",
+        "frames": 172,
+        "spent_after": 36557
+      },
+      {
+        "reason": "final_deterministic:seed610052",
+        "frames": 161,
+        "spent_after": 36718
+      },
+      {
+        "reason": "final_deterministic:seed610053",
+        "frames": 180,
+        "spent_after": 36898
+      },
+      {
+        "reason": "final_deterministic:seed610054",
+        "frames": 172,
+        "spent_after": 37070
+      },
+      {
+        "reason": "final_deterministic:seed610055",
+        "frames": 166,
+        "spent_after": 37236
+      },
+      {
+        "reason": "final_deterministic:seed610056",
+        "frames": 166,
+        "spent_after": 37402
+      },
+      {
+        "reason": "final_deterministic:seed610057",
+        "frames": 173,
+        "spent_after": 37575
+      },
+      {
+        "reason": "final_deterministic:seed610058",
+        "frames": 172,
+        "spent_after": 37747
+      },
+      {
+        "reason": "final_deterministic:seed610059",
+        "frames": 173,
+        "spent_after": 37920
+      },
+      {
+        "reason": "final_deterministic:seed610060",
+        "frames": 186,
+        "spent_after": 38106
+      },
+      {
+        "reason": "final_deterministic:seed610061",
+        "frames": 177,
+        "spent_after": 38283
+      },
+      {
+        "reason": "final_deterministic:seed610062",
+        "frames": 186,
+        "spent_after": 38469
+      },
+      {
+        "reason": "final_deterministic:seed610063",
+        "frames": 160,
+        "spent_after": 38629
+      },
+      {
+        "reason": "final_deterministic:seed610064",
+        "frames": 157,
+        "spent_after": 38786
+      },
+      {
+        "reason": "final_deterministic:seed610065",
+        "frames": 145,
+        "spent_after": 38931
+      },
+      {
+        "reason": "final_deterministic:seed610066",
+        "frames": 160,
+        "spent_after": 39091
+      },
+      {
+        "reason": "final_deterministic:seed610067",
+        "frames": 145,
+        "spent_after": 39236
+      },
+      {
+        "reason": "final_deterministic:seed610068",
+        "frames": 145,
+        "spent_after": 39381
+      },
+      {
+        "reason": "final_deterministic:seed610069",
+        "frames": 142,
+        "spent_after": 39523
+      },
+      {
+        "reason": "final_deterministic:seed610070",
+        "frames": 138,
+        "spent_after": 39661
+      },
+      {
+        "reason": "final_deterministic:seed610071",
+        "frames": 177,
+        "spent_after": 39838
+      },
+      {
+        "reason": "final_deterministic:seed610072",
+        "frames": 192,
+        "spent_after": 40030
+      },
+      {
+        "reason": "final_deterministic:seed610073",
+        "frames": 144,
+        "spent_after": 40174
+      },
+      {
+        "reason": "final_deterministic:seed610074",
+        "frames": 172,
+        "spent_after": 40346
+      },
+      {
+        "reason": "final_deterministic:seed610075",
+        "frames": 170,
+        "spent_after": 40516
+      },
+      {
+        "reason": "final_deterministic:seed610076",
+        "frames": 150,
+        "spent_after": 40666
+      },
+      {
+        "reason": "final_deterministic:seed610077",
+        "frames": 171,
+        "spent_after": 40837
+      },
+      {
+        "reason": "final_deterministic:seed610078",
+        "frames": 163,
+        "spent_after": 41000
+      },
+      {
+        "reason": "final_deterministic:seed610079",
+        "frames": 170,
+        "spent_after": 41170
+      },
+      {
+        "reason": "final_deterministic:seed610080",
+        "frames": 151,
+        "spent_after": 41321
+      },
+      {
+        "reason": "final_deterministic:seed610081",
+        "frames": 188,
+        "spent_after": 41509
+      },
+      {
+        "reason": "final_deterministic:seed610082",
+        "frames": 139,
+        "spent_after": 41648
+      },
+      {
+        "reason": "final_deterministic:seed610083",
+        "frames": 146,
+        "spent_after": 41794
+      },
+      {
+        "reason": "final_deterministic:seed610084",
+        "frames": 143,
+        "spent_after": 41937
+      },
+      {
+        "reason": "final_deterministic:seed610085",
+        "frames": 152,
+        "spent_after": 42089
+      },
+      {
+        "reason": "final_deterministic:seed610086",
+        "frames": 175,
+        "spent_after": 42264
+      },
+      {
+        "reason": "final_deterministic:seed610087",
+        "frames": 127,
+        "spent_after": 42391
+      },
+      {
+        "reason": "final_deterministic:seed610088",
+        "frames": 174,
+        "spent_after": 42565
+      },
+      {
+        "reason": "final_deterministic:seed610089",
+        "frames": 189,
+        "spent_after": 42754
+      },
+      {
+        "reason": "final_deterministic:seed610090",
+        "frames": 164,
+        "spent_after": 42918
+      },
+      {
+        "reason": "final_deterministic:seed610091",
+        "frames": 175,
+        "spent_after": 43093
+      },
+      {
+        "reason": "final_deterministic:seed610092",
+        "frames": 132,
+        "spent_after": 43225
+      },
+      {
+        "reason": "final_deterministic:seed610093",
+        "frames": 162,
+        "spent_after": 43387
+      },
+      {
+        "reason": "final_deterministic:seed610094",
+        "frames": 181,
+        "spent_after": 43568
+      },
+      {
+        "reason": "final_deterministic:seed610095",
+        "frames": 182,
+        "spent_after": 43750
+      },
+      {
+        "reason": "final_deterministic:seed610096",
+        "frames": 196,
+        "spent_after": 43946
+      },
+      {
+        "reason": "final_deterministic:seed610097",
+        "frames": 178,
+        "spent_after": 44124
+      },
+      {
+        "reason": "final_deterministic:seed610098",
+        "frames": 165,
+        "spent_after": 44289
+      },
+      {
+        "reason": "final_deterministic:seed610099",
+        "frames": 161,
+        "spent_after": 44450
+      }
+    ]
+  },
+  "early_stop_reason": "training_budget_exhausted_before_rollout",
+  "step0_sha256": "0bebf2b04c8493cf64272595766fa71e7cf2e540d0f4c9dfaf98833325af6b85",
+  "final_sha256": "bcb50c4480c81240a7e5cc75c541336e00aca3b6a0e46f07f3f4abb4bcbeffe2",
+  "step0_counts": {
+    "perfect": 0,
+    "hard": 0,
+    "crash": 100,
+    "timeout": 0
+  },
+  "step0_landing_rate": 0.0,
+  "final_counts": {
+    "perfect": 0,
+    "hard": 0,
+    "crash": 100,
+    "timeout": 0
+  },
+  "final_landing_rate": 0.0,
+  "final_vs_step0": {
+    "mcnemar": {
+      "b": 0,
+      "c": 0,
+      "n_discordant": 0,
+      "p_value": 1.0,
+      "method": "exact_none"
+    },
+    "step0_landings": 0,
+    "ckpt_landings": 0,
+    "delta_landings": 0,
+    "beats_step0_mcnemar_p_lt_0.01": false,
+    "wilson_ckpt": [
+      0.0,
+      0.03699480747600191
+    ],
+    "wilson_step0": [
+      0.0,
+      0.03699480747600191
+    ],
+    "wilson_nonoverlap_ckpt_above_step0": false
+  },
+  "final_policy_vs_step0": {
+    "kl_thrust_mean": 0.039133746176958084,
+    "kl_rotation_mean": 0.11587389558553696,
+    "det_rotation_agreement": 0.26953125,
+    "mean_det_thrust": 0.5171598792076111,
+    "mean_det_thrust_step0": 0.49724918603897095,
+    "mean_abs_value_diff": 18.532533645629883
+  },
+  "train_landing_events": 0,
+  "first_landing_frames": {
+    "apollolander.starts.l0_near_v6": null
+  },
+  "milestone": null,
+  "integrity": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "soft_thrust_prior_false",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "hold_attitude_prior_false",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "init_orthogonal_zero_bias",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "rotation_delta",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "action_repeat_8",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "max_steps_400",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "level_l0_near_v6",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "train_cap",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "diag_cap",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "diag_cap_not_raised",
+        "passed": true,
+        "detail": ""
+      }
+    ],
+    "utc": "2026-10-18T18:47:16Z"
+  },
+  "step0_equivalence": {
+    "step0_sha256": "0bebf2b04c8493cf64272595766fa71e7cf2e540d0f4c9dfaf98833325af6b85",
+    "max_abs_diff": 0.0,
+    "bit_exact": true,
+    "passed": true
+  },
+  "prereg_seeds_sha256": "df12cd0c69196d3e1e85e230099cef8a17d4993d006cf796f77856a9e387e06f",
+  "wall_seconds": 32.233887672424316,
+  "updates": 61
+}

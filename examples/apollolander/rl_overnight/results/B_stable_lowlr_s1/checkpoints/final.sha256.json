@@ -1,0 +1,12 @@
+{
+  "tag": "final",
+  "path": "examples/apollolander/rl_overnight/results/B_stable_lowlr_s1/checkpoints/final.pt",
+  "sha256": "31dd6085338708202faf7b4c6a1c9543375efeefb6fd7393e13b100d62dd4ec8",
+  "global_step": 3000320,
+  "physics_frames": 3000320,
+  "policy_decisions": 1500160,
+  "update_idx": 2930,
+  "reward_mode": "research_shaped",
+  "family": "B",
+  "backend": "upstream_vm_host"
+}

@@ -1,0 +1,21 @@
+{
+  "tag": "bc_l0",
+  "level": "apollolander.starts.l0_near_v6",
+  "seed": 703015,
+  "checkpoint": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/checkpoints/bc.pt",
+  "checkpoint_sha256": "92b495648420db31babff2e1ddf858470f6b9bcd9028a35b3a30173dc60a019e",
+  "status": "landed",
+  "native_score": 100.0,
+  "rotation": 0.0,
+  "vy": 0.053819505278679756,
+  "touchdown_frame": 137,
+  "label": "demonstration-assisted",
+  "reverify": {
+    "skipped": true,
+    "reason": "trace_persisted_footage_capped"
+  },
+  "video": {
+    "ok": false,
+    "skipped": true
+  }
+}

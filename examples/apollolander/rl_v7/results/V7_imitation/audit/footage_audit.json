@@ -1,0 +1,945 @@
+{
+  "label": "demonstration-assisted",
+  "prior_diag_spent": 188571,
+  "hud_vs_scale": {
+    "bridge_line": "ctx.fillText(\"VS \" + Math.round(lander.vel.y * 200), 10, 80);",
+    "bridge_file": "frontend/apollolander/rl_overnight/browser_rl_bridge.html:259",
+    "upstream_line": "infoDisplay.updateBoxInt('vertSpeed', (lander.vel.y*200));",
+    "upstream_file": "frontend/apollolander/upstream/game.js:792",
+    "scale": "HUD_VS = round(internal_vy * 200)",
+    "perfect_threshold_internal_vy": 0.075,
+    "hard_threshold_internal_vy": 0.15,
+    "vs10_means_vy": 0.05,
+    "vs10_is_perfect": true
+  },
+  "eval_set": {
+    "n": 40,
+    "seeds": [
+      703000,
+      703001,
+      703002,
+      703003,
+      703004,
+      703005,
+      703006,
+      703007,
+      703008,
+      703009,
+      703010,
+      703011,
+      703012,
+      703013,
+      703014,
+      703015,
+      703016,
+      703017,
+      703018,
+      703019,
+      703020,
+      703021,
+      703022,
+      703023,
+      703024,
+      703025,
+      703026,
+      703027,
+      703028,
+      703029,
+      703030,
+      703031,
+      703032,
+      703033,
+      703034,
+      703035,
+      703036,
+      703037,
+      703038,
+      703039
+    ],
+    "requested_at_least_100": true,
+    "actually_evaluated_l0near": 40,
+    "note": "Preregistered 100 v1 + 40 L0-near; primary BC milestone used 40 L0-near. V1 partial under diag cap.",
+    "disjoint_from_demo_seeds": true,
+    "overlap_with_demos": [],
+    "demo_seed_count": 35
+  },
+  "old_footage_bug": "render_trace_video wrote frames_png[::2], dropping the final physics frame when len was even. Episode length 86 \u2192 kept frames 0,2,...,84 (FLYING at ALT0); frame 85 (LANDED) was discarded. Old files retained as *_v1_buggy.mp4.",
+  "retained_buggy": [
+    {
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/footage/bc_l0_seed703000_landed_v1_buggy.mp4",
+      "sha256": "75a30ca595dfa9fe6bfd12c59d5c1ef5c02039350f2979cba7997218038f9ef5"
+    },
+    {
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/footage/bc_l0_seed703001_landed_v1_buggy.mp4",
+      "sha256": "91f381d97a8240379c41a3c7b1fa14471221310174b0cd5b1899e3de814b543b"
+    },
+    {
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/footage/bc_l0_seed703002_landed_v1_buggy.mp4",
+      "sha256": "5f513376bd791074b9442a79fa85340a734ca71f9e31cace7953fc23b1193802"
+    }
+  ],
+  "bc_action_stats_l0near_eval": {
+    "n_decisions": 584,
+    "mean_thrust": 0.12632445552807353,
+    "median_thrust": 0.08946109935641289,
+    "max_thrust": 0.3634047210216522,
+    "frac_thrust_lt_0_05": 0.351027397260274,
+    "rotation_delta_distribution": {
+      "0": 584
+    },
+    "all_deltas_zero": true,
+    "interpretation": "On L0-near, start rotation is always 0 and altitude is ~3\u20136px. BC outputs delta=0 always and low thrust \u2014 essentially stay-upright soft drop."
+  },
+  "trivial_constant_policy": {
+    "definition": "thrust=0, rotation_delta=0 every decision (absolute rotation held at start=0)",
+    "n": 40,
+    "counts": {
+      "perfect": 34,
+      "hard": 6,
+      "crash": 0,
+      "timeout": 0
+    },
+    "landing_rate": 1.0,
+    "perfect": 34,
+    "hard": 6,
+    "also_lands_40_of_40": true,
+    "per_seed": [
+      {
+        "seed": 703000,
+        "status": "landed",
+        "vy": 0.05920558226004998,
+        "rotation": 0.0,
+        "steps": 82,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703001,
+        "status": "landed",
+        "vy": 0.063605099378474,
+        "rotation": 0.0,
+        "steps": 101,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703002,
+        "status": "landed",
+        "vy": 0.05644205569077212,
+        "rotation": 0.0,
+        "steps": 79,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703003,
+        "status": "landed",
+        "vy": 0.06663746812037286,
+        "rotation": 0.0,
+        "steps": 95,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703004,
+        "status": "landed",
+        "vy": 0.061357916088231663,
+        "rotation": 0.0,
+        "steps": 100,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703005,
+        "status": "landed",
+        "vy": 0.07258285653405389,
+        "rotation": 0.0,
+        "steps": 121,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703006,
+        "status": "hard_landing",
+        "vy": 0.07846375400403896,
+        "rotation": 0.0,
+        "steps": 118,
+        "perfect": false,
+        "hard": true
+      },
+      {
+        "seed": 703007,
+        "status": "landed",
+        "vy": 0.06114050764046762,
+        "rotation": 0.0,
+        "steps": 102,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703008,
+        "status": "landed",
+        "vy": 0.07059972925517681,
+        "rotation": 0.0,
+        "steps": 116,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703009,
+        "status": "landed",
+        "vy": 0.06875647471364638,
+        "rotation": 0.0,
+        "steps": 106,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703010,
+        "status": "landed",
+        "vy": 0.06116073595312724,
+        "rotation": 0.0,
+        "steps": 101,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703011,
+        "status": "landed",
+        "vy": 0.07475346188580613,
+        "rotation": 0.0,
+        "steps": 121,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703012,
+        "status": "landed",
+        "vy": 0.07478688448410363,
+        "rotation": 0.0,
+        "steps": 117,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703013,
+        "status": "landed",
+        "vy": 0.06094579108933948,
+        "rotation": 0.0,
+        "steps": 87,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703014,
+        "status": "hard_landing",
+        "vy": 0.07624645930005373,
+        "rotation": 0.0,
+        "steps": 130,
+        "perfect": false,
+        "hard": true
+      },
+      {
+        "seed": 703015,
+        "status": "hard_landing",
+        "vy": 0.07620339177274507,
+        "rotation": 0.0,
+        "steps": 124,
+        "perfect": false,
+        "hard": true
+      },
+      {
+        "seed": 703016,
+        "status": "landed",
+        "vy": 0.07327505629606068,
+        "rotation": 0.0,
+        "steps": 108,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703017,
+        "status": "landed",
+        "vy": 0.060149015554120944,
+        "rotation": 0.0,
+        "steps": 81,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703018,
+        "status": "landed",
+        "vy": 0.060939372452851026,
+        "rotation": 0.0,
+        "steps": 83,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703019,
+        "status": "landed",
+        "vy": 0.0628983575388779,
+        "rotation": 0.0,
+        "steps": 100,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703020,
+        "status": "landed",
+        "vy": 0.07121004072385405,
+        "rotation": 0.0,
+        "steps": 109,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703021,
+        "status": "landed",
+        "vy": 0.062225505576412994,
+        "rotation": 0.0,
+        "steps": 94,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703022,
+        "status": "landed",
+        "vy": 0.06464446242838802,
+        "rotation": 0.0,
+        "steps": 108,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703023,
+        "status": "landed",
+        "vy": 0.06752151592111814,
+        "rotation": 0.0,
+        "steps": 107,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703024,
+        "status": "hard_landing",
+        "vy": 0.07636944489550791,
+        "rotation": 0.0,
+        "steps": 123,
+        "perfect": false,
+        "hard": true
+      },
+      {
+        "seed": 703025,
+        "status": "landed",
+        "vy": 0.06820756613842462,
+        "rotation": 0.0,
+        "steps": 102,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703026,
+        "status": "landed",
+        "vy": 0.06832509848557698,
+        "rotation": 0.0,
+        "steps": 101,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703027,
+        "status": "landed",
+        "vy": 0.07466816162177209,
+        "rotation": 0.0,
+        "steps": 113,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703028,
+        "status": "landed",
+        "vy": 0.06525993911843032,
+        "rotation": 0.0,
+        "steps": 93,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703029,
+        "status": "hard_landing",
+        "vy": 0.07612933872367678,
+        "rotation": 0.0,
+        "steps": 116,
+        "perfect": false,
+        "hard": true
+      },
+      {
+        "seed": 703030,
+        "status": "landed",
+        "vy": 0.07299577727987992,
+        "rotation": 0.0,
+        "steps": 115,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703031,
+        "status": "landed",
+        "vy": 0.06443619554033315,
+        "rotation": 0.0,
+        "steps": 90,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703032,
+        "status": "landed",
+        "vy": 0.05839258019202635,
+        "rotation": 0.0,
+        "steps": 90,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703033,
+        "status": "landed",
+        "vy": 0.06236865000702032,
+        "rotation": 0.0,
+        "steps": 101,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703034,
+        "status": "hard_landing",
+        "vy": 0.07611339236434359,
+        "rotation": 0.0,
+        "steps": 131,
+        "perfect": false,
+        "hard": true
+      },
+      {
+        "seed": 703035,
+        "status": "landed",
+        "vy": 0.06950345075821537,
+        "rotation": 0.0,
+        "steps": 111,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703036,
+        "status": "landed",
+        "vy": 0.0677154151731325,
+        "rotation": 0.0,
+        "steps": 105,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703037,
+        "status": "landed",
+        "vy": 0.06333166050960513,
+        "rotation": 0.0,
+        "steps": 101,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703038,
+        "status": "landed",
+        "vy": 0.07202675967717789,
+        "rotation": 0.0,
+        "steps": 109,
+        "perfect": true,
+        "hard": false
+      },
+      {
+        "seed": 703039,
+        "status": "landed",
+        "vy": 0.0686950371671101,
+        "rotation": 0.0,
+        "steps": 113,
+        "perfect": true,
+        "hard": false
+      }
+    ]
+  },
+  "videos_v2": [
+    {
+      "ok": true,
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/footage/bc_l0_seed703000_landed_v2_posthold.mp4",
+      "sha256": "aca9c758caf6b56fa7e4e34f27d3a4715e798ff78112d58f247088c47c3473fb",
+      "seed": 703000,
+      "label": "demonstration-assisted_bc_l0",
+      "n_frames": 146,
+      "fps": 30,
+      "duration_s": 4.866666666666666,
+      "physics_steps_rendered": 86,
+      "post_landing_hold_frames": 60,
+      "status_sequence_unique": [
+        "flying",
+        "landed"
+      ],
+      "last_frame_status": "landed",
+      "shows_non_flying_status": true,
+      "flying_only_bug": false,
+      "browser_outcome": {
+        "status": "landed",
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": true,
+          "hard": false,
+          "nativePoints": 100,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.05073447825908563,
+          "rotation": 0
+        },
+        "physics_steps_at_outcome": 86
+      },
+      "host_status": "landed",
+      "parity_browser_vs_host": true,
+      "render_fix": "dropped_even_terminal_frame_via_slice_stride_2",
+      "artifact": "/opt/cursor/artifacts/rl_v7/bc_l0_seed703000_landed_v2_posthold.mp4",
+      "host_reverify_status": "landed",
+      "host_vy": 0.05073447825908563,
+      "host_perfect": true,
+      "host_hard": false,
+      "hud_vs_at_contact_approx": 10
+    },
+    {
+      "ok": true,
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/footage/bc_l0_seed703001_landed_v2_posthold.mp4",
+      "sha256": "6f1a58b0d76ff121a8ea0599703d9dcdbc118b16721fd3f139fb74ce6eb80d37",
+      "seed": 703001,
+      "label": "demonstration-assisted_bc_l0",
+      "n_frames": 167,
+      "fps": 30,
+      "duration_s": 5.566666666666666,
+      "physics_steps_rendered": 107,
+      "post_landing_hold_frames": 60,
+      "status_sequence_unique": [
+        "flying",
+        "landed"
+      ],
+      "last_frame_status": "landed",
+      "shows_non_flying_status": true,
+      "flying_only_bug": false,
+      "browser_outcome": {
+        "status": "landed",
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": true,
+          "hard": false,
+          "nativePoints": 100,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.0525452670187073,
+          "rotation": 0
+        },
+        "physics_steps_at_outcome": 107
+      },
+      "host_status": "landed",
+      "parity_browser_vs_host": true,
+      "render_fix": "dropped_even_terminal_frame_via_slice_stride_2",
+      "artifact": "/opt/cursor/artifacts/rl_v7/bc_l0_seed703001_landed_v2_posthold.mp4",
+      "host_reverify_status": "landed",
+      "host_vy": 0.0525452670187073,
+      "host_perfect": true,
+      "host_hard": false,
+      "hud_vs_at_contact_approx": 11
+    },
+    {
+      "ok": true,
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/footage/bc_l0_seed703002_landed_v2_posthold.mp4",
+      "sha256": "7a26dce8e5d267b958ea48cb2860ccbd6caa4d3c24bd8e83315da201f7b39bf3",
+      "seed": 703002,
+      "label": "demonstration-assisted_bc_l0",
+      "n_frames": 143,
+      "fps": 30,
+      "duration_s": 4.766666666666667,
+      "physics_steps_rendered": 83,
+      "post_landing_hold_frames": 60,
+      "status_sequence_unique": [
+        "flying",
+        "landed"
+      ],
+      "last_frame_status": "landed",
+      "shows_non_flying_status": true,
+      "flying_only_bug": false,
+      "browser_outcome": {
+        "status": "landed",
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": true,
+          "hard": false,
+          "nativePoints": 100,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.049895511464324666,
+          "rotation": 0
+        },
+        "physics_steps_at_outcome": 83
+      },
+      "host_status": "landed",
+      "parity_browser_vs_host": true,
+      "render_fix": "dropped_even_terminal_frame_via_slice_stride_2",
+      "artifact": "/opt/cursor/artifacts/rl_v7/bc_l0_seed703002_landed_v2_posthold.mp4",
+      "host_reverify_status": "landed",
+      "host_vy": 0.049895511464324666,
+      "host_perfect": true,
+      "host_hard": false,
+      "hud_vs_at_contact_approx": 10
+    },
+    {
+      "ok": true,
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/footage/ppo_l0_seed703000_landed_v2_posthold.mp4",
+      "sha256": "0e81c78c3fabdc19ed0fd31e62ae33f78716084c1014dbb79bf76a224fa539f9",
+      "seed": 703000,
+      "label": "demonstration-assisted_ppo_l0",
+      "n_frames": 143,
+      "fps": 30,
+      "duration_s": 4.766666666666667,
+      "physics_steps_rendered": 83,
+      "post_landing_hold_frames": 60,
+      "status_sequence_unique": [
+        "flying",
+        "landed"
+      ],
+      "last_frame_status": "landed",
+      "shows_non_flying_status": true,
+      "flying_only_bug": false,
+      "browser_outcome": {
+        "status": "landed",
+        "nativeOutcome": {
+          "kind": "landed",
+          "perfect": true,
+          "hard": false,
+          "nativePoints": 100,
+          "multiplier": 2,
+          "designated": true,
+          "vy": 0.05761242556630457,
+          "rotation": 0
+        },
+        "physics_steps_at_outcome": 83
+      },
+      "host_status": "landed",
+      "parity_browser_vs_host": true,
+      "render_fix": "dropped_even_terminal_frame_via_slice_stride_2",
+      "artifact": "/opt/cursor/artifacts/rl_v7/ppo_l0_seed703000_landed_v2_posthold.mp4",
+      "host_reverify_status": "landed",
+      "host_vy": 0.05761242556630457,
+      "host_perfect": true,
+      "host_hard": false,
+      "hud_vs_at_contact_approx": 12
+    }
+  ],
+  "host_footage_rollouts": [
+    {
+      "tag": "bc_l0",
+      "seed": 703000,
+      "status": "landed",
+      "perfect": true,
+      "hard": false,
+      "vy": 0.05073447825908563,
+      "rotation": 0.0,
+      "steps": 86,
+      "mean_thrust": 0.09493801869790662,
+      "delta_set": [
+        0
+      ]
+    },
+    {
+      "tag": "bc_l0",
+      "seed": 703001,
+      "status": "landed",
+      "perfect": true,
+      "hard": false,
+      "vy": 0.0525452670187073,
+      "rotation": 0.0,
+      "steps": 107,
+      "mean_thrust": 0.10547822434455156,
+      "delta_set": [
+        0
+      ]
+    },
+    {
+      "tag": "bc_l0",
+      "seed": 703002,
+      "status": "landed",
+      "perfect": true,
+      "hard": false,
+      "vy": 0.049895511464324666,
+      "rotation": 0.0,
+      "steps": 83,
+      "mean_thrust": 0.08630642760545015,
+      "delta_set": [
+        0
+      ]
+    },
+    {
+      "tag": "ppo_l0",
+      "seed": 703000,
+      "status": "landed",
+      "perfect": true,
+      "hard": false,
+      "vy": 0.05761242556630457,
+      "rotation": 0.0,
+      "steps": 83,
+      "mean_thrust": 0.017682742496783085,
+      "delta_set": [
+        0
+      ]
+    }
+  ],
+  "diagnostic_budget": {
+    "hard_cap": 200000,
+    "spent": 193493,
+    "remaining": 6507,
+    "ledger": [
+      {
+        "reason": "audit_bc_footage:seed703000",
+        "frames": 86,
+        "spent_after": 188657
+      },
+      {
+        "reason": "audit_bc_footage:seed703001",
+        "frames": 107,
+        "spent_after": 188764
+      },
+      {
+        "reason": "audit_bc_footage:seed703002",
+        "frames": 83,
+        "spent_after": 188847
+      },
+      {
+        "reason": "audit_ppo_footage:seed703000",
+        "frames": 83,
+        "spent_after": 188930
+      },
+      {
+        "reason": "reverify:bc_l0:703000",
+        "frames": 86,
+        "spent_after": 189016
+      },
+      {
+        "reason": "reverify:bc_l0:703001",
+        "frames": 107,
+        "spent_after": 189123
+      },
+      {
+        "reason": "reverify:bc_l0:703002",
+        "frames": 83,
+        "spent_after": 189206
+      },
+      {
+        "reason": "reverify:ppo_l0:703000",
+        "frames": 83,
+        "spent_after": 189289
+      },
+      {
+        "reason": "audit_trivial:seed703000",
+        "frames": 82,
+        "spent_after": 189371
+      },
+      {
+        "reason": "audit_trivial:seed703001",
+        "frames": 101,
+        "spent_after": 189472
+      },
+      {
+        "reason": "audit_trivial:seed703002",
+        "frames": 79,
+        "spent_after": 189551
+      },
+      {
+        "reason": "audit_trivial:seed703003",
+        "frames": 95,
+        "spent_after": 189646
+      },
+      {
+        "reason": "audit_trivial:seed703004",
+        "frames": 100,
+        "spent_after": 189746
+      },
+      {
+        "reason": "audit_trivial:seed703005",
+        "frames": 121,
+        "spent_after": 189867
+      },
+      {
+        "reason": "audit_trivial:seed703006",
+        "frames": 118,
+        "spent_after": 189985
+      },
+      {
+        "reason": "audit_trivial:seed703007",
+        "frames": 102,
+        "spent_after": 190087
+      },
+      {
+        "reason": "audit_trivial:seed703008",
+        "frames": 116,
+        "spent_after": 190203
+      },
+      {
+        "reason": "audit_trivial:seed703009",
+        "frames": 106,
+        "spent_after": 190309
+      },
+      {
+        "reason": "audit_trivial:seed703010",
+        "frames": 101,
+        "spent_after": 190410
+      },
+      {
+        "reason": "audit_trivial:seed703011",
+        "frames": 121,
+        "spent_after": 190531
+      },
+      {
+        "reason": "audit_trivial:seed703012",
+        "frames": 117,
+        "spent_after": 190648
+      },
+      {
+        "reason": "audit_trivial:seed703013",
+        "frames": 87,
+        "spent_after": 190735
+      },
+      {
+        "reason": "audit_trivial:seed703014",
+        "frames": 130,
+        "spent_after": 190865
+      },
+      {
+        "reason": "audit_trivial:seed703015",
+        "frames": 124,
+        "spent_after": 190989
+      },
+      {
+        "reason": "audit_trivial:seed703016",
+        "frames": 108,
+        "spent_after": 191097
+      },
+      {
+        "reason": "audit_trivial:seed703017",
+        "frames": 81,
+        "spent_after": 191178
+      },
+      {
+        "reason": "audit_trivial:seed703018",
+        "frames": 83,
+        "spent_after": 191261
+      },
+      {
+        "reason": "audit_trivial:seed703019",
+        "frames": 100,
+        "spent_after": 191361
+      },
+      {
+        "reason": "audit_trivial:seed703020",
+        "frames": 109,
+        "spent_after": 191470
+      },
+      {
+        "reason": "audit_trivial:seed703021",
+        "frames": 94,
+        "spent_after": 191564
+      },
+      {
+        "reason": "audit_trivial:seed703022",
+        "frames": 108,
+        "spent_after": 191672
+      },
+      {
+        "reason": "audit_trivial:seed703023",
+        "frames": 107,
+        "spent_after": 191779
+      },
+      {
+        "reason": "audit_trivial:seed703024",
+        "frames": 123,
+        "spent_after": 191902
+      },
+      {
+        "reason": "audit_trivial:seed703025",
+        "frames": 102,
+        "spent_after": 192004
+      },
+      {
+        "reason": "audit_trivial:seed703026",
+        "frames": 101,
+        "spent_after": 192105
+      },
+      {
+        "reason": "audit_trivial:seed703027",
+        "frames": 113,
+        "spent_after": 192218
+      },
+      {
+        "reason": "audit_trivial:seed703028",
+        "frames": 93,
+        "spent_after": 192311
+      },
+      {
+        "reason": "audit_trivial:seed703029",
+        "frames": 116,
+        "spent_after": 192427
+      },
+      {
+        "reason": "audit_trivial:seed703030",
+        "frames": 115,
+        "spent_after": 192542
+      },
+      {
+        "reason": "audit_trivial:seed703031",
+        "frames": 90,
+        "spent_after": 192632
+      },
+      {
+        "reason": "audit_trivial:seed703032",
+        "frames": 90,
+        "spent_after": 192722
+      },
+      {
+        "reason": "audit_trivial:seed703033",
+        "frames": 101,
+        "spent_after": 192823
+      },
+      {
+        "reason": "audit_trivial:seed703034",
+        "frames": 131,
+        "spent_after": 192954
+      },
+      {
+        "reason": "audit_trivial:seed703035",
+        "frames": 111,
+        "spent_after": 193065
+      },
+      {
+        "reason": "audit_trivial:seed703036",
+        "frames": 105,
+        "spent_after": 193170
+      },
+      {
+        "reason": "audit_trivial:seed703037",
+        "frames": 101,
+        "spent_after": 193271
+      },
+      {
+        "reason": "audit_trivial:seed703038",
+        "frames": 109,
+        "spent_after": 193380
+      },
+      {
+        "reason": "audit_trivial:seed703039",
+        "frames": 113,
+        "spent_after": 193493
+      }
+    ]
+  },
+  "milestone_correction": "CORRECTED: L0-near BC 40/40 does NOT demonstrate a learned landing maneuver. A trivial constant policy (thrust=0, delta=0) also lands 40/40 on the same seeds because l0_near_v6 spawns upright (~3\u20136px above pad) with low vy. BC learned stay-upright / near-zero-thrust drop. Label remains demonstration-assisted; prior 'independent landing skill' claim is overstated."
+}

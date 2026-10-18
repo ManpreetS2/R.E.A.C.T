@@ -1,0 +1,34 @@
+# Clean learning validation — L0 only, no output-layer priors / maneuver bias.
+# Matched step-0 baseline; fixed max_steps for train + eval; diagnostic hard cap.
+run_name: CLEAN_L0_s21
+seed: 21
+total_budget: 250000
+n_envs: 4
+rollout_steps: 128
+learning_rate: 2.5e-4
+gamma: 0.99
+gae_lambda: 0.95
+clip_coef: 0.2
+ent_coef: 0.01
+vf_coef: 0.5
+max_grad_norm: 0.5
+update_epochs: 4
+minibatch_size: 256
+hidden: 128
+action_repeat: 1
+max_steps: 400
+rotation_mode: delta
+# Init: orthogonal weights gain=1.0, zero bias, thrust_log_std=0 (reset_parameters_clean).
+soft_thrust_prior: false
+hold_attitude_prior: false
+init_scheme: orthogonal_zero_bias
+allow_level_advance: false
+level: apollolander.starts.curriculum_l0_v3
+checkpoint_every_frames: 50000
+eval_every_frames: 50000
+val_episodes: 40
+val_seed_start: 510000
+train_seed_start: 82000
+train_seed_count: 100000
+diagnostic_hard_cap: 400000
+device: cpu

@@ -1,0 +1,20 @@
+{
+  "created_utc": "2026-10-18T22:24:43Z",
+  "title": "V7 preregistered plan \u2014 committed BEFORE demo generation",
+  "learner_action_space": {
+    "thrust": "continuous[0,1]",
+    "rotation": "delta{-10,0,+10}",
+    "action_repeat": 8,
+    "fallback_if_feasibility_fails": "document and switch to closest player-legal repr"
+  },
+  "primary_start": "apollolander.starts.v1",
+  "secondary_start_optional": "apollolander.starts.l0_near_v6",
+  "phases": [
+    "feasibility",
+    "demos",
+    "bc",
+    "independent_eval",
+    "ppo_if_bc_lands"
+  ],
+  "seeds_sha256": "5a9f330be4d55473bbe77f5d3fa739f7a92e7225d31add5725decfe5d3ea6134"
+}

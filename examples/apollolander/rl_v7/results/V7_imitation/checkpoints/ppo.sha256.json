@@ -1,0 +1,5 @@
+{
+  "tag": "ppo",
+  "sha256": "03df86ad681b7b56cbdcefc0942de87961bedc61983b19a34d42b7f54dea4a20",
+  "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/checkpoints/ppo.pt"
+}

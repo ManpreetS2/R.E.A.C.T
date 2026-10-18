@@ -1,0 +1,8 @@
+{
+  "tag": "final",
+  "path": "/workspace/examples/apollolander/rl_curriculum_v3/results/CURR_touchdown_delta_s12/checkpoints/final.pt",
+  "sha256": "18f931b82e8f2c9023f09bab0727d9925d452844de77f10d39b2a77dd82fbc00",
+  "global_step": 400384,
+  "level": "apollolander.starts.curriculum_l0_v3",
+  "level_idx": 0
+}

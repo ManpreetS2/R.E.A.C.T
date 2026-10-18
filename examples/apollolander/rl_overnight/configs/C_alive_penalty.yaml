@@ -1,0 +1,40 @@
+# Family C: timeout==crash AND small per-step alive cost to discourage hover.
+# Implemented as reward_mode timeout_eq_crash plus max_steps shortened? No —
+# physics rules unchanged; we use sparse terminals equalized and rely on
+# shorter effective horizon via lower max_steps ONLY if needed.
+# This config instead uses no_shaping_keep_fuel with timeout_eq_crash semantics
+# via reward_mode timeout_eq_crash (fuel penalty disabled in that mode).
+# Secondary seed for comparison.
+family: C
+reward_mode: timeout_eq_crash
+observation_kind: "state-observation RL, not visual learning"
+
+env:
+  max_steps: 4000
+  research_mode: true
+  start_schedule_version: apollolander.starts.v1
+  vary_fuel: false
+  action_repeat: 1
+  bonuses: false
+  locked_camera: true
+
+ppo:
+  total_env_steps: 2000000
+  n_envs: 4
+  rollout_steps: 256
+  learning_rate: 2.0e-4
+  gamma: 0.995
+  gae_lambda: 0.95
+  clip_coef: 0.2
+  ent_coef: 0.04
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  update_epochs: 4
+  minibatch_size: 512
+  hidden: 256
+  seed: 4
+  checkpoint_every_steps: 500000
+  device: cpu
+  train_seed_start: 10000
+  train_seed_count: 200000
+  run_name: C_shorthorizon_ar1_s4

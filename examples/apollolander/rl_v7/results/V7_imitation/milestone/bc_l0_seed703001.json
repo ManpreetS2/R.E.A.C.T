@@ -1,0 +1,37 @@
+{
+  "tag": "bc_l0",
+  "level": "apollolander.starts.l0_near_v6",
+  "seed": 703001,
+  "checkpoint": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/checkpoints/bc.pt",
+  "checkpoint_sha256": "92b495648420db31babff2e1ddf858470f6b9bcd9028a35b3a30173dc60a019e",
+  "status": "landed",
+  "native_score": 100.0,
+  "rotation": 0.0,
+  "vy": 0.0525452670187073,
+  "touchdown_frame": 107,
+  "reverify": {
+    "seed": 703001,
+    "matched": true,
+    "expected_status": "landed",
+    "replay_status": "landed",
+    "expected_steps": 107,
+    "replay_steps": 107,
+    "expected_score": 100.0,
+    "replay_score": 100.0,
+    "expected_rotation": 0.0,
+    "replay_rotation": 0.0,
+    "expected_vy": 0.0525452670187073,
+    "replay_vy": 0.0525452670187073
+  },
+  "video": {
+    "ok": true,
+    "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/footage/bc_l0_seed703001_landed.mp4",
+    "sha256": "91f381d97a8240379c41a3c7b1fa14471221310174b0cd5b1899e3de814b543b",
+    "seed": 703001,
+    "label": "demonstration-assisted_bc_l0",
+    "status": "landed",
+    "frames_rendered": 107
+  },
+  "label": "demonstration-assisted",
+  "video_artifact": "/opt/cursor/artifacts/rl_v7/bc_l0_seed703001_landed.mp4"
+}

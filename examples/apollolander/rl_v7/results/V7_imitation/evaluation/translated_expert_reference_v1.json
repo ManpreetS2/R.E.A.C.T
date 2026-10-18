@@ -1,0 +1,20 @@
+{
+  "label": "demonstration-assisted",
+  "reason": "expert_ref_v1",
+  "role": "translated_expert_REFERENCE_not_learner",
+  "level": "apollolander.starts.v1",
+  "n": 0,
+  "counts": {
+    "perfect": 0,
+    "hard": 0,
+    "crash": 0,
+    "timeout": 0
+  },
+  "landing_rate": 0.0,
+  "landing_wilson95": [
+    0.0,
+    0.0
+  ],
+  "diagnostic_frames": 0,
+  "per_seed": []
+}
