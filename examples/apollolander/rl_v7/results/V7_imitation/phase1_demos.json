@@ -1,0 +1,1108 @@
+{
+  "label": "demonstration-assisted",
+  "phase": 1,
+  "attempts": 37,
+  "failures": 2,
+  "kept": 35,
+  "kept_train": 35,
+  "kept_val": 0,
+  "kept_v1": 11,
+  "kept_l0_near": 24,
+  "include_l0_near": true,
+  "primary_start": "apollolander.starts.v1",
+  "note": "V1 demos are primary but expensive (~6k frames \u00d7 attempt+replay). L0-near demos fill to 50\u2013100 under the 300k demo/feas/replay cap.",
+  "demos": [
+    {
+      "demo_id": "train_apollolander_starts_v1_700012",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_v1_700012.json",
+      "sha256": "c35177ecdb28cfd5519781c78b5bd610f8477c754b32400d690aa29f70271b04",
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "seed": 700012,
+      "status": "landed",
+      "steps": 5381,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_v1_700013",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_v1_700013.json",
+      "sha256": "4ebb65da58f923e17928e4df6baba844d908852971ded7cb26d2419138c7a506",
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "seed": 700013,
+      "status": "landed",
+      "steps": 5633,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_v1_700014",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_v1_700014.json",
+      "sha256": "83e6a42cf095ccbb00cbb156bc2c2e98164fc8f7b73fbfe0fbe5b744938a4d43",
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "seed": 700014,
+      "status": "landed",
+      "steps": 5422,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_v1_700015",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_v1_700015.json",
+      "sha256": "11d72e03487a09fc6a797689a3e88b2ee5af9cae58824b579bc44dc638005a8d",
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "seed": 700015,
+      "status": "landed",
+      "steps": 6275,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_v1_700016",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_v1_700016.json",
+      "sha256": "505ecc2871c89991964fe63c1d250dec7c7d0bc3482dff4a2929770e9277415e",
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "seed": 700016,
+      "status": "landed",
+      "steps": 5670,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_v1_700017",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_v1_700017.json",
+      "sha256": "d5738ee5adf971a728def78ae7a9e773a1b40a8221baf3d5a4cce79f32c32df0",
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "seed": 700017,
+      "status": "landed",
+      "steps": 5481,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_v1_700018",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_v1_700018.json",
+      "sha256": "eb51236122716786e41a1545e6dbe572a03a7c9545104b08df785f728ff7820b",
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "seed": 700018,
+      "status": "landed",
+      "steps": 5514,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_v1_700019",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_v1_700019.json",
+      "sha256": "e587d249fb7e205d5691b6e45b5a7292c439026888003baf1f208e8c7aa942df",
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "seed": 700019,
+      "status": "landed",
+      "steps": 5764,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_v1_700020",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_v1_700020.json",
+      "sha256": "bf5339f63747f97cdca62c1a168f8c83648119ceb14ff1316638965ce8ed7a35",
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "seed": 700020,
+      "status": "landed",
+      "steps": 5478,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_v1_700021",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_v1_700021.json",
+      "sha256": "30b278b351bdbc49fc0c216847744cb4f01f442d055e1fd183584b72306a0479",
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "seed": 700021,
+      "status": "landed",
+      "steps": 5555,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_v1_700022",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_v1_700022.json",
+      "sha256": "4d1cf15c67d9241066d6c739f4ad1b92009664f96fe2a3edb085c4bba70f64ba",
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "seed": 700022,
+      "status": "landed",
+      "steps": 5802,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700000",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700000.json",
+      "sha256": "2eb362ccefe9b10c2f6d97aeec6c262f01ab536caf0a146816ef3daa9220ac16",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700000,
+      "status": "landed",
+      "steps": 167,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700001",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700001.json",
+      "sha256": "9d32ecd358eb276ea9fa833d99ca6d93cd1c5b6ca144aed00c8b5120ceae684b",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700001,
+      "status": "landed",
+      "steps": 175,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700002",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700002.json",
+      "sha256": "f11ff10adc3588f9e42d5afe39935c01f025b5c499c120bbaa385cb721273516",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700002,
+      "status": "landed",
+      "steps": 162,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700003",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700003.json",
+      "sha256": "846c9dc7f484e7580445e3ba03daae155fc646036736818571ce8de2b79c4603",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700003,
+      "status": "landed",
+      "steps": 125,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700004",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700004.json",
+      "sha256": "1b81b23c61b8f5bd0298c8df8e6687a0b9be95e23e691b90df6f32e8e3f8d163",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700004,
+      "status": "landed",
+      "steps": 139,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700005",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700005.json",
+      "sha256": "2d964a257e4b5c20b716b2f9b4f8091a1e7e4ef9d1591bda17c585cf8f386ef3",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700005,
+      "status": "landed",
+      "steps": 123,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700006",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700006.json",
+      "sha256": "da301e1de65f2882c001024a197ad792ee969f4d9d696f892feee61ea0456fd2",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700006,
+      "status": "landed",
+      "steps": 127,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700007",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700007.json",
+      "sha256": "3619e65f61c499e10cb0b267b619f55e6a5dd92a2583a43382fe5cceab736682",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700007,
+      "status": "landed",
+      "steps": 107,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700008",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700008.json",
+      "sha256": "c0f8a19d6ffa2d6c4269a468a03cc86a6d7061b361f8561d60937568c2ab5f97",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700008,
+      "status": "landed",
+      "steps": 124,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700009",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700009.json",
+      "sha256": "81c974a4160427680ae1abff12ccd1fc559e0cbac5532ce9bdf7a024426a7549",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700009,
+      "status": "landed",
+      "steps": 98,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700010",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700010.json",
+      "sha256": "2ccd0ce181cf81b9f7a7716f6862cce5e72fb6212f500ba8d136a992b09005c1",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700010,
+      "status": "landed",
+      "steps": 150,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700011",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700011.json",
+      "sha256": "879ccc9c22d059f6b88b2bb060e2e0359d4e1375a3283b3401dcf12646ca30e6",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700011,
+      "status": "landed",
+      "steps": 107,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700023",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700023.json",
+      "sha256": "b8eef7babc2d5c6fc8abf25343628e99fea9bc1f474622cb4607da9470e603d1",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700023,
+      "status": "landed",
+      "steps": 182,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700024",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700024.json",
+      "sha256": "975d44e47cc08de2386ea7f37e835f81c96b424f56a04294258b24e85c60dca1",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700024,
+      "status": "landed",
+      "steps": 153,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700025",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700025.json",
+      "sha256": "edaccdc1d76c9e8c9e6f2856b9215c847f468a36fc862097db0691a13fe412e7",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700025,
+      "status": "landed",
+      "steps": 169,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700026",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700026.json",
+      "sha256": "3b556676eb9fc151c4f8aa2c53c603f21a3de0f1eb45c4319dc9a4b99516210c",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700026,
+      "status": "landed",
+      "steps": 106,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700027",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700027.json",
+      "sha256": "d086d02b21b76ab49d2f41ebf9d53d9e70abec29df879eb073a144503042c942",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700027,
+      "status": "landed",
+      "steps": 144,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700028",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700028.json",
+      "sha256": "9763e8d3e2d8b44ed9d441f5c0ff276b87a7c3b32ad91fc13ce3eaf29573c321",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700028,
+      "status": "landed",
+      "steps": 141,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700029",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700029.json",
+      "sha256": "f5b4ef7eba25925196ac77a102cf162aa366675b0fb1134cbc0bc64649ae00c0",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700029,
+      "status": "landed",
+      "steps": 129,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700030",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700030.json",
+      "sha256": "eb126f47bdbe73e5ae0076ac3a6a195fc09e2766e30f8836ef87fb5da4968639",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700030,
+      "status": "landed",
+      "steps": 117,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700031",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700031.json",
+      "sha256": "c8163294976bcbe583275ce809ea950994f027622f85a7aa2379466e54378a39",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700031,
+      "status": "landed",
+      "steps": 181,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700032",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700032.json",
+      "sha256": "c10473a7dc15f268b6e410c6c977ae0c6e1877f8c6b4b48779f3df69c93ca037",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700032,
+      "status": "landed",
+      "steps": 141,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700033",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700033.json",
+      "sha256": "affa52f3275f59dacd38d81edce20ab99c42d605186a2e18e66db2dbf3b05dd6",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700033,
+      "status": "landed",
+      "steps": 161,
+      "native_score": 100.0
+    },
+    {
+      "demo_id": "train_apollolander_starts_l0_near_v6_700034",
+      "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/demos/train_apollolander_starts_l0_near_v6_700034.json",
+      "sha256": "891198283e41ef444a5e0acb4cc535ee0a19e0dece0bdafd8c0dccb074c33000",
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "seed": 700034,
+      "status": "landed",
+      "steps": 153,
+      "native_score": 100.0
+    }
+  ],
+  "attempt_log": [
+    {
+      "seed": 700012,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 5381
+    },
+    {
+      "seed": 700013,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 5633
+    },
+    {
+      "seed": 700014,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 5422
+    },
+    {
+      "seed": 700015,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 6275
+    },
+    {
+      "seed": 700016,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 5670
+    },
+    {
+      "seed": 700017,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 5481
+    },
+    {
+      "seed": 700018,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 5514
+    },
+    {
+      "seed": 700019,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 5764
+    },
+    {
+      "seed": 700020,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 5478
+    },
+    {
+      "seed": 700021,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 5555
+    },
+    {
+      "seed": 700022,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 5802
+    },
+    {
+      "seed": 700023,
+      "split": "train",
+      "level": "apollolander.starts.v1",
+      "status": "landed",
+      "landed": true,
+      "steps": 5608,
+      "replay_skipped_budget": true
+    },
+    {
+      "seed": 700000,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 167
+    },
+    {
+      "seed": 700001,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 175
+    },
+    {
+      "seed": 700002,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 162
+    },
+    {
+      "seed": 700003,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 125
+    },
+    {
+      "seed": 700004,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 139
+    },
+    {
+      "seed": 700005,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 123
+    },
+    {
+      "seed": 700006,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 127
+    },
+    {
+      "seed": 700007,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 107
+    },
+    {
+      "seed": 700008,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 124
+    },
+    {
+      "seed": 700009,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 98
+    },
+    {
+      "seed": 700010,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 150
+    },
+    {
+      "seed": 700011,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 107
+    },
+    {
+      "seed": 700023,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 182
+    },
+    {
+      "seed": 700024,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 153
+    },
+    {
+      "seed": 700025,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 169
+    },
+    {
+      "seed": 700026,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 106
+    },
+    {
+      "seed": 700027,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 144
+    },
+    {
+      "seed": 700028,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 141
+    },
+    {
+      "seed": 700029,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 129
+    },
+    {
+      "seed": 700030,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 117
+    },
+    {
+      "seed": 700031,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 181
+    },
+    {
+      "seed": 700032,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 141
+    },
+    {
+      "seed": 700033,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 161
+    },
+    {
+      "seed": 700034,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 153
+    },
+    {
+      "seed": 700035,
+      "split": "train",
+      "level": "apollolander.starts.l0_near_v6",
+      "status": "landed",
+      "landed": true,
+      "steps": 165,
+      "replay_skipped_budget": true
+    }
+  ],
+  "demo_seed_list": [
+    700000,
+    700001,
+    700002,
+    700003,
+    700004,
+    700005,
+    700006,
+    700007,
+    700008,
+    700009,
+    700010,
+    700011,
+    700012,
+    700013,
+    700014,
+    700015,
+    700016,
+    700017,
+    700018,
+    700019,
+    700020,
+    700021,
+    700022,
+    700023,
+    700024,
+    700025,
+    700026,
+    700027,
+    700028,
+    700029,
+    700030,
+    700031,
+    700032,
+    700033,
+    700034
+  ],
+  "demo_seed_list_sha256": "9ae7aa086d4a7bbbec163a1405d934aa7a3581147d19a3d26cf43fef55b0c164",
+  "budget_spent": 299757,
+  "budget_cap": 300000,
+  "budget_snapshot": {
+    "hard_cap": 300000,
+    "spent": 299757,
+    "remaining": 243,
+    "ledger": [
+      {
+        "reason": "demo_train:seed700012",
+        "frames": 5381,
+        "spent_after": 168653
+      },
+      {
+        "reason": "demo_replay_train:seed700012",
+        "frames": 5381,
+        "spent_after": 174034
+      },
+      {
+        "reason": "demo_train:seed700013",
+        "frames": 5633,
+        "spent_after": 179667
+      },
+      {
+        "reason": "demo_replay_train:seed700013",
+        "frames": 5633,
+        "spent_after": 185300
+      },
+      {
+        "reason": "demo_train:seed700014",
+        "frames": 5422,
+        "spent_after": 190722
+      },
+      {
+        "reason": "demo_replay_train:seed700014",
+        "frames": 5422,
+        "spent_after": 196144
+      },
+      {
+        "reason": "demo_train:seed700015",
+        "frames": 6275,
+        "spent_after": 202419
+      },
+      {
+        "reason": "demo_replay_train:seed700015",
+        "frames": 6275,
+        "spent_after": 208694
+      },
+      {
+        "reason": "demo_train:seed700016",
+        "frames": 5670,
+        "spent_after": 214364
+      },
+      {
+        "reason": "demo_replay_train:seed700016",
+        "frames": 5670,
+        "spent_after": 220034
+      },
+      {
+        "reason": "demo_train:seed700017",
+        "frames": 5481,
+        "spent_after": 225515
+      },
+      {
+        "reason": "demo_replay_train:seed700017",
+        "frames": 5481,
+        "spent_after": 230996
+      },
+      {
+        "reason": "demo_train:seed700018",
+        "frames": 5514,
+        "spent_after": 236510
+      },
+      {
+        "reason": "demo_replay_train:seed700018",
+        "frames": 5514,
+        "spent_after": 242024
+      },
+      {
+        "reason": "demo_train:seed700019",
+        "frames": 5764,
+        "spent_after": 247788
+      },
+      {
+        "reason": "demo_replay_train:seed700019",
+        "frames": 5764,
+        "spent_after": 253552
+      },
+      {
+        "reason": "demo_train:seed700020",
+        "frames": 5478,
+        "spent_after": 259030
+      },
+      {
+        "reason": "demo_replay_train:seed700020",
+        "frames": 5478,
+        "spent_after": 264508
+      },
+      {
+        "reason": "demo_train:seed700021",
+        "frames": 5555,
+        "spent_after": 270063
+      },
+      {
+        "reason": "demo_replay_train:seed700021",
+        "frames": 5555,
+        "spent_after": 275618
+      },
+      {
+        "reason": "demo_train:seed700022",
+        "frames": 5802,
+        "spent_after": 281420
+      },
+      {
+        "reason": "demo_replay_train:seed700022",
+        "frames": 5802,
+        "spent_after": 287222
+      },
+      {
+        "reason": "demo_train:seed700023",
+        "frames": 5608,
+        "spent_after": 292830
+      },
+      {
+        "reason": "demo_train:seed700000",
+        "frames": 167,
+        "spent_after": 292997
+      },
+      {
+        "reason": "demo_replay_train:seed700000",
+        "frames": 167,
+        "spent_after": 293164
+      },
+      {
+        "reason": "demo_train:seed700001",
+        "frames": 175,
+        "spent_after": 293339
+      },
+      {
+        "reason": "demo_replay_train:seed700001",
+        "frames": 175,
+        "spent_after": 293514
+      },
+      {
+        "reason": "demo_train:seed700002",
+        "frames": 162,
+        "spent_after": 293676
+      },
+      {
+        "reason": "demo_replay_train:seed700002",
+        "frames": 162,
+        "spent_after": 293838
+      },
+      {
+        "reason": "demo_train:seed700003",
+        "frames": 125,
+        "spent_after": 293963
+      },
+      {
+        "reason": "demo_replay_train:seed700003",
+        "frames": 125,
+        "spent_after": 294088
+      },
+      {
+        "reason": "demo_train:seed700004",
+        "frames": 139,
+        "spent_after": 294227
+      },
+      {
+        "reason": "demo_replay_train:seed700004",
+        "frames": 139,
+        "spent_after": 294366
+      },
+      {
+        "reason": "demo_train:seed700005",
+        "frames": 123,
+        "spent_after": 294489
+      },
+      {
+        "reason": "demo_replay_train:seed700005",
+        "frames": 123,
+        "spent_after": 294612
+      },
+      {
+        "reason": "demo_train:seed700006",
+        "frames": 127,
+        "spent_after": 294739
+      },
+      {
+        "reason": "demo_replay_train:seed700006",
+        "frames": 127,
+        "spent_after": 294866
+      },
+      {
+        "reason": "demo_train:seed700007",
+        "frames": 107,
+        "spent_after": 294973
+      },
+      {
+        "reason": "demo_replay_train:seed700007",
+        "frames": 107,
+        "spent_after": 295080
+      },
+      {
+        "reason": "demo_train:seed700008",
+        "frames": 124,
+        "spent_after": 295204
+      },
+      {
+        "reason": "demo_replay_train:seed700008",
+        "frames": 124,
+        "spent_after": 295328
+      },
+      {
+        "reason": "demo_train:seed700009",
+        "frames": 98,
+        "spent_after": 295426
+      },
+      {
+        "reason": "demo_replay_train:seed700009",
+        "frames": 98,
+        "spent_after": 295524
+      },
+      {
+        "reason": "demo_train:seed700010",
+        "frames": 150,
+        "spent_after": 295674
+      },
+      {
+        "reason": "demo_replay_train:seed700010",
+        "frames": 150,
+        "spent_after": 295824
+      },
+      {
+        "reason": "demo_train:seed700011",
+        "frames": 107,
+        "spent_after": 295931
+      },
+      {
+        "reason": "demo_replay_train:seed700011",
+        "frames": 107,
+        "spent_after": 296038
+      },
+      {
+        "reason": "demo_train:seed700023",
+        "frames": 182,
+        "spent_after": 296220
+      },
+      {
+        "reason": "demo_replay_train:seed700023",
+        "frames": 182,
+        "spent_after": 296402
+      },
+      {
+        "reason": "demo_train:seed700024",
+        "frames": 153,
+        "spent_after": 296555
+      },
+      {
+        "reason": "demo_replay_train:seed700024",
+        "frames": 153,
+        "spent_after": 296708
+      },
+      {
+        "reason": "demo_train:seed700025",
+        "frames": 169,
+        "spent_after": 296877
+      },
+      {
+        "reason": "demo_replay_train:seed700025",
+        "frames": 169,
+        "spent_after": 297046
+      },
+      {
+        "reason": "demo_train:seed700026",
+        "frames": 106,
+        "spent_after": 297152
+      },
+      {
+        "reason": "demo_replay_train:seed700026",
+        "frames": 106,
+        "spent_after": 297258
+      },
+      {
+        "reason": "demo_train:seed700027",
+        "frames": 144,
+        "spent_after": 297402
+      },
+      {
+        "reason": "demo_replay_train:seed700027",
+        "frames": 144,
+        "spent_after": 297546
+      },
+      {
+        "reason": "demo_train:seed700028",
+        "frames": 141,
+        "spent_after": 297687
+      },
+      {
+        "reason": "demo_replay_train:seed700028",
+        "frames": 141,
+        "spent_after": 297828
+      },
+      {
+        "reason": "demo_train:seed700029",
+        "frames": 129,
+        "spent_after": 297957
+      },
+      {
+        "reason": "demo_replay_train:seed700029",
+        "frames": 129,
+        "spent_after": 298086
+      },
+      {
+        "reason": "demo_train:seed700030",
+        "frames": 117,
+        "spent_after": 298203
+      },
+      {
+        "reason": "demo_replay_train:seed700030",
+        "frames": 117,
+        "spent_after": 298320
+      },
+      {
+        "reason": "demo_train:seed700031",
+        "frames": 181,
+        "spent_after": 298501
+      },
+      {
+        "reason": "demo_replay_train:seed700031",
+        "frames": 181,
+        "spent_after": 298682
+      },
+      {
+        "reason": "demo_train:seed700032",
+        "frames": 141,
+        "spent_after": 298823
+      },
+      {
+        "reason": "demo_replay_train:seed700032",
+        "frames": 141,
+        "spent_after": 298964
+      },
+      {
+        "reason": "demo_train:seed700033",
+        "frames": 161,
+        "spent_after": 299125
+      },
+      {
+        "reason": "demo_replay_train:seed700033",
+        "frames": 161,
+        "spent_after": 299286
+      },
+      {
+        "reason": "demo_train:seed700034",
+        "frames": 153,
+        "spent_after": 299439
+      },
+      {
+        "reason": "demo_replay_train:seed700034",
+        "frames": 153,
+        "spent_after": 299592
+      },
+      {
+        "reason": "demo_train:seed700035",
+        "frames": 165,
+        "spent_after": 299757
+      }
+    ]
+  }
+}

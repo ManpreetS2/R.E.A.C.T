@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "controller_calls_during_eval_probe": 0,
+  "detail": "policy.act_deterministic completed with controller monkeypatched to raise",
+  "label": "demonstration-assisted"
+}

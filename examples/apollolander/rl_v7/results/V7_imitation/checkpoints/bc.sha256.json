@@ -1,0 +1,7 @@
+{
+  "tag": "bc",
+  "sha256": "92b495648420db31babff2e1ddf858470f6b9bcd9028a35b3a30173dc60a019e",
+  "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/checkpoints/bc.pt",
+  "demo_seed_list_sha256": "9ae7aa086d4a7bbbec163a1405d934aa7a3581147d19a3d26cf43fef55b0c164",
+  "step0_sha256": "adfacc9bad94960380b4562211de203811ae880717e90d0ba9ba4a3df0e495e8"
+}

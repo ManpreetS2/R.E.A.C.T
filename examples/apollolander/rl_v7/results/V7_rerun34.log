@@ -1,0 +1,26 @@
+=== PHASE 3 ===
+[eval] untrained L0-near…
+  untrained_l0 counts={'perfect': 0, 'hard': 0, 'crash': 40, 'timeout': 0} n=40
+[eval] BC L0-near…
+  bc_l0 counts={'perfect': 40, 'hard': 0, 'crash': 0, 'timeout': 0} n=40
+[eval] untrained v1 (up to 100 / budget)…
+  untrained_v1 counts={'perfect': 0, 'hard': 0, 'crash': 100, 'timeout': 0} n=100
+[eval] BC v1 (up to 100 / budget)…
+  bc_v1 counts={'perfect': 0, 'hard': 0, 'crash': 12, 'timeout': 0} n=12
+[eval] translated expert REFERENCE…
+=== PHASE 4 ===
+[ppo] updates=5 frames=20480
+[ppo] updates=10 frames=40960
+[ppo] updates=15 frames=61440
+[ppo] updates=20 frames=81920
+[ppo] updates=25 frames=102400
+[ppo] updates=30 frames=122880
+[ppo] updates=35 frames=143360
+[ppo] updates=40 frames=163840
+[ppo] updates=45 frames=184320
+[ppo] updates=50 frames=204800
+[ppo] updates=55 frames=225280
+[ppo] updates=60 frames=245760
+[ppo-eval] frozen BC on L0-near…
+[ppo-eval] frozen PPO on L0-near…
+REPORT /workspace/docs/rl_v7/REPORT.md

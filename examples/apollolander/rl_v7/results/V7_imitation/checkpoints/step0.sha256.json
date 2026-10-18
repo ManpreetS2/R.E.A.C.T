@@ -1,0 +1,5 @@
+{
+  "tag": "step0",
+  "sha256": "adfacc9bad94960380b4562211de203811ae880717e90d0ba9ba4a3df0e495e8",
+  "path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/checkpoints/step0.pt"
+}

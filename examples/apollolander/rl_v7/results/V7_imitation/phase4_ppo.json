@@ -1,0 +1,789 @@
+{
+  "label": "demonstration-assisted",
+  "phase": 4,
+  "skipped": false,
+  "ppo_frames": 249856,
+  "ppo_updates": 61,
+  "early_stop": "ppo_budget_exhausted_before_rollout",
+  "wall_seconds": 30.176079034805298,
+  "ppo_sha256": "03df86ad681b7b56cbdcefc0942de87961bedc61983b19a34d42b7f54dea4a20",
+  "ppo_path": "/workspace/examples/apollolander/rl_v7/results/V7_imitation/checkpoints/ppo.pt",
+  "bc_eval": {
+    "label": "demonstration-assisted",
+    "reason": "ppo_phase_bc_refreeze",
+    "deterministic": true,
+    "level": "apollolander.starts.l0_near_v6",
+    "n": 40,
+    "seeds_requested": [
+      703000,
+      703001,
+      703002,
+      703003,
+      703004,
+      703005,
+      703006,
+      703007,
+      703008,
+      703009,
+      703010,
+      703011,
+      703012,
+      703013,
+      703014,
+      703015,
+      703016,
+      703017,
+      703018,
+      703019,
+      703020,
+      703021,
+      703022,
+      703023,
+      703024,
+      703025,
+      703026,
+      703027,
+      703028,
+      703029,
+      703030,
+      703031,
+      703032,
+      703033,
+      703034,
+      703035,
+      703036,
+      703037,
+      703038,
+      703039
+    ],
+    "seeds_evaluated": [
+      703000,
+      703001,
+      703002,
+      703003,
+      703004,
+      703005,
+      703006,
+      703007,
+      703008,
+      703009,
+      703010,
+      703011,
+      703012,
+      703013,
+      703014,
+      703015,
+      703016,
+      703017,
+      703018,
+      703019,
+      703020,
+      703021,
+      703022,
+      703023,
+      703024,
+      703025,
+      703026,
+      703027,
+      703028,
+      703029,
+      703030,
+      703031,
+      703032,
+      703033,
+      703034,
+      703035,
+      703036,
+      703037,
+      703038,
+      703039
+    ],
+    "counts": {
+      "perfect": 40,
+      "hard": 0,
+      "crash": 0,
+      "timeout": 0
+    },
+    "landing_rate": 1.0,
+    "landing_wilson95": [
+      0.9123754607496077,
+      1.0
+    ],
+    "diagnostic_frames": 4542,
+    "expert_disabled": true
+  },
+  "ppo_eval": {
+    "label": "demonstration-assisted",
+    "reason": "ppo_det",
+    "deterministic": true,
+    "level": "apollolander.starts.l0_near_v6",
+    "n": 40,
+    "seeds_requested": [
+      703000,
+      703001,
+      703002,
+      703003,
+      703004,
+      703005,
+      703006,
+      703007,
+      703008,
+      703009,
+      703010,
+      703011,
+      703012,
+      703013,
+      703014,
+      703015,
+      703016,
+      703017,
+      703018,
+      703019,
+      703020,
+      703021,
+      703022,
+      703023,
+      703024,
+      703025,
+      703026,
+      703027,
+      703028,
+      703029,
+      703030,
+      703031,
+      703032,
+      703033,
+      703034,
+      703035,
+      703036,
+      703037,
+      703038,
+      703039
+    ],
+    "seeds_evaluated": [
+      703000,
+      703001,
+      703002,
+      703003,
+      703004,
+      703005,
+      703006,
+      703007,
+      703008,
+      703009,
+      703010,
+      703011,
+      703012,
+      703013,
+      703014,
+      703015,
+      703016,
+      703017,
+      703018,
+      703019,
+      703020,
+      703021,
+      703022,
+      703023,
+      703024,
+      703025,
+      703026,
+      703027,
+      703028,
+      703029,
+      703030,
+      703031,
+      703032,
+      703033,
+      703034,
+      703035,
+      703036,
+      703037,
+      703038,
+      703039
+    ],
+    "counts": {
+      "perfect": 39,
+      "hard": 1,
+      "crash": 0,
+      "timeout": 0
+    },
+    "landing_rate": 1.0,
+    "landing_wilson95": [
+      0.9123754607496077,
+      1.0
+    ],
+    "diagnostic_frames": 4285,
+    "expert_disabled": true
+  },
+  "mcnemar_ppo_vs_bc": {
+    "shared_seeds": [
+      703000,
+      703001,
+      703002,
+      703003,
+      703004,
+      703005,
+      703006,
+      703007,
+      703008,
+      703009,
+      703010,
+      703011,
+      703012,
+      703013,
+      703014,
+      703015,
+      703016,
+      703017,
+      703018,
+      703019,
+      703020,
+      703021,
+      703022,
+      703023,
+      703024,
+      703025,
+      703026,
+      703027,
+      703028,
+      703029,
+      703030,
+      703031,
+      703032,
+      703033,
+      703034,
+      703035,
+      703036,
+      703037,
+      703038,
+      703039
+    ],
+    "mcnemar": {
+      "b": 0,
+      "c": 0,
+      "n_discordant": 0,
+      "p_value": 1.0,
+      "method": "exact_none"
+    }
+  },
+  "verdict": "PPO_PRESERVED_BC",
+  "note": "Never imply PPO discovered the maneuver from scratch \u2014 started from BC.",
+  "reward": "touchdown_v1 unchanged",
+  "bc_regularization": 0.0,
+  "diagnostic_budget": {
+    "hard_cap": 200000,
+    "spent": 188571,
+    "remaining": 11429,
+    "ledger": [
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703000",
+        "frames": 86,
+        "spent_after": 179830
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703001",
+        "frames": 107,
+        "spent_after": 179937
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703002",
+        "frames": 83,
+        "spent_after": 180020
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703003",
+        "frames": 102,
+        "spent_after": 180122
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703004",
+        "frames": 106,
+        "spent_after": 180228
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703005",
+        "frames": 131,
+        "spent_after": 180359
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703006",
+        "frames": 132,
+        "spent_after": 180491
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703007",
+        "frames": 108,
+        "spent_after": 180599
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703008",
+        "frames": 126,
+        "spent_after": 180725
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703009",
+        "frames": 114,
+        "spent_after": 180839
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703010",
+        "frames": 107,
+        "spent_after": 180946
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703011",
+        "frames": 134,
+        "spent_after": 181080
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703012",
+        "frames": 129,
+        "spent_after": 181209
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703013",
+        "frames": 92,
+        "spent_after": 181301
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703014",
+        "frames": 143,
+        "spent_after": 181444
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703015",
+        "frames": 137,
+        "spent_after": 181581
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703016",
+        "frames": 119,
+        "spent_after": 181700
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703017",
+        "frames": 85,
+        "spent_after": 181785
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703018",
+        "frames": 87,
+        "spent_after": 181872
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703019",
+        "frames": 107,
+        "spent_after": 181979
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703020",
+        "frames": 119,
+        "spent_after": 182098
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703021",
+        "frames": 100,
+        "spent_after": 182198
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703022",
+        "frames": 115,
+        "spent_after": 182313
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703023",
+        "frames": 116,
+        "spent_after": 182429
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703024",
+        "frames": 136,
+        "spent_after": 182565
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703025",
+        "frames": 110,
+        "spent_after": 182675
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703026",
+        "frames": 108,
+        "spent_after": 182783
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703027",
+        "frames": 125,
+        "spent_after": 182908
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703028",
+        "frames": 100,
+        "spent_after": 183008
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703029",
+        "frames": 128,
+        "spent_after": 183136
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703030",
+        "frames": 125,
+        "spent_after": 183261
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703031",
+        "frames": 95,
+        "spent_after": 183356
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703032",
+        "frames": 95,
+        "spent_after": 183451
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703033",
+        "frames": 107,
+        "spent_after": 183558
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703034",
+        "frames": 144,
+        "spent_after": 183702
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703035",
+        "frames": 120,
+        "spent_after": 183822
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703036",
+        "frames": 113,
+        "spent_after": 183935
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703037",
+        "frames": 108,
+        "spent_after": 184043
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703038",
+        "frames": 120,
+        "spent_after": 184163
+      },
+      {
+        "reason": "ppo_phase_bc_refreeze:seed703039",
+        "frames": 123,
+        "spent_after": 184286
+      },
+      {
+        "reason": "ppo_det:seed703000",
+        "frames": 83,
+        "spent_after": 184369
+      },
+      {
+        "reason": "ppo_det:seed703001",
+        "frames": 103,
+        "spent_after": 184472
+      },
+      {
+        "reason": "ppo_det:seed703002",
+        "frames": 81,
+        "spent_after": 184553
+      },
+      {
+        "reason": "ppo_det:seed703003",
+        "frames": 97,
+        "spent_after": 184650
+      },
+      {
+        "reason": "ppo_det:seed703004",
+        "frames": 102,
+        "spent_after": 184752
+      },
+      {
+        "reason": "ppo_det:seed703005",
+        "frames": 123,
+        "spent_after": 184875
+      },
+      {
+        "reason": "ppo_det:seed703006",
+        "frames": 121,
+        "spent_after": 184996
+      },
+      {
+        "reason": "ppo_det:seed703007",
+        "frames": 104,
+        "spent_after": 185100
+      },
+      {
+        "reason": "ppo_det:seed703008",
+        "frames": 119,
+        "spent_after": 185219
+      },
+      {
+        "reason": "ppo_det:seed703009",
+        "frames": 108,
+        "spent_after": 185327
+      },
+      {
+        "reason": "ppo_det:seed703010",
+        "frames": 103,
+        "spent_after": 185430
+      },
+      {
+        "reason": "ppo_det:seed703011",
+        "frames": 124,
+        "spent_after": 185554
+      },
+      {
+        "reason": "ppo_det:seed703012",
+        "frames": 119,
+        "spent_after": 185673
+      },
+      {
+        "reason": "ppo_det:seed703013",
+        "frames": 88,
+        "spent_after": 185761
+      },
+      {
+        "reason": "ppo_det:seed703014",
+        "frames": 132,
+        "spent_after": 185893
+      },
+      {
+        "reason": "ppo_det:seed703015",
+        "frames": 126,
+        "spent_after": 186019
+      },
+      {
+        "reason": "ppo_det:seed703016",
+        "frames": 110,
+        "spent_after": 186129
+      },
+      {
+        "reason": "ppo_det:seed703017",
+        "frames": 82,
+        "spent_after": 186211
+      },
+      {
+        "reason": "ppo_det:seed703018",
+        "frames": 84,
+        "spent_after": 186295
+      },
+      {
+        "reason": "ppo_det:seed703019",
+        "frames": 102,
+        "spent_after": 186397
+      },
+      {
+        "reason": "ppo_det:seed703020",
+        "frames": 111,
+        "spent_after": 186508
+      },
+      {
+        "reason": "ppo_det:seed703021",
+        "frames": 96,
+        "spent_after": 186604
+      },
+      {
+        "reason": "ppo_det:seed703022",
+        "frames": 110,
+        "spent_after": 186714
+      },
+      {
+        "reason": "ppo_det:seed703023",
+        "frames": 110,
+        "spent_after": 186824
+      },
+      {
+        "reason": "ppo_det:seed703024",
+        "frames": 125,
+        "spent_after": 186949
+      },
+      {
+        "reason": "ppo_det:seed703025",
+        "frames": 104,
+        "spent_after": 187053
+      },
+      {
+        "reason": "ppo_det:seed703026",
+        "frames": 103,
+        "spent_after": 187156
+      },
+      {
+        "reason": "ppo_det:seed703027",
+        "frames": 115,
+        "spent_after": 187271
+      },
+      {
+        "reason": "ppo_det:seed703028",
+        "frames": 95,
+        "spent_after": 187366
+      },
+      {
+        "reason": "ppo_det:seed703029",
+        "frames": 118,
+        "spent_after": 187484
+      },
+      {
+        "reason": "ppo_det:seed703030",
+        "frames": 117,
+        "spent_after": 187601
+      },
+      {
+        "reason": "ppo_det:seed703031",
+        "frames": 91,
+        "spent_after": 187692
+      },
+      {
+        "reason": "ppo_det:seed703032",
+        "frames": 92,
+        "spent_after": 187784
+      },
+      {
+        "reason": "ppo_det:seed703033",
+        "frames": 103,
+        "spent_after": 187887
+      },
+      {
+        "reason": "ppo_det:seed703034",
+        "frames": 134,
+        "spent_after": 188021
+      },
+      {
+        "reason": "ppo_det:seed703035",
+        "frames": 113,
+        "spent_after": 188134
+      },
+      {
+        "reason": "ppo_det:seed703036",
+        "frames": 107,
+        "spent_after": 188241
+      },
+      {
+        "reason": "ppo_det:seed703037",
+        "frames": 103,
+        "spent_after": 188344
+      },
+      {
+        "reason": "ppo_det:seed703038",
+        "frames": 111,
+        "spent_after": 188455
+      },
+      {
+        "reason": "ppo_det:seed703039",
+        "frames": 116,
+        "spent_after": 188571
+      }
+    ]
+  },
+  "train_budget": {
+    "hard_cap": 250000,
+    "spent": 249856,
+    "remaining": 144,
+    "ledger_tail": [
+      {
+        "reason": "ppo_u60_t108",
+        "frames": 32,
+        "spent_after": 249248
+      },
+      {
+        "reason": "ppo_u60_t109",
+        "frames": 32,
+        "spent_after": 249280
+      },
+      {
+        "reason": "ppo_u60_t110",
+        "frames": 32,
+        "spent_after": 249312
+      },
+      {
+        "reason": "ppo_u60_t111",
+        "frames": 32,
+        "spent_after": 249344
+      },
+      {
+        "reason": "ppo_u60_t112",
+        "frames": 32,
+        "spent_after": 249376
+      },
+      {
+        "reason": "ppo_u60_t113",
+        "frames": 32,
+        "spent_after": 249408
+      },
+      {
+        "reason": "ppo_u60_t114",
+        "frames": 32,
+        "spent_after": 249440
+      },
+      {
+        "reason": "ppo_u60_t115",
+        "frames": 32,
+        "spent_after": 249472
+      },
+      {
+        "reason": "ppo_u60_t116",
+        "frames": 32,
+        "spent_after": 249504
+      },
+      {
+        "reason": "ppo_u60_t117",
+        "frames": 32,
+        "spent_after": 249536
+      },
+      {
+        "reason": "ppo_u60_t118",
+        "frames": 32,
+        "spent_after": 249568
+      },
+      {
+        "reason": "ppo_u60_t119",
+        "frames": 32,
+        "spent_after": 249600
+      },
+      {
+        "reason": "ppo_u60_t120",
+        "frames": 32,
+        "spent_after": 249632
+      },
+      {
+        "reason": "ppo_u60_t121",
+        "frames": 32,
+        "spent_after": 249664
+      },
+      {
+        "reason": "ppo_u60_t122",
+        "frames": 32,
+        "spent_after": 249696
+      },
+      {
+        "reason": "ppo_u60_t123",
+        "frames": 32,
+        "spent_after": 249728
+      },
+      {
+        "reason": "ppo_u60_t124",
+        "frames": 32,
+        "spent_after": 249760
+      },
+      {
+        "reason": "ppo_u60_t125",
+        "frames": 32,
+        "spent_after": 249792
+      },
+      {
+        "reason": "ppo_u60_t126",
+        "frames": 32,
+        "spent_after": 249824
+      },
+      {
+        "reason": "ppo_u60_t127",
+        "frames": 32,
+        "spent_after": 249856
+      }
+    ],
+    "ledger_len": 7808
+  }
+}

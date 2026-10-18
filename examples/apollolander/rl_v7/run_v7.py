@@ -137,9 +137,11 @@ class V7Config:
     soft_thrust_prior: bool = False
     hold_attitude_prior: bool = False
     bc_regularization: float = 0.0  # optional KL/BC term; 0 = off
-    eval_v1_n: int = 100  # attempt all preregistered; stop when diag cap blocks
+    eval_v1_n: int = 40  # attempt preregistered v1 seeds; stop when diag cap blocks
     eval_l0_n: int = 40
-    expert_ref_n: int = 8
+    expert_ref_n: int = 4
+    diag_reserve_for_ppo_eval: int = 20_000  # leave room for BC+PPO L0 McNemar
+    max_footage_landings: int = 3
 
 
 def load_prereg() -> dict[str, Any]:
@@ -742,23 +744,59 @@ def phase1_collect_demos(cfg: V7Config, out: Path, seeds_doc: dict, phase0: dict
 # ---------------------------------------------------------------------------
 
 
-def load_demo_pairs(manifest: dict) -> tuple[list[dict], list[dict]]:
-    train, val = [], []
+def load_demo_pairs(manifest: dict, *, val_fraction: float = 0.2, seed: int = 71) -> tuple[list[dict], list[dict], dict]:
+    """Train/val split BY TRAJECTORY.
+
+    If Phase-1 produced no demos tagged split=val (budget exhaustion), hold out
+    ``val_fraction`` of kept trajectories deterministically.
+    """
+    by_demo: dict[str, list[dict]] = {}
+    meta: dict[str, dict] = {}
     for d in manifest["demos"]:
         payload = json.loads(Path(d["path"]).read_text())
+        did = payload["demo_id"]
+        meta[did] = {"seed": payload["seed"], "split_tag": payload["split"], "level": payload["level"]}
+        pairs = []
         for step in payload["steps_log"]:
-            pair = {
-                "obs": np.asarray(step["observation"], dtype=np.float32),
-                "thrust": float(step["translated_expert_action"]["thrust"]),
-                "rotation_idx": int(step["translated_expert_action"]["rotation_idx"]),
-                "seed": payload["seed"],
-                "demo_id": payload["demo_id"],
-            }
-            if payload["split"] == "train":
-                train.append(pair)
-            else:
-                val.append(pair)
-    return train, val
+            pairs.append(
+                {
+                    "obs": np.asarray(step["observation"], dtype=np.float32),
+                    "thrust": float(step["translated_expert_action"]["thrust"]),
+                    "rotation_idx": int(step["translated_expert_action"]["rotation_idx"]),
+                    "seed": payload["seed"],
+                    "demo_id": did,
+                }
+            )
+        by_demo[did] = pairs
+
+    tagged_val = [did for did, m in meta.items() if m["split_tag"] == "val"]
+    tagged_train = [did for did, m in meta.items() if m["split_tag"] != "val"]
+    if tagged_val:
+        train_ids, val_ids = tagged_train, tagged_val
+        split_mode = "phase1_tags"
+    else:
+        ids = sorted(by_demo.keys())
+        rng = np.random.default_rng(seed)
+        rng.shuffle(ids)
+        n_val = max(1, int(round(len(ids) * val_fraction))) if len(ids) > 1 else 0
+        val_ids = sorted(ids[:n_val])
+        train_ids = sorted(ids[n_val:])
+        split_mode = "holdout_by_trajectory"
+
+    train, val = [], []
+    for did in train_ids:
+        train.extend(by_demo[did])
+    for did in val_ids:
+        val.extend(by_demo[did])
+    split_info = {
+        "mode": split_mode,
+        "train_demo_ids": train_ids,
+        "val_demo_ids": val_ids,
+        "n_train_trajectories": len(train_ids),
+        "n_val_trajectories": len(val_ids),
+        "val_fraction_requested": val_fraction,
+    }
+    return train, val, split_info
 
 
 def phase2_bc(cfg: V7Config, out: Path, manifest: dict) -> dict[str, Any]:
@@ -767,7 +805,7 @@ def phase2_bc(cfg: V7Config, out: Path, manifest: dict) -> dict[str, Any]:
     logs = out / "logs"
     logs.mkdir(parents=True, exist_ok=True)
 
-    train_pairs, val_pairs = load_demo_pairs(manifest)
+    train_pairs, val_pairs, split_info = load_demo_pairs(manifest, seed=cfg.seed)
     if not train_pairs:
         raise SystemExit("No training demo pairs for BC")
 
@@ -931,8 +969,9 @@ def phase2_bc(cfg: V7Config, out: Path, manifest: dict) -> dict[str, Any]:
         "phase": 2,
         "n_train_pairs": n_train,
         "n_val_pairs": len(val_pairs),
-        "n_train_trajectories": manifest["kept_train"],
-        "n_val_trajectories": manifest["kept_val"],
+        "n_train_trajectories": split_info["n_train_trajectories"],
+        "n_val_trajectories": split_info["n_val_trajectories"],
+        "trajectory_split": split_info,
         "epochs": cfg.bc_epochs,
         "wall_seconds": wall,
         "history": history,
@@ -1300,6 +1339,10 @@ def phase3_eval(cfg: V7Config, out: Path, seeds_doc: dict, bc_summary: dict) -> 
         raise SystemExit("eval integrity failed")
 
     l0_seeds = list(seeds_doc["unseen_eval_l0near_seeds"][: cfg.eval_l0_n])
+    # Soft reserve: treat budget as (cap - reserve) during Phase-3 eval/footage so
+    # Phase-4 PPO McNemar can still run under the hard 200k diagnostic cap.
+    budget_hard = budget.hard_cap
+    budget.hard_cap = max(0, budget_hard - int(cfg.diag_reserve_for_ppo_eval))
 
     def run_net(pol, seeds, level, max_steps, reason, record=True):
         return evaluate_policy(
@@ -1315,7 +1358,7 @@ def phase3_eval(cfg: V7Config, out: Path, seeds_doc: dict, bc_summary: dict) -> 
             record_traces=record,
         )
 
-    # L0-near first (cheap, where demos concentrate) then v1 (expensive ~6–8k/ep).
+    # L0-near first (cheap, where demos concentrate) then v1.
     print("[eval] untrained L0-near…", flush=True)
     untrained_l0 = run_net(step0, l0_seeds, LEVEL_L0, cfg.max_steps_l0, "untrained_l0")
     print(f"  untrained_l0 counts={untrained_l0['counts']} n={untrained_l0['n']}", flush=True)
@@ -1324,11 +1367,66 @@ def phase3_eval(cfg: V7Config, out: Path, seeds_doc: dict, bc_summary: dict) -> 
     bc_l0 = run_net(bc_pol, l0_seeds, LEVEL_L0, cfg.max_steps_l0, "bc_l0")
     print(f"  bc_l0 counts={bc_l0['counts']} n={bc_l0['n']}", flush=True)
 
-    print("[eval] untrained v1 (up to 100 / budget)…", flush=True)
+    # Film a few BC L0 landings NOW (before expensive v1 evals consume the budget).
+    landings_preserved_early: list[dict[str, Any]] = []
+    env_rev_l0_early = make_env(LEVEL_L0, cfg.max_steps_l0, cfg.action_repeat)
+    try:
+        filmed = 0
+        for row in bc_l0["per_seed"]:
+            if filmed >= cfg.max_footage_landings or not row.get("landed"):
+                continue
+            if not budget.can_afford(cfg.max_steps_l0):
+                break
+            seed = row["seed"]
+            trace = row.get("action_trace") or []
+            rev = independent_reverify_landing(env_rev_l0_early, seed, trace, row, budget)
+            vid_path = footage_dir / f"bc_l0_seed{seed}_{row['status']}.mp4"
+            try:
+                vid = render_trace_video(
+                    seed=seed,
+                    level=LEVEL_L0,
+                    max_steps=cfg.max_steps_l0,
+                    action_trace=trace,
+                    action_repeat=cfg.action_repeat,
+                    out_mp4=vid_path,
+                    label=f"{LABEL}_bc_l0",
+                )
+            except Exception as exc:
+                vid = {"ok": False, "error": str(exc)}
+            entry = {
+                "tag": "bc_l0",
+                "level": LEVEL_L0,
+                "seed": seed,
+                "checkpoint": bc_summary["bc_path"],
+                "checkpoint_sha256": bc_summary["bc_sha256"],
+                "status": row["status"],
+                "native_score": row["native_score"],
+                "rotation": row["rotation"],
+                "vy": row["vy"],
+                "touchdown_frame": row.get("touchdown_frame") or row["steps"],
+                "action_trace": trace,
+                "reverify": rev,
+                "video": vid,
+                "label": LABEL,
+            }
+            if vid.get("ok") and vid.get("path"):
+                art = Path("/opt/cursor/artifacts/rl_v7")
+                art.mkdir(parents=True, exist_ok=True)
+                import shutil
+                dest = art / Path(vid["path"]).name
+                shutil.copy2(vid["path"], dest)
+                entry["video_artifact"] = str(dest)
+            landings_preserved_early.append(entry)
+            filmed += 1
+            print(f"  EARLY footage bc_l0 seed={seed} vid={vid.get('ok')} reverify={rev.get('matched')}", flush=True)
+    finally:
+        env_rev_l0_early.close()
+
+    print(f"[eval] untrained v1 (up to {cfg.eval_v1_n} / budget)…", flush=True)
     untrained = run_net(step0, eval_seeds, LEVEL_V1, cfg.max_steps_v1, "untrained_v1")
     print(f"  untrained_v1 counts={untrained['counts']} n={untrained['n']}", flush=True)
 
-    print("[eval] BC v1 (up to 100 / budget)…", flush=True)
+    print(f"[eval] BC v1 (up to {cfg.eval_v1_n} / budget)…", flush=True)
     bc_eval = run_net(bc_pol, eval_seeds, LEVEL_V1, cfg.max_steps_v1, "bc_v1")
     print(f"  bc_v1 counts={bc_eval['counts']} n={bc_eval['n']}", flush=True)
 
@@ -1371,68 +1469,52 @@ def phase3_eval(cfg: V7Config, out: Path, seeds_doc: dict, bc_summary: dict) -> 
         json.dumps(expert_ref_v1, indent=2) + "\n"
     )
 
-    landings_preserved = []
-    env_rev_l0 = make_env(LEVEL_L0, cfg.max_steps_l0, cfg.action_repeat)
-    env_rev_v1 = make_env(LEVEL_V1, cfg.max_steps_v1, cfg.action_repeat)
-    try:
-        for tag, result, sha, path, level, max_steps, env_rev in (
-            ("untrained_l0", untrained_l0, bc_summary["step0_sha256"], bc_summary["step0_path"], LEVEL_L0, cfg.max_steps_l0, env_rev_l0),
-            ("bc_l0", bc_l0, bc_summary["bc_sha256"], bc_summary["bc_path"], LEVEL_L0, cfg.max_steps_l0, env_rev_l0),
-            ("untrained_v1", untrained, bc_summary["step0_sha256"], bc_summary["step0_path"], LEVEL_V1, cfg.max_steps_v1, env_rev_v1),
-            ("bc_v1", bc_eval, bc_summary["bc_sha256"], bc_summary["bc_path"], LEVEL_V1, cfg.max_steps_v1, env_rev_v1),
-        ):
-            for row in result["per_seed"]:
-                if not row.get("landed"):
-                    continue
-                seed = row["seed"]
-                trace = row.get("action_trace") or []
-                try:
-                    rev = independent_reverify_landing(env_rev, seed, trace, row, budget)
-                except DiagnosticBudgetExhausted:
-                    rev = {"matched": False, "error": "budget"}
-                vid_path = footage_dir / f"{tag}_seed{seed}_{row['status']}.mp4"
-                try:
-                    vid = render_trace_video(
-                        seed=seed,
-                        level=level,
-                        max_steps=max_steps,
-                        action_trace=trace,
-                        action_repeat=cfg.action_repeat,
-                        out_mp4=vid_path,
-                        label=f"{LABEL}_{tag}",
-                    )
-                except Exception as exc:
-                    vid = {"ok": False, "error": str(exc)}
-                entry = {
-                    "tag": tag,
-                    "level": level,
-                    "seed": seed,
-                    "checkpoint": path,
-                    "checkpoint_sha256": sha,
-                    "status": row["status"],
-                    "native_score": row["native_score"],
-                    "rotation": row["rotation"],
-                    "vy": row["vy"],
-                    "touchdown_frame": row.get("touchdown_frame") or row["steps"],
-                    "action_trace": trace,
-                    "reverify": rev,
-                    "video": vid,
-                    "label": LABEL,
-                }
-                landings_preserved.append(entry)
-                (mile_dir / f"{tag}_seed{seed}.json").write_text(json.dumps(entry, indent=2) + "\n")
-                # Copy video to artifacts if present
-                if vid.get("ok") and vid.get("path"):
-                    art = Path("/opt/cursor/artifacts/rl_v7")
-                    art.mkdir(parents=True, exist_ok=True)
-                    import shutil
-                    dest = art / Path(vid["path"]).name
-                    shutil.copy2(vid["path"], dest)
-                    entry["video_artifact"] = str(dest)
-                print(f"  LANDING preserved {tag} seed={seed} vid={vid.get('ok')}", flush=True)
-    finally:
-        env_rev_l0.close()
-        env_rev_v1.close()
+    # Persist all landing outcomes + traces; footage already captured early for a few.
+    landings_preserved: list[dict[str, Any]] = list(landings_preserved_early)
+    early_seeds = {(e["tag"], e["seed"]) for e in landings_preserved_early}
+    for tag, result, sha, path, level in (
+        ("untrained_l0", untrained_l0, bc_summary["step0_sha256"], bc_summary["step0_path"], LEVEL_L0),
+        ("bc_l0", bc_l0, bc_summary["bc_sha256"], bc_summary["bc_path"], LEVEL_L0),
+        ("untrained_v1", untrained, bc_summary["step0_sha256"], bc_summary["step0_path"], LEVEL_V1),
+        ("bc_v1", bc_eval, bc_summary["bc_sha256"], bc_summary["bc_path"], LEVEL_V1),
+    ):
+        for row in result["per_seed"]:
+            if not row.get("landed"):
+                continue
+            seed = row["seed"]
+            if (tag, seed) in early_seeds:
+                continue
+            trace = row.get("action_trace") or []
+            entry = {
+                "tag": tag,
+                "level": level,
+                "seed": seed,
+                "checkpoint": path,
+                "checkpoint_sha256": sha,
+                "status": row["status"],
+                "native_score": row["native_score"],
+                "rotation": row["rotation"],
+                "vy": row["vy"],
+                "touchdown_frame": row.get("touchdown_frame") or row["steps"],
+                "action_trace": trace,
+                "label": LABEL,
+                "reverify": {"skipped": True, "reason": "trace_persisted_footage_capped"},
+                "video": {"ok": False, "skipped": True},
+            }
+            landings_preserved.append(entry)
+            (mile_dir / f"{tag}_seed{seed}_trace.json").write_text(
+                json.dumps({"seed": seed, "trace": trace, "status": row["status"]}, indent=2) + "\n"
+            )
+            (mile_dir / f"{tag}_seed{seed}.json").write_text(
+                json.dumps({k: v for k, v in entry.items() if k != "action_trace"}, indent=2) + "\n"
+            )
+    for entry in landings_preserved_early:
+        (mile_dir / f"{entry['tag']}_seed{entry['seed']}.json").write_text(
+            json.dumps({k: v for k, v in entry.items() if k != "action_trace"}, indent=2) + "\n"
+        )
+
+    # Restore hard cap so snapshot / Phase-4 see the real remaining reserve.
+    budget.hard_cap = budget_hard
 
     bc_land_l0 = bc_l0["counts"]["perfect"] + bc_l0["counts"]["hard"]
     bc_land_v1 = bc_eval["counts"]["perfect"] + bc_eval["counts"]["hard"]
@@ -1733,7 +1815,11 @@ def phase4_ppo(cfg: V7Config, out: Path, seeds_doc: dict, bc_summary: dict, phas
     mc = paired_mcnemar(bc_again, ppo_eval) if bc_again.get("per_seed") and ppo_eval.get("per_seed") else None
     ppo_land = ppo_eval.get("counts", {}).get("perfect", 0) + ppo_eval.get("counts", {}).get("hard", 0)
     bc_land = bc_again.get("counts", {}).get("perfect", 0) + bc_again.get("counts", {}).get("hard", 0)
-    if mc and mc["mcnemar"]["n_discordant"] > 0:
+    n_ppo = int(ppo_eval.get("n") or 0)
+    n_bc = int(bc_again.get("n") or 0)
+    if n_ppo == 0 or n_bc == 0 or not mc:
+        verdict = "PPO_EVAL_INCOMPLETE_DIAG_BUDGET"
+    elif mc["mcnemar"]["n_discordant"] > 0:
         if mc["mcnemar"]["b"] > mc["mcnemar"]["c"]:
             verdict = "PPO_IMPROVED_OVER_BC"
         elif mc["mcnemar"]["b"] < mc["mcnemar"]["c"]:
@@ -1898,12 +1984,18 @@ def write_report(
     ]
     if not phase4.get("skipped"):
         lines.append(f"- ppo: `{phase4.get('ppo_path')}` sha256=`{phase4.get('ppo_sha256')}`")
-    for e in phase3.get("landings_preserved", []):
+    filmed = [e for e in phase3.get("landings_preserved", []) if (e.get("video") or {}).get("ok")]
+    lines.append(
+        f"- Landing traces persisted for {len(phase3.get('landings_preserved', []))} "
+        f"outcomes; Chromium footage for {len(filmed)} (capped)."
+    )
+    for e in filmed:
         vid = e.get("video") or {}
         lines.append(
             f"- landing {e.get('tag')} seed={e.get('seed')}: "
             f"video=`{vid.get('path')}` sha256=`{vid.get('sha256')}` "
-            f"reverify={e.get('reverify', {}).get('matched')}"
+            f"reverify={e.get('reverify', {}).get('matched')} "
+            f"artifact=`{e.get('video_artifact')}`"
         )
 
     lines += [
@@ -1956,6 +2048,9 @@ def main() -> None:
     seeds_doc = load_prereg()
     phase0 = phase1 = phase2 = phase3 = phase4 = {}
 
+    def _load(name: str) -> dict:
+        return json.loads((out / name).read_text())
+
     try:
         if args.phase in ("all", "0"):
             print("=== PHASE 0 ===", flush=True)
@@ -1967,13 +2062,28 @@ def main() -> None:
                     "or mix L0-near starts. See phase0_feasibility.json.",
                     flush=True,
                 )
-                write_report(cfg, out, phase0, {"attempts": 0, "failures": 0, "kept": 0,
-                    "kept_train": 0, "kept_val": 0, "include_l0_near": False,
-                    "demo_seed_list_sha256": "", "budget_spent": phase0["budget_spent"],
-                    "budget_cap": phase0["budget_cap"]}, {}, {}, {"skipped": True, "reason": "phase0_failed"})
+                write_report(
+                    cfg,
+                    out,
+                    phase0,
+                    {
+                        "attempts": 0,
+                        "failures": 0,
+                        "kept": 0,
+                        "kept_train": 0,
+                        "kept_val": 0,
+                        "include_l0_near": False,
+                        "demo_seed_list_sha256": "",
+                        "budget_spent": phase0["budget_spent"],
+                        "budget_cap": phase0["budget_cap"],
+                    },
+                    {},
+                    {},
+                    {"skipped": True, "reason": "phase0_failed"},
+                )
                 raise SystemExit(2)
-        else:
-            phase0 = json.loads((out / "phase0_feasibility.json").read_text())
+        elif args.phase in ("1", "2", "3", "4", "report"):
+            phase0 = _load("phase0_feasibility.json")
 
         if args.phase in ("all", "1"):
             print("=== PHASE 1 ===", flush=True)
@@ -1984,27 +2094,27 @@ def main() -> None:
                     f"(target {cfg.demo_keep_target_min}-{cfg.demo_keep_target_max})",
                     flush=True,
                 )
-        else:
-            phase1 = json.loads((out / "phase1_demos.json").read_text())
+        elif args.phase in ("2", "3", "4", "report"):
+            phase1 = _load("phase1_demos.json")
 
         if args.phase in ("all", "2"):
             print("=== PHASE 2 ===", flush=True)
             phase2 = phase2_bc(cfg, out, phase1)
-        else:
-            phase2 = json.loads((out / "phase2_bc.json").read_text())
+        elif args.phase in ("3", "4", "report"):
+            phase2 = _load("phase2_bc.json")
 
         if args.phase in ("all", "3"):
             print("=== PHASE 3 ===", flush=True)
             phase3 = phase3_eval(cfg, out, seeds_doc, phase2)
-        else:
-            phase3 = json.loads((out / "phase3_eval.json").read_text())
+        elif args.phase in ("4", "report"):
+            phase3 = _load("phase3_eval.json")
 
         if args.phase in ("all", "4"):
             print("=== PHASE 4 ===", flush=True)
             phase4 = phase4_ppo(cfg, out, seeds_doc, phase2, phase3)
-        else:
+        elif args.phase == "report":
             p4 = out / "phase4_ppo.json"
-            phase4 = json.loads(p4.read_text()) if p4.exists() else {"skipped": True}
+            phase4 = _load("phase4_ppo.json") if p4.exists() else {"skipped": True}
 
         if args.phase in ("all", "report"):
             path = write_report(cfg, out, phase0, phase1, phase2, phase3, phase4)

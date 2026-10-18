@@ -1,0 +1,260 @@
+=== PHASE 0 ===
+[feas] translated seed=700000
+[feas] raw seed=700000
+  tr=landed steps=6087 fid_rot_mae=0.08542796122884837 replay=True
+[feas] translated seed=700001
+[feas] raw seed=700001
+  tr=landed steps=6026 fid_rot_mae=0.2904082309990043 replay=True
+[feas] translated seed=700002
+[feas] raw seed=700002
+  tr=landed steps=5306 fid_rot_mae=0.19452313503305005 replay=True
+[feas] translated seed=700003
+[feas] raw seed=700003
+  tr=landed steps=5753 fid_rot_mae=0.17208413001912046 replay=True
+[feas] translated seed=700004
+  tr=landed steps=5396 fid_rot_mae=None replay=True
+[feas] translated seed=700005
+  tr=landed steps=5961 fid_rot_mae=None replay=True
+[feas] translated seed=700006
+  tr=landed steps=5410 fid_rot_mae=None replay=True
+[feas] translated seed=700007
+  tr=landed steps=5302 fid_rot_mae=None replay=True
+[feas] translated seed=700008
+  tr=landed steps=5572 fid_rot_mae=None replay=True
+[feas] translated seed=700009
+  tr=landed steps=6120 fid_rot_mae=None replay=True
+[feas] translated seed=700010
+  tr=landed steps=6241 fid_rot_mae=None replay=True
+[feas] translated seed=700011
+  tr=landed steps=6139 fid_rot_mae=None replay=True
+[feas-l0] translated seed=700390
+[feas-l0] translated seed=700391
+[feas-l0] translated seed=700392
+[feas-l0] translated seed=700393
+[feas-l0] translated seed=700394
+[feas-l0] translated seed=700395
+[feas-l0] translated seed=700396
+[feas-l0] translated seed=700397
+[feas-l0] translated seed=700398
+[feas-l0] translated seed=700399
+=== PHASE 1 ===
+[demo train/apollolander.starts.v1] attempt seed=700012 kept=0 spent=163272
+  KEPT train_apollolander_starts_v1_700012 status=landed steps=5381
+[demo train/apollolander.starts.v1] attempt seed=700013 kept=1 spent=174034
+  KEPT train_apollolander_starts_v1_700013 status=landed steps=5633
+[demo train/apollolander.starts.v1] attempt seed=700014 kept=2 spent=185300
+  KEPT train_apollolander_starts_v1_700014 status=landed steps=5422
+[demo train/apollolander.starts.v1] attempt seed=700015 kept=3 spent=196144
+  KEPT train_apollolander_starts_v1_700015 status=landed steps=6275
+[demo train/apollolander.starts.v1] attempt seed=700016 kept=4 spent=208694
+  KEPT train_apollolander_starts_v1_700016 status=landed steps=5670
+[demo train/apollolander.starts.v1] attempt seed=700017 kept=5 spent=220034
+  KEPT train_apollolander_starts_v1_700017 status=landed steps=5481
+[demo train/apollolander.starts.v1] attempt seed=700018 kept=6 spent=230996
+  KEPT train_apollolander_starts_v1_700018 status=landed steps=5514
+[demo train/apollolander.starts.v1] attempt seed=700019 kept=7 spent=242024
+  KEPT train_apollolander_starts_v1_700019 status=landed steps=5764
+[demo train/apollolander.starts.v1] attempt seed=700020 kept=8 spent=253552
+  KEPT train_apollolander_starts_v1_700020 status=landed steps=5478
+[demo train/apollolander.starts.v1] attempt seed=700021 kept=9 spent=264508
+  KEPT train_apollolander_starts_v1_700021 status=landed steps=5555
+[demo train/apollolander.starts.v1] attempt seed=700022 kept=10 spent=275618
+  KEPT train_apollolander_starts_v1_700022 status=landed steps=5802
+[demo train/apollolander.starts.v1] attempt seed=700023 kept=11 spent=287222
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700000 kept=11 spent=292830
+  KEPT train_apollolander_starts_l0_near_v6_700000 status=landed steps=167
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700001 kept=12 spent=293164
+  KEPT train_apollolander_starts_l0_near_v6_700001 status=landed steps=175
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700002 kept=13 spent=293514
+  KEPT train_apollolander_starts_l0_near_v6_700002 status=landed steps=162
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700003 kept=14 spent=293838
+  KEPT train_apollolander_starts_l0_near_v6_700003 status=landed steps=125
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700004 kept=15 spent=294088
+  KEPT train_apollolander_starts_l0_near_v6_700004 status=landed steps=139
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700005 kept=16 spent=294366
+  KEPT train_apollolander_starts_l0_near_v6_700005 status=landed steps=123
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700006 kept=17 spent=294612
+  KEPT train_apollolander_starts_l0_near_v6_700006 status=landed steps=127
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700007 kept=18 spent=294866
+  KEPT train_apollolander_starts_l0_near_v6_700007 status=landed steps=107
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700008 kept=19 spent=295080
+  KEPT train_apollolander_starts_l0_near_v6_700008 status=landed steps=124
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700009 kept=20 spent=295328
+  KEPT train_apollolander_starts_l0_near_v6_700009 status=landed steps=98
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700010 kept=21 spent=295524
+  KEPT train_apollolander_starts_l0_near_v6_700010 status=landed steps=150
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700011 kept=22 spent=295824
+  KEPT train_apollolander_starts_l0_near_v6_700011 status=landed steps=107
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700023 kept=23 spent=296038
+  KEPT train_apollolander_starts_l0_near_v6_700023 status=landed steps=182
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700024 kept=24 spent=296402
+  KEPT train_apollolander_starts_l0_near_v6_700024 status=landed steps=153
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700025 kept=25 spent=296708
+  KEPT train_apollolander_starts_l0_near_v6_700025 status=landed steps=169
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700026 kept=26 spent=297046
+  KEPT train_apollolander_starts_l0_near_v6_700026 status=landed steps=106
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700027 kept=27 spent=297258
+  KEPT train_apollolander_starts_l0_near_v6_700027 status=landed steps=144
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700028 kept=28 spent=297546
+  KEPT train_apollolander_starts_l0_near_v6_700028 status=landed steps=141
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700029 kept=29 spent=297828
+  KEPT train_apollolander_starts_l0_near_v6_700029 status=landed steps=129
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700030 kept=30 spent=298086
+  KEPT train_apollolander_starts_l0_near_v6_700030 status=landed steps=117
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700031 kept=31 spent=298320
+  KEPT train_apollolander_starts_l0_near_v6_700031 status=landed steps=181
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700032 kept=32 spent=298682
+  KEPT train_apollolander_starts_l0_near_v6_700032 status=landed steps=141
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700033 kept=33 spent=298964
+  KEPT train_apollolander_starts_l0_near_v6_700033 status=landed steps=161
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700034 kept=34 spent=299286
+  KEPT train_apollolander_starts_l0_near_v6_700034 status=landed steps=153
+[demo train/apollolander.starts.l0_near_v6] attempt seed=700035 kept=35 spent=299592
+WARNING: only 35 demos kept (target 50-100)
+=== PHASE 2 ===
+[bc] epoch=0 train_loss=2.6174 val_loss=nan val_rot_acc=nan
+[bc] epoch=1 train_loss=1.8989 val_loss=nan val_rot_acc=nan
+[bc] epoch=2 train_loss=1.3889 val_loss=nan val_rot_acc=nan
+[bc] epoch=3 train_loss=0.9832 val_loss=nan val_rot_acc=nan
+[bc] epoch=4 train_loss=0.7772 val_loss=nan val_rot_acc=nan
+[bc] epoch=5 train_loss=0.6856 val_loss=nan val_rot_acc=nan
+[bc] epoch=6 train_loss=0.6331 val_loss=nan val_rot_acc=nan
+[bc] epoch=7 train_loss=0.5577 val_loss=nan val_rot_acc=nan
+[bc] epoch=8 train_loss=0.4891 val_loss=nan val_rot_acc=nan
+[bc] epoch=9 train_loss=0.4163 val_loss=nan val_rot_acc=nan
+[bc] epoch=10 train_loss=0.3414 val_loss=nan val_rot_acc=nan
+[bc] epoch=11 train_loss=0.2608 val_loss=nan val_rot_acc=nan
+[bc] epoch=12 train_loss=0.1972 val_loss=nan val_rot_acc=nan
+[bc] epoch=13 train_loss=0.1369 val_loss=nan val_rot_acc=nan
+[bc] epoch=14 train_loss=0.0987 val_loss=nan val_rot_acc=nan
+[bc] epoch=15 train_loss=0.0659 val_loss=nan val_rot_acc=nan
+[bc] epoch=16 train_loss=0.0483 val_loss=nan val_rot_acc=nan
+[bc] epoch=17 train_loss=0.0232 val_loss=nan val_rot_acc=nan
+[bc] epoch=18 train_loss=0.0044 val_loss=nan val_rot_acc=nan
+[bc] epoch=19 train_loss=-0.0034 val_loss=nan val_rot_acc=nan
+[bc] epoch=20 train_loss=-0.0192 val_loss=nan val_rot_acc=nan
+[bc] epoch=21 train_loss=-0.0281 val_loss=nan val_rot_acc=nan
+[bc] epoch=22 train_loss=-0.0402 val_loss=nan val_rot_acc=nan
+[bc] epoch=23 train_loss=-0.0433 val_loss=nan val_rot_acc=nan
+[bc] epoch=24 train_loss=-0.0469 val_loss=nan val_rot_acc=nan
+[bc] epoch=25 train_loss=-0.0668 val_loss=nan val_rot_acc=nan
+[bc] epoch=26 train_loss=-0.0738 val_loss=nan val_rot_acc=nan
+[bc] epoch=27 train_loss=-0.0806 val_loss=nan val_rot_acc=nan
+[bc] epoch=28 train_loss=-0.0822 val_loss=nan val_rot_acc=nan
+[bc] epoch=29 train_loss=-0.0903 val_loss=nan val_rot_acc=nan
+[bc] epoch=30 train_loss=-0.1012 val_loss=nan val_rot_acc=nan
+[bc] epoch=31 train_loss=-0.0985 val_loss=nan val_rot_acc=nan
+[bc] epoch=32 train_loss=-0.1098 val_loss=nan val_rot_acc=nan
+[bc] epoch=33 train_loss=-0.1060 val_loss=nan val_rot_acc=nan
+[bc] epoch=34 train_loss=-0.1131 val_loss=nan val_rot_acc=nan
+[bc] epoch=35 train_loss=-0.1193 val_loss=nan val_rot_acc=nan
+[bc] epoch=36 train_loss=-0.1184 val_loss=nan val_rot_acc=nan
+[bc] epoch=37 train_loss=-0.1307 val_loss=nan val_rot_acc=nan
+[bc] epoch=38 train_loss=-0.1339 val_loss=nan val_rot_acc=nan
+[bc] epoch=39 train_loss=-0.1339 val_loss=nan val_rot_acc=nan
+=== PHASE 3 ===
+[eval] untrained L0-near…
+  untrained_l0 counts={'perfect': 0, 'hard': 0, 'crash': 40, 'timeout': 0} n=40
+[eval] BC L0-near…
+  bc_l0 counts={'perfect': 40, 'hard': 0, 'crash': 0, 'timeout': 0} n=40
+[eval] untrained v1 (up to 100 / budget)…
+  untrained_v1 counts={'perfect': 0, 'hard': 0, 'crash': 100, 'timeout': 0} n=100
+[eval] BC v1 (up to 100 / budget)…
+  bc_v1 counts={'perfect': 0, 'hard': 0, 'crash': 12, 'timeout': 0} n=12
+[eval] translated expert REFERENCE…
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703000 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703001 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703002 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703003 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703004 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703005 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703006 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703007 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703008 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703009 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703010 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703011 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703012 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703013 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703014 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703015 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703016 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703017 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703018 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703019 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703020 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703021 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703022 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703023 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703024 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703025 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703026 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703027 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703028 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703029 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703030 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703031 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703032 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703033 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703034 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703035 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703036 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703037 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703038 vid=True
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  LANDING preserved bc_l0 seed=703039 vid=True
+=== PHASE 4 ===
+[ppo] updates=5 frames=20480
+[ppo] updates=10 frames=40960
+[ppo] updates=15 frames=61440
+[ppo] updates=20 frames=81920
+[ppo] updates=25 frames=102400
+[ppo] updates=30 frames=122880
+[ppo] updates=35 frames=143360
+[ppo] updates=40 frames=163840
+[ppo] updates=45 frames=184320
+[ppo] updates=50 frames=204800
+[ppo] updates=55 frames=225280
+[ppo] updates=60 frames=245760
+[ppo-eval] frozen BC on L0-near…
+[ppo-eval] frozen PPO on L0-near…
+REPORT /workspace/docs/rl_v7/REPORT.md
