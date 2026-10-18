@@ -1,260 +1,836 @@
 {
-  "generated_at": "2026-10-18T15:20:39Z",
+  "generated_at": "2026-10-18T15:34:41Z",
   "episodes_per_cell": 200,
-  "note": "partial snapshot for L0 learning check; full file will overwrite when measure_baselines finishes",
+  "max_steps": 1200,
+  "diagnostic_physics_frames": 3358817,
+  "wall_seconds": 1310.8035237789154,
+  "schedules": {
+    "apollolander.starts.curriculum_l0_v3": {
+      "version": "apollolander.starts.curriculum_l0_v3",
+      "pad_mid_x": 6963.200000000001,
+      "standard_start": {
+        "x": 6803.200000000001,
+        "y": 150.0,
+        "vx": 0.415,
+        "vy": 0.0,
+        "rotation": -90.0,
+        "fuel": 1000.0,
+        "scale": 0.25
+      },
+      "dx_from_pad": [
+        -8.0,
+        8.0
+      ],
+      "y": [
+        661.4358077547447,
+        667.4358077547447
+      ],
+      "vx": [
+        -0.01,
+        0.01
+      ],
+      "vy": [
+        0.01,
+        0.035
+      ],
+      "rotations": [
+        0.0
+      ],
+      "fuel": [
+        850.0,
+        1000.0
+      ],
+      "scale": 0.25,
+      "vary_fuel_default": false,
+      "channels": [
+        "dx",
+        "y",
+        "vx",
+        "vy",
+        "rotation",
+        "fuel"
+      ],
+      "hash": "sha256(f'{version}:{seed}:{channel}')[:12] / 16**12",
+      "development_seed_rule": "seeds in 0..999999",
+      "held_out_seed_rule": "seeds at and above 1000000"
+    },
+    "apollolander.starts.curriculum_l1_v3": {
+      "version": "apollolander.starts.curriculum_l1_v3",
+      "pad_mid_x": 6963.200000000001,
+      "standard_start": {
+        "x": 6803.200000000001,
+        "y": 150.0,
+        "vx": 0.415,
+        "vy": 0.0,
+        "rotation": -90.0,
+        "fuel": 1000.0,
+        "scale": 0.25
+      },
+      "dx_from_pad": [
+        -40.0,
+        40.0
+      ],
+      "y": [
+        599.4358077547447,
+        639.4358077547447
+      ],
+      "vx": [
+        -0.04,
+        0.04
+      ],
+      "vy": [
+        0.0,
+        0.05
+      ],
+      "rotations": [
+        -10.0,
+        0.0,
+        10.0
+      ],
+      "fuel": [
+        850.0,
+        1000.0
+      ],
+      "scale": 0.25,
+      "vary_fuel_default": false,
+      "channels": [
+        "dx",
+        "y",
+        "vx",
+        "vy",
+        "rotation",
+        "fuel"
+      ],
+      "hash": "sha256(f'{version}:{seed}:{channel}')[:12] / 16**12",
+      "development_seed_rule": "seeds in 0..999999",
+      "held_out_seed_rule": "seeds at and above 1000000"
+    },
+    "apollolander.starts.curriculum_l2_v3": {
+      "version": "apollolander.starts.curriculum_l2_v3",
+      "pad_mid_x": 6963.200000000001,
+      "standard_start": {
+        "x": 6803.200000000001,
+        "y": 150.0,
+        "vx": 0.415,
+        "vy": 0.0,
+        "rotation": -90.0,
+        "fuel": 1000.0,
+        "scale": 0.25
+      },
+      "dx_from_pad": [
+        -100.0,
+        20.0
+      ],
+      "y": [
+        479.4358077547447,
+        579.4358077547447
+      ],
+      "vx": [
+        -0.05,
+        0.12
+      ],
+      "vy": [
+        -0.02,
+        0.06
+      ],
+      "rotations": [
+        -30.0,
+        -20.0,
+        -10.0,
+        0.0,
+        10.0,
+        20.0
+      ],
+      "fuel": [
+        850.0,
+        1000.0
+      ],
+      "scale": 0.25,
+      "vary_fuel_default": false,
+      "channels": [
+        "dx",
+        "y",
+        "vx",
+        "vy",
+        "rotation",
+        "fuel"
+      ],
+      "hash": "sha256(f'{version}:{seed}:{channel}')[:12] / 16**12",
+      "development_seed_rule": "seeds in 0..999999",
+      "held_out_seed_rule": "seeds at and above 1000000"
+    },
+    "apollolander.starts.curriculum_l3_v3": {
+      "version": "apollolander.starts.curriculum_l3_v3",
+      "pad_mid_x": 6963.200000000001,
+      "standard_start": {
+        "x": 6803.200000000001,
+        "y": 150.0,
+        "vx": 0.415,
+        "vy": 0.0,
+        "rotation": -90.0,
+        "fuel": 1000.0,
+        "scale": 0.25
+      },
+      "dx_from_pad": [
+        -180.0,
+        -40.0
+      ],
+      "y": [
+        279.4358077547447,
+        459.4358077547447
+      ],
+      "vx": [
+        0.05,
+        0.35
+      ],
+      "vy": [
+        -0.03,
+        0.06
+      ],
+      "rotations": [
+        -60.0,
+        -50.0,
+        -40.0,
+        -30.0,
+        -20.0,
+        -10.0,
+        0.0
+      ],
+      "fuel": [
+        850.0,
+        1000.0
+      ],
+      "scale": 0.25,
+      "vary_fuel_default": false,
+      "channels": [
+        "dx",
+        "y",
+        "vx",
+        "vy",
+        "rotation",
+        "fuel"
+      ],
+      "hash": "sha256(f'{version}:{seed}:{channel}')[:12] / 16**12",
+      "development_seed_rule": "seeds in 0..999999",
+      "held_out_seed_rule": "seeds at and above 1000000"
+    },
+    "apollolander.starts.curriculum_l4_v3": {
+      "version": "apollolander.starts.curriculum_l4_v3",
+      "pad_mid_x": 6963.200000000001,
+      "standard_start": {
+        "x": 6803.200000000001,
+        "y": 150.0,
+        "vx": 0.415,
+        "vy": 0.0,
+        "rotation": -90.0,
+        "fuel": 1000.0,
+        "scale": 0.25
+      },
+      "dx_from_pad": [
+        -240.0,
+        -80.0
+      ],
+      "y": [
+        90.0,
+        210.0
+      ],
+      "vx": [
+        0.2,
+        0.63
+      ],
+      "vy": [
+        -0.04,
+        0.06
+      ],
+      "rotations": [
+        -90.0,
+        -80.0,
+        -70.0,
+        -60.0,
+        -50.0,
+        -40.0,
+        -30.0
+      ],
+      "fuel": [
+        850.0,
+        1000.0
+      ],
+      "scale": 0.25,
+      "vary_fuel_default": false,
+      "channels": [
+        "dx",
+        "y",
+        "vx",
+        "vy",
+        "rotation",
+        "fuel"
+      ],
+      "hash": "sha256(f'{version}:{seed}:{channel}')[:12] / 16**12",
+      "development_seed_rule": "seeds in 0..999999",
+      "held_out_seed_rule": "seeds at and above 1000000"
+    },
+    "apollolander.starts.curriculum_easy_v1": {
+      "version": "apollolander.starts.curriculum_easy_v1",
+      "pad_mid_x": 6963.200000000001,
+      "standard_start": {
+        "x": 6803.200000000001,
+        "y": 150.0,
+        "vx": 0.415,
+        "vy": 0.0,
+        "rotation": -90.0,
+        "fuel": 1000.0,
+        "scale": 0.25
+      },
+      "dx_from_pad": [
+        -60.0,
+        -20.0
+      ],
+      "y": [
+        500.0,
+        620.0
+      ],
+      "vx": [
+        0.0,
+        0.08
+      ],
+      "vy": [
+        0.0,
+        0.05
+      ],
+      "rotations": [
+        -20.0,
+        -10.0,
+        0.0,
+        10.0,
+        20.0
+      ],
+      "fuel": [
+        850.0,
+        1000.0
+      ],
+      "scale": 0.25,
+      "vary_fuel_default": false,
+      "channels": [
+        "dx",
+        "y",
+        "vx",
+        "vy",
+        "rotation",
+        "fuel"
+      ],
+      "hash": "sha256(f'{version}:{seed}:{channel}')[:12] / 16**12",
+      "development_seed_rule": "seeds in 0..999999",
+      "held_out_seed_rule": "seeds at and above 1000000"
+    },
+    "apollolander.starts.v1": {
+      "version": "apollolander.starts.v1",
+      "pad_mid_x": 6963.200000000001,
+      "standard_start": {
+        "x": 6803.200000000001,
+        "y": 150.0,
+        "vx": 0.415,
+        "vy": 0.0,
+        "rotation": -90.0,
+        "fuel": 1000.0,
+        "scale": 0.25
+      },
+      "dx_from_pad": [
+        -240.0,
+        -80.0
+      ],
+      "y": [
+        90.0,
+        210.0
+      ],
+      "vx": [
+        0.2,
+        0.63
+      ],
+      "vy": [
+        -0.04,
+        0.06
+      ],
+      "rotations": [
+        -90.0,
+        -80.0,
+        -70.0,
+        -60.0,
+        -50.0,
+        -40.0,
+        -30.0
+      ],
+      "fuel": [
+        850.0,
+        1000.0
+      ],
+      "scale": 0.25,
+      "vary_fuel_default": false,
+      "channels": [
+        "dx",
+        "y",
+        "vx",
+        "vy",
+        "rotation",
+        "fuel"
+      ],
+      "hash": "sha256(f'{version}:{seed}:{channel}')[:12] / 16**12",
+      "development_seed_rule": "seeds in 0..999999",
+      "held_out_seed_rule": "seeds at and above 1000000"
+    }
+  },
   "rows": [
     {
       "level": "apollolander.starts.curriculum_l0_v3",
       "mode": "random",
       "n": 200,
+      "seed_start": 300000,
       "counts": {
         "perfect": 0,
         "hard": 0,
         "crash": 0,
-        "timeout": 0,
+        "timeout": 200,
         "other": 0
       },
       "landing_rate": 0.0,
       "landing_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "perfect_rate": 0.0,
       "perfect_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "hard_rate": 0.0,
       "hard_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
-      "partial": true
+      "mean_return": -124.3211660606,
+      "median_return": -124.31863734011822,
+      "mean_fuel_used": 119.48341052840082,
+      "mean_duration": 1200.0
     },
     {
       "level": "apollolander.starts.curriculum_l0_v3",
       "mode": "untrained",
       "n": 200,
+      "seed_start": 300000,
       "counts": {
         "perfect": 0,
         "hard": 0,
         "crash": 0,
-        "timeout": 0,
+        "timeout": 200,
         "other": 0
       },
       "landing_rate": 0.0,
       "landing_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "perfect_rate": 0.0,
       "perfect_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "hard_rate": 0.0,
       "hard_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
-      "partial": true
+      "mean_return": -124.54300765932898,
+      "median_return": -124.54526237116704,
+      "mean_fuel_used": 119.67544927268563,
+      "mean_duration": 1200.0
     },
     {
       "level": "apollolander.starts.curriculum_l1_v3",
       "mode": "random",
       "n": 200,
+      "seed_start": 310000,
       "counts": {
         "perfect": 0,
         "hard": 0,
         "crash": 0,
-        "timeout": 0,
+        "timeout": 200,
         "other": 0
       },
       "landing_rate": 0.0,
       "landing_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "perfect_rate": 0.0,
       "perfect_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "hard_rate": 0.0,
       "hard_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
-      "partial": true
+      "mean_return": -124.29638798348893,
+      "median_return": -124.29858055716997,
+      "mean_fuel_used": 119.63682822156989,
+      "mean_duration": 1200.0
     },
     {
       "level": "apollolander.starts.curriculum_l1_v3",
       "mode": "untrained",
       "n": 200,
+      "seed_start": 310000,
       "counts": {
         "perfect": 0,
         "hard": 0,
-        "crash": 0,
-        "timeout": 0,
+        "crash": 7,
+        "timeout": 193,
         "other": 0
       },
       "landing_rate": 0.0,
       "landing_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "perfect_rate": 0.0,
       "perfect_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "hard_rate": 0.0,
       "hard_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
-      "partial": true
+      "mean_return": -124.4126698318062,
+      "median_return": -124.47469425619833,
+      "mean_fuel_used": 119.35501422157036,
+      "mean_duration": 1196.745
     },
     {
       "level": "apollolander.starts.curriculum_l2_v3",
       "mode": "random",
       "n": 200,
+      "seed_start": 320000,
       "counts": {
         "perfect": 0,
         "hard": 0,
         "crash": 0,
-        "timeout": 0,
+        "timeout": 200,
         "other": 0
       },
       "landing_rate": 0.0,
       "landing_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "perfect_rate": 0.0,
       "perfect_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "hard_rate": 0.0,
       "hard_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
-      "partial": true
+      "mean_return": -124.29272415096155,
+      "median_return": -124.29673977103934,
+      "mean_fuel_used": 119.79648422697335,
+      "mean_duration": 1200.0
     },
     {
       "level": "apollolander.starts.curriculum_l2_v3",
       "mode": "untrained",
       "n": 200,
+      "seed_start": 320000,
       "counts": {
         "perfect": 0,
         "hard": 0,
-        "crash": 0,
-        "timeout": 0,
+        "crash": 4,
+        "timeout": 196,
         "other": 0
       },
       "landing_rate": 0.0,
       "landing_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "perfect_rate": 0.0,
       "perfect_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "hard_rate": 0.0,
       "hard_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
-      "partial": true
+      "mean_return": -124.37069693616981,
+      "median_return": -124.42234187500453,
+      "mean_fuel_used": 119.42919331032215,
+      "mean_duration": 1197.34
     },
     {
       "level": "apollolander.starts.curriculum_l3_v3",
       "mode": "random",
       "n": 200,
+      "seed_start": 330000,
       "counts": {
         "perfect": 0,
         "hard": 0,
         "crash": 0,
-        "timeout": 0,
+        "timeout": 200,
         "other": 0
       },
       "landing_rate": 0.0,
       "landing_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "perfect_rate": 0.0,
       "perfect_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "hard_rate": 0.0,
       "hard_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
-      "partial": true
+      "mean_return": -124.24860618491851,
+      "median_return": -124.24765927333694,
+      "mean_fuel_used": 119.40770351900547,
+      "mean_duration": 1200.0
     },
     {
       "level": "apollolander.starts.curriculum_l3_v3",
       "mode": "untrained",
       "n": 200,
+      "seed_start": 330000,
       "counts": {
         "perfect": 0,
         "hard": 0,
         "crash": 0,
-        "timeout": 0,
+        "timeout": 200,
         "other": 0
       },
       "landing_rate": 0.0,
       "landing_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "perfect_rate": 0.0,
       "perfect_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "hard_rate": 0.0,
       "hard_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
-      "partial": true
+      "mean_return": -124.30413262260018,
+      "median_return": -124.29829504469842,
+      "mean_fuel_used": 119.72798438956481,
+      "mean_duration": 1200.0
     },
     {
       "level": "apollolander.starts.curriculum_l4_v3",
       "mode": "random",
       "n": 200,
+      "seed_start": 340000,
       "counts": {
         "perfect": 0,
         "hard": 0,
         "crash": 0,
-        "timeout": 0,
+        "timeout": 200,
         "other": 0
       },
       "landing_rate": 0.0,
       "landing_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "perfect_rate": 0.0,
       "perfect_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
       "hard_rate": 0.0,
       "hard_wilson95": [
-        0,
+        0.0,
         0.018846005918320894
       ],
-      "partial": true
+      "mean_return": -124.29355117868359,
+      "median_return": -124.28843127918807,
+      "mean_fuel_used": 119.41499296018857,
+      "mean_duration": 1200.0
+    },
+    {
+      "level": "apollolander.starts.curriculum_l4_v3",
+      "mode": "untrained",
+      "n": 200,
+      "seed_start": 340000,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 0,
+        "timeout": 200,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "mean_return": -124.1411872622839,
+      "median_return": -124.13438934904482,
+      "mean_fuel_used": 119.77542582215507,
+      "mean_duration": 1200.0
+    },
+    {
+      "level": "apollolander.starts.curriculum_easy_v1",
+      "mode": "random",
+      "n": 200,
+      "seed_start": 350000,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 0,
+        "timeout": 200,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "mean_return": -124.27066574887813,
+      "median_return": -124.27130253520167,
+      "mean_fuel_used": 119.49591272548919,
+      "mean_duration": 1200.0
+    },
+    {
+      "level": "apollolander.starts.curriculum_easy_v1",
+      "mode": "untrained",
+      "n": 200,
+      "seed_start": 350000,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 0,
+        "timeout": 200,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "mean_return": -124.42113406554154,
+      "median_return": -124.42443181887177,
+      "mean_fuel_used": 119.69215853985317,
+      "mean_duration": 1200.0
+    },
+    {
+      "level": "apollolander.starts.v1",
+      "mode": "random",
+      "n": 200,
+      "seed_start": 360000,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 0,
+        "timeout": 200,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "mean_return": -124.28299191184352,
+      "median_return": -124.26231866949388,
+      "mean_fuel_used": 120.00837161079853,
+      "mean_duration": 1200.0
+    },
+    {
+      "level": "apollolander.starts.v1",
+      "mode": "untrained",
+      "n": 200,
+      "seed_start": 360000,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 0,
+        "timeout": 200,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "mean_return": -124.12191329074857,
+      "median_return": -124.11530551790491,
+      "mean_fuel_used": 119.77606864011246,
+      "mean_duration": 1200.0
     }
   ],
-  "diagnostic_physics_frames": null
+  "diagnosis_notes": [
+    "Family D curriculum_easy_v1 starts near the pad but often with rotation\u22600;",
+    "native landing requires exact rotation==0 and vy<0.15.",
+    "Random/untrained rates on L0 vs easy_v1 quantify whether D was 'easy enough'."
+  ]
 }

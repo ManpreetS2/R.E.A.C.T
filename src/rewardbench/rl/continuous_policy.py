@@ -32,10 +32,14 @@ class ContinuousThrustActorCritic(nn.Module):
         n_rotations: int = N_ROTATION,
         hidden: int = 128,
         rotation_mode: str = "absolute",
+        soft_thrust_prior: bool = False,
+        hold_attitude_prior: bool = False,
     ) -> None:
         super().__init__()
         self.obs_dim = obs_dim
         self.rotation_mode = rotation_mode
+        self.soft_thrust_prior = soft_thrust_prior
+        self.hold_attitude_prior = hold_attitude_prior
         if rotation_mode == "delta":
             n_rotations = N_ROTATION_DELTAS
             self.rotation_bins = torch.as_tensor(ROTATION_DELTAS, dtype=torch.float32)
@@ -61,6 +65,18 @@ class ContinuousThrustActorCritic(nn.Module):
                 nn.init.constant_(module.bias, 0.0)
         nn.init.orthogonal_(self.thrust_mean.weight, gain=0.01)
         nn.init.orthogonal_(self.rotation_head.weight, gain=0.01)
+        # Documented random-init priors (NOT guidance parameters / traces):
+        # soft thrust ~0.22 and hold-attitude (delta 0) so L0 episodes can
+        # occasionally contact upright before the policy collapses to hover.
+        if self.soft_thrust_prior:
+            nn.init.constant_(self.thrust_mean.bias, -1.25)  # sigmoid ≈ 0.22
+            with torch.no_grad():
+                self.thrust_log_std.fill_(-0.5)
+        if self.hold_attitude_prior and self.rotation_mode == "delta":
+            # ROTATION_DELTAS = (-10, 0, 10) → index 1 is hold.
+            with torch.no_grad():
+                self.rotation_head.bias.zero_()
+                self.rotation_head.bias[1] = 2.5
 
     def forward(
         self, obs: torch.Tensor

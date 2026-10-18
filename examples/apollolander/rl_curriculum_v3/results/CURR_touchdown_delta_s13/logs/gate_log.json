@@ -1,0 +1,590 @@
+[
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l0_v3",
+    "level_idx": 0,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 430000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 40,
+      "timeout": 0
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -103.53515674646516,
+    "median_return": -103.5725939733469,
+    "mean_fuel": 3.1742570834561605,
+    "mean_duration": 177.975,
+    "diagnostic_frames": 7119,
+    "global_step_at_eval": 58952,
+    "wall_time_utc": "2026-10-18T15:40:14Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l0_v3",
+    "level_idx": 0,
+    "passed": true,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 430000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 13,
+      "hard": 27,
+      "crash": 0,
+      "timeout": 0
+    },
+    "landing_rate": 1.0,
+    "landing_wilson95": [
+      0.9123754607496077,
+      1.0
+    ],
+    "mean_return": 127.80249521878709,
+    "median_return": 95.35843093478516,
+    "mean_fuel": 8.427056415486504,
+    "mean_duration": 236.1,
+    "diagnostic_frames": 9444,
+    "global_step_at_eval": 109128,
+    "wall_time_utc": "2026-10-18T15:40:32Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 2,
+      "timeout": 38
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.9112646297805,
+    "median_return": -107.93275615039657,
+    "mean_fuel": 10.788216775068573,
+    "mean_duration": 398.975,
+    "diagnostic_frames": 15959,
+    "global_step_at_eval": 159304,
+    "wall_time_utc": "2026-10-18T15:40:52Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 5,
+      "timeout": 35
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -108.04180601737148,
+    "median_return": -108.14131898859623,
+    "mean_fuel": 6.285231242793668,
+    "mean_duration": 396.375,
+    "diagnostic_frames": 15855,
+    "global_step_at_eval": 209480,
+    "wall_time_utc": "2026-10-18T15:41:11Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.9052607447135,
+    "median_return": -108.12069803852256,
+    "mean_fuel": 2.8295980634312285,
+    "mean_duration": 391.675,
+    "diagnostic_frames": 15667,
+    "global_step_at_eval": 259656,
+    "wall_time_utc": "2026-10-18T15:41:31Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 8,
+      "timeout": 32
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.97915739392688,
+    "median_return": -108.13019290647483,
+    "mean_fuel": 3.500402418910886,
+    "mean_duration": 394.575,
+    "diagnostic_frames": 15783,
+    "global_step_at_eval": 309832,
+    "wall_time_utc": "2026-10-18T15:41:50Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.9005440302248,
+    "median_return": -108.11267791740926,
+    "mean_fuel": 1.2683475793370236,
+    "mean_duration": 391.575,
+    "diagnostic_frames": 15663,
+    "global_step_at_eval": 360008,
+    "wall_time_utc": "2026-10-18T15:42:09Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.90010944546229,
+    "median_return": -108.11273109321844,
+    "mean_fuel": 1.5636117009190713,
+    "mean_duration": 391.55,
+    "diagnostic_frames": 15662,
+    "global_step_at_eval": 410184,
+    "wall_time_utc": "2026-10-18T15:42:28Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.90034132744253,
+    "median_return": -108.11297629765356,
+    "mean_fuel": 1.5008629866617098,
+    "mean_duration": 391.55,
+    "diagnostic_frames": 15662,
+    "global_step_at_eval": 460360,
+    "wall_time_utc": "2026-10-18T15:42:47Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.90024021886593,
+    "median_return": -108.11316135909733,
+    "mean_fuel": 2.2464406881777337,
+    "mean_duration": 391.55,
+    "diagnostic_frames": 15662,
+    "global_step_at_eval": 510536,
+    "wall_time_utc": "2026-10-18T15:43:06Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.91080651566605,
+    "median_return": -108.11497855545926,
+    "mean_fuel": 1.0852323229551815,
+    "mean_duration": 392.025,
+    "diagnostic_frames": 15681,
+    "global_step_at_eval": 560712,
+    "wall_time_utc": "2026-10-18T15:43:25Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.9086994035192,
+    "median_return": -108.11478051977981,
+    "mean_fuel": 0.6995217187916097,
+    "mean_duration": 391.925,
+    "diagnostic_frames": 15677,
+    "global_step_at_eval": 610888,
+    "wall_time_utc": "2026-10-18T15:43:44Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.90874248627051,
+    "median_return": -108.11257461667566,
+    "mean_fuel": 0.7596369306571006,
+    "mean_duration": 391.975,
+    "diagnostic_frames": 15679,
+    "global_step_at_eval": 661064,
+    "wall_time_utc": "2026-10-18T15:44:03Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.90058065620728,
+    "median_return": -108.11367425497681,
+    "mean_fuel": 0.7125441054850115,
+    "mean_duration": 391.55,
+    "diagnostic_frames": 15662,
+    "global_step_at_eval": 711240,
+    "wall_time_utc": "2026-10-18T15:44:22Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.9005545712444,
+    "median_return": -108.1136170985709,
+    "mean_fuel": 1.088071152609595,
+    "mean_duration": 391.55,
+    "diagnostic_frames": 15662,
+    "global_step_at_eval": 761416,
+    "wall_time_utc": "2026-10-18T15:44:41Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.90059615688783,
+    "median_return": -108.1136921386663,
+    "mean_fuel": 1.2572809195831893,
+    "mean_duration": 391.55,
+    "diagnostic_frames": 15662,
+    "global_step_at_eval": 811592,
+    "wall_time_utc": "2026-10-18T15:45:00Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.75399197217067,
+    "median_return": -107.88722713251516,
+    "mean_fuel": 2.418616553293225,
+    "mean_duration": 392.8,
+    "diagnostic_frames": 15712,
+    "global_step_at_eval": 861768,
+    "wall_time_utc": "2026-10-18T15:45:19Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.90060624093098,
+    "median_return": -108.11369742552685,
+    "mean_fuel": 0.9532977194433812,
+    "mean_duration": 391.55,
+    "diagnostic_frames": 15662,
+    "global_step_at_eval": 911944,
+    "wall_time_utc": "2026-10-18T15:45:38Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.9006742144984,
+    "median_return": -108.11379954897376,
+    "mean_fuel": 0.8103998684223995,
+    "mean_duration": 391.55,
+    "diagnostic_frames": 15662,
+    "global_step_at_eval": 962120,
+    "wall_time_utc": "2026-10-18T15:45:57Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.75901788408423,
+    "median_return": -107.88797080083742,
+    "mean_fuel": 3.1754972915987283,
+    "mean_duration": 393.025,
+    "diagnostic_frames": 15721,
+    "global_step_at_eval": 1012296,
+    "wall_time_utc": "2026-10-18T15:46:16Z"
+  },
+  {
+    "event": "gate_check",
+    "level": "apollolander.starts.curriculum_l1_v3",
+    "level_idx": 1,
+    "passed": false,
+    "threshold": 0.5,
+    "n": 40,
+    "seed_start": 431000,
+    "deterministic": true,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 10,
+      "timeout": 30
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.08762453925039232
+    ],
+    "mean_return": -107.90067753241824,
+    "median_return": -108.1138633854251,
+    "mean_fuel": 0.3091491437199494,
+    "mean_duration": 391.55,
+    "diagnostic_frames": 15662,
+    "global_step_at_eval": 1062472,
+    "wall_time_utc": "2026-10-18T15:46:35Z"
+  }
+]

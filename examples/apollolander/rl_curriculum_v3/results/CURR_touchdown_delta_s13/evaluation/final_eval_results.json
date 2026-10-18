@@ -1,0 +1,562 @@
+{
+  "protocol": {
+    "seeds": [
+      1000300,
+      1000499
+    ],
+    "n": 200,
+    "level": "apollolander.starts.v1",
+    "chosen_before_outcomes": true,
+    "checkpoint": "examples/apollolander/rl_curriculum_v3/results/CURR_touchdown_delta_s13/checkpoints/final.pt",
+    "checkpoint_sha256": "cfd6fad1d90c0245a3a22c3dcd940c81923d5b59646d4a347edeeba6d5d99823",
+    "max_steps": 2000
+  },
+  "agents": {
+    "trained_deterministic": {
+      "n": 200,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 200,
+        "timeout": 0,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "crash_rate": 1.0,
+      "crash_wilson95": [
+        0.9811539940816791,
+        1.0
+      ],
+      "timeout_rate": 0.0,
+      "timeout_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "mean_return": -124.14437488694344,
+      "median_return": -123.89974883707474,
+      "mean_fuel_used": 22.523631905960688,
+      "median_fuel_used": 21.849861506185277,
+      "mean_duration": 1250.695,
+      "median_duration": 1239.5,
+      "name": "trained_deterministic",
+      "level": "apollolander.starts.v1",
+      "diagnostic_frames": 250139,
+      "landings_slim": []
+    },
+    "trained_stochastic": {
+      "n": 200,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 200,
+        "timeout": 0,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "crash_rate": 1.0,
+      "crash_wilson95": [
+        0.9811539940816791,
+        1.0
+      ],
+      "timeout_rate": 0.0,
+      "timeout_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "mean_return": -123.67226341965201,
+      "median_return": -123.52829683892283,
+      "mean_fuel_used": 20.860618473032744,
+      "median_fuel_used": 20.15870017920321,
+      "mean_duration": 1223.535,
+      "median_duration": 1205.5,
+      "name": "trained_stochastic",
+      "level": "apollolander.starts.v1",
+      "diagnostic_frames": 244707,
+      "landings_slim": []
+    },
+    "random": {
+      "n": 200,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 5,
+        "timeout": 195,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "crash_rate": 0.025,
+      "crash_wilson95": [
+        0.010724561470787708,
+        0.05717914415161715
+      ],
+      "timeout_rate": 0.975,
+      "timeout_wilson95": [
+        0.9428208558483829,
+        0.9892754385292123
+      ],
+      "mean_return": -140.02489705523874,
+      "median_return": -140.04553128652677,
+      "mean_fuel_used": 198.92862621644926,
+      "median_fuel_used": 199.48775443766186,
+      "mean_duration": 1993.525,
+      "median_duration": 2000.0,
+      "name": "random",
+      "level": "apollolander.starts.v1",
+      "diagnostic_frames": 398705,
+      "landings_slim": []
+    },
+    "untrained": {
+      "n": 200,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 185,
+        "timeout": 15,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "crash_rate": 0.925,
+      "crash_wilson95": [
+        0.8799554020266798,
+        0.9540254929427476
+      ],
+      "timeout_rate": 0.075,
+      "timeout_wilson95": [
+        0.04597450705725241,
+        0.12004459797332036
+      ],
+      "mean_return": -130.69140323596085,
+      "median_return": -130.45762716365914,
+      "mean_fuel_used": 70.56853487293054,
+      "median_fuel_used": 69.82941532480783,
+      "mean_duration": 1588.53,
+      "median_duration": 1572.0,
+      "name": "untrained",
+      "level": "apollolander.starts.v1",
+      "diagnostic_frames": 317706,
+      "landings_slim": []
+    },
+    "pr4_runA_final_det": {
+      "n": 200,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 186,
+        "timeout": 14,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "crash_rate": 0.93,
+      "crash_wilson95": [
+        0.8859442178331628,
+        0.9578482170770813
+      ],
+      "timeout_rate": 0.07,
+      "timeout_wilson95": [
+        0.04215178292291873,
+        0.11405578216683726
+      ],
+      "mean_return": -128.18625484259792,
+      "median_return": -127.06232288272899,
+      "mean_fuel_used": 90.64457543644359,
+      "median_fuel_used": 85.00000000074857,
+      "mean_duration": 1435.65,
+      "median_duration": 1376.0,
+      "name": "pr4_runA_final_det",
+      "level": "apollolander.starts.v1",
+      "diagnostic_frames": 287222,
+      "landings_slim": []
+    },
+    "hand_tuned_guidance_REFERENCE_ONLY": {
+      "name": "hand_tuned_guidance_REFERENCE_ONLY",
+      "level": "apollolander.starts.v1",
+      "label": "REFERENCE_ONLY \u2014 not a trained agent",
+      "n": 200,
+      "counts": {
+        "perfect": 200,
+        "hard": 0,
+        "crash": 0,
+        "timeout": 0,
+        "other": 0
+      },
+      "landing_rate": 1.0,
+      "landing_wilson95": [
+        0.9811539940816791,
+        1
+      ],
+      "perfect_rate": 1.0,
+      "perfect_wilson95": [
+        0.9811539940816791,
+        1
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0,
+        0.018846005918320894
+      ],
+      "crash_rate": 0.0,
+      "crash_wilson95": [
+        0,
+        0.018846005918320894
+      ],
+      "timeout_rate": 0.0,
+      "timeout_wilson95": [
+        0,
+        0.018846005918320894
+      ],
+      "mean_return": 85.93433179320425,
+      "median_return": 86.43364555319519,
+      "mean_fuel_used": 403.9436971548278,
+      "median_fuel_used": 400.91476586203447,
+      "mean_duration": 5780.35,
+      "median_duration": 5757.0,
+      "diagnostic_frames": 1156134,
+      "note": "Re-run with max_steps=8000, action_repeat=2 (final_eval used s13 max_steps=2000 which truncated guidance)",
+      "wall_seconds": 91.46143555641174
+    },
+    "hand_tuned_guidance_REFERENCE_ONLY_maxsteps2000_INVALID_horizon": {
+      "n": 200,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 0,
+        "timeout": 200,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "crash_rate": 0.0,
+      "crash_wilson95": [
+        0.0,
+        0.018846005918320894
+      ],
+      "timeout_rate": 1.0,
+      "timeout_wilson95": [
+        0.9811539940816791,
+        1.0
+      ],
+      "mean_return": -139.44488642303398,
+      "median_return": -139.43050567629234,
+      "mean_fuel_used": 146.43805252521926,
+      "median_fuel_used": 146.78370262588317,
+      "mean_duration": 2000.0,
+      "median_duration": 2000.0,
+      "name": "hand_tuned_guidance_REFERENCE_ONLY",
+      "level": "apollolander.starts.v1",
+      "diagnostic_frames": 400000,
+      "label": "REFERENCE_ONLY \u2014 not a trained agent"
+    }
+  },
+  "per_level": {
+    "apollolander.starts.curriculum_l0_v3": {
+      "n": 40,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "crash_rate": 1.0,
+      "crash_wilson95": [
+        0.9123754607496077,
+        1.0
+      ],
+      "timeout_rate": 0.0,
+      "timeout_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -103.61238245311515,
+      "median_return": -103.65950383994047,
+      "mean_fuel_used": 0.0023767544293690434,
+      "median_fuel_used": 0.0023915171838098104,
+      "mean_duration": 181.925,
+      "median_duration": 184.0,
+      "name": "trained_det_apollolander.starts.curriculum_l0_v3",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "diagnostic_frames": 7277,
+      "landing_seeds": []
+    },
+    "apollolander.starts.curriculum_l1_v3": {
+      "n": 40,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "crash_rate": 1.0,
+      "crash_wilson95": [
+        0.9123754607496077,
+        1.0
+      ],
+      "timeout_rate": 0.0,
+      "timeout_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -108.3171606006616,
+      "median_return": -108.46098969918773,
+      "mean_fuel_used": 0.8944405307221274,
+      "median_fuel_used": 0.7694262883935039,
+      "mean_duration": 421.8,
+      "median_duration": 427.0,
+      "name": "trained_det_apollolander.starts.curriculum_l1_v3",
+      "level": "apollolander.starts.curriculum_l1_v3",
+      "diagnostic_frames": 16872,
+      "landing_seeds": []
+    },
+    "apollolander.starts.curriculum_l2_v3": {
+      "n": 40,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "crash_rate": 1.0,
+      "crash_wilson95": [
+        0.9123754607496077,
+        1.0
+      ],
+      "timeout_rate": 0.0,
+      "timeout_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -114.30019899719541,
+      "median_return": -114.29504521930804,
+      "mean_fuel_used": 8.074257689109078,
+      "median_fuel_used": 8.387308056740324,
+      "mean_duration": 733.725,
+      "median_duration": 733.0,
+      "name": "trained_det_apollolander.starts.curriculum_l2_v3",
+      "level": "apollolander.starts.curriculum_l2_v3",
+      "diagnostic_frames": 29349,
+      "landing_seeds": []
+    },
+    "apollolander.starts.curriculum_l3_v3": {
+      "n": 40,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "crash_rate": 1.0,
+      "crash_wilson95": [
+        0.9123754607496077,
+        1.0
+      ],
+      "timeout_rate": 0.0,
+      "timeout_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -119.97434369322272,
+      "median_return": -119.92999219762854,
+      "mean_fuel_used": 14.47670722289734,
+      "median_fuel_used": 14.456563942140463,
+      "mean_duration": 1032.325,
+      "median_duration": 1032.5,
+      "name": "trained_det_apollolander.starts.curriculum_l3_v3",
+      "level": "apollolander.starts.curriculum_l3_v3",
+      "diagnostic_frames": 41293,
+      "landing_seeds": []
+    },
+    "apollolander.starts.curriculum_l4_v3": {
+      "n": 40,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0,
+        "other": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "perfect_rate": 0.0,
+      "perfect_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "hard_rate": 0.0,
+      "hard_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "crash_rate": 1.0,
+      "crash_wilson95": [
+        0.9123754607496077,
+        1.0
+      ],
+      "timeout_rate": 0.0,
+      "timeout_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -125.0824941501402,
+      "median_return": -124.89214792481911,
+      "mean_fuel_used": 23.876238072951686,
+      "median_fuel_used": 23.520343976845766,
+      "mean_duration": 1304.275,
+      "median_duration": 1299.0,
+      "name": "trained_det_apollolander.starts.curriculum_l4_v3",
+      "level": "apollolander.starts.curriculum_l4_v3",
+      "diagnostic_frames": 52171,
+      "landing_seeds": []
+    }
+  },
+  "wall_seconds": 484.7861957550049,
+  "total_diagnostic_frames": 3201575
+}

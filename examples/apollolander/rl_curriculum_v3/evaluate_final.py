@@ -27,7 +27,10 @@ from rewardbench.environments.apollolander.schema import (  # noqa: E402
     guidance_action,
 )
 from rewardbench.environments.apollolander.starts import CURRICULUM_V3_LEVELS  # noqa: E402
-from rewardbench.rl.continuous_policy import ContinuousThrustActorCritic  # noqa: E402
+from rewardbench.rl.continuous_policy import (  # noqa: E402
+    ROTATION_DELTAS,
+    ContinuousThrustActorCritic,
+)
 from rewardbench.rl.env import EnvConfig  # noqa: E402
 from rewardbench.rl.physics_python import ROTATION_BINS, decode_action  # noqa: E402
 from rewardbench.rl.policy import ActorCritic  # noqa: E402
@@ -90,6 +93,7 @@ def run_policy(
     max_steps: int,
     action_fn,
     action_repeat: int = 2,
+    on_reset=None,
 ) -> dict[str, Any]:
     env = ApolloLanderUpstreamEnv(
         EnvConfig(
@@ -114,6 +118,8 @@ def run_policy(
         for seed in seeds:
             assert_seed_allowed(seed, context=f"final_eval.{name}")
             obs, info0 = env.reset(seed)
+            if on_reset is not None:
+                on_reset(info0.get("start") or {})
             done = False
             ep_ret = 0.0
             info: dict[str, Any] = {}
@@ -181,60 +187,72 @@ def main() -> None:
 
     device = torch.device("cpu")
     ckpt = torch.load(args.checkpoint, map_location=device, weights_only=False)
-    continuous = ContinuousThrustActorCritic(hidden=int(ckpt.get("cfg", {}).get("hidden", 128))).to(device)
+    cfg = ckpt.get("cfg", {})
+    rot_mode = str(cfg.get("rotation_mode", "absolute"))
+    soft_prior = bool(cfg.get("soft_thrust_prior", False))
+    hold_prior = bool(cfg.get("hold_attitude_prior", False))
+    continuous = ContinuousThrustActorCritic(
+        hidden=int(cfg.get("hidden", 128)),
+        rotation_mode=rot_mode,
+        soft_thrust_prior=soft_prior,
+        hold_attitude_prior=hold_prior,
+    ).to(device)
     continuous.load_state_dict(ckpt["policy"])
     continuous.eval()
     ckpt_sha = hashlib.sha256(args.checkpoint.read_bytes()).hexdigest()
 
-    untrained = ContinuousThrustActorCritic(hidden=128).to(device)
+    untrained = ContinuousThrustActorCritic(
+        hidden=128,
+        rotation_mode=rot_mode,
+        soft_thrust_prior=soft_prior,
+        hold_attitude_prior=hold_prior,
+    ).to(device)
     torch.manual_seed(42)
     untrained.reset_parameters()
     untrained.eval()
 
     rng = np.random.default_rng(0)
+    cmd_rot_box = {"rot": 0}
+
+    def on_reset(start: dict[str, float]) -> None:
+        cmd_rot_box["rot"] = int(round(float(start.get("rotation", 0)) / 10.0) * 10)
+
+    def _decode_ongoing(policy, thrust, rot_idx):
+        if rot_mode == "delta":
+            delta = int(ROTATION_DELTAS[int(rot_idx.item())])
+            cmd_rot_box["rot"] = int(np.clip(cmd_rot_box["rot"] + delta, -90, 90))
+            cmd_rot_box["rot"] = int(round(cmd_rot_box["rot"] / 10.0) * 10)
+            return {"thrust": float(thrust.item()), "rotation": int(cmd_rot_box["rot"])}
+        return {
+            "thrust": float(thrust.item()),
+            "rotation": int(policy.decode_rotation(rot_idx).item()),
+        }
 
     def act_trained_det(obs, seed, start):
         with torch.no_grad():
             t = torch.as_tensor(obs[None], dtype=torch.float32, device=device)
             thrust, rot_idx, _ = continuous.act_deterministic(t)
-            return {
-                "thrust": float(thrust.item()),
-                "rotation": int(continuous.decode_rotation(rot_idx).item()),
-            }
+            return _decode_ongoing(continuous, thrust, rot_idx)
 
     def act_trained_stoch(obs, seed, start):
         with torch.no_grad():
             t = torch.as_tensor(obs[None], dtype=torch.float32, device=device)
             thrust, rot_idx, _, _, _ = continuous.act(t)
-            return {
-                "thrust": float(thrust.item()),
-                "rotation": int(continuous.decode_rotation(rot_idx).item()),
-            }
+            return _decode_ongoing(continuous, thrust, rot_idx)
 
     def act_untrained(obs, seed, start):
         with torch.no_grad():
             t = torch.as_tensor(obs[None], dtype=torch.float32, device=device)
             thrust, rot_idx, _ = untrained.act_deterministic(t)
-            return {
-                "thrust": float(thrust.item()),
-                "rotation": int(untrained.decode_rotation(rot_idx).item()),
-            }
+            return _decode_ongoing(untrained, thrust, rot_idx)
 
     def act_random(obs, seed, start):
+        if rot_mode == "delta":
+            delta = int(rng.choice(ROTATION_DELTAS))
+            cmd_rot_box["rot"] = int(np.clip(cmd_rot_box["rot"] + delta, -90, 90))
+            cmd_rot_box["rot"] = int(round(cmd_rot_box["rot"] / 10.0) * 10)
+            return {"thrust": float(rng.uniform(0, 1)), "rotation": int(cmd_rot_box["rot"])}
         return {"thrust": float(rng.uniform(0, 1)), "rotation": int(rng.choice(ROTATION_BINS))}
-
-    def act_guidance(obs, seed, start):
-        # REFERENCE ONLY
-        raw = {
-            "dx": float(obs[0] * 8000.0) if False else None,
-        }
-        # obs is normalized — recover from env by using guidance on denormalized via session.
-        # Simpler: use host observation fields through a side channel — evaluate via
-        # re-deriving from start is wrong. Instead step using guidance on last raw obs
-        # stored on the closure.
-        return guidance_action(act_guidance.last_raw, DEMONSTRATION_GUIDANCE)  # type: ignore[attr-defined]
-
-    # Guidance needs raw observations. Wrap env loop specially below.
 
     out_dir = args.output or (args.run_dir or args.checkpoint.parent.parent) / "evaluation"
     out_dir = Path(out_dir)
@@ -255,6 +273,7 @@ def main() -> None:
         "per_level": {},
     }
 
+    action_repeat = int(cfg.get("action_repeat", 2))
     print("Evaluating trained deterministic…", flush=True)
     results["agents"]["trained_deterministic"] = run_policy(
         name="trained_deterministic",
@@ -262,6 +281,8 @@ def main() -> None:
         level="apollolander.starts.v1",
         max_steps=args.max_steps,
         action_fn=act_trained_det,
+        action_repeat=action_repeat,
+        on_reset=on_reset,
     )
     # Persist any success evidence immediately.
     for land in results["agents"]["trained_deterministic"].get("landings", []):
@@ -283,6 +304,8 @@ def main() -> None:
         level="apollolander.starts.v1",
         max_steps=args.max_steps,
         action_fn=act_trained_stoch,
+        action_repeat=action_repeat,
+        on_reset=on_reset,
     )
 
     print("Evaluating random…", flush=True)
@@ -292,6 +315,8 @@ def main() -> None:
         level="apollolander.starts.v1",
         max_steps=args.max_steps,
         action_fn=act_random,
+        action_repeat=action_repeat,
+        on_reset=on_reset,
     )
 
     print("Evaluating untrained…", flush=True)
@@ -301,6 +326,8 @@ def main() -> None:
         level="apollolander.starts.v1",
         max_steps=args.max_steps,
         action_fn=act_untrained,
+        action_repeat=action_repeat,
+        on_reset=on_reset,
     )
 
     # PR #4 run A discrete policy comparison
@@ -309,7 +336,8 @@ def main() -> None:
         print("Evaluating PR #4 run A final.pt…", flush=True)
         discrete = ActorCritic(hidden=128).to(device)
         data = torch.load(run_a, map_location=device, weights_only=False)
-        discrete.load_state_dict(data["policy"] if "policy" in data else data)
+        state = data.get("policy") or data.get("policy_state_dict") or data
+        discrete.load_state_dict(state)
         discrete.eval()
 
         def act_a(obs, seed, start):
@@ -387,6 +415,8 @@ def main() -> None:
             level=level,
             max_steps=min(args.max_steps, 4000),
             action_fn=act_trained_det,
+            action_repeat=action_repeat,
+            on_reset=on_reset,
         )
         # strip bulky landings traces for per-level except seeds list
         lands = results["per_level"][level].pop("landings", [])

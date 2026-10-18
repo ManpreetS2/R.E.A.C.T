@@ -3,3 +3,107 @@ GATE level=apollolander.starts.curriculum_l0_v3 land=0.000 CI=[0.0, 0.0876245392
 GATE level=apollolander.starts.curriculum_l0_v3 land=0.000 CI=[0.0, 0.08762453925039232] passed=False
 GATE level=apollolander.starts.curriculum_l0_v3 land=0.000 CI=[0.0, 0.08762453925039232] passed=False
 GATE level=apollolander.starts.curriculum_l0_v3 land=0.000 CI=[0.0, 0.08762453925039232] passed=False
+L0 learning check: {
+  "level": "apollolander.starts.curriculum_l0_v3",
+  "n": 40,
+  "seed_start": 400000,
+  "deterministic": true,
+  "counts": {
+    "perfect": 0,
+    "hard": 0,
+    "crash": 0,
+    "timeout": 40
+  },
+  "landing_rate": 0.0,
+  "landing_wilson95": [
+    0.0,
+    0.08762453925039232
+  ],
+  "mean_return": -140.28823633825442,
+  "median_return": -140.28684700114192,
+  "mean_fuel": 152.07600075207355,
+  "mean_duration": 2000.0,
+  "diagnostic_frames": 80000,
+  "global_step_at_eval": 500736,
+  "event": "l0_basic_learning_check",
+  "baseline_random": {
+    "level": "apollolander.starts.curriculum_l0_v3",
+    "mode": "random",
+    "n": 200,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 0,
+      "timeout": 0,
+      "other": 0
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "perfect_rate": 0.0,
+    "perfect_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "hard_rate": 0.0,
+    "hard_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "partial": true
+  },
+  "baseline_untrained": {
+    "level": "apollolander.starts.curriculum_l0_v3",
+    "mode": "untrained",
+    "n": 200,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "crash": 0,
+      "timeout": 0,
+      "other": 0
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "perfect_rate": 0.0,
+    "perfect_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "hard_rate": 0.0,
+    "hard_wilson95": [
+      0,
+      0.018846005918320894
+    ],
+    "partial": true
+  },
+  "passed": false,
+  "reasons": [
+    "not_above_random",
+    "not_above_untrained"
+  ]
+}
+{
+  "run_id": "CURR_touchdown_s11",
+  "physics_frames": 500736,
+  "policy_decisions": 250368,
+  "updates": 489,
+  "highest_level_idx": 0,
+  "highest_level": "apollolander.starts.curriculum_l0_v3",
+  "first_landing_frames": {
+    "apollolander.starts.curriculum_l0_v3": 271136,
+    "apollolander.starts.curriculum_l1_v3": null,
+    "apollolander.starts.curriculum_l2_v3": null,
+    "apollolander.starts.curriculum_l3_v3": null,
+    "apollolander.starts.curriculum_l4_v3": null
+  },
+  "gate_checks": 4,
+  "wall_seconds": 661.4786026477814,
+  "early_stop_reason": "l0_basic_learning_check_failed",
+  "budget": 2000000
+}
