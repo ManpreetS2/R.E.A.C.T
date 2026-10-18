@@ -60,16 +60,17 @@ Stop reason: `training_budget_exhausted_before_rollout` (pre-step refuse of next
 | Tag | sha256 |
 | --- | --- |
 | step0 | `0bebf2b04c8493cf64272595766fa71e7cf2e540d0f4c9dfaf98833325af6b85` |
-| step53248 / mark50000 | `ca140afbb3e8d1ec…` / `e93d9d6c7f11f7793a0b8c8e6f0f5f5e8c0e1a2b3c4d5e6f708192a3b4c5d6e7` → use files |
-| mark50000 | `e93d9d6c7f11f7795c8e0e1f2a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5` |
+| step53248 | `ca140afbb3e8d1eceb2fcf13a1d8d4400cb82ca3f6216b1a3415889c4c5be05c` |
+| mark50000 | `e93d9d6c7f11f779e56b3635b5cc567e00a334f50deb12d18973b0382960f873` |
+| step102400 | `a17965287f63f9d13e3a562f521f18863d8d8bd2d18b14a0c27221a1bb88fffe` |
+| mark100000 | `acd6751324803327a8dd72997ecd691ff388b4e8410d31ed7070d28dfc8cca06` |
+| step151552 | `8ba207694c8e71f0a0cf7f341416f1373f2a20a5e256e5398cfe029c4e478760` |
+| mark150000 | `54f4e0c67b8ff9be177a002fa69c3f6e48baee3747bcd8fb85414e33a93bfbbc` |
+| step200704 | `382d35fe295619951bace367842dfcf286576895c1bd78b80fe4c954dac64b8f` |
+| mark200000 | `3fd85d8e42c7b399400474881bf8cf8e1c9db87f4c1dcd9d60eab96be58172c2` |
+| final | `bcb50c4480c81240a7e5cc75c541336e00aca3b6a0e46f07f3f4abb4bcbeffe2` |
 
-Full digests from `checkpoints/*.sha256.json`:
-
-- step0: `0bebf2b04c8493cf64272595766fa71e7cf2e540d0f4c9dfaf98833325af6b85`
-- mark50000: `e93d9d6c7f11f77991c0d5c6e8b2a4f0d3e1c7b9a5f2e8d4c0b6a3f9e5d1c7b3` — **read from disk in artifacts**
-- final: `bcb50c4480c81240a7e5cc75c541336e00aca3b6a0e46f07f3f4abb4bcbeffe2`
-
-(Exact strings are in `examples/apollolander/rl_v6/results/V6_L0near_s31/checkpoints/*.sha256.json`.)
+Touchdown orientation: mean \|rotation\| at pad contact = **90°** for both step-0 and final (deterministic policy holds a non-zero extreme attitude through contact).
 
 ---
 
