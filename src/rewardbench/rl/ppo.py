@@ -253,8 +253,18 @@ class PPOTrainer:
             actions_np = actions.cpu().numpy()
             next_obs, rewards, terminated, truncated, infos = self.env.step(actions_np)
             dones = np.logical_or(terminated, truncated)
+            # Bootstrap value targets on truncation (timeout); hard-stop on termination.
+            # Store pre-reset bootstrap values for truncated envs.
+            bootstrap_values = values.cpu().numpy().astype(np.float64).copy()
+            with torch.no_grad():
+                if np.any(truncated):
+                    trunc_obs = torch.as_tensor(next_obs, dtype=torch.float32, device=self.device)
+                    trunc_values = self.policy.forward(trunc_obs)[1].cpu().numpy()
+                    bootstrap_values = np.where(truncated, trunc_values, bootstrap_values)
+
             physics_steps = self.env_config.action_repeat * n_envs
             self.global_step += physics_steps
+            self.global_decisions = getattr(self, "global_decisions", 0) + n_envs
 
             self._episode_returns += rewards
             for i, info in enumerate(infos):
@@ -264,7 +274,15 @@ class PPOTrainer:
             buf.actions[t] = actions_np
             buf.log_probs[t] = log_probs.cpu().numpy()
             buf.rewards[t] = rewards
+            # dones marks episode boundary for metrics; terminations mask GAE separately.
             buf.dones[t] = dones.astype(np.float64)
+            if not hasattr(buf, "terminations"):
+                buf.terminations = np.zeros_like(buf.dones)
+                buf.truncations = np.zeros_like(buf.dones)
+                buf.bootstrap_values = np.zeros_like(buf.values)
+            buf.terminations[t] = terminated.astype(np.float64)
+            buf.truncations[t] = truncated.astype(np.float64)
+            buf.bootstrap_values[t] = bootstrap_values
             buf.values[t] = values.cpu().numpy()
 
             self._record_episodes(infos, dones)
@@ -281,20 +299,32 @@ class PPOTrainer:
                         self._episode_fuel[i] = 0.0
             obs = next_obs
 
-        # GAE
+        # GAE with correct truncation bootstrap (confirmed pilot bugfix).
         with torch.no_grad():
             last_values = self.policy.forward(torch.as_tensor(obs, dtype=torch.float32, device=self.device))[1]
             last_values_np = last_values.cpu().numpy()
-        last_gae = 0.0
+        last_gae = np.zeros(n_envs, dtype=np.float64)
         for t in reversed(range(n_steps)):
             if t == n_steps - 1:
-                next_non_terminal = 1.0 - buf.dones[t]
                 next_values = last_values_np
             else:
-                next_non_terminal = 1.0 - buf.dones[t]
+                # When the episode ended at t, next buffer values belong to the reset
+                # episode. Use stored bootstrap values for truncations; zeros via mask
+                # for true terminations.
                 next_values = buf.values[t + 1]
-            delta = buf.rewards[t] + self.cfg.gamma * next_values * next_non_terminal - buf.values[t]
-            last_gae = delta + self.cfg.gamma * self.cfg.gae_lambda * next_non_terminal * last_gae
+            terminated_t = buf.terminations[t]
+            truncated_t = buf.truncations[t]
+            # next_non_terminal: 0 on true termination; 1 otherwise (incl. truncation).
+            next_non_terminal = 1.0 - terminated_t
+            # On truncation, bootstrap from the pre-reset value estimate.
+            boot = buf.bootstrap_values[t]
+            next_values_eff = np.where(truncated_t > 0.5, boot, next_values)
+            # On termination, force next value 0; on truncation use boot; else next_values.
+            next_values_eff = np.where(terminated_t > 0.5, 0.0, next_values_eff)
+            delta = buf.rewards[t] + self.cfg.gamma * next_values_eff * next_non_terminal - buf.values[t]
+            # For truncation, also cut GAE continuity into the next (reset) episode.
+            gae_mask = 1.0 - np.maximum(terminated_t, truncated_t)
+            last_gae = delta + self.cfg.gamma * self.cfg.gae_lambda * gae_mask * last_gae
             buf.advantages[t] = last_gae
         buf.returns = buf.advantages + buf.values
         return buf, obs
@@ -313,6 +343,10 @@ class PPOTrainer:
         mb = self.cfg.minibatch_size
         loss_sum = 0.0
         ent_sum = 0.0
+        vloss_sum = 0.0
+        kl_sum = 0.0
+        clip_sum = 0.0
+        grad_sum = 0.0
         n_mb = 0
         epochs_this_update = 0
         for _ in range(self.cfg.update_epochs):
@@ -336,10 +370,21 @@ class PPOTrainer:
                 loss = policy_loss + self.cfg.vf_coef * value_loss - self.cfg.ent_coef * entropy_loss
                 self.optimizer.zero_grad()
                 loss.backward()
-                torch.nn.utils.clip_grad_norm_(self.policy.parameters(), self.cfg.max_grad_norm)
+                grad_norm = float(
+                    torch.nn.utils.clip_grad_norm_(self.policy.parameters(), self.cfg.max_grad_norm)
+                )
                 self.optimizer.step()
+                with torch.no_grad():
+                    approx_kl = float(((mb_old_logp - new_logp)).mean().item())
+                    clipfrac = float(
+                        ((ratio - 1.0).abs() > self.cfg.clip_coef).float().mean().item()
+                    )
                 loss_sum += float(loss.item())
                 ent_sum += float(entropy_loss.item())
+                vloss_sum += float(value_loss.item())
+                kl_sum += approx_kl
+                clip_sum += clipfrac
+                grad_sum += grad_norm
                 n_mb += 1
                 self.total_minibatch_grad_steps += 1
         self.total_optimizer_epochs += epochs_this_update
@@ -347,6 +392,10 @@ class PPOTrainer:
         return {
             "loss": loss_sum / max(n_mb, 1),
             "entropy": ent_sum / max(n_mb, 1),
+            "value_loss": vloss_sum / max(n_mb, 1),
+            "approx_kl": kl_sum / max(n_mb, 1),
+            "clipfrac": clip_sum / max(n_mb, 1),
+            "grad_norm": grad_sum / max(n_mb, 1),
             "update_epochs": epochs_this_update,
             "minibatch_grad_steps": n_mb,
             "total_minibatch_grad_steps": self.total_minibatch_grad_steps,
@@ -388,8 +437,15 @@ class PPOTrainer:
             stats_row = {
                 "update": self.update_idx,
                 "global_step": self.global_step,
+                "physics_frames": self.global_step,
+                "policy_decisions": getattr(self, "global_decisions", self.global_step // max(self.env_config.action_repeat, 1)),
+                "action_repeat": self.env_config.action_repeat,
                 "loss": stats["loss"],
                 "entropy": stats["entropy"],
+                "value_loss": stats.get("value_loss"),
+                "approx_kl": stats.get("approx_kl"),
+                "clipfrac": stats.get("clipfrac"),
+                "grad_norm": stats.get("grad_norm"),
                 "update_epochs": stats["update_epochs"],
                 "minibatch_grad_steps": stats["minibatch_grad_steps"],
                 "total_minibatch_grad_steps": stats["total_minibatch_grad_steps"],

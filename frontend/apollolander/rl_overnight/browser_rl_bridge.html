@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ApolloLander RL Bridge (upstream, research harness)</title>
+  <!--
+    Loads UNMODIFIED upstream scripts. This HTML lives outside upstream/.
+    Used for headless Chromium parity checks and original-renderer video replay.
+  -->
+  <style>
+    html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <script src="../upstream/perlin.js"></script>
+  <script src="../upstream/libs/Vector2.js"></script>
+  <script src="../upstream/libs/rAF.js"></script>
+  <script>
+    // Stubs required before Lander.js / Landscape.js / game pieces.
+    var TO_RADIANS = Math.PI / 180;
+    var counter = 0;
+    var SCREEN_WIDTH = 800, SCREEN_HEIGHT = 600;
+    function clamp(value, min, max) {
+      return value < min ? min : value > max ? max : value;
+    }
+    function map(value, min1, max1, min2, max2, doClamp) {
+      if (doClamp) {
+        if (value <= min1) return min2;
+        if (value >= max1) return max2;
+      }
+      return ((value - min1) / (max1 - min1)) * (max2 - min2) + min2;
+    }
+    function setThrustVolume() {}
+    var samples = { beep: { play: function(){} }, explosion: { play: function(){} } };
+    // Deterministic RNG for landscape stars only (physics ignores stars).
+    (function() {
+      var s = 0xc0ffee;
+      Math.random = function() {
+        s ^= s << 13; s ^= s >>> 17; s ^= s << 5;
+        return ((s >>> 0) % 1000000) / 1000000;
+      };
+    })();
+  </script>
+  <script src="../upstream/Lander.js"></script>
+  <script src="../upstream/Landscape.js"></script>
+  <script>
+    // Collision helpers — same logic as upstream game.js (outside upstream/).
+    var PLAYING = 1, LANDED = 2, CRASHED = 3;
+    var gameState = PLAYING;
+    var score = 0;
+    var lander = new Lander();
+    var landscape = new Landscape();
+    var lastNativeOutcome = null;
+    var targetRotation = -90;
+    var stepCount = 0;
+    var status = "flying";
+    var done = false;
+    var zone = null;
+
+    (function pickZone() {
+      var best = null;
+      for (var i = 0; i < landscape.lines.length; i++) {
+        var line = landscape.lines[i];
+        if (!line.landable) continue;
+        var width = line.p2.x - line.p1.x;
+        if (width < 12) continue;
+        if (!best || width > best.width) best = { width: width, line: line };
+      }
+      best.line.multiplier = Math.max(best.line.multiplier, 2);
+      best.line.designated = true;
+      zone = best.line;
+    })();
+
+    function pointIsLessThanLine(point, linepoint1, linepoint2) {
+      var dist = (point.x - linepoint1.x) / (linepoint2.x - linepoint1.x);
+      var yhitpoint = linepoint1.y + ((linepoint2.y - linepoint1.y) * dist);
+      return ((dist > 0) && (dist < 1) && (yhitpoint <= point.y));
+    }
+
+    function setLanded(line) {
+      var multiplier = line.multiplier;
+      lander.land();
+      var perfect = lander.vel.y < 0.075;
+      var points = perfect ? 50 * multiplier : 15 * multiplier;
+      if (perfect) lander.fuel += 50; else lander.makeBounce();
+      score += points;
+      gameState = LANDED;
+      lastNativeOutcome = {
+        kind: "landed", perfect: perfect, hard: !perfect,
+        nativePoints: points, multiplier: multiplier,
+        designated: multiplier > 1, vy: lander.vel.y, rotation: lander.rotation
+      };
+    }
+
+    function setCrashed() {
+      lander.crash();
+      gameState = CRASHED;
+      lastNativeOutcome = {
+        kind: "crashed", perfect: false, hard: false,
+        nativePoints: 0, multiplier: 1, designated: false,
+        vy: lander.vel.y, rotation: lander.rotation
+      };
+    }
+
+    function checkCollisions() {
+      lastNativeOutcome = null;
+      var lines = landscape.lines,
+        right = lander.right % landscape.tileWidth,
+        left = lander.left % landscape.tileWidth;
+      while (right < 0) { right += landscape.tileWidth; left += landscape.tileWidth; }
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+        if (!((right < line.p1.x) || (left > line.p2.x))) {
+          lander.altitude = line.p1.y - lander.bottom;
+          if (line.landable) {
+            if (lander.bottom >= line.p1.y) {
+              if ((left > line.p1.x) && (right < line.p2.x)) {
+                if ((lander.rotation == 0) && (lander.vel.y < 0.15)) setLanded(line);
+                else setCrashed();
+              } else setCrashed();
+              return lastNativeOutcome;
+            }
+          } else if ((lander.bottom > line.p2.y) || (lander.bottom > line.p1.y)) {
+            lander.bottomRight.x = right;
+            lander.bottomLeft.x = left;
+            if (pointIsLessThanLine(lander.bottomLeft, line.p1, line.p2) ||
+                pointIsLessThanLine(lander.bottomRight, line.p1, line.p2)) {
+              setCrashed();
+              return lastNativeOutcome;
+            }
+          }
+        }
+      }
+      return lastNativeOutcome;
+    }
+
+    function observe() {
+      var mid = (zone.p1.x + zone.p2.x) / 2;
+      return {
+        x: lander.pos.x, y: lander.pos.y,
+        vx: lander.vel.x, vy: lander.vel.y,
+        rotation: lander.rotation, fuel: lander.fuel,
+        altitude: lander.altitude, thrust: lander.thrustLevel,
+        thrustBuild: lander.thrustLevel,
+        zoneLeft: zone.p1.x, zoneRight: zone.p2.x, zoneY: zone.p1.y,
+        dx: mid - lander.pos.x, dy: zone.p1.y - lander.pos.y,
+        step: stepCount, status: status, targetRotation: targetRotation,
+        active: lander.active, scale: lander.scale
+      };
+    }
+
+    function applyStart(start) {
+      lander.reset();
+      lander.scale = start.scale;
+      lander.pos.reset(start.x, start.y);
+      lander.vel.reset(start.vx, start.vy);
+      lander.rotation = start.rotation;
+      lander.setRotation(start.rotation);
+      lander.rotation = start.rotation;
+      targetRotation = start.rotation;
+      lander.fuel = start.fuel;
+      lander.active = true;
+      lander.thrust(0);
+      lander.left = lander.pos.x - 10 * lander.scale;
+      lander.right = lander.pos.x + 10 * lander.scale;
+      lander.bottom = lander.pos.y + 13 * lander.scale;
+      lander.top = lander.pos.y - 5 * lander.scale;
+      lander.bottomLeft.reset(lander.left, lander.bottom);
+      lander.bottomRight.reset(lander.right, lander.bottom);
+    }
+
+    window.__rl = {
+      ready: true,
+      engine: "browser_upstream_bridge",
+      reset: function(config) {
+        var start = Object.assign({
+          x: (zone.p1.x + zone.p2.x) / 2 - 160, y: 150, vx: 0.415, vy: 0,
+          rotation: -90, fuel: 1000, scale: 0.25
+        }, (config && config.start) || {});
+        this._maxSteps = (config && config.maxSteps) || 8000;
+        gameState = PLAYING; score = 0; stepCount = 0;
+        status = "flying"; done = false; lastNativeOutcome = null;
+        applyStart(start);
+        return observe();
+      },
+      step: function(action) {
+        if (done) return { observation: observe(), done: true, status: status, nativeOutcome: lastNativeOutcome };
+        var thrust = Math.max(0, Math.min(1, Number(action.thrust) || 0));
+        var rotation = Number(action.rotation);
+        if (!isFinite(rotation)) rotation = targetRotation;
+        rotation = Math.round(Math.max(-90, Math.min(90, rotation)) / 10) * 10;
+        lander.setRotation(rotation);
+        targetRotation = rotation;
+        lander.thrust(lander.fuel > 0 ? thrust : 0);
+        lander.update();
+        stepCount += 1;
+        counter = stepCount;
+        var contact = null;
+        if (lander.active) contact = checkCollisions();
+        if (contact && status === "flying") {
+          if (contact.kind === "landed") {
+            status = contact.perfect ? "landed" : "hard_landing";
+            done = true;
+          } else if (contact.kind === "crashed") {
+            status = "crashed"; done = true;
+          }
+        } else if (stepCount >= this._maxSteps && status === "flying") {
+          status = "timeout"; done = true; lander.active = false;
+        }
+        return {
+          observation: observe(),
+          done: done,
+          status: status,
+          nativeOutcome: contact,
+          applied: { thrust: thrust, rotation: rotation }
+        };
+      },
+      observe: observe,
+      mapInfo: function() {
+        return {
+          tileWidth: landscape.tileWidth,
+          zone: { x1: zone.p1.x, x2: zone.p2.x, y: zone.p1.y, width: zone.p2.x - zone.p1.x },
+          lineCount: landscape.lines.length
+        };
+      },
+      // For video: render one frame with original lander/landscape draw calls.
+      renderFrame: function(canvas) {
+        if (!canvas) {
+          canvas = document.querySelector("canvas") || document.createElement("canvas");
+          if (!canvas.parentNode) {
+            canvas.width = SCREEN_WIDTH; canvas.height = SCREEN_HEIGHT;
+            document.body.appendChild(canvas);
+          }
+        }
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        var view = {
+          x: lander.pos.x - canvas.width / 2,
+          y: lander.pos.y - canvas.height / 2,
+          scale: 1,
+          left: lander.pos.x - canvas.width / 2,
+          right: lander.pos.x + canvas.width / 2,
+          top: lander.pos.y - canvas.height / 2,
+          bottom: lander.pos.y + canvas.height / 2
+        };
+        ctx.save();
+        ctx.translate(-view.x, -view.y);
+        landscape.render(ctx, view);
+        lander.render(ctx, view.scale);
+        ctx.restore();
+        // Minimal HUD
+        ctx.fillStyle = "#F0F6FF";
+        ctx.font = "14px monospace";
+        ctx.fillText("FUEL " + Math.round(lander.fuel), 10, 20);
+        ctx.fillText("ALT " + Math.round(Math.max(0, lander.altitude)), 10, 40);
+        ctx.fillText("HS " + Math.round(lander.vel.x * 200), 10, 60);
+        ctx.fillText("VS " + Math.round(lander.vel.y * 200), 10, 80);
+        ctx.fillText(status.toUpperCase(), 10, 100);
+        return canvas;
+      }
+    };
+  </script>
+</body>
+</html>
