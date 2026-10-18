@@ -1,0 +1,19 @@
+{
+  "run_id": "CURR_touchdown_s11",
+  "physics_frames": 500736,
+  "policy_decisions": 250368,
+  "updates": 489,
+  "highest_level_idx": 0,
+  "highest_level": "apollolander.starts.curriculum_l0_v3",
+  "first_landing_frames": {
+    "apollolander.starts.curriculum_l0_v3": 271136,
+    "apollolander.starts.curriculum_l1_v3": null,
+    "apollolander.starts.curriculum_l2_v3": null,
+    "apollolander.starts.curriculum_l3_v3": null,
+    "apollolander.starts.curriculum_l4_v3": null
+  },
+  "gate_checks": 4,
+  "wall_seconds": 661.4786026477814,
+  "early_stop_reason": "l0_basic_learning_check_failed",
+  "budget": 2000000
+}

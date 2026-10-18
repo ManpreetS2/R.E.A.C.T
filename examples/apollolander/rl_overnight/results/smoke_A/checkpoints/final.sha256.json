@@ -1,0 +1,12 @@
+{
+  "tag": "final",
+  "path": "examples/apollolander/rl_overnight/results/smoke_A/checkpoints/final.pt",
+  "sha256": "1e795623f6f605ac42ffbd888212400bcf795566cdad1b2b9ee0ec268eebc2ba",
+  "global_step": 16384,
+  "physics_frames": 16384,
+  "policy_decisions": 8192,
+  "update_idx": 8,
+  "reward_mode": "research_shaped",
+  "family": "A",
+  "backend": "upstream_vm_host"
+}

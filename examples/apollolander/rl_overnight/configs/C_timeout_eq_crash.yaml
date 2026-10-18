@@ -1,0 +1,35 @@
+# Family C: alternative TRAINING reward — timeout penalty equals crash (−100).
+# Tests hovering hypothesis. Physics and native landing rules unchanged.
+family: C
+reward_mode: timeout_eq_crash
+observation_kind: "state-observation RL, not visual learning"
+
+env:
+  max_steps: 8000
+  research_mode: true
+  start_schedule_version: apollolander.starts.v1
+  vary_fuel: false
+  action_repeat: 2
+  bonuses: false
+  locked_camera: true
+
+ppo:
+  total_env_steps: 3000000
+  n_envs: 4
+  rollout_steps: 256
+  learning_rate: 3.0e-4
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_coef: 0.2
+  ent_coef: 0.02
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  update_epochs: 4
+  minibatch_size: 512
+  hidden: 128
+  seed: 2
+  checkpoint_every_steps: 500000
+  device: cpu
+  train_seed_start: 10000
+  train_seed_count: 200000
+  run_name: C_timeout_eq_crash_s2

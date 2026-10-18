@@ -1,0 +1,7 @@
+{
+  "total_env_steps": 2007040,
+  "updates": 245,
+  "wall_seconds": 193.372465508,
+  "steps_per_sec_effective": 10379.140560303642,
+  "env_config_hash": "16a394e68777abe52d2ee691a00abaf0401fc849db1118b88ac1dc9e96b265d3"
+}

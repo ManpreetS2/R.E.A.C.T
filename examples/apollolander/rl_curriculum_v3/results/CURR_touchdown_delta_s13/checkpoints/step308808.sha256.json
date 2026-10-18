@@ -1,0 +1,8 @@
+{
+  "tag": "step308808",
+  "path": "/workspace/examples/apollolander/rl_curriculum_v3/results/CURR_touchdown_delta_s13/checkpoints/step308808.pt",
+  "sha256": "f010a27029fdf44084eaf02c0ee91774f8733b5667b1876b3af1de57a40de105",
+  "global_step": 308808,
+  "level": "apollolander.starts.curriculum_l1_v3",
+  "level_idx": 1
+}
