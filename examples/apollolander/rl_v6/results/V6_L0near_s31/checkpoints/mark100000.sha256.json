@@ -1,0 +1,7 @@
+{
+  "tag": "mark100000",
+  "path": "/workspace/examples/apollolander/rl_v6/results/V6_L0near_s31/checkpoints/mark100000.pt",
+  "sha256": "acd6751324803327a8dd72997ecd691ff388b4e8410d31ed7070d28dfc8cca06",
+  "global_step": 102400,
+  "train_budget_spent": 102400
+}
