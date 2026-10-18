@@ -25,6 +25,13 @@ environments = [
     "numpy>=1.26",
     "imageio>=2.34",
     "imageio-ffmpeg>=0.5",
+    "Pillow>=10.0",
+]
+rl = [
+    "torch>=2.1",
+    "numpy>=1.26",
+    "matplotlib>=3.8",
+    "PyYAML>=6.0.1",
 ]
 
 [tool.setuptools.packages.find]

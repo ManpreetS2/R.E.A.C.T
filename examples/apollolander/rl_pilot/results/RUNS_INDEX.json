@@ -1,0 +1,27 @@
+{
+  "observation_kind": "state-observation RL pilot, not visual learning",
+  "observation_disclosure": "numerical state observations with shaped rewards (progress/potential + fuel); NOT screenshots",
+  "simulator_label": "custom Node ApolloLander simulator (frontend/apollolander/experiment/physics.js)",
+  "reserved_seeds": "2000000..2000015 inclusive",
+  "primary_run": "ppo_pilot_v1",
+  "actual_total_env_steps": 5005312,
+  "actual_combined_wall_seconds": 386.54,
+  "actual_combined_steps_per_sec": 12948.95,
+  "note": "1-5M target is aspirational, not required; report actuals above",
+  "verdict": "Policy did not learn to land within CPU budget; see docs/RL_PILOT_REPORT.md",
+  "runs": {
+    "ppo_pilot_v1": {
+      "total_env_steps": 5005312,
+      "updates": 611,
+      "train_landings": 0
+    },
+    "ppo_pilot_v2_ar1": {
+      "total_env_steps": 2007040,
+      "train_landings": 0
+    },
+    "ppo_pilot_v3_lowent": {
+      "total_env_steps": 1507328,
+      "train_landings": 0
+    }
+  }
+}
