@@ -38,6 +38,19 @@ const RESEARCH_REWARD = {
   progressScale: 0.5,
 };
 
+// Curriculum v3 training signal ONLY. Native landing/scoring rules unchanged.
+// Designed to discourage hover: timeout == crash, large landing bonuses,
+// modest potential shaping, small per-frame time cost.
+const TOUCHDOWN_V1_REWARD = {
+  perfectLanding: 200,
+  hardLanding: 100,
+  crash: -100,
+  timeout: -100,
+  fuelPerUnit: 0.0,
+  progressScale: 0.25,
+  stepCost: 0.02,
+};
+
 function loadUpstreamSandbox() {
   const clock = { now: 1_000_000 };
   const sandbox = {
@@ -452,23 +465,30 @@ function createEngine() {
 
     const obs = observe();
     const nextPotential = potential(obs);
+    const isTouchdownV1 = config.rewardMode === "touchdown_v1";
+    const shapingScale = isTouchdownV1
+      ? TOUCHDOWN_V1_REWARD.progressScale
+      : RESEARCH_REWARD.progressScale;
     const shaping =
-      config.rewardMode === "research_shaped"
-        ? (nextPotential - lastPotential) * RESEARCH_REWARD.progressScale
+      config.rewardMode === "research_shaped" || isTouchdownV1
+        ? (nextPotential - lastPotential) * shapingScale
         : 0;
     lastPotential = nextPotential;
     let fuelPenalty = burned * RESEARCH_REWARD.fuelPerUnit;
     if (
       config.rewardMode === "sparse_terminal_only" ||
       config.rewardMode === "timeout_eq_crash" ||
-      config.rewardMode === "step_cost"
+      config.rewardMode === "step_cost" ||
+      isTouchdownV1
     ) {
       fuelPenalty = 0;
     }
-    // Family C: small constant per-physics-frame cost to remove hover incentive.
-    const stepCost =
-      config.rewardMode === "step_cost" ? 0.01 : 0;
+    // Family C / touchdown_v1: per-physics-frame cost to remove hover incentive.
+    let stepCost = 0;
+    if (config.rewardMode === "step_cost") stepCost = 0.01;
+    if (isTouchdownV1) stepCost = TOUCHDOWN_V1_REWARD.stepCost;
 
+    const landTable = isTouchdownV1 ? TOUCHDOWN_V1_REWARD : RESEARCH_REWARD;
     let terminal = 0;
     if (contact && status === "flying") {
       nativeOutcome = contact;
@@ -478,10 +498,10 @@ function createEngine() {
           (obs.x > zone.p1.x && obs.x < zone.p2.x);
         if (onDesignated && contact.perfect) {
           status = "landed";
-          terminal = RESEARCH_REWARD.perfectLanding;
+          terminal = landTable.perfectLanding;
         } else if (onDesignated) {
           status = "hard_landing";
-          terminal = RESEARCH_REWARD.hardLanding;
+          terminal = landTable.hardLanding;
         } else {
           status = "landed_outside_zone";
           terminal = 0;
@@ -489,16 +509,21 @@ function createEngine() {
         done = true;
       } else if (contact.kind === "crashed") {
         status = "crashed";
-        terminal = RESEARCH_REWARD.crash;
+        terminal = landTable.crash;
         done = true;
       }
     } else if (stepCount >= config.maxSteps && status === "flying") {
       status = "timeout";
-      // Family C: timeout_eq_crash removes the hover incentive (timeout == crash).
-      terminal =
-        config.rewardMode === "timeout_eq_crash"
-          ? RESEARCH_REWARD.crash
-          : RESEARCH_REWARD.timeout;
+      // Family C / touchdown_v1: timeout_eq_crash removes the hover incentive.
+      if (
+        config.rewardMode === "timeout_eq_crash" ||
+        config.rewardMode === "step_cost" ||
+        isTouchdownV1
+      ) {
+        terminal = landTable.crash;
+      } else {
+        terminal = RESEARCH_REWARD.timeout;
+      }
       done = true;
       lander.active = false;
     }
@@ -561,6 +586,7 @@ function createEngine() {
 
   function getResult() {
     const obs = observe();
+    const nativeScore = vm.runInContext("score", sandbox);
     return {
       done,
       status,
@@ -573,6 +599,7 @@ function createEngine() {
       steps: stepCount,
       reward: totalReward,
       nativeOutcome,
+      nativeScore,
       observation: obs,
     };
   }

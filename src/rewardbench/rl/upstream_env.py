@@ -136,7 +136,14 @@ class ApolloLanderUpstreamEnv:
     def step(self, action_index: int) -> tuple[np.ndarray, float, bool, bool, dict[str, Any]]:
         if self._obs is None:
             raise RuntimeError("call reset() before step()")
-        command = decode_action(int(action_index))
+        return self.step_command(decode_action(int(action_index)))
+
+    def step_command(
+        self, command: dict[str, float | int]
+    ) -> tuple[np.ndarray, float, bool, bool, dict[str, Any]]:
+        """Step with an explicit thrust/rotation command (continuous thrust OK)."""
+        if self._obs is None:
+            raise RuntimeError("call reset() before step()")
         total_reward = 0.0
         terminated = False
         truncated = False
@@ -167,6 +174,7 @@ class ApolloLanderUpstreamEnv:
             "applied": last["step"].get("applied"),
             "action_repeat": self.config.action_repeat,
             "native_outcome": result.get("nativeOutcome"),
+            "native_score": float(result.get("nativeScore", 0.0) or 0.0),
             "backend": "upstream_vm",
             # Failure-mode / learning-from-experience metrics at episode end.
             "terminal_vy": float(contact.get("vy", obs_raw.get("vy", 0.0))),
@@ -231,6 +239,32 @@ class VectorApolloLanderUpstreamEnv:
         infos = []
         for env, action in zip(self.envs, actions):
             o, r, term, trunc, info = env.step(int(action))
+            obs_list.append(o)
+            rewards.append(r)
+            terminated.append(term)
+            truncated.append(trunc)
+            infos.append(info)
+        return (
+            np.stack(obs_list, axis=0),
+            np.asarray(rewards, dtype=np.float64),
+            np.asarray(terminated, dtype=bool),
+            np.asarray(truncated, dtype=bool),
+            infos,
+        )
+
+    def step_commands(
+        self, commands: list[dict[str, float | int]]
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, list[dict[str, Any]]]:
+        """Vectorized continuous-thrust / quantized-rotation steps."""
+        if len(commands) != self.n_envs:
+            raise ValueError("commands length must equal n_envs")
+        obs_list = []
+        rewards = []
+        terminated = []
+        truncated = []
+        infos = []
+        for env, command in zip(self.envs, commands):
+            o, r, term, trunc, info = env.step_command(command)
             obs_list.append(o)
             rewards.append(r)
             terminated.append(term)
