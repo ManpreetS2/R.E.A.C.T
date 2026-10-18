@@ -1,25 +1,27 @@
 {
   "observation_kind": "state-observation RL pilot, not visual learning",
+  "observation_disclosure": "numerical state observations with shaped rewards (progress/potential + fuel); NOT screenshots",
+  "simulator_label": "custom Node ApolloLander simulator (frontend/apollolander/experiment/physics.js)",
+  "reserved_seeds": "2000000..2000015 inclusive",
   "primary_run": "ppo_pilot_v1",
+  "actual_total_env_steps": 5005312,
+  "actual_combined_wall_seconds": 386.54,
+  "actual_combined_steps_per_sec": 12948.95,
+  "note": "1-5M target is aspirational, not required; report actuals above",
+  "verdict": "Policy did not learn to land within CPU budget; see docs/RL_PILOT_REPORT.md",
   "runs": {
     "ppo_pilot_v1": {
-      "total_env_steps": 3006464,
-      "wall_seconds": 232.176,
-      "train_landings": 0,
-      "config": "examples/apollolander/rl_pilot/config.yaml"
+      "total_env_steps": 5005312,
+      "updates": 611,
+      "train_landings": 0
     },
     "ppo_pilot_v2_ar1": {
       "total_env_steps": 2007040,
-      "wall_seconds": 193.372,
-      "train_landings": 0,
-      "config": "examples/apollolander/rl_pilot/results/sweep_configs/v2_ar1.yaml"
+      "train_landings": 0
     },
     "ppo_pilot_v3_lowent": {
       "total_env_steps": 1507328,
-      "wall_seconds": 122.287,
-      "train_landings": 0,
-      "config": "examples/apollolander/rl_pilot/results/sweep_configs/v3_lowent.yaml"
+      "train_landings": 0
     }
-  },
-  "verdict": "Policy did not learn to land within budget; see docs/RL_PILOT_REPORT.md"
+  }
 }

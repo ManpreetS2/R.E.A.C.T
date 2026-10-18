@@ -1,10 +1,10 @@
 # ApolloLander RL pilot report
 
-**Verdict:** A genuine CPU-only PPO pilot was run from randomly initialized weights on the documented ApolloLander research-mode task. **The policy did not learn to land within budget.** Held-out landing rate for the final checkpoint is **0%** (32/32 crashes). The hand-tuned guidance controller (reference only) lands **100%** on the same seeds, so the task is solvable; this PPO setup did not solve it.
+**Verdict:** A genuine CPU-only PPO pilot was run from randomly initialized weights on the documented ApolloLander research-mode task. **The policy did not learn to land within the CPU budget.** Frozen final policy held-out **landing success rate = 0.000** (0/32; Wald 95% CI **[0.000, 0.000]**), crash rate **1.000**, timeout rate **0.000**. Curves were not edited; the reference/guidance controller was never substituted into training.
 
-Observation mode (explicit): **state-observation RL pilot, not visual learning**.
+**Disclosure (mandatory):** The policy uses **numerical state observations** and the **unchanged repo reward**, which includes **shaped terms** (progress/potential shaping + fuel penalty). This is **NOT** screenshot / pixel / visual learning.
 
-There is **no Playwright bridge** to the live original browser game in this repo. Training and evaluation use the experiment physics / adapter, not the upstream play page.
+**Simulator label (mandatory):** All physics here are the **custom Node ApolloLander simulator** (`frontend/apollolander/experiment/physics.js`) via `ApolloLanderAdapter` / `session.js`. Do **not** call this the original browser game’s exact physics. The Python-port equivalence test proves **port vs Node** parity only — **not** parity with the original upstream browser game. There is no Playwright bridge to the live upstream game in this repo.
 
 ## Setup
 
@@ -12,33 +12,33 @@ There is **no Playwright bridge** to the live original browser game in this repo
 | --- | --- |
 | Branch | `cursor/apollolander-rl-pilot-2f7b` |
 | Algorithm | PyTorch PPO, device=`cpu` only |
-| Weight init | Orthogonal random init at step 0 (checkpoint `step0.pt`); no pretrained weights |
-| Imitation / demos | **None.** `demonstration_guidance_controller()` used only as a separately labeled eval baseline |
-| Train physics | Verified Python port of `frontend/apollolander/experiment/physics.js` |
-| Eval / footage physics | **Original Node** `ApolloLanderAdapter` / `session.js` |
-| Optional deps | `pip install -e '.[rl,environments,analysis,dev]'` (`torch` is **not** a core dependency) |
+| Weight init | Orthogonal random init at step 0 (`step0.pt`); real weights saved |
+| Imitation / demos | **None** in training. `demonstration_guidance_controller()` is REFERENCE ONLY in eval |
+| Train physics | Python port of the **custom Node** simulator (`physics.js`) |
+| Eval / footage | **Custom Node** `ApolloLanderAdapter` (same `physics.js`) |
+| Optional deps | `pip install -e '.[rl,environments,analysis,dev]'` (`torch` not core) |
 
-### Frozen environment config (unchanged during training)
-
-From `examples/apollolander/rl_pilot/config.yaml` (primary run `ppo_pilot_v1`):
+### Frozen environment config
 
 - `max_steps=8000`, `research_mode=true`, `start_schedule_version=apollolander.starts.v1`, `vary_fuel=false`, `bonuses=false`
-- `action_repeat=2` (each policy action applied for 2 **unmodified** physics steps)
-- Config hash (SHA-256 of frozen env dict): recorded in `runs/ppo_pilot_v1/run_metadata.json` as `env_config_hash`
+- `action_repeat=2` (each policy action = 2 unmodified custom-Node physics steps)
+- `env_config_hash`: `33f72bf37844c9d11c07b18f99371024f1cb547a75e48ea311a2618180ce9fc1`
 
-Primary run hash: `33f72bf37844c9d11c07b18f99371024f1cb547a75e48ea311a2618180ce9fc1`
+### Reserved seeds (sealed)
+
+Seeds **2000000 through 2000015 inclusive** are never trained on, evaluated on, rendered, reset with, or inspected. Code guard: `rewardbench.rl.reserved_seeds` (raises `ReservedSeedError`). Held-out eval uses `1000000…1000031` only. Test: `tests/rl/test_reserved_seeds.py`.
 
 ## Observation / action / reward
 
-### Observation (state vector, not pixels)
+### Observation — numerical state (NOT screenshots)
 
-Labels: `x, y, vx, vy, rotation, fuel, altitude, dx, dy, thrust_build`, then divided by fixed scales. Clearly **not** visual / pixel learning.
+`x, y, vx, vy, rotation, fuel, altitude, dx, dy, thrust_build` (scaled). Explicitly: **state-observation RL pilot, not visual learning**.
 
 ### Action
 
-Flat `Discrete(95)` = 5 thrust bins `{0, 0.25, 0.5, 0.75, 1}` × 19 rotations `{-90…90}` step 10°. Documented action repeat: 2 underlying physics steps per policy action (primary run).
+`Discrete(95)` = 5 thrust bins × 19 rotations (−90…90 / 10°). Action repeat = 2 underlying physics steps.
 
-### Reward (unmodified repo reward)
+### Reward — unchanged repo table (includes shaping)
 
 | Event | Value |
 | --- | --- |
@@ -47,116 +47,103 @@ Flat `Discrete(95)` = 5 thrust bins `{0, 0.25, 0.5, 0.75, 1}` × 19 rotations `{
 | Safe landing outside pad | 0 (`landed` false) |
 | Crash | −100 |
 | Timeout | −25 |
-| Fuel | −0.05 per fuel unit burned |
-| Progress | 0.5 × Δ potential |
+| Fuel | −0.05 per fuel unit burned that step |
+| Progress (shaped) | 0.5 × Δ potential |
 
-## Hyperparameters (primary `ppo_pilot_v1`)
+**Shaped rewards disclosure:** training signal includes the progress/potential term and fuel penalty, not only sparse terminal landing/crash/timeout.
 
-`n_envs=16`, `rollout_steps=256`, `lr=3e-4`, `γ=0.99`, `λ_GAE=0.95`, `clip=0.2`, `ent_coef=0.02`, `vf_coef=0.5`, `epochs=4`, `minibatch=1024`, `hidden=128`, `seed=0`, train seeds `10000…209999` (development pool only).
+## Throughput and actual env steps achieved
 
-## Throughput (before training)
+The **1–5M target is aspirational, not required.** Actual measured values:
 
-From `examples/apollolander/rl_pilot/results/throughput.json`:
-
-| Backend | Steps/sec |
+| Metric | Value |
 | --- | --- |
-| Python port (single) | ~16.7k |
-| Python port (16 envs, action_repeat=4 measurement) | ~15.1k |
-| Node JSON IPC (single persistent session) | ~24.7k |
+| Pre-train Python port (single) | **~16.7k** env steps/s |
+| Pre-train Python port (vectorized) | **~15.1k** env steps/s |
+| Pre-train Node JSON IPC (single) | **~24.7k** env steps/s |
+| **Actual total env steps (primary)** | **5,005,312** |
+| Combined wall (phase1 + continued) | **~386.5 s** |
+| Combined effective steps/s | **~12.9k** |
+| Continued-phase wall / steps/s | ~154.4 s / ~12.9k |
 
-## Runs performed (all reported)
+Sources: `examples/apollolander/rl_pilot/results/throughput.json`, `…/ppo_pilot_v1/logs/train_summary.json`.
 
-| Run | Physics steps | Wall time | Effective steps/s | Train landings | Mean episodic return |
-| --- | --- | --- | --- | --- | --- |
-| `ppo_pilot_v1` (primary) | 3,006,464 | 232.2 s | ~12.9k | **0 / 934** | −100.38 |
-| `ppo_pilot_v2_ar1` (sweep: AR=1, hidden=256, lr=5e-4, ent=0.05) | 2,007,040 | 193.4 s | ~10.4k | **0 / 373** | −83.98 |
-| `ppo_pilot_v3_lowent` (sweep: low entropy, more epochs) | 1,507,328 | 122.3 s | ~12.3k | **0 / 708** | −103.50 |
+## PPO optimization step counts (logged)
 
-No run produced a verified designated landing during training. Env physics / reward / starts were **not** retuned to make landing easier.
+| Counter | Value |
+| --- | --- |
+| PPO updates | **611** |
+| Update epochs per update | 4 |
+| Minibatch size | 1024 |
+| Rollout batch (`rollout_steps × n_envs`) | 256 × 16 = 4096 |
+| Minibatch gradient steps / update | 16 |
+| Estimated total minibatch grad steps | **9776** (prior 367×16 estimated + continued 3904 logged) |
+| Continued-phase logged grad steps | **3904** |
+
+Raw per-update JSON: `results/ppo_pilot_v1/logs/update_stats.json` (includes `minibatch_grad_steps` from the continued phase onward). Real model weights: `checkpoints/*.pt` (`real_weights: true`).
+
+## Runs performed (all reported; none cherry-picked)
+
+| Run | Env steps | Wall | Train landings | Mean return |
+| --- | --- | --- | --- | --- |
+| `ppo_pilot_v1` phase 1 | 3,006,464 | 232.2 s | 0 / 934 | −100.38 |
+| `ppo_pilot_v1` continued | → **5,005,312** | +154.4 s | 0 / 1345 total | −100.93 |
+| `ppo_pilot_v2_ar1` (sweep) | 2,007,040 | 193.4 s | 0 / 373 | −83.98 |
+| `ppo_pilot_v3_lowent` (sweep) | 1,507,328 | 122.3 s | 0 / 708 | −103.50 |
+
+Preserved: random-policy baseline logs, `step0.pt` random init, periodic checkpoints (`step1000000`, `step2000000`, `step3500000`…`step5000000`, `final.pt`).
 
 ## Learning curves
 
-Raw CSV: `examples/apollolander/rl_pilot/results/ppo_pilot_v1/logs/learning_curve.csv` (and sweep siblings).
+Raw CSV (failures not omitted): `results/ppo_pilot_v1/logs/learning_curve.csv`.
 
-Plots (also copied under `/opt/cursor/artifacts/`):
+Plots: `v1_curves.png`, `v1_fuel.png` (also under `/opt/cursor/artifacts/`).
 
-- `v1_curves.png`, `v1_fuel.png`
-- `v2_curves.png`, `v2_fuel.png`
+## Frozen-policy evaluation (custom Node simulator)
 
-Curves show crash-dominated episodes; rolling means are overlays only — raw points are plotted and failures are not omitted.
+Eval mode: **frozen deterministic argmax** — no further weight updates. Seeds fixed before outcomes; reserved range excluded.
 
-## Evaluation (original Node adapter)
+### Held-out (≥1_000_000, n=32) — success rate with CI
 
-Seeds fixed in config **before** looking at outcomes:
-
-- Development eval: `0…31` (disjoint from train pool `≥10000`)
-- Held-out: `1000000…1000031`
-- Footage held-out: first 3 held-out seeds `1000000…1000002` (chosen before outcomes)
-
-Sample size **n=32** per cell. Wald 95% CIs in `evaluation_results.json`.
-
-### Baseline vs final (development)
-
-| Policy | Land | Crash | Timeout | Mean return |
+| Policy | Landing success (CI95) | Crash | Timeout | Mean return |
 | --- | --- | --- | --- | --- |
-| Random open-loop (`random_controller`) | 0.000 | 0.000 | 1.000 | −95.39 |
-| Untrained MLP (random init) | 0.000 | 1.000 | 0.000 | −100.24 |
-| PPO `step0` | 0.000 | 1.000 | 0.000 | −100.24 |
-| PPO `final` (`ppo_pilot_v1`) | 0.000 | 1.000 | 0.000 | −106.18 |
-| Hand-tuned guidance (**REFERENCE ONLY**) | **1.000** | 0.000 | 0.000 | **+82.99** |
+| Random open-loop baseline | 0.000 **[0.000, 0.000]** | 0.000 | 1.000 | −95.34 |
+| Untrained MLP (random init) | 0.000 **[0.000, 0.000]** | 1.000 | 0.000 | −99.92 |
+| PPO `step0` (frozen) | 0.000 **[0.000, 0.000]** | 1.000 | 0.000 | −99.92 |
+| PPO `final` (frozen) | **0.000 [0.000, 0.000]** | **1.000** | **0.000** | −106.23 |
+| Hand-tuned guidance (**REFERENCE ONLY**) | 1.000 **[1.000, 1.000]** | 0.000 | 0.000 | +82.97 |
 
-### Baseline vs final (held-out ≥ 1_000_000)
+### Development (n=32, not used as training seed pool)
 
-| Policy | Land | Crash | Timeout | Mean return |
+| Policy | Land (CI95) | Crash | Timeout | Mean R |
 | --- | --- | --- | --- | --- |
-| Random open-loop | 0.000 | 0.000 | 1.000 | −95.34 |
-| Untrained MLP | 0.000 | 1.000 | 0.000 | −99.92 |
-| PPO `step0` | 0.000 | 1.000 | 0.000 | −99.92 |
-| PPO `final` (`ppo_pilot_v1`) | 0.000 | 1.000 | 0.000 | −105.80 |
-| Hand-tuned guidance (**REFERENCE ONLY**) | **1.000** | 0.000 | 0.000 | **+82.97** |
-
-`ppo_pilot_v2_ar1` final (Node eval): held-out land=0.000, crash=1.000, mean_r≈−102.4 — still no landings.
+| Random open-loop | 0.000 [0,0] | 0.000 | 1.000 | −95.39 |
+| PPO `final` (frozen) | 0.000 [0,0] | 1.000 | 0.000 | −106.23 |
+| Hand-tuned guidance (REFERENCE ONLY) | 1.000 [1,1] | 0.000 | 0.000 | +82.99 |
 
 ## Footage
 
-Rendered via `record_video=True` / flight records on the **Node** path; each flight record replay-matched (`verify_flight_record` → `matched=true`). Seeds were the pre-chosen first three held-out seeds (no cherry-picking).
+Custom Node path; flight records replay-matched. Footage seeds = first three held-out seeds `1000000…1000002` (chosen before outcomes; not reserved).
 
-Artifacts under `/opt/cursor/artifacts/`:
+`/opt/cursor/artifacts/`: `apollolander_rl_{step0,final}_heldout_seed{1000000,1000001,1000002}.mp4` (+ earlier intermediate renders), manifests, curve PNGs, throughput/train_summary/eval JSON.
 
-- `apollolander_rl_step0_heldout_seed{1000000,1000001,1000002}.mp4`
-- `apollolander_rl_step1500000_heldout_seed{1000000,1000001,1000002}.mp4`
-- `apollolander_rl_final_heldout_seed{1000000,1000001,1000002}.mp4`
-- `apollolander_rl_footage_manifest.json`
-- Learning-curve PNGs and `apollolander_rl_throughput.json`, `apollolander_rl_evaluation_v1.json`
+Committed flight JSONs: `results/ppo_pilot_v1/footage/*.flight.json`.
 
-## Equivalence (Python port)
+## Equivalence scope
 
-`tests/rl/test_physics_equivalence.py` replays random-action trajectories on many development seeds against the live Node session. Per-step state and reward match within `1e-9`; terminal outcomes identical. **If this test fails, training must fall back to Node.** Final evaluation and footage always use Node regardless.
+`tests/rl/test_physics_equivalence.py`: Python port ↔ **custom Node session** within 1e-9. **Does not** prove parity with the original upstream browser game.
 
 ## Honest limitations
 
-1. **No landings learned.** Sparse terminal success (+40/+100) vs easy crash (−100); upright landing requires `rotation == 0` exactly and `vy < 0.15` on the designated segment.
-2. Discrete 95-way actions + short budget (~3M steps, ~4 minutes wall) are likely insufficient for this precision task from scratch.
-3. Deterministic eval (argmax) crashed on every seed; stochastic training still recorded zero successful landings.
-4. Adapter flight manifests still set `autonomous_learning=false` by environment policy; this report labels the PPO runs as genuine RL from random weights.
-5. Not trained on pixel observations; not the live upstream browser game.
+1. PPO failed to land within the achieved CPU budget (~5.0M env steps, ~6.4 minutes combined wall).
+2. Never blended/substituted the guidance controller into training or curves.
+3. Shaped reward + discrete 95-way actions make sparse exact landings hard from scratch.
+4. Adapter manifests still set `autonomous_learning=false` by environment policy; this report labels the PPO runs as genuine RL from random weights.
 
-## Proposed next step: visual (pixel) learning
+## Proposed next step (visual)
 
-1. Keep the same reward, starts, and Node verifier.
-2. Add a stacked grayscale or RGB observation from the existing 1920×1080 recorder (downscale to e.g. 84×84 or 128×128).
-3. Replace the MLP with a small CNN encoder + PPO (or DQN) on GPU.
+Keep the same custom-Node reward/verifier; add downscaled pixel stacks; CNN+PPO. Cost: CPU overnight–days ($0); single consumer GPU ~2–12 h (~$1–5 spot). Prefer proving a state policy can land before pixels.
 
-**Rough cost estimate (order-of-magnitude):**
-
-| Path | Compute | Wall time for ~10–50M frames | $ |
-| --- | --- | --- | --- |
-| CPU only (this machine class) | CNN forward is ~10–50× slower than state MLP | Many hours to days | ~$0 on free/CPU |
-| Single consumer GPU (e.g. 8–12 GB) | Typical Atari-scale PPO | ~2–12 hours | ~$1–5 spot / free Colab-class |
-| Larger pixel stack + domain randomization | Multi-GPU | Overnight+ | tens of $ |
-
-Recommended: prove a **state** policy can land first (longer CPU PPO, factored MultiDiscrete heads, or SAC on continuous thrust), then freeze the reward and move to pixels without changing the verifier.
-
-## How to reproduce
+## Reproduce
 
 See `examples/apollolander/rl_pilot/README.md`.

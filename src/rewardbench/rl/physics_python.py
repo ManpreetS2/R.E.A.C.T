@@ -1,11 +1,15 @@
-"""Faithful Python port of ``frontend/apollolander/experiment/physics.js``.
+"""Python port of the custom Node ApolloLander simulator physics.
 
-Uses the fixed landscape dumped from the Node session (same simplex seed 12039
-map). Every ``step()`` is one unmodified original physics update. Intended for
+Source of truth for this port: ``frontend/apollolander/experiment/physics.js``
+(the custom Node experiment simulator). This is **not** independently verified
+against the original upstream browser game; do not claim upstream-game parity.
+
+Uses the fixed landscape dumped from the Node session (simplex seed 12039 map).
+Every ``step()`` is one unmodified Node-experiment physics update. Intended for
 fast CPU training only; final evaluation must use the Node adapter.
 
-Equivalence is proven in ``tests/rl/test_physics_equivalence.py`` against the
-original Node session within the repo replay tolerance (1e-9).
+Equivalence in ``tests/rl/test_physics_equivalence.py`` proves **port vs Node
+session** parity within 1e-9 — not parity with the original upstream game.
 """
 
 from __future__ import annotations

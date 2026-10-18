@@ -11,8 +11,8 @@ from pathlib import Path
 import yaml
 
 from rewardbench.environments.apollolander import ApolloLanderAdapter
-from rewardbench.rl.env import EnvConfig
 from rewardbench.rl.node_eval import load_policy, policy_action_fn, run_episode_node
+from rewardbench.rl.reserved_seeds import assert_seeds_allowed
 
 HERE = Path(__file__).resolve().parent
 ARTIFACTS = Path("/opt/cursor/artifacts")
@@ -33,6 +33,7 @@ def main() -> None:
 
     raw = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     footage_seeds = list(raw["eval"]["footage_held_out_seeds"])
+    assert_seeds_allowed(footage_seeds, context="render_footage")
     env_raw = raw["env"]
     max_steps = int(env_raw["max_steps"])
     out = args.run_dir / "footage"

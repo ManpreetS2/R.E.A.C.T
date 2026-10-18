@@ -10,6 +10,7 @@ from pathlib import Path
 from rewardbench.environments.apollolander import ApolloLanderAdapter
 from rewardbench.rl.env import EnvConfig
 from rewardbench.rl.node_eval import load_policy, policy_action_fn, run_episode_node
+from rewardbench.rl.reserved_seeds import assert_seed_allowed
 
 
 def main() -> None:
@@ -24,6 +25,7 @@ def main() -> None:
     parser.add_argument("--device", default="cpu")
     args = parser.parse_args()
 
+    assert_seed_allowed(args.seed, context="play")
     policy, payload = load_policy(args.checkpoint, device=args.device)
     env_cfg = EnvConfig(**{k: v for k, v in (payload.get("env_config") or {}).items() if k in EnvConfig.__dataclass_fields__})
     env_cfg = EnvConfig(

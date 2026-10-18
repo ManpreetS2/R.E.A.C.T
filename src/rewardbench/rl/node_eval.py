@@ -31,6 +31,7 @@ from rewardbench.rl.physics_python import (
     observation_vector,
 )
 from rewardbench.rl.policy import ActorCritic
+from rewardbench.rl.reserved_seeds import assert_seed_allowed, assert_seeds_allowed
 
 PolicyFn = Callable[[dict[str, Any]], dict[str, float | int]]
 
@@ -84,7 +85,8 @@ def run_episode_node(
     episode_index: int | None = None,
     adapter: ApolloLanderAdapter | None = None,
 ) -> dict[str, Any]:
-    """One episode on the original Node session."""
+    """One episode on the custom Node ApolloLander simulator session."""
+    assert_seed_allowed(seed, context="node_eval.run_episode")
     if adapter is None:
         adapter = ApolloLanderAdapter(
             max_steps=max_steps,
@@ -265,6 +267,7 @@ def evaluate_policy_node(
     revision: int = 1,
 ) -> dict[str, Any]:
     validate_seed_split(seeds, split)
+    assert_seeds_allowed(seeds, context=f"node_eval.{split}")
     cfg = env_config or EnvConfig(max_steps=max_steps)
     adapter = ApolloLanderAdapter(
         max_steps=cfg.max_steps,
@@ -306,7 +309,15 @@ def evaluate_policy_node(
         "observation_kind": cfg.observation_kind,
         "env_config": cfg.to_dict(),
         "env_config_hash": cfg.config_hash(),
-        "physics_backend": "original Node ApolloLanderAdapter",
+        "physics_backend": (
+            "custom Node ApolloLander simulator via ApolloLanderAdapter "
+            "(frontend/apollolander/experiment/physics.js)"
+        ),
+        "observation_disclosure": (
+            "numerical state observations with shaped rewards "
+            "(progress/potential term + fuel penalty); NOT screenshots"
+        ),
+        "eval_policy_mode": "frozen (caller-supplied action_fn; no weight updates here)",
         "summary": summary,
         "episodes": episodes,
     }

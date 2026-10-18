@@ -24,6 +24,7 @@ from rewardbench.rl.physics_python import (
     normalize_obs,
     observation_vector,
 )
+from rewardbench.rl.reserved_seeds import assert_seed_allowed, assert_seeds_allowed
 
 OBSERVATION_KIND = "state-observation RL pilot, not visual learning"
 
@@ -77,6 +78,7 @@ class ApolloLanderPythonEnv:
     def reset(self, seed: int) -> tuple[np.ndarray, dict[str, Any]]:
         if isinstance(seed, bool) or not isinstance(seed, int) or seed < 0:
             raise ValueError("episode seed must be a non-negative integer")
+        assert_seed_allowed(seed, context="env.reset")
         if self.config.research_mode:
             start = derive_start(
                 seed,
@@ -165,6 +167,7 @@ class VectorApolloLanderEnv:
         seeds = np.asarray(seeds, dtype=np.int64)
         if seeds.shape != (self.n_envs,):
             raise ValueError(f"expected {self.n_envs} seeds, got shape {seeds.shape}")
+        assert_seeds_allowed(seeds.tolist(), context="vector_env.reset")
         obs = np.zeros((self.n_envs, OBS_DIM), dtype=np.float32)
         infos: list[dict[str, Any]] = []
         for i, env in enumerate(self.envs):

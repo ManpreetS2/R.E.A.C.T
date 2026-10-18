@@ -27,6 +27,7 @@ from rewardbench.rl.node_eval import (
     policy_action_fn,
     random_network_action_fn,
 )
+from rewardbench.rl.reserved_seeds import assert_seeds_allowed
 
 HERE = Path(__file__).resolve().parent
 
@@ -56,6 +57,7 @@ def evaluate_scripted(
     research_mode: bool = True,
 ) -> dict[str, Any]:
     adapter = ApolloLanderAdapter(research_mode=research_mode, max_steps=max_steps)
+    assert_seeds_allowed(seeds, context=f"evaluate_scripted.{split}")
     report = adapter.evaluate(
         controller,
         seeds,
@@ -90,7 +92,10 @@ def evaluate_scripted(
         "origin": origin,
         "split": split,
         "label": model,
-        "physics_backend": "original Node ApolloLanderAdapter",
+        "physics_backend": (
+            "custom Node ApolloLander simulator via ApolloLanderAdapter "
+            "(frontend/apollolander/experiment/physics.js)"
+        ),
         "summary": {
             "n": n,
             "mean_reward": mean_r,
@@ -137,15 +142,27 @@ def main() -> None:
     eval_cfg = raw["eval"]
     dev_seeds = list(eval_cfg["development_seeds"])
     hold_seeds = list(eval_cfg["held_out_seeds"])
+    assert_seeds_allowed(dev_seeds, context="evaluate.development")
+    assert_seeds_allowed(hold_seeds, context="evaluate.held_out")
     out = args.output or (args.run_dir / "evaluation")
     out.mkdir(parents=True, exist_ok=True)
 
     results: dict[str, Any] = {
         "observation_kind": env_cfg.observation_kind,
+        "observation_disclosure": (
+            "numerical state observations with shaped rewards "
+            "(progress/potential term + fuel penalty); NOT screenshots"
+        ),
+        "simulator_label": (
+            "custom Node ApolloLander simulator "
+            "(frontend/apollolander/experiment/physics.js)"
+        ),
+        "eval_policy_mode": "frozen_deterministic_argmax (no further weight updates)",
         "env_config": env_cfg.to_dict(),
         "env_config_hash": env_cfg.config_hash(),
         "development_seeds": dev_seeds,
         "held_out_seeds": hold_seeds,
+        "reserved_seeds_excluded": "2000000..2000015 inclusive",
         "baselines": {},
         "checkpoints": {},
     }

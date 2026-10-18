@@ -46,6 +46,12 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--total-env-steps", type=int, default=None)
     parser.add_argument("--run-name", type=str, default=None)
+    parser.add_argument(
+        "--resume",
+        type=Path,
+        default=None,
+        help="Resume from a checkpoint (continues global_step / optimizer state)",
+    )
     args = parser.parse_args()
 
     env_cfg, ppo_cfg, raw = load_configs(args.config)
@@ -58,9 +64,21 @@ def main() -> None:
     (out / "config_snapshot.yaml").write_text(args.config.read_text(encoding="utf-8"), encoding="utf-8")
 
     print("observation_kind:", env_cfg.observation_kind)
+    print(
+        "disclosure: numerical state observations + shaped rewards "
+        "(progress/potential + fuel); NOT screenshots"
+    )
+    print(
+        "simulator: custom Node ApolloLander simulator "
+        "(frontend/apollolander/experiment/physics.js)"
+    )
     print("env_config_hash:", env_cfg.config_hash())
     print("output:", out)
     trainer = PPOTrainer(env_cfg, ppo_cfg, out)
+    if args.resume is not None:
+        print("resuming from", args.resume)
+        trainer.load_checkpoint(args.resume)
+        # Do not overwrite step0; continued training keeps prior checkpoints.
     summary = trainer.train()
     print(json.dumps(summary, indent=2))
 

@@ -14,6 +14,7 @@ import torch
 
 from rewardbench.rl.env import EnvConfig, VectorApolloLanderEnv
 from rewardbench.rl.policy import ActorCritic
+from rewardbench.rl.reserved_seeds import assert_seeds_allowed
 
 
 @dataclass
@@ -86,6 +87,8 @@ class PPOTrainer:
 
         self.global_step = 0
         self.update_idx = 0
+        self.total_minibatch_grad_steps = 0
+        self.total_optimizer_epochs = 0
         self._rng = np.random.default_rng(self.cfg.seed + 17)
         self._train_seeds = np.arange(
             self.cfg.train_seed_start,
@@ -94,6 +97,7 @@ class PPOTrainer:
         )
         if self._train_seeds.max() >= 1_000_000:
             raise ValueError("training seeds must stay in the development pool (< 1_000_000)")
+        assert_seeds_allowed(self._train_seeds.tolist(), context="ppo.train_seed_pool")
 
         self._episode_returns = np.zeros(self.cfg.n_envs, dtype=np.float64)
         self._episode_fuel = np.zeros(self.cfg.n_envs, dtype=np.float64)
@@ -108,11 +112,27 @@ class PPOTrainer:
     def _write_run_metadata(self) -> None:
         meta = {
             "observation_kind": self.env_config.observation_kind,
+            "observation_disclosure": (
+                "numerical state observations with shaped rewards "
+                "(progress/potential term + fuel penalty); NOT screenshots"
+            ),
             "env_config": self.env_config.to_dict(),
             "env_config_hash": self.env_config.config_hash(),
             "ppo_config": self.cfg.to_dict(),
             "physics_backend_train": self.env_config.physics_backend,
-            "physics_backend_eval": "original Node ApolloLanderAdapter (required)",
+            "physics_backend_eval": (
+                "custom Node ApolloLander simulator via ApolloLanderAdapter "
+                "(frontend/apollolander/experiment/physics.js)"
+            ),
+            "simulator_label": (
+                "custom Node ApolloLander simulator "
+                "(frontend/apollolander/experiment/physics.js)"
+            ),
+            "python_port_equivalence_scope": (
+                "port vs Node session parity only; not independently verified "
+                "against the original upstream browser game"
+            ),
+            "reserved_seeds": "2000000..2000015 inclusive (never used)",
             "torch_version": torch.__version__,
             "device": str(self.device),
             "cuda_available": torch.cuda.is_available(),
@@ -122,7 +142,9 @@ class PPOTrainer:
 
     def _sample_train_seeds(self, n: int) -> np.ndarray:
         idx = self._rng.integers(0, len(self._train_seeds), size=n)
-        return self._train_seeds[idx]
+        seeds = self._train_seeds[idx]
+        assert_seeds_allowed(seeds.tolist(), context="ppo.sample_train_seeds")
+        return seeds
 
     def save_checkpoint(self, tag: str) -> Path:
         path = self.output_dir / "checkpoints" / f"{tag}.pt"
@@ -130,13 +152,24 @@ class PPOTrainer:
             "tag": tag,
             "global_step": self.global_step,
             "update_idx": self.update_idx,
+            "total_minibatch_grad_steps": self.total_minibatch_grad_steps,
+            "total_optimizer_epochs": self.total_optimizer_epochs,
             "policy_state_dict": self.policy.state_dict(),
             "optimizer_state_dict": self.optimizer.state_dict(),
             "env_config": self.env_config.to_dict(),
             "env_config_hash": self.env_config.config_hash(),
             "ppo_config": self.cfg.to_dict(),
             "observation_kind": self.env_config.observation_kind,
+            "observation_disclosure": (
+                "numerical state observations with shaped rewards "
+                "(progress/potential term + fuel penalty); NOT screenshots"
+            ),
+            "simulator_label": (
+                "custom Node ApolloLander simulator "
+                "(frontend/apollolander/experiment/physics.js)"
+            ),
             "random_init": tag.endswith("step0") or self.global_step == 0,
+            "real_weights": True,
         }
         torch.save(payload, path)
         return path
@@ -148,6 +181,8 @@ class PPOTrainer:
             self.optimizer.load_state_dict(payload["optimizer_state_dict"])
         self.global_step = int(payload.get("global_step", 0))
         self.update_idx = int(payload.get("update_idx", 0))
+        self.total_minibatch_grad_steps = int(payload.get("total_minibatch_grad_steps", 0))
+        self.total_optimizer_epochs = int(payload.get("total_optimizer_epochs", 0))
 
     def _flush_metrics(self) -> None:
         if not self._metrics_rows:
@@ -279,7 +314,9 @@ class PPOTrainer:
         loss_sum = 0.0
         ent_sum = 0.0
         n_mb = 0
+        epochs_this_update = 0
         for _ in range(self.cfg.update_epochs):
+            epochs_this_update += 1
             self._rng.shuffle(indices)
             for start in range(0, batch_size, mb):
                 end = start + mb
@@ -304,19 +341,43 @@ class PPOTrainer:
                 loss_sum += float(loss.item())
                 ent_sum += float(entropy_loss.item())
                 n_mb += 1
+                self.total_minibatch_grad_steps += 1
+        self.total_optimizer_epochs += epochs_this_update
         self.update_idx += 1
         return {
             "loss": loss_sum / max(n_mb, 1),
             "entropy": ent_sum / max(n_mb, 1),
+            "update_epochs": epochs_this_update,
+            "minibatch_grad_steps": n_mb,
+            "total_minibatch_grad_steps": self.total_minibatch_grad_steps,
+            "total_optimizer_epochs": self.total_optimizer_epochs,
+            "rollout_batch_size": batch_size,
+            "minibatch_size": mb,
         }
 
     def train(self) -> dict[str, Any]:
         wall_start = time.perf_counter()
-        self.save_checkpoint("step0")
+        start_env_steps = int(self.global_step)
+        start_updates = int(self.update_idx)
+        start_grad_steps = int(self.total_minibatch_grad_steps)
+        # Preserve step-0 random init: only write it once at true start.
+        if self.global_step == 0 and self.update_idx == 0:
+            self.save_checkpoint("step0")
         seeds = self._sample_train_seeds(self.cfg.n_envs)
         obs, _ = self.env.reset(seeds)
-        next_ckpt = self.cfg.checkpoint_every_steps
+        next_ckpt = (
+            ((self.global_step // self.cfg.checkpoint_every_steps) + 1) * self.cfg.checkpoint_every_steps
+            if self.global_step > 0
+            else self.cfg.checkpoint_every_steps
+        )
         update_stats: list[dict[str, Any]] = []
+        # Append to update_stats if continuing a prior log.
+        update_stats_path = self.output_dir / "logs" / "update_stats.json"
+        if update_stats_path.exists() and self.global_step > 0:
+            try:
+                update_stats = json.loads(update_stats_path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError:
+                update_stats = []
 
         while self.global_step < self.cfg.total_env_steps:
             buf, obs = self.collect_rollout(obs)
@@ -329,6 +390,12 @@ class PPOTrainer:
                 "global_step": self.global_step,
                 "loss": stats["loss"],
                 "entropy": stats["entropy"],
+                "update_epochs": stats["update_epochs"],
+                "minibatch_grad_steps": stats["minibatch_grad_steps"],
+                "total_minibatch_grad_steps": stats["total_minibatch_grad_steps"],
+                "total_optimizer_epochs": stats["total_optimizer_epochs"],
+                "rollout_batch_size": stats["rollout_batch_size"],
+                "minibatch_size": stats["minibatch_size"],
                 "wall_seconds": time.perf_counter() - wall_start,
                 **ep_summary,
             }
@@ -336,6 +403,8 @@ class PPOTrainer:
             print(
                 f"update={self.update_idx} step={self.global_step} "
                 f"loss={stats['loss']:.4f} ent={stats['entropy']:.4f} "
+                f"mb_grads={stats['minibatch_grad_steps']} "
+                f"total_grads={stats['total_minibatch_grad_steps']} "
                 f"land={ep_summary.get('landing_rate', float('nan')):.3f} "
                 f"mean_r={ep_summary.get('mean_return', float('nan')):.2f} "
                 f"eps={ep_summary.get('episodes', 0)} "
@@ -349,12 +418,37 @@ class PPOTrainer:
         self.save_checkpoint("final")
         self._flush_metrics()
         wall = time.perf_counter() - wall_start
+        session_env_steps = self.global_step - start_env_steps
+        session_updates = self.update_idx - start_updates
+        session_grads = self.total_minibatch_grad_steps - start_grad_steps
         summary = {
             "total_env_steps": self.global_step,
             "updates": self.update_idx,
+            "update_epochs_per_update": self.cfg.update_epochs,
+            "total_optimizer_epochs": self.total_optimizer_epochs,
+            "total_minibatch_grad_steps": self.total_minibatch_grad_steps,
+            "minibatch_size": self.cfg.minibatch_size,
+            "rollout_steps": self.cfg.rollout_steps,
+            "n_envs": self.cfg.n_envs,
+            "session_wall_seconds": wall,
+            "session_env_steps": session_env_steps,
+            "session_updates": session_updates,
+            "session_minibatch_grad_steps": session_grads,
+            "session_steps_per_sec_effective": session_env_steps / wall if wall > 0 else 0.0,
+            # Alias kept for older report parsers; equals this training session only.
             "wall_seconds": wall,
-            "steps_per_sec_effective": self.global_step / wall if wall > 0 else 0.0,
+            "steps_per_sec_effective": session_env_steps / wall if wall > 0 else 0.0,
+            "resumed_from_env_steps": start_env_steps,
             "env_config_hash": self.env_config.config_hash(),
+            "observation_disclosure": (
+                "numerical state observations with shaped rewards "
+                "(progress/potential term + fuel penalty); NOT screenshots"
+            ),
+            "simulator_label": (
+                "custom Node ApolloLander simulator "
+                "(frontend/apollolander/experiment/physics.js); "
+                "Python-port equivalence is port-vs-Node only, not upstream-game parity"
+            ),
         }
         (self.output_dir / "logs" / "train_summary.json").write_text(
             json.dumps(summary, indent=2) + "\n", encoding="utf-8"

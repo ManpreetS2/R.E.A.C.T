@@ -1,5 +1,6 @@
 {
   "observation_kind": "state-observation RL pilot, not visual learning",
+  "observation_disclosure": "numerical state observations with shaped rewards (progress/potential term + fuel penalty); NOT screenshots",
   "env_config": {
     "max_steps": 8000,
     "research_mode": true,
@@ -15,7 +16,7 @@
   },
   "env_config_hash": "33f72bf37844c9d11c07b18f99371024f1cb547a75e48ea311a2618180ce9fc1",
   "ppo_config": {
-    "total_env_steps": 3000000,
+    "total_env_steps": 5000000,
     "n_envs": 16,
     "rollout_steps": 256,
     "learning_rate": 0.0003,
@@ -37,7 +38,10 @@
     "notes": ""
   },
   "physics_backend_train": "python_port_of_frontend/apollolander/experiment/physics.js",
-  "physics_backend_eval": "original Node ApolloLanderAdapter (required)",
+  "physics_backend_eval": "custom Node ApolloLander simulator via ApolloLanderAdapter (frontend/apollolander/experiment/physics.js)",
+  "simulator_label": "custom Node ApolloLander simulator (frontend/apollolander/experiment/physics.js)",
+  "python_port_equivalence_scope": "port vs Node session parity only; not independently verified against the original upstream browser game",
+  "reserved_seeds": "2000000..2000015 inclusive (never used)",
   "torch_version": "2.14.1+cpu",
   "device": "cpu",
   "cuda_available": false

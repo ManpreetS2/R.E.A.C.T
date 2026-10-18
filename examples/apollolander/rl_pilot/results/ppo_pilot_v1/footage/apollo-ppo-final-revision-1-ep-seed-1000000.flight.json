@@ -37,5675 +37,8731 @@
   "start_schedule_version": "apollolander.starts.v1",
   "terminal": {
     "crashed": true,
-    "fuel_penalty": 3.9424920771857783,
-    "fuel_remaining": 921.1501584563365,
-    "fuel_used": 78.84984154371506,
+    "fuel_penalty": 6.894999428325682,
+    "fuel_remaining": 862.1000114335685,
+    "fuel_used": 137.89998856650905,
     "in_landing_zone": false,
     "landed": false,
-    "reward": -103.67439217259667,
+    "reward": -105.02787425534868,
     "status": "crashed",
-    "steps": 1411,
+    "steps": 2175,
     "terminal_reward": -100.0,
     "timed_out": false,
     "verified": {
-      "bottom": 423.3945240023117,
+      "bottom": 591.1551170889782,
       "kind": "crashed",
-      "left": 7415.0842496960295,
-      "lineIndex": 935,
-      "reason": "not_fully_on_segment",
-      "right": 7420.0842496960295,
-      "rotation": -60,
-      "vy": 0.2857489985363462
+      "left": 7103.98184284481,
+      "lineIndex": 893,
+      "reason": "slope_contact",
+      "right": 7108.98184284481,
+      "rotation": 90,
+      "vy": 0.34100636198871387
     }
   },
   "trace": [
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": 40,
+      "rotation": -20,
       "thrust": 0.25
     },
     {
-      "rotation": -50,
-      "thrust": 0.75
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -20,
+      "thrust": 0.25
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": -50,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": -50,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
-      "thrust": 0.75
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
+    },
+    {
+      "rotation": -70,
+      "thrust": 1.0
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
     },
     {
-      "rotation": 30,
+      "rotation": 90,
       "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     },
     {
-      "rotation": -60,
-      "thrust": 0.5
+      "rotation": 90,
+      "thrust": 0.75
     }
   ],
-  "trace_hash": "sha256:58ba3893d13e29685d7d83e3c5d9fc58dcf8ce337ff8b4da15fa2b1e31913953",
-  "trace_length": 1411,
+  "trace_hash": "sha256:01e513c13d15a4313fc1022996172df8cea0fed23f5b1a499fbc4768674726fb",
+  "trace_length": 2175,
   "vary_fuel": false,
   "video_path": "examples/apollolander/rl_pilot/results/ppo_pilot_v1/footage/apollo-ppo-final-revision-1-ep-seed-1000000.mp4",
   "zone": {
