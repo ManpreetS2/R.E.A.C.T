@@ -1,0 +1,25 @@
+{
+  "observation_kind": "state-observation RL pilot, not visual learning",
+  "primary_run": "ppo_pilot_v1",
+  "runs": {
+    "ppo_pilot_v1": {
+      "total_env_steps": 3006464,
+      "wall_seconds": 232.176,
+      "train_landings": 0,
+      "config": "examples/apollolander/rl_pilot/config.yaml"
+    },
+    "ppo_pilot_v2_ar1": {
+      "total_env_steps": 2007040,
+      "wall_seconds": 193.372,
+      "train_landings": 0,
+      "config": "examples/apollolander/rl_pilot/results/sweep_configs/v2_ar1.yaml"
+    },
+    "ppo_pilot_v3_lowent": {
+      "total_env_steps": 1507328,
+      "wall_seconds": 122.287,
+      "train_landings": 0,
+      "config": "examples/apollolander/rl_pilot/results/sweep_configs/v3_lowent.yaml"
+    }
+  },
+  "verdict": "Policy did not learn to land within budget; see docs/RL_PILOT_REPORT.md"
+}

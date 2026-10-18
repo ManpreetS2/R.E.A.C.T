@@ -1,0 +1,7 @@
+Evaluating checkpoint step0…
+  step0 development: land=0.000 crash=1.000 timeout=0.000 mean_r=-101.66
+  step0 held_out: land=0.000 crash=1.000 timeout=0.000 mean_r=-101.65
+Evaluating checkpoint final…
+  final development: land=0.000 crash=1.000 timeout=0.000 mean_r=-102.00
+  final held_out: land=0.000 crash=1.000 timeout=0.000 mean_r=-102.40
+wrote examples/apollolander/rl_pilot/results/ppo_pilot_v2_ar1/evaluation/evaluation_results.json
