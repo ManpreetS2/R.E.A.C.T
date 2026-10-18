@@ -1,0 +1,6981 @@
+[
+  {
+    "start": "L0",
+    "rep": "cont_delta_ar1",
+    "policy": "random",
+    "action_repeat": 1,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Touch thrust slider continuous; setRotation \u00b110\u00b0/0 each decision (1 frame). Unlike keyboard, decisions every physics frame.",
+    "n": 12,
+    "seed_start": 530000,
+    "max_steps": 400,
+    "diagnostic_frames": 4119,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 1,
+      "pad_aligned_contact": 6,
+      "landable_contact": 6,
+      "crash": 6,
+      "timeout": 6
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.08333333333333333,
+    "near_miss_wilson95": [
+      0.014864709450773478,
+      0.35388592179859524
+    ],
+    "pad_aligned_contact_rate": 0.5,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 6,
+      "rotation_nonzero": 6
+    },
+    "joint_violations": {
+      "unknown": 6,
+      "rotation_nonzero": 6
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 28.66889897,
+        "vy": 0.04684262214197607,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.7236769780721,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7301200976180017,
+          "rotation": 30
+        },
+        "seed": 530000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -14.332049712211266,
+        "vy": 0.025913654144038796,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.2261541735439,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.36155132733709294,
+          "rotation": -20
+        },
+        "seed": 530001
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 62.08480128014026,
+        "vy": 0.053925723326756526,
+        "vx": -0.042648199809242074,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 964.7393056803819,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 364,
+        "frame": 364,
+        "command_last": {
+          "thrust": 0.4162224145946032,
+          "rotation": 60
+        },
+        "seed": 530002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -43.793044113348856,
+        "vy": 0.0279111364664652,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.0996246861785,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6518762907966826,
+          "rotation": -60
+        },
+        "seed": 530003
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 51.73994677438757,
+        "vy": 0.0760693479626917,
+        "vx": 0.12741651491140027,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 978.858468398158,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 213,
+        "frame": 213,
+        "command_last": {
+          "thrust": 0.23012426277560882,
+          "rotation": 40
+        },
+        "seed": 530004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 19.44571515482842,
+        "vy": 0.010085615176768694,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.6736064915813,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8298702213399812,
+          "rotation": 20
+        },
+        "seed": 530005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -80.1894861338681,
+        "vy": 0.05631838245794484,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.4194754098291,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8823289718706323,
+          "rotation": -70
+        },
+        "seed": 530006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 46.28941088622222,
+        "vy": -0.0348815668351065,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.8739162875578,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.061174238038415596,
+          "rotation": 60
+        },
+        "seed": 530007
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 62.01212225770452,
+        "vy": 0.07194516207478721,
+        "vx": -0.01156143360441634,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 968.6196823420788,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 326,
+        "frame": 326,
+        "command_last": {
+          "thrust": 0.6855822222715745,
+          "rotation": 70
+        },
+        "seed": 530008
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -32.97152663954203,
+        "vy": 0.05613872200213829,
+        "vx": -0.14626441685987918,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 969.9659400742331,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 303,
+        "frame": 303,
+        "command_last": {
+          "thrust": 0.862946379081171,
+          "rotation": -30
+        },
+        "seed": 530009
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": true,
+        "rotation": -5.5052529,
+        "vy": 0.04880886563857982,
+        "vx": 0.09445659261543657,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 974.5292668558516,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 273,
+        "frame": 273,
+        "command_last": {
+          "thrust": 0.9764040932810524,
+          "rotation": 0
+        },
+        "seed": 530010
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 88.38664358086606,
+        "vy": 0.08816744326018493,
+        "vx": 0.1503499390608014,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 976.709911074189,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 240,
+        "frame": 240,
+        "command_last": {
+          "thrust": 0.5004094656076585,
+          "rotation": 90
+        },
+        "seed": 530011
+      }
+    ]
+  },
+  {
+    "start": "L0",
+    "rep": "cont_delta_ar4",
+    "policy": "random",
+    "action_repeat": 4,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Same as keyboard-ish hold: one setRotation/thrust command held ~4 frames (\u224867ms), near the 80ms keyboard rotate rate limit.",
+    "n": 12,
+    "seed_start": 531000,
+    "max_steps": 400,
+    "diagnostic_frames": 4673,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 2,
+      "landable_contact": 2,
+      "crash": 2,
+      "timeout": 10
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.16666666666666666,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 10,
+      "rotation_nonzero": 2
+    },
+    "joint_violations": {
+      "unknown": 10,
+      "rotation_nonzero": 2
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -71.78084352746797,
+        "vy": -0.020973588033878287,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.1618534850816,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.00015714186828363896,
+          "rotation": -70
+        },
+        "seed": 531000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 29.3902869694304,
+        "vy": -0.02482083761492481,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 962.7507754327812,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.09412569083734834,
+          "rotation": 30
+        },
+        "seed": 531001
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 90.0,
+        "vy": 0.10218717828952777,
+        "vx": 0.20299129504220248,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 966.7066234952013,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 324,
+        "frame": 324,
+        "command_last": {
+          "thrust": 0.46861808369787095,
+          "rotation": 90
+        },
+        "seed": 531002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 1.8245198999999999,
+        "vy": -0.04574498159980105,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.0078504127458,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.05947959174806605,
+          "rotation": 0
+        },
+        "seed": 531003
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 85.72283607,
+        "vy": 0.09123326147044541,
+        "vx": 0.2118628980082653,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 961.5670638233433,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 349,
+        "frame": 349,
+        "command_last": {
+          "thrust": 0.10169550118743942,
+          "rotation": 80
+        },
+        "seed": 531004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -42.79596538902257,
+        "vy": -0.06319263344226554,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.6753544694991,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.09779395225826226,
+          "rotation": -40
+        },
+        "seed": 531005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 10.756022732420458,
+        "vy": 0.0409474128471741,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.8882001542319,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.009713780920300508,
+          "rotation": 10
+        },
+        "seed": 531006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -62.82949034993244,
+        "vy": -0.014489721953301987,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 962.2917072228826,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7202353187948369,
+          "rotation": -60
+        },
+        "seed": 531007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 42.5061799414404,
+        "vy": -0.03699908772258497,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 963.746976975198,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.04234585849696526,
+          "rotation": 40
+        },
+        "seed": 531008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -88.06388226934075,
+        "vy": 0.021962114337515413,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.9499071774662,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.746536693191706,
+          "rotation": -90
+        },
+        "seed": 531009
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -48.143586185634476,
+        "vy": -0.03282504086438035,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.062510593866,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.14783643997468687,
+          "rotation": -50
+        },
+        "seed": 531010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 38.31389297201,
+        "vy": 0.014560881401876166,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.957778903864,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.34954177935502395,
+          "rotation": 40
+        },
+        "seed": 531011
+      }
+    ]
+  },
+  {
+    "start": "L0",
+    "rep": "cont_delta_ar8",
+    "policy": "random",
+    "action_repeat": 8,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Command held 8 frames (~133ms); slower than keyboard max rotate rate.",
+    "n": 12,
+    "seed_start": 532000,
+    "max_steps": 400,
+    "diagnostic_frames": 4525,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 2,
+      "landable_contact": 2,
+      "crash": 2,
+      "timeout": 10
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.16666666666666666,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 10,
+      "rotation_nonzero": 2
+    },
+    "joint_violations": {
+      "unknown": 10,
+      "rotation_nonzero": 2
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -49.45866864288341,
+        "vy": -0.040635615270956084,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.1093262791879,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5151938907814889,
+          "rotation": -50
+        },
+        "seed": 532000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 30.0,
+        "vy": -0.07045782391433449,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 954.0588648685109,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.15895894863602034,
+          "rotation": 30
+        },
+        "seed": 532001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -30.576480099999998,
+        "vy": -0.05998995487988115,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.3512322171215,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.4381436155696722,
+          "rotation": -30
+        },
+        "seed": 532002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -9.4235199,
+        "vy": -0.06919263559740818,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 954.8292764821471,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.31786575806878536,
+          "rotation": -10
+        },
+        "seed": 532003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 80.0,
+        "vy": -0.004946260372004588,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.6701400804251,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.4910769755996187,
+          "rotation": 80
+        },
+        "seed": 532004
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -64.9,
+        "vy": 0.07460297047690218,
+        "vx": -0.10491454462549524,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 981.5382372310713,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 202,
+        "frame": 202,
+        "command_last": {
+          "thrust": 0.19498505646872333,
+          "rotation": -60
+        },
+        "seed": 532005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 40.0,
+        "vy": 0.052201030279012704,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.9103540203372,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.175463212758032,
+          "rotation": 40
+        },
+        "seed": 532006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 29.458558200115984,
+        "vy": -0.0756771918659823,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.1276635029307,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.1271822824825345,
+          "rotation": 30
+        },
+        "seed": 532007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 80.5764801,
+        "vy": 0.028503507779570583,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 956.7882007288305,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5332532569668964,
+          "rotation": 80
+        },
+        "seed": 532008
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -76.57,
+        "vy": 0.08544267554811047,
+        "vx": -0.15523823960833483,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 973.1530773434412,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 323,
+        "frame": 323,
+        "command_last": {
+          "thrust": 0.7605046174671196,
+          "rotation": -80
+        },
+        "seed": 532009
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 19.4235199,
+        "vy": -0.025401771009652362,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 962.4289641864043,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.2890216964801877,
+          "rotation": 20
+        },
+        "seed": 532010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 69.3902869694304,
+        "vy": -0.016618307209407452,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 964.638459185895,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6884486682185259,
+          "rotation": 70
+        },
+        "seed": 532011
+      }
+    ]
+  },
+  {
+    "start": "L0",
+    "rep": "cont_delta_ar16",
+    "policy": "random",
+    "action_repeat": 16,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Command held 16 frames (~267ms); player holding a key / not re-tapping.",
+    "n": 12,
+    "seed_start": 533000,
+    "max_steps": 400,
+    "diagnostic_frames": 4476,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 3,
+      "landable_contact": 3,
+      "crash": 3,
+      "timeout": 9
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.25,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 9,
+      "rotation_nonzero": 3
+    },
+    "joint_violations": {
+      "unknown": 9,
+      "rotation_nonzero": 3
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 60.0,
+        "vy": -0.05860576148846092,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 956.8944404844701,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.27650964434638214,
+          "rotation": 60
+        },
+        "seed": 533000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 0.0,
+        "vy": -0.09132785204727342,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 956.3970460814218,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.24574270292071887,
+          "rotation": 0
+        },
+        "seed": 533001
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 38.823510000000006,
+        "vy": 0.025362386631985003,
+        "vx": 0.07414348020740676,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 973.4021735860322,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 342,
+        "frame": 342,
+        "command_last": {
+          "thrust": 0.8129901919378734,
+          "rotation": 40
+        },
+        "seed": 533002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.0,
+        "vy": 0.0019840758025451905,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 967.7872202913079,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.9505034463468872,
+          "rotation": 20
+        },
+        "seed": 533003
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -40.0,
+        "vy": 0.054520645361149485,
+        "vx": -0.060566066229231774,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 978.1374647024345,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 322,
+        "frame": 322,
+        "command_last": {
+          "thrust": 0.914080398167325,
+          "rotation": -40
+        },
+        "seed": 533004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -10.0,
+        "vy": -0.08621253875574443,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 952.2630853347425,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.4516346989070006,
+          "rotation": -10
+        },
+        "seed": 533005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 0.0,
+        "vy": -0.08755492829891379,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.2932106477525,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.4551063488396142,
+          "rotation": 0
+        },
+        "seed": 533006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 0.0,
+        "vy": -0.04674836202762903,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 962.7692344919515,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.2140924845402108,
+          "rotation": 0
+        },
+        "seed": 533007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 50.0,
+        "vy": -0.0335274296963194,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 963.4655553140414,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7985744235333883,
+          "rotation": 50
+        },
+        "seed": 533008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 0.0,
+        "vy": -0.034538039719989984,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 965.7437181863231,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.4323427008582923,
+          "rotation": 0
+        },
+        "seed": 533009
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -40.0,
+        "vy": 0.03576005734599775,
+        "vx": -0.03288927956656951,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 985.2334551548953,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 212,
+        "frame": 212,
+        "command_last": {
+          "thrust": 0.9862905383231345,
+          "rotation": -40
+        },
+        "seed": 533010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -10.0,
+        "vy": -0.03129453131598702,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 966.3467575575235,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5094571751997886,
+          "rotation": -10
+        },
+        "seed": 533011
+      }
+    ]
+  },
+  {
+    "start": "L0",
+    "rep": "disc4_delta_ar8",
+    "policy": "random",
+    "action_repeat": 8,
+    "thrust_mode": "discrete4",
+    "rotation_mode": "delta",
+    "player_mapping": "Thrust in {0,0.25,0.5,1} (UP key is binary 0/1; touch is continuous \u2014 discrete bins are a coarsening of touch). Delta setRotation as above.",
+    "n": 12,
+    "seed_start": 534000,
+    "max_steps": 400,
+    "diagnostic_frames": 4340,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 6,
+      "landable_contact": 6,
+      "crash": 6,
+      "timeout": 6
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.5,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 6,
+      "rotation_nonzero": 6
+    },
+    "joint_violations": {
+      "unknown": 6,
+      "rotation_nonzero": 6
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -69.4567528305696,
+        "vy": 0.027764698681254106,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 964.586193410474,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.25,
+          "rotation": -70
+        },
+        "seed": 534000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -9.454941482409902,
+        "vy": -0.03663742339317536,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 964.1341115723943,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.0,
+          "rotation": -10
+        },
+        "seed": 534001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -9.4235199,
+        "vy": 0.022439168417436272,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 971.9248690786403,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 1.0,
+          "rotation": -10
+        },
+        "seed": 534002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -69.45473328694929,
+        "vy": 0.0028641058907017377,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 964.3692270943758,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5,
+          "rotation": -70
+        },
+        "seed": 534003
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 89.89784752152774,
+        "vy": 0.08619438273088795,
+        "vx": 0.1561193063167673,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 968.8850767824284,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 389,
+        "frame": 389,
+        "command_last": {
+          "thrust": 1.0,
+          "rotation": 90
+        },
+        "seed": 534004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -60.5764801,
+        "vy": 0.01860002775195625,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 963.5296255638006,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 1.0,
+          "rotation": -60
+        },
+        "seed": 534005
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 85.1,
+        "vy": 0.095471611022729,
+        "vx": 0.16041670079370457,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 973.3864258947497,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 306,
+        "frame": 306,
+        "command_last": {
+          "thrust": 0.0,
+          "rotation": 90
+        },
+        "seed": 534006
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -57.599000000000004,
+        "vy": 0.04400430100091655,
+        "vx": -0.15310446109688364,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 967.621698452888,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 356,
+        "frame": 356,
+        "command_last": {
+          "thrust": 0.5,
+          "rotation": -60
+        },
+        "seed": 534007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -20.5764801,
+        "vy": -0.04520771439118429,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 962.6790806012141,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.25,
+          "rotation": -20
+        },
+        "seed": 534008
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 80.0,
+        "vy": 0.0754953196440702,
+        "vx": 0.09985754884188908,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 979.5809589023215,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 280,
+        "frame": 280,
+        "command_last": {
+          "thrust": 0.5,
+          "rotation": 80
+        },
+        "seed": 534009
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -20.0,
+        "vy": 0.050499898797601556,
+        "vx": -0.030901492594138158,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 983.2735454659139,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 293,
+        "frame": 293,
+        "command_last": {
+          "thrust": 0.0,
+          "rotation": -20
+        },
+        "seed": 534010
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 12.401,
+        "vy": 0.046701058032508104,
+        "vx": 0.12187046731039863,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 974.4971257059348,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 316,
+        "frame": 316,
+        "command_last": {
+          "thrust": 1.0,
+          "rotation": 10
+        },
+        "seed": 534011
+      }
+    ]
+  },
+  {
+    "start": "L0",
+    "rep": "cont_absolute_ar8",
+    "policy": "random",
+    "action_repeat": 8,
+    "thrust_mode": "continuous",
+    "rotation_mode": "absolute",
+    "player_mapping": "Touch absolute angle via setRotation to one of 19 bins (-90..90/10\u00b0), held 8 frames.",
+    "n": 12,
+    "seed_start": 535000,
+    "max_steps": 400,
+    "diagnostic_frames": 4723,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 1,
+      "landable_contact": 1,
+      "crash": 1,
+      "timeout": 11
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.08333333333333333,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 11,
+      "rotation_nonzero": 1
+    },
+    "joint_violations": {
+      "unknown": 11,
+      "rotation_nonzero": 1
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -46.30785841916975,
+        "vy": 0.018742739410448503,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.8172481279861,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.12658002936822688,
+          "rotation": -50
+        },
+        "seed": 535000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -70.206756297857,
+        "vy": 0.008005358693742805,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.7351608695883,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.44218789602875264,
+          "rotation": -70
+        },
+        "seed": 535001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -65.78720529103717,
+        "vy": -0.025425726898244662,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 956.5150158007837,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6116403546411872,
+          "rotation": -70
+        },
+        "seed": 535002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -64.88276759138249,
+        "vy": -0.014167932545650604,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.8351032140973,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.24225245674247864,
+          "rotation": -70
+        },
+        "seed": 535003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 12.055196454560987,
+        "vy": 0.004008700447022586,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.6592733860516,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.26424356221574774,
+          "rotation": 10
+        },
+        "seed": 535004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 53.27478664143841,
+        "vy": 0.003920070665417809,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 956.4514113467407,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.9568265930826384,
+          "rotation": 60
+        },
+        "seed": 535005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -36.6063041290754,
+        "vy": 0.005614728885009471,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.7831410918216,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.3598843073689909,
+          "rotation": -40
+        },
+        "seed": 535006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.380370927525732,
+        "vy": -0.017399719496698378,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.9905857567005,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.44044813252630366,
+          "rotation": 20
+        },
+        "seed": 535007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -14.421682040060828,
+        "vy": -0.003881690205985855,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.6036205103035,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.897554383462502,
+          "rotation": -20
+        },
+        "seed": 535008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 85.54920323318294,
+        "vy": 0.018858646960220517,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.4904617151257,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.20721533398855685,
+          "rotation": 90
+        },
+        "seed": 535009
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 51.92551512854622,
+        "vy": 0.032155816322056524,
+        "vx": 0.016565620407889118,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 972.4308335668889,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 323,
+        "frame": 323,
+        "command_last": {
+          "thrust": 0.4533672049827061,
+          "rotation": 90
+        },
+        "seed": 535010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -69.69382689608152,
+        "vy": -0.009725633025879182,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.4059037202965,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.3210820837877578,
+          "rotation": -70
+        },
+        "seed": 535011
+      }
+    ]
+  },
+  {
+    "start": "L0",
+    "rep": "cont_holdheavy_ar8",
+    "policy": "random",
+    "action_repeat": 8,
+    "thrust_mode": "continuous",
+    "rotation_mode": "hold_heavy_delta",
+    "player_mapping": "Action layout {-10,0,0,0,+10}: 3/5 mass on hold by layout (maps to releasing arrow keys), not NN bias. Held 8 frames.",
+    "n": 12,
+    "seed_start": 536000,
+    "max_steps": 400,
+    "diagnostic_frames": 4800,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 0,
+      "landable_contact": 0,
+      "crash": 0,
+      "timeout": 12
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.0,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 12
+    },
+    "joint_violations": {
+      "unknown": 12
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -30.0,
+        "vy": -0.04993762760842941,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 963.030736587647,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.02769153027422855,
+          "rotation": -30
+        },
+        "seed": 536000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.0,
+        "vy": -0.050159446221545854,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.5347066294777,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8059660593112872,
+          "rotation": 20
+        },
+        "seed": 536001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 50.0,
+        "vy": -0.053955264633565606,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.1219778015151,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6210835507075968,
+          "rotation": 50
+        },
+        "seed": 536002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -9.454837018255795,
+        "vy": -0.02273201677855558,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 966.7101687065584,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.31182034839451733,
+          "rotation": -10
+        },
+        "seed": 536003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -20.0,
+        "vy": -0.11395334208962021,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 953.3995550426632,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.18221822185916325,
+          "rotation": -20
+        },
+        "seed": 536004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 90.0,
+        "vy": 0.03563564966096772,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.3105586810915,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5727469690601027,
+          "rotation": 90
+        },
+        "seed": 536005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -30.0,
+        "vy": -0.07837544831503926,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.1631172052711,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.3645385610465507,
+          "rotation": -30
+        },
+        "seed": 536006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -40.0,
+        "vy": -0.09047091858266564,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 956.1392770804639,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.9408625058806026,
+          "rotation": -40
+        },
+        "seed": 536007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.0,
+        "vy": -0.0719328567606078,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.8884104470789,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.09777895431285821,
+          "rotation": 20
+        },
+        "seed": 536008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -60.0,
+        "vy": -0.041230007723655406,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.0170845444612,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7920779897803842,
+          "rotation": -60
+        },
+        "seed": 536009
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -30.0,
+        "vy": -0.05191901768716315,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.493320630208,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6219766935391111,
+          "rotation": -30
+        },
+        "seed": 536010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 39.4235199,
+        "vy": -0.009924197637242522,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 966.0527689949212,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.04538146383420283,
+          "rotation": 40
+        },
+        "seed": 536011
+      }
+    ]
+  },
+  {
+    "start": "L0_near",
+    "rep": "cont_delta_ar1",
+    "policy": "random",
+    "action_repeat": 1,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Touch thrust slider continuous; setRotation \u00b110\u00b0/0 each decision (1 frame). Unlike keyboard, decisions every physics frame.",
+    "n": 12,
+    "seed_start": 537000,
+    "max_steps": 400,
+    "diagnostic_frames": 2892,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 1,
+      "pad_aligned_contact": 9,
+      "landable_contact": 9,
+      "crash": 9,
+      "timeout": 3
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.08333333333333333,
+    "near_miss_wilson95": [
+      0.014864709450773478,
+      0.35388592179859524
+    ],
+    "pad_aligned_contact_rate": 0.75,
+    "top_violation": "rotation_nonzero",
+    "single_condition_violations": {
+      "timeout_no_contact": 3,
+      "rotation_nonzero": 9
+    },
+    "joint_violations": {
+      "unknown": 3,
+      "rotation_nonzero": 9
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 58.899733032333586,
+        "vy": -0.0002433520439984098,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.0681887312821,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.22324549171188124,
+          "rotation": 60
+        },
+        "seed": 537000
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -47.96859281162091,
+        "vy": 0.03206265076018339,
+        "vx": -0.08228427103137324,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 986.339126312622,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 152,
+        "frame": 152,
+        "command_last": {
+          "thrust": 0.3477513437062252,
+          "rotation": -50
+        },
+        "seed": 537001
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -26.927253080105256,
+        "vy": 0.025804013881007358,
+        "vx": 0.05791724267814171,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 986.6156479324349,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 146,
+        "frame": 146,
+        "command_last": {
+          "thrust": 0.5601565851683347,
+          "rotation": -30
+        },
+        "seed": 537002
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -81.9813046093805,
+        "vy": 0.03788122414720453,
+        "vx": -0.08363665804575236,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 980.6281448697528,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 199,
+        "frame": 199,
+        "command_last": {
+          "thrust": 0.036939186134529844,
+          "rotation": -80
+        },
+        "seed": 537003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 82.10752924552361,
+        "vy": -0.01795353692284009,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.2319405125345,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.05057373134876175,
+          "rotation": 90
+        },
+        "seed": 537004
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -50.921571957149084,
+        "vy": 0.03680253155280404,
+        "vx": -0.07098279917358734,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 987.0695382758041,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 146,
+        "frame": 146,
+        "command_last": {
+          "thrust": 0.4561087028848032,
+          "rotation": -40
+        },
+        "seed": 537005
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -84.6561385989004,
+        "vy": 0.044006887511144815,
+        "vx": -0.08319728041997246,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 987.7937828946338,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 128,
+        "frame": 128,
+        "command_last": {
+          "thrust": 0.12077875939145766,
+          "rotation": -90
+        },
+        "seed": 537006
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": true,
+        "rotation": -7.592976844005516,
+        "vy": 0.018819049312847634,
+        "vx": 0.097966201605223,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 978.9545254037492,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 223,
+        "frame": 223,
+        "command_last": {
+          "thrust": 0.5209608271808088,
+          "rotation": -20
+        },
+        "seed": 537007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -88.6591156883267,
+        "vy": 0.0005832035507353789,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.1573524362082,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7612663471523431,
+          "rotation": -90
+        },
+        "seed": 537008
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 87.82255292750439,
+        "vy": 0.04428985756966988,
+        "vx": 0.07746049606788596,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 987.1790797195455,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 133,
+        "frame": 133,
+        "command_last": {
+          "thrust": 0.6166605238569767,
+          "rotation": 90
+        },
+        "seed": 537009
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -22.880744403834118,
+        "vy": 0.006295522784692701,
+        "vx": -0.11656571601633375,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 970.8359752807495,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 307,
+        "frame": 307,
+        "command_last": {
+          "thrust": 0.6049001928053229,
+          "rotation": -20
+        },
+        "seed": 537010
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 23.136756074627595,
+        "vy": 0.02580131985912603,
+        "vx": 0.12459967956694161,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 973.6832346756314,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 258,
+        "frame": 258,
+        "command_last": {
+          "thrust": 0.5498648527821782,
+          "rotation": 10
+        },
+        "seed": 537011
+      }
+    ]
+  },
+  {
+    "start": "L0_near",
+    "rep": "cont_delta_ar4",
+    "policy": "random",
+    "action_repeat": 4,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Same as keyboard-ish hold: one setRotation/thrust command held ~4 frames (\u224867ms), near the 80ms keyboard rotate rate limit.",
+    "n": 12,
+    "seed_start": 538000,
+    "max_steps": 400,
+    "diagnostic_frames": 4268,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 3,
+      "landable_contact": 3,
+      "crash": 3,
+      "timeout": 9
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.25,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 9,
+      "rotation_nonzero": 3
+    },
+    "joint_violations": {
+      "unknown": 9,
+      "rotation_nonzero": 3
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 37.42599021983599,
+        "vy": 0.01788048616849857,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 963.0307310427487,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5284180815688029,
+          "rotation": 40
+        },
+        "seed": 538000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 39.86158712799,
+        "vy": -0.045447796830800094,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.6177419612895,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5988805023959598,
+          "rotation": 40
+        },
+        "seed": 538001
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 16.358965249,
+        "vy": 0.020706898856936287,
+        "vx": 0.08468941797402106,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 977.9937730260806,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 246,
+        "frame": 246,
+        "command_last": {
+          "thrust": 0.6051781000707204,
+          "rotation": 10
+        },
+        "seed": 538002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -31.725538915146856,
+        "vy": 0.0204732341877072,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 964.1364033431718,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8389795260216304,
+          "rotation": -30
+        },
+        "seed": 538003
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 50.894014751,
+        "vy": 0.03349949009888496,
+        "vx": 0.03966816007118755,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 990.8289683344365,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 146,
+        "frame": 146,
+        "command_last": {
+          "thrust": 0.5381665351337174,
+          "rotation": 50
+        },
+        "seed": 538004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -81.95441483855411,
+        "vy": -0.007919168649230502,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.8831496903334,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6558765470699023,
+          "rotation": -80
+        },
+        "seed": 538005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 77.42866632542187,
+        "vy": -0.047448863727423615,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.9822363756778,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6957772123719546,
+          "rotation": 80
+        },
+        "seed": 538006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 0.1696142265436858,
+        "vy": -0.06742580567530151,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.9976761146919,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8004336469908133,
+          "rotation": 0
+        },
+        "seed": 538007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 40.144819463289316,
+        "vy": 0.013797955976033732,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.3239360436525,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.403829515346266,
+          "rotation": 40
+        },
+        "seed": 538008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -8.1754801,
+        "vy": -0.05827202533955813,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.2789918814515,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7057886130601088,
+          "rotation": -10
+        },
+        "seed": 538009
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -87.72759666771978,
+        "vy": 0.05119648297684744,
+        "vx": -0.1405651345558562,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 972.9300570749716,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 276,
+        "frame": 276,
+        "command_last": {
+          "thrust": 0.6244876244900207,
+          "rotation": -90
+        },
+        "seed": 538010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 80.39741952027441,
+        "vy": 0.037297957561997934,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.7517674422181,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.016999343789715904,
+          "rotation": 80
+        },
+        "seed": 538011
+      }
+    ]
+  },
+  {
+    "start": "L0_near",
+    "rep": "cont_delta_ar8",
+    "policy": "random",
+    "action_repeat": 8,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Command held 8 frames (~133ms); slower than keyboard max rotate rate.",
+    "n": 12,
+    "seed_start": 539000,
+    "max_steps": 400,
+    "diagnostic_frames": 4467,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 4,
+      "landable_contact": 4,
+      "crash": 4,
+      "timeout": 8
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.3333333333333333,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 8,
+      "rotation_nonzero": 4
+    },
+    "joint_violations": {
+      "unknown": 8,
+      "rotation_nonzero": 4
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -30.0,
+        "vy": -0.05565453188506605,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.8850694062381,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.4564736369933692,
+          "rotation": -30
+        },
+        "seed": 539000
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -80.0,
+        "vy": 0.034720896658154275,
+        "vx": -0.20268014789431113,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 964.1736752067743,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 351,
+        "frame": 351,
+        "command_last": {
+          "thrust": 0.441395941622137,
+          "rotation": -80
+        },
+        "seed": 539001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.0,
+        "vy": -0.07017940873761223,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.4081759049478,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8917815300812537,
+          "rotation": 20
+        },
+        "seed": 539002
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -61.17649,
+        "vy": 0.02200870250431114,
+        "vx": -0.1938592918939348,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 962.2535298842156,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 390,
+        "frame": 390,
+        "command_last": {
+          "thrust": 0.3993402014440369,
+          "rotation": -60
+        },
+        "seed": 539003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -9.390286969430399,
+        "vy": -0.0917278599214223,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 956.1424246738316,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5912097807464776,
+          "rotation": -10
+        },
+        "seed": 539004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 39.4235199,
+        "vy": -0.07542535184425501,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 956.9990915132508,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.958865081409979,
+          "rotation": 40
+        },
+        "seed": 539005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 90.0,
+        "vy": -0.005247102138491763,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.6907613041653,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.9175648152347197,
+          "rotation": 90
+        },
+        "seed": 539006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -9.4235199,
+        "vy": -0.10061548017142725,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.7813233258779,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.40455257450589854,
+          "rotation": -10
+        },
+        "seed": 539007
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -68.82351,
+        "vy": 0.02151993342690325,
+        "vx": -0.08239704249086399,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 982.7070799412255,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 206,
+        "frame": 206,
+        "command_last": {
+          "thrust": 0.5896698635851868,
+          "rotation": -70
+        },
+        "seed": 539008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 49.3902869694304,
+        "vy": -0.04591167915453205,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 962.8887922220872,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8167443492857779,
+          "rotation": 50
+        },
+        "seed": 539009
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 39.45494746102322,
+        "vy": -0.07036910686612959,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 956.9071989564258,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.21673155226455432,
+          "rotation": 40
+        },
+        "seed": 539010
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 60.61162884288341,
+        "vy": 0.043057226405355295,
+        "vx": 0.14779968032616636,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 970.3351284703378,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 320,
+        "frame": 320,
+        "command_last": {
+          "thrust": 0.7249970276052622,
+          "rotation": 60
+        },
+        "seed": 539011
+      }
+    ]
+  },
+  {
+    "start": "L0_near",
+    "rep": "cont_delta_ar16",
+    "policy": "random",
+    "action_repeat": 16,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Command held 16 frames (~267ms); player holding a key / not re-tapping.",
+    "n": 12,
+    "seed_start": 540000,
+    "max_steps": 400,
+    "diagnostic_frames": 4511,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 1,
+      "landable_contact": 1,
+      "crash": 1,
+      "timeout": 11
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.08333333333333333,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 11,
+      "rotation_nonzero": 1
+    },
+    "joint_violations": {
+      "unknown": 11,
+      "rotation_nonzero": 1
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -30.0,
+        "vy": -0.03928021608442499,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.197787753595,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.21543070661719654,
+          "rotation": -30
+        },
+        "seed": 540000
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 20.0,
+        "vy": 0.03617329930467355,
+        "vx": 0.0023991413946861245,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 995.9402236738533,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 111,
+        "frame": 111,
+        "command_last": {
+          "thrust": 0.27681126852939897,
+          "rotation": 20
+        },
+        "seed": 540001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -30.0,
+        "vy": -0.04190330545106474,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 963.6574338573738,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.31021232885350947,
+          "rotation": -30
+        },
+        "seed": 540002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -50.0,
+        "vy": -0.04432308616744994,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 954.6379255476576,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.48308141564547114,
+          "rotation": -50
+        },
+        "seed": 540003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.0,
+        "vy": -0.10991239260275518,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 955.2226210117136,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7142215475137045,
+          "rotation": 20
+        },
+        "seed": 540004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.0,
+        "vy": -0.1525028855351803,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 949.9490998148269,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6216783624028783,
+          "rotation": 20
+        },
+        "seed": 540005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 10.0,
+        "vy": -0.08315749371557746,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.3904893903657,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.06853709042621825,
+          "rotation": 10
+        },
+        "seed": 540006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 30.0,
+        "vy": -0.08147220389776799,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.0645834813186,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.02651187581738823,
+          "rotation": 30
+        },
+        "seed": 540007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.0,
+        "vy": -0.07853262780953497,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.69835654213,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.1798428606250787,
+          "rotation": 20
+        },
+        "seed": 540008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -20.0,
+        "vy": -0.06757621838569661,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 962.3766979623889,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.3815472673571205,
+          "rotation": -20
+        },
+        "seed": 540009
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -10.0,
+        "vy": -0.052636534268066214,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 963.0964413000992,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7942054872828139,
+          "rotation": -10
+        },
+        "seed": 540010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.0,
+        "vy": -0.046636399633910176,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 963.8042538789771,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.04121905776203283,
+          "rotation": 20
+        },
+        "seed": 540011
+      }
+    ]
+  },
+  {
+    "start": "L0_near",
+    "rep": "disc4_delta_ar8",
+    "policy": "random",
+    "action_repeat": 8,
+    "thrust_mode": "discrete4",
+    "rotation_mode": "delta",
+    "player_mapping": "Thrust in {0,0.25,0.5,1} (UP key is binary 0/1; touch is continuous \u2014 discrete bins are a coarsening of touch). Delta setRotation as above.",
+    "n": 12,
+    "seed_start": 541000,
+    "max_steps": 400,
+    "diagnostic_frames": 4707,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 2,
+      "landable_contact": 2,
+      "crash": 2,
+      "timeout": 10
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.16666666666666666,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 10,
+      "rotation_nonzero": 2
+    },
+    "joint_violations": {
+      "unknown": 10,
+      "rotation_nonzero": 2
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.541214547543408,
+        "vy": -0.04854271165037825,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 962.8530514884437,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5,
+          "rotation": 20
+        },
+        "seed": 541000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -69.4567528305696,
+        "vy": -0.023413854096419277,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.4830990551259,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.25,
+          "rotation": -70
+        },
+        "seed": 541001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -0.5764801000000002,
+        "vy": -0.06308774175222806,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.2650669922476,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5,
+          "rotation": 0
+        },
+        "seed": 541002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -40.0,
+        "vy": -0.057437838131206766,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.7629664896994,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5,
+          "rotation": -40
+        },
+        "seed": 541003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -9.4235199,
+        "vy": -0.023252274274571664,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 966.4224198114578,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.0,
+          "rotation": -10
+        },
+        "seed": 541004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -59.4235199,
+        "vy": 0.019403550744946756,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 968.2148191279114,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.25,
+          "rotation": -60
+        },
+        "seed": 541005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 10.609713030569601,
+        "vy": 0.015627021397450466,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.22053543971,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.0,
+          "rotation": 10
+        },
+        "seed": 541006
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -82.40100000000001,
+        "vy": 0.03109837533395043,
+        "vx": -0.10021863361642223,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 970.6214347543714,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 372,
+        "frame": 372,
+        "command_last": {
+          "thrust": 1.0,
+          "rotation": -80
+        },
+        "seed": 541007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 69.38826742702985,
+        "vy": -0.029532970574665217,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 963.1126087548027,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 1.0,
+          "rotation": 70
+        },
+        "seed": 541008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -90.0,
+        "vy": 0.04151184642800983,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.3788230076161,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 1.0,
+          "rotation": -90
+        },
+        "seed": 541009
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -70.0,
+        "vy": 0.018396129975407842,
+        "vx": -0.07651866772297478,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 974.973238574938,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 335,
+        "frame": 335,
+        "command_last": {
+          "thrust": 1.0,
+          "rotation": -70
+        },
+        "seed": 541010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -59.39209233897678,
+        "vy": -0.03500160634685069,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.379275239035,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 1.0,
+          "rotation": -60
+        },
+        "seed": 541011
+      }
+    ]
+  },
+  {
+    "start": "L0_near",
+    "rep": "cont_absolute_ar8",
+    "policy": "random",
+    "action_repeat": 8,
+    "thrust_mode": "continuous",
+    "rotation_mode": "absolute",
+    "player_mapping": "Touch absolute angle via setRotation to one of 19 bins (-90..90/10\u00b0), held 8 frames.",
+    "n": 12,
+    "seed_start": 542000,
+    "max_steps": 400,
+    "diagnostic_frames": 4027,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 4,
+      "landable_contact": 4,
+      "crash": 4,
+      "timeout": 8
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.3333333333333333,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 8,
+      "rotation_nonzero": 4
+    },
+    "joint_violations": {
+      "unknown": 8,
+      "rotation_nonzero": 4
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -36.12116100919034,
+        "vy": -0.011863779758697348,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 962.0320756105517,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5457043889114186,
+          "rotation": -40
+        },
+        "seed": 542000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -80.637300700502,
+        "vy": -0.02221969731825918,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.2957549972398,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6990029039673463,
+          "rotation": -90
+        },
+        "seed": 542001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -1.259177122519525,
+        "vy": 0.0034305921749741785,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.8946772206499,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.11054386416042705,
+          "rotation": 0
+        },
+        "seed": 542002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 4.986067206883991,
+        "vy": -0.012767518155884571,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.4680339802167,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.0008883329007745022,
+          "rotation": 10
+        },
+        "seed": 542003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 9.082673741879177,
+        "vy": -0.021596086352244172,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 956.2759909001475,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5397421790586592,
+          "rotation": 10
+        },
+        "seed": 542004
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -43.7239765398882,
+        "vy": 0.01023184139295355,
+        "vx": -0.029785047991249352,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 983.0052193731143,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 181,
+        "frame": 181,
+        "command_last": {
+          "thrust": 0.2467473940093825,
+          "rotation": -50
+        },
+        "seed": 542005
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -50.74188176682672,
+        "vy": 0.02004700201203657,
+        "vx": -0.01679458723888919,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 978.2772662131132,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 246,
+        "frame": 246,
+        "command_last": {
+          "thrust": 0.007636940281984361,
+          "rotation": -50
+        },
+        "seed": 542006
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 14.948817292825083,
+        "vy": 0.0125846643612536,
+        "vx": 0.017594077660698704,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 976.033182387335,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 256,
+        "frame": 256,
+        "command_last": {
+          "thrust": 0.9951759272803087,
+          "rotation": 20
+        },
+        "seed": 542007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 47.94233080019153,
+        "vy": -0.017252468134521325,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.3500883947358,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7020795320042675,
+          "rotation": 50
+        },
+        "seed": 542008
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -78.67169906084928,
+        "vy": 0.02527373232910998,
+        "vx": -0.02922015644683483,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 988.2257669894793,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 144,
+        "frame": 144,
+        "command_last": {
+          "thrust": 0.28355178086186517,
+          "rotation": -80
+        },
+        "seed": 542009
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -86.68516050400005,
+        "vy": -0.015068846647466872,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.1072491749246,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.19583695535848877,
+          "rotation": -90
+        },
+        "seed": 542010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 52.214448924665795,
+        "vy": 0.000979343281844796,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.0494089158238,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.4407120832099638,
+          "rotation": 60
+        },
+        "seed": 542011
+      }
+    ]
+  },
+  {
+    "start": "L0_near",
+    "rep": "cont_holdheavy_ar8",
+    "policy": "random",
+    "action_repeat": 8,
+    "thrust_mode": "continuous",
+    "rotation_mode": "hold_heavy_delta",
+    "player_mapping": "Action layout {-10,0,0,0,+10}: 3/5 mass on hold by layout (maps to releasing arrow keys), not NN bias. Held 8 frames.",
+    "n": 12,
+    "seed_start": 543000,
+    "max_steps": 400,
+    "diagnostic_frames": 4800,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 0,
+      "landable_contact": 0,
+      "crash": 0,
+      "timeout": 12
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.0,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 12
+    },
+    "joint_violations": {
+      "unknown": 12
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -19.4235199,
+        "vy": -0.09149728525691687,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.6465016448042,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8940473452051518,
+          "rotation": -20
+        },
+        "seed": 543000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -20.0,
+        "vy": -0.044161911005929304,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 963.9825457253193,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5051131706195808,
+          "rotation": -20
+        },
+        "seed": 543001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 30.0,
+        "vy": -0.0687737258593468,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.3125100132436,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6460258206859663,
+          "rotation": 30
+        },
+        "seed": 543002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 9.390286969430399,
+        "vy": -0.11608917395886853,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 955.8138436269841,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7636695765863537,
+          "rotation": 10
+        },
+        "seed": 543003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -70.0,
+        "vy": 0.041406674309793924,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.9265873188178,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.12295402740245309,
+          "rotation": -70
+        },
+        "seed": 543004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -10.0,
+        "vy": -0.06940352718247551,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.3227041582313,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.264555808113747,
+          "rotation": -10
+        },
+        "seed": 543005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -40.5764801,
+        "vy": -0.02187294596814875,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 963.2408571414215,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.15788413698205206,
+          "rotation": -40
+        },
+        "seed": 543006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 19.4235199,
+        "vy": -0.08092781847686538,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.542687909466,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7725170690682025,
+          "rotation": 20
+        },
+        "seed": 543007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -80.0,
+        "vy": -0.014073621988591366,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.0263711048726,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6322141390186169,
+          "rotation": -80
+        },
+        "seed": 543008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -40.6097130305696,
+        "vy": 0.0018507586105950152,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.0277836212985,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.41540405289161275,
+          "rotation": -40
+        },
+        "seed": 543009
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 30.54505253897678,
+        "vy": -0.05936614835571811,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.2439916452275,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8145367409839365,
+          "rotation": 30
+        },
+        "seed": 543010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 60.0,
+        "vy": -0.062209292967780716,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.3981771166871,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.57048823837722,
+          "rotation": 60
+        },
+        "seed": 543011
+      }
+    ]
+  },
+  {
+    "start": "L0",
+    "rep": "cont_delta_ar1",
+    "policy": "untrained",
+    "action_repeat": 1,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Touch thrust slider continuous; setRotation \u00b110\u00b0/0 each decision (1 frame). Unlike keyboard, decisions every physics frame.",
+    "n": 12,
+    "seed_start": 544000,
+    "max_steps": 400,
+    "diagnostic_frames": 4608,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 2,
+      "landable_contact": 2,
+      "crash": 2,
+      "timeout": 10
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.16666666666666666,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 10,
+      "rotation_nonzero": 2
+    },
+    "joint_violations": {
+      "unknown": 10,
+      "rotation_nonzero": 2
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 30.0,
+        "vy": -0.04816933254695151,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.7272220368665,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.9145998954772949,
+          "rotation": 30
+        },
+        "seed": 544000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 56.141480429090386,
+        "vy": 0.03965336067849474,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.4427435940078,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6326796412467957,
+          "rotation": 60
+        },
+        "seed": 544001
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -48.25435408598234,
+        "vy": 0.06250091321198313,
+        "vx": -0.16227597340349362,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 971.6350034689392,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 277,
+        "frame": 277,
+        "command_last": {
+          "thrust": 0.3203893005847931,
+          "rotation": -50
+        },
+        "seed": 544002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -53.210624983391554,
+        "vy": -0.05366301003325199,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.2161609430628,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8283347487449646,
+          "rotation": -50
+        },
+        "seed": 544003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -8.333297714403082,
+        "vy": 0.004585270996312944,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.5656033188193,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.2595873773097992,
+          "rotation": -10
+        },
+        "seed": 544004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 0.7491229931961878,
+        "vy": -0.022170185895001436,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.696826528964,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.750381588935852,
+          "rotation": 10
+        },
+        "seed": 544005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 71.01487032443416,
+        "vy": 0.032429502711954626,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.3705525769378,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8280541300773621,
+          "rotation": 70
+        },
+        "seed": 544006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 43.85560197895441,
+        "vy": 0.022679933456017817,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.0641056235378,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5819915533065796,
+          "rotation": 50
+        },
+        "seed": 544007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 89.39610949673886,
+        "vy": 0.025527939800150473,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.1152239472518,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5784258842468262,
+          "rotation": 90
+        },
+        "seed": 544008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -17.110970072248513,
+        "vy": -0.037410329058563854,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.8012571030935,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.21722564101219177,
+          "rotation": -10
+        },
+        "seed": 544009
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 86.15784215775129,
+        "vy": 0.025833421718619718,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.1914674818278,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.2239193469285965,
+          "rotation": 90
+        },
+        "seed": 544010
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -45.685171535776426,
+        "vy": 0.06182851397219283,
+        "vx": -0.12665822920345843,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 966.4210768314562,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 331,
+        "frame": 331,
+        "command_last": {
+          "thrust": 0.32149818539619446,
+          "rotation": -50
+        },
+        "seed": 544011
+      }
+    ]
+  },
+  {
+    "start": "L0",
+    "rep": "cont_delta_ar8",
+    "policy": "untrained",
+    "action_repeat": 8,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Command held 8 frames (~133ms); slower than keyboard max rotate rate.",
+    "n": 12,
+    "seed_start": 545000,
+    "max_steps": 400,
+    "diagnostic_frames": 4800,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 0,
+      "landable_contact": 0,
+      "crash": 0,
+      "timeout": 12
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.0,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 12
+    },
+    "joint_violations": {
+      "unknown": 12
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -89.38826708115494,
+        "vy": 0.08844704295693795,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.951151248694,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.3797667324542999,
+          "rotation": -90
+        },
+        "seed": 545000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 9.454837018255795,
+        "vy": -0.11044698737677386,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 955.6246619658599,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5059722065925598,
+          "rotation": 10
+        },
+        "seed": 545001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.6097130305696,
+        "vy": -0.031155429070202183,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.3014423683572,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6577866673469543,
+          "rotation": 20
+        },
+        "seed": 545002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -59.3922027817442,
+        "vy": -0.03675462370130943,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.0772007726141,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.9327203631401062,
+          "rotation": -60
+        },
+        "seed": 545003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -30.0,
+        "vy": -0.07753533050659256,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 954.2732110336872,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5997499823570251,
+          "rotation": -30
+        },
+        "seed": 545004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -80.0,
+        "vy": 0.0034769805313555674,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.6793510274206,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5023542642593384,
+          "rotation": -80
+        },
+        "seed": 545005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.0,
+        "vy": -0.024226191702641037,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 955.126220442446,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5335631370544434,
+          "rotation": 20
+        },
+        "seed": 545006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -19.392202781744203,
+        "vy": -0.04243695606458806,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.9990413298262,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.37161222100257874,
+          "rotation": -20
+        },
+        "seed": 545007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 19.3902869694304,
+        "vy": -0.05621802886441277,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 960.9864886152441,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5138457417488098,
+          "rotation": 20
+        },
+        "seed": 545008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 29.388371157116595,
+        "vy": -0.07601039760957891,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.9178566329388,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6230812668800354,
+          "rotation": 30
+        },
+        "seed": 545009
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 20.0,
+        "vy": -0.073418193572619,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.3242564964232,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5095226764678955,
+          "rotation": 20
+        },
+        "seed": 545010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 70.0,
+        "vy": 0.020435077373199242,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.9974844538556,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.4034454822540283,
+          "rotation": 70
+        },
+        "seed": 545011
+      }
+    ]
+  },
+  {
+    "start": "L0",
+    "rep": "cont_holdheavy_ar8",
+    "policy": "untrained",
+    "action_repeat": 8,
+    "thrust_mode": "continuous",
+    "rotation_mode": "hold_heavy_delta",
+    "player_mapping": "Action layout {-10,0,0,0,+10}: 3/5 mass on hold by layout (maps to releasing arrow keys), not NN bias. Held 8 frames.",
+    "n": 12,
+    "seed_start": 546000,
+    "max_steps": 400,
+    "diagnostic_frames": 4541,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 3,
+      "landable_contact": 3,
+      "crash": 3,
+      "timeout": 9
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.25,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 9,
+      "rotation_nonzero": 3
+    },
+    "joint_violations": {
+      "unknown": 9,
+      "rotation_nonzero": 3
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -80.0,
+        "vy": 0.04897847418410922,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 955.8752476291847,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.37979087233543396,
+          "rotation": -80
+        },
+        "seed": 546000
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -90.0,
+        "vy": 0.09293327462522284,
+        "vx": -0.17531634500309679,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 967.8446218348327,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 328,
+        "frame": 328,
+        "command_last": {
+          "thrust": 0.31901153922080994,
+          "rotation": -90
+        },
+        "seed": 546001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -90.0,
+        "vy": 0.03129175645712851,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 958.0567019060405,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6924209594726562,
+          "rotation": -90
+        },
+        "seed": 546002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -80.0,
+        "vy": 0.025497457596391642,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.3331278095061,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7775633931159973,
+          "rotation": -80
+        },
+        "seed": 546003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -60.54527342451163,
+        "vy": 0.04723969955172336,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 957.5442103624137,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6177189946174622,
+          "rotation": -60
+        },
+        "seed": 546004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -50.0,
+        "vy": -0.037798576924491865,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 959.6954397125197,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5236057639122009,
+          "rotation": -50
+        },
+        "seed": 546005
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -66.77978869310901,
+        "vy": 0.08353228973955347,
+        "vx": -0.21664098433487303,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 966.3000942793594,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 291,
+        "frame": 291,
+        "command_last": {
+          "thrust": 0.5681665539741516,
+          "rotation": -70
+        },
+        "seed": 546006
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -84.9,
+        "vy": 0.08035747963480887,
+        "vx": -0.1698533698772067,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 966.7843377598928,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 322,
+        "frame": 322,
+        "command_last": {
+          "thrust": 0.7736327052116394,
+          "rotation": -80
+        },
+        "seed": 546007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -50.60768040868261,
+        "vy": -0.050840284361099115,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 956.5799807575399,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.8715758323669434,
+          "rotation": -50
+        },
+        "seed": 546008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -69.45472020868262,
+        "vy": -0.04065803941463481,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.2848924569026,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.2834309935569763,
+          "rotation": -70
+        },
+        "seed": 546009
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -79.4235199,
+        "vy": -0.03102410565219192,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 961.5414417955956,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.29148879647254944,
+          "rotation": -80
+        },
+        "seed": 546010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -70.5432471694304,
+        "vy": 0.009718233238441674,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 962.7967488764216,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6631770133972168,
+          "rotation": -70
+        },
+        "seed": 546011
+      }
+    ]
+  },
+  {
+    "start": "L0_near",
+    "rep": "cont_delta_ar1",
+    "policy": "untrained",
+    "action_repeat": 1,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Touch thrust slider continuous; setRotation \u00b110\u00b0/0 each decision (1 frame). Unlike keyboard, decisions every physics frame.",
+    "n": 12,
+    "seed_start": 547000,
+    "max_steps": 400,
+    "diagnostic_frames": 4193,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 3,
+      "landable_contact": 3,
+      "crash": 3,
+      "timeout": 9
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.25,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 9,
+      "rotation_nonzero": 3
+    },
+    "joint_violations": {
+      "unknown": 9,
+      "rotation_nonzero": 3
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -89.41649543657171,
+        "vy": -0.02969211044848985,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 952.530839958528,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6473942399024963,
+          "rotation": -90
+        },
+        "seed": 547000
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -57.766284346578395,
+        "vy": 0.035490715482411554,
+        "vx": -0.16681374562232917,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 972.5316172317727,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 237,
+        "frame": 237,
+        "command_last": {
+          "thrust": 0.42808404564857483,
+          "rotation": -50
+        },
+        "seed": 547001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -70.53582417920971,
+        "vy": -0.03737945785298689,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 953.5934514315032,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6931348443031311,
+          "rotation": -70
+        },
+        "seed": 547002
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -80.25662925645456,
+        "vy": 0.04173581510409385,
+        "vx": -0.14874235656483292,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 974.301433938856,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 216,
+        "frame": 216,
+        "command_last": {
+          "thrust": 0.784356951713562,
+          "rotation": -80
+        },
+        "seed": 547003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 4.082808895411489,
+        "vy": -0.10653831872623237,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 953.1414401492254,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7455336451530457,
+          "rotation": 0
+        },
+        "seed": 547004
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -52.686998394438845,
+        "vy": 0.030270403086708864,
+        "vx": -0.10529055640644493,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 983.8007103039971,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 140,
+        "frame": 140,
+        "command_last": {
+          "thrust": 0.9121478796005249,
+          "rotation": -60
+        },
+        "seed": 547005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -36.942311320788484,
+        "vy": -0.06540916442304175,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 952.9313893829097,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6286218762397766,
+          "rotation": -40
+        },
+        "seed": 547006
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 42.75243647146542,
+        "vy": -0.09673436214961617,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 952.9972737348054,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.4171786308288574,
+          "rotation": 40
+        },
+        "seed": 547007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -78.31195869445787,
+        "vy": -0.04934323741440363,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 952.8880837259974,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7406675219535828,
+          "rotation": -80
+        },
+        "seed": 547008
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -18.936473308879055,
+        "vy": -0.06647904366829321,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 951.9034862561388,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.47846734523773193,
+          "rotation": -20
+        },
+        "seed": 547009
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -17.715029361564234,
+        "vy": -0.0925677465630903,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 952.1190631146278,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.6938824653625488,
+          "rotation": -20
+        },
+        "seed": 547010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -83.3437191046772,
+        "vy": -0.06690622216080906,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 952.6380704761261,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.602891206741333,
+          "rotation": -80
+        },
+        "seed": 547011
+      }
+    ]
+  },
+  {
+    "start": "L0_near",
+    "rep": "cont_delta_ar8",
+    "policy": "untrained",
+    "action_repeat": 8,
+    "thrust_mode": "continuous",
+    "rotation_mode": "delta",
+    "player_mapping": "Command held 8 frames (~133ms); slower than keyboard max rotate rate.",
+    "n": 12,
+    "seed_start": 548000,
+    "max_steps": 400,
+    "diagnostic_frames": 2144,
+    "counts": {
+      "perfect": 1,
+      "hard": 0,
+      "land": 1,
+      "near_miss": 1,
+      "pad_aligned_contact": 12,
+      "landable_contact": 12,
+      "crash": 11,
+      "timeout": 0
+    },
+    "landing_rate": 0.08333333333333333,
+    "landing_wilson95": [
+      0.014864709450773478,
+      0.35388592179859524
+    ],
+    "near_miss_rate": 0.08333333333333333,
+    "near_miss_wilson95": [
+      0.014864709450773478,
+      0.35388592179859524
+    ],
+    "pad_aligned_contact_rate": 1.0,
+    "top_violation": "rotation_nonzero",
+    "single_condition_violations": {
+      "rotation_nonzero": 11
+    },
+    "joint_violations": {
+      "rotation_nonzero": 11,
+      "none": 1
+    },
+    "episodes": [
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -20.0,
+        "vy": 0.03510624376805265,
+        "vx": -0.02416937334783315,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 993.8425651565008,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 133,
+        "frame": 133,
+        "command_last": {
+          "thrust": 0.12443381547927856,
+          "rotation": -20
+        },
+        "seed": 548000
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -11.577884978260665,
+        "vy": 0.013886246487503877,
+        "vx": 0.005039654841978277,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 988.5523392979611,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 173,
+        "frame": 173,
+        "command_last": {
+          "thrust": 0.04181047901511192,
+          "rotation": -10
+        },
+        "seed": 548001
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -20.0,
+        "vy": 0.02713715833856306,
+        "vx": -0.019413836686043563,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 992.0187799572054,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 148,
+        "frame": 148,
+        "command_last": {
+          "thrust": 0.33924058079719543,
+          "rotation": -20
+        },
+        "seed": 548002
+      },
+      {
+        "outcome": "perfect",
+        "pad_aligned_contact": true,
+        "violations": [],
+        "near_miss": false,
+        "rotation": 0.0,
+        "vy": 0.019353469397667564,
+        "vx": -0.013517321044002653,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 982.1760455306793,
+        "perfect": true,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "status": "landed",
+        "steps": 274,
+        "frame": 274,
+        "command_last": {
+          "thrust": 0.5100575685501099,
+          "rotation": 0
+        },
+        "seed": 548003
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -81.583810989593,
+        "vy": 0.035190683952011005,
+        "vx": -0.029619919397701033,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 986.829088677094,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 213,
+        "frame": 213,
+        "command_last": {
+          "thrust": 0.3521280884742737,
+          "rotation": -80
+        },
+        "seed": 548004
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": true,
+        "rotation": -10.0,
+        "vy": 0.03232162207865742,
+        "vx": -0.005743311336896343,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 994.3485372483105,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 128,
+        "frame": 128,
+        "command_last": {
+          "thrust": 0.6155503392219543,
+          "rotation": -10
+        },
+        "seed": 548005
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -14.801240615020895,
+        "vy": 0.017690049542607753,
+        "vx": 0.0006085916022821634,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 987.4218290445148,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 202,
+        "frame": 202,
+        "command_last": {
+          "thrust": 0.14138731360435486,
+          "rotation": -20
+        },
+        "seed": 548006
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 60.0,
+        "vy": 0.02856980917152112,
+        "vx": 0.038012920176585356,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 990.2538022477632,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 144,
+        "frame": 144,
+        "command_last": {
+          "thrust": 0.1239364966750145,
+          "rotation": 60
+        },
+        "seed": 548007
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 46.61972698139872,
+        "vy": 0.026172006747282556,
+        "vx": 0.02865446832972995,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 987.4234147396487,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 201,
+        "frame": 201,
+        "command_last": {
+          "thrust": 0.13371436297893524,
+          "rotation": 40
+        },
+        "seed": 548008
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": 12.531893631916784,
+        "vy": 0.025593995352058006,
+        "vx": 0.000654484899713914,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 990.2925859659304,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 172,
+        "frame": 172,
+        "command_last": {
+          "thrust": 0.18649041652679443,
+          "rotation": 10
+        },
+        "seed": 548009
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -28.7556876927151,
+        "vy": 0.026794499904548772,
+        "vx": -0.0070984392238325296,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 992.4896828226756,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 142,
+        "frame": 142,
+        "command_last": {
+          "thrust": 0.23361241817474365,
+          "rotation": -30
+        },
+        "seed": 548010
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -28.82351,
+        "vy": 0.02109347658591664,
+        "vx": -0.032826414158121736,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 986.4679698008732,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 214,
+        "frame": 214,
+        "command_last": {
+          "thrust": 0.07977980375289917,
+          "rotation": -30
+        },
+        "seed": 548011
+      }
+    ]
+  },
+  {
+    "start": "L0_near",
+    "rep": "cont_holdheavy_ar8",
+    "policy": "untrained",
+    "action_repeat": 8,
+    "thrust_mode": "continuous",
+    "rotation_mode": "hold_heavy_delta",
+    "player_mapping": "Action layout {-10,0,0,0,+10}: 3/5 mass on hold by layout (maps to releasing arrow keys), not NN bias. Held 8 frames.",
+    "n": 12,
+    "seed_start": 549000,
+    "max_steps": 400,
+    "diagnostic_frames": 4433,
+    "counts": {
+      "perfect": 0,
+      "hard": 0,
+      "land": 0,
+      "near_miss": 0,
+      "pad_aligned_contact": 3,
+      "landable_contact": 3,
+      "crash": 3,
+      "timeout": 9
+    },
+    "landing_rate": 0.0,
+    "landing_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "near_miss_rate": 0.0,
+    "near_miss_wilson95": [
+      0.0,
+      0.2425007574992425
+    ],
+    "pad_aligned_contact_rate": 0.25,
+    "top_violation": "timeout_no_contact",
+    "single_condition_violations": {
+      "timeout_no_contact": 9,
+      "rotation_nonzero": 3
+    },
+    "joint_violations": {
+      "unknown": 9,
+      "rotation_nonzero": 3
+    },
+    "episodes": [
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -40.611525133955425,
+        "vy": -0.004002963814919313,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 947.8382197976903,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.9044149518013,
+          "rotation": -40
+        },
+        "seed": 549000
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -49.3902869694304,
+        "vy": -0.1375010693290368,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 951.671609322965,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.5821613669395447,
+          "rotation": -50
+        },
+        "seed": 549001
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -59.45877908565083,
+        "vy": -0.030910306041823342,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 947.6211490041532,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.27420464158058167,
+          "rotation": -60
+        },
+        "seed": 549002
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -80.0,
+        "vy": -0.04379420276341422,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 944.3328933622349,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7647601366043091,
+          "rotation": -80
+        },
+        "seed": 549003
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -80.54505890578254,
+        "vy": 0.026817443155540934,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 945.487679783371,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.9127272963523865,
+          "rotation": -80
+        },
+        "seed": 549004
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 30.611524766921743,
+        "vy": -0.00151886008054904,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 950.7208268214279,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7696465849876404,
+          "rotation": 30
+        },
+        "seed": 549005
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -79.45495382782899,
+        "vy": -0.02899368565227542,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 948.9213577384207,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.9051336050033569,
+          "rotation": -80
+        },
+        "seed": 549006
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -87.0,
+        "vy": 0.043587776093653406,
+        "vx": -0.17668515126538323,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 972.8478766438105,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 209,
+        "frame": 209,
+        "command_last": {
+          "thrust": 0.48511865735054016,
+          "rotation": -80
+        },
+        "seed": 549007
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": 29.45877232949935,
+        "vy": -0.18197359676847374,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 945.2514551893873,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.7126312255859375,
+          "rotation": 30
+        },
+        "seed": 549008
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -84.9,
+        "vy": 0.06810907628287467,
+        "vx": -0.24241349592657177,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 958.9812573087672,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 322,
+        "frame": 322,
+        "command_last": {
+          "thrust": 0.7608863115310669,
+          "rotation": -80
+        },
+        "seed": 549009
+      },
+      {
+        "outcome": "crash",
+        "pad_aligned_contact": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "top_violation": "rotation_nonzero",
+        "near_miss": false,
+        "rotation": -90.0,
+        "vy": 0.059597015319551326,
+        "vx": -0.22772715780530464,
+        "within_pad": true,
+        "landable_contact": true,
+        "fuel": 962.833386227941,
+        "perfect": false,
+        "hard": false,
+        "designated": true,
+        "pad_x1": 6873.6,
+        "pad_x2": 7052.8,
+        "joint_violation_key": "rotation_nonzero",
+        "status": "crashed",
+        "steps": 302,
+        "frame": 302,
+        "command_last": {
+          "thrust": 0.6230096817016602,
+          "rotation": -90
+        },
+        "seed": 549010
+      },
+      {
+        "outcome": "timeout",
+        "pad_aligned_contact": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "near_miss": false,
+        "rotation": -29.3902869694304,
+        "vy": -0.10418716573251854,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "fuel": 950.0403359390966,
+        "perfect": false,
+        "hard": false,
+        "status": "timeout",
+        "steps": 400,
+        "frame": 400,
+        "command_last": {
+          "thrust": 0.42387816309928894,
+          "rotation": -30
+        },
+        "seed": 549011
+      }
+    ]
+  }
+]

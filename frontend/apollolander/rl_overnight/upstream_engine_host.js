@@ -157,7 +157,31 @@ function loadUpstreamSandbox() {
       return ((dist > 0) && (dist < 1) && (yhitpoint <= point.y));
     }
 
+    function snapshotContact(line, withinPad, landableContact) {
+      // Snapshot BEFORE lander.crash() zeroes rotation (Lander.js crash()).
+      return {
+        vy: lander.vel.y,
+        vx: lander.vel.x,
+        rotation: lander.rotation,
+        fuel: lander.fuel,
+        x: lander.pos.x,
+        y: lander.pos.y,
+        left: lander.left,
+        right: lander.right,
+        bottom: lander.bottom,
+        altitude: lander.altitude,
+        within_pad: !!withinPad,
+        landable_contact: !!landableContact,
+        pad_x1: line ? line.p1.x : null,
+        pad_x2: line ? line.p2.x : null,
+        pad_y: line ? line.p1.y : null,
+        multiplier: line ? line.multiplier : 1,
+        designated: line ? (line.multiplier > 1 || !!line.designated) : false,
+      };
+    }
+
     function setLanded(line) {
+      var snap = snapshotContact(line, true, true);
       var multiplier = line.multiplier;
       lander.land();
       var points = 0;
@@ -179,12 +203,26 @@ function loadUpstreamSandbox() {
         nativePoints: points,
         multiplier: multiplier,
         designated: multiplier > 1,
-        vy: lander.vel.y,
-        rotation: lander.rotation,
+        vy: snap.vy,
+        vx: snap.vx,
+        rotation: snap.rotation,
+        fuel: snap.fuel,
+        within_pad: true,
+        landable_contact: true,
+        pad_x1: snap.pad_x1,
+        pad_x2: snap.pad_x2,
+        pad_y: snap.pad_y,
+        x: snap.x,
+        y: snap.y,
+        left: snap.left,
+        right: snap.right,
+        bottom: snap.bottom,
+        altitude: snap.altitude,
       };
     }
 
-    function setCrashed() {
+    function setCrashed(line, withinPad, landableContact) {
+      var snap = snapshotContact(line, withinPad, landableContact);
       lander.crash();
       // Original uses Math.random for fuel penalty display; research mode
       // records crash without mutating fuel via random (deterministic).
@@ -195,10 +233,23 @@ function loadUpstreamSandbox() {
         perfect: false,
         hard: false,
         nativePoints: 0,
-        multiplier: 1,
-        designated: false,
-        vy: lander.vel.y,
-        rotation: lander.rotation,
+        multiplier: snap.multiplier,
+        designated: snap.designated,
+        vy: snap.vy,
+        vx: snap.vx,
+        rotation: snap.rotation,
+        fuel: snap.fuel,
+        within_pad: snap.within_pad,
+        landable_contact: snap.landable_contact,
+        pad_x1: snap.pad_x1,
+        pad_x2: snap.pad_x2,
+        pad_y: snap.pad_y,
+        x: snap.x,
+        y: snap.y,
+        left: snap.left,
+        right: snap.right,
+        bottom: snap.bottom,
+        altitude: snap.altitude,
       };
     }
 
@@ -226,10 +277,10 @@ function loadUpstreamSandbox() {
                 if ((lander.rotation == 0) && (lander.vel.y < 0.15)) {
                   setLanded(line);
                 } else {
-                  setCrashed();
+                  setCrashed(line, true, true);
                 }
               } else {
-                setCrashed();
+                setCrashed(line, false, true);
               }
               return lastNativeOutcome;
             }
@@ -238,7 +289,7 @@ function loadUpstreamSandbox() {
             lander.bottomLeft.x = left;
             if (pointIsLessThanLine(lander.bottomLeft, line.p1, line.p2) ||
                 pointIsLessThanLine(lander.bottomRight, line.p1, line.p2)) {
-              setCrashed();
+              setCrashed(line, false, false);
               return lastNativeOutcome;
             }
           }
