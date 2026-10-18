@@ -68,6 +68,8 @@ class ContinuousThrustActorCritic(nn.Module):
         # Documented random-init priors (NOT guidance parameters / traces):
         # soft thrust ~0.22 and hold-attitude (delta 0) so L0 episodes can
         # occasionally contact upright before the policy collapses to hover.
+        # Clean-learning experiments must leave both prior flags False and call
+        # ``reset_parameters_clean`` instead (orthogonal + zero bias, no head gain tweak).
         if self.soft_thrust_prior:
             nn.init.constant_(self.thrust_mean.bias, -1.25)  # sigmoid ≈ 0.22
             with torch.no_grad():
@@ -77,6 +79,23 @@ class ContinuousThrustActorCritic(nn.Module):
             with torch.no_grad():
                 self.rotation_head.bias.zero_()
                 self.rotation_head.bias[1] = 2.5
+
+    def reset_parameters_clean(self) -> None:
+        """Orthogonal weights (gain=1.0), zero biases, thrust_log_std=0.
+
+        No output-layer priors, no head gain shrink, no maneuver bias.
+        Requires ``soft_thrust_prior`` and ``hold_attitude_prior`` to be False.
+        """
+        if self.soft_thrust_prior or self.hold_attitude_prior:
+            raise ValueError(
+                "reset_parameters_clean forbids soft_thrust_prior/hold_attitude_prior"
+            )
+        for module in self.modules():
+            if isinstance(module, nn.Linear):
+                nn.init.orthogonal_(module.weight, gain=1.0)
+                nn.init.constant_(module.bias, 0.0)
+        with torch.no_grad():
+            self.thrust_log_std.zero_()
 
     def forward(
         self, obs: torch.Tensor

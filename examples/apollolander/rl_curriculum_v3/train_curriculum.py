@@ -35,8 +35,14 @@ from rewardbench.rl.continuous_policy import (  # noqa: E402
     ROTATION_DELTAS,
     ContinuousThrustActorCritic,
 )
+from rewardbench.rl.diagnostic_budget import DiagnosticBudget, DiagnosticBudgetExhausted  # noqa: E402
 from rewardbench.rl.env import EnvConfig  # noqa: E402
 from rewardbench.rl.reserved_seeds import assert_seed_allowed, assert_seeds_allowed  # noqa: E402
+from rewardbench.rl.train_integrity import (  # noqa: E402
+    early_stop_reason_for_failed_check,
+    preserve_resume_artifacts,
+    should_early_stop_on_failed_check,
+)
 from rewardbench.rl.upstream_env import VectorApolloLanderUpstreamEnv  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
@@ -88,6 +94,8 @@ class TrainConfig:
     rotation_mode: str = "absolute"
     soft_thrust_prior: bool = False
     hold_attitude_prior: bool = False
+    # Diagnostic physics-frame hard cap (baselines/gates/evals). Do not raise.
+    diagnostic_hard_cap: int = 400_000
 
 
 class CurriculumTrainer:
@@ -97,6 +105,7 @@ class CurriculumTrainer:
         self.output_dir.mkdir(parents=True, exist_ok=True)
         for sub in ("checkpoints", "logs", "plots", "evidence"):
             (self.output_dir / sub).mkdir(exist_ok=True)
+        self.diagnostic_budget = DiagnosticBudget(hard_cap=int(cfg.diagnostic_hard_cap))
 
         self._set_seeds(cfg.seed)
         torch.set_num_threads(max(1, int(os.environ.get("OMP_NUM_THREADS", "2"))))
@@ -248,6 +257,10 @@ class CurriculumTrainer:
         self.env = VectorApolloLanderUpstreamEnv(
             self.cfg.n_envs, self.env_config, reward_mode="touchdown_v1"
         )
+        # (c) Preserve pre-resume episode metrics + first-landing records.
+        preserved = preserve_resume_artifacts(self.output_dir, levels=LEVELS)
+        self._first_landing_frames = preserved["first_landing_frames"]
+        self._resume_preserved = preserved
 
     def _sample_train_seeds(self, n: int) -> np.ndarray:
         idx = self._rng.integers(0, len(self._train_seeds), size=n)
@@ -346,6 +359,14 @@ class CurriculumTrainer:
                 durations.append(int(info.get("steps", steps)))
         finally:
             env.close()
+        # Charge diagnostic budget (gates/evals). Training frames are separate.
+        try:
+            self.diagnostic_budget.charge(diag_frames, reason=f"evaluate_frozen:{level}")
+        except DiagnosticBudgetExhausted:
+            (self.output_dir / "logs" / "diagnostic_budget_exhausted.json").write_text(
+                json.dumps(self.diagnostic_budget.snapshot(), indent=2) + "\n"
+            )
+            raise
         land = counts["perfect"] + counts["hard"]
         p, lo, hi = wilson_ci(land, n)
         return {
@@ -362,6 +383,7 @@ class CurriculumTrainer:
             "mean_duration": float(np.mean(durations)) if durations else 0.0,
             "diagnostic_frames": diag_frames,
             "global_step_at_eval": self.global_step,
+            "diagnostic_budget_spent": self.diagnostic_budget.spent,
         }
 
     def maybe_gate(self) -> bool:
@@ -681,8 +703,13 @@ class CurriculumTrainer:
                 with (self.output_dir / "logs" / "l0_learning_check.json").open("w") as f:
                     json.dump(check, f, indent=2)
                 print("L0 learning check:", json.dumps(check, indent=2), flush=True)
-                if not ok and self.level_idx == 0:
-                    early_stop_reason = "l0_basic_learning_check_failed"
+                # (a) Failed integrity/learning check stops at ANY curriculum level.
+                if should_early_stop_on_failed_check(
+                    check_passed=ok, level_idx=self.level_idx
+                ):
+                    early_stop_reason = early_stop_reason_for_failed_check(
+                        "l0_basic_learning_check"
+                    )
                     break
 
         self._flush_metrics()
@@ -749,6 +776,7 @@ def main() -> None:
                         "checkpoint": str(args.resume),
                         "global_step": trainer.global_step,
                         "level": LEVELS[trainer.level_idx],
+                        "preserved": getattr(trainer, "_resume_preserved", {}),
                     }
                 )
                 + "\n"
