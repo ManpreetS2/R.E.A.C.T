@@ -1,0 +1,176 @@
+/workspace/examples/apollolander/rl_overnight/analyze_learning_from_experience.py:75: RuntimeWarning: Mean of empty slice
+  "mean_terminal_vy": float(np.nanmean([fget(r, "terminal_vy") for r in chunk])),
+/workspace/examples/apollolander/rl_overnight/analyze_learning_from_experience.py:76: RuntimeWarning: Mean of empty slice
+  "mean_terminal_dist": float(np.nanmean([fget(r, "terminal_dist_to_pad") for r in chunk])),
+{
+  "run": "A_reproduce_upstream_s0",
+  "episodes": 2535,
+  "physics_frames_span": [
+    32000.0,
+    6992944.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 507,
+    "land_rate": 0.0,
+    "crash_rate": 0.9881656804733728,
+    "timeout_rate": 0.011834319526627219,
+    "mean_steps": 1652.5798816568047,
+    "mean_return": -101.61595175689315,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "late": {
+    "n": 507,
+    "land_rate": 0.0,
+    "crash_rate": 0.7159763313609467,
+    "timeout_rate": 0.28402366863905326,
+    "mean_steps": 4222.090729783037,
+    "mean_return": -94.14344182306299,
+    "mean_terminal_vy": -0.009374801142512176,
+    "mean_terminal_dist": 813.0871223130987
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash rate declined; mean episode length rose (1653\u21924222) \u2014 survival longer, not proof of landing skill; terminal contact metrics did NOT improve",
+  "failure_modes_declined": false
+}
+{
+  "run": "D_curriculum_easy_s7",
+  "episodes": 1777,
+  "physics_frames_span": [
+    16000.0,
+    5997208.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 355,
+    "land_rate": 0.0,
+    "crash_rate": 0.352112676056338,
+    "timeout_rate": 0.647887323943662,
+    "mean_steps": 2830.4901408450705,
+    "mean_return": -128.30490140845112,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "late": {
+    "n": 355,
+    "land_rate": 0.0,
+    "crash_rate": 0.1352112676056338,
+    "timeout_rate": 0.8647887323943662,
+    "mean_steps": 3692.287323943662,
+    "mean_return": -136.92287323943717,
+    "mean_terminal_vy": -1.3064905950955932,
+    "mean_terminal_dist": 2916.5110246189406
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash rate declined; mean episode length rose (2830\u21923692) \u2014 survival longer, not proof of landing skill; terminal contact metrics did NOT improve",
+  "failure_modes_declined": false
+}
+{
+  "run": "CTRL_zero_reward_s0",
+  "episodes": 533,
+  "physics_frames_span": [
+    32000.0,
+    2998744.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 106,
+    "land_rate": 0.0,
+    "crash_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_steps": 8000.0,
+    "mean_return": 0.0,
+    "mean_terminal_vy": -2.170118363712077,
+    "mean_terminal_dist": 17245.950306349958
+  },
+  "late": {
+    "n": 106,
+    "land_rate": 0.0,
+    "crash_rate": 0.44339622641509435,
+    "timeout_rate": 0.5566037735849056,
+    "mean_steps": 5762.38679245283,
+    "mean_return": 0.0,
+    "mean_terminal_vy": -0.5734631969557478,
+    "mean_terminal_dist": 3553.333473378123
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve; terminal vy and/or pad distance improved",
+  "failure_modes_declined": true
+}
+{
+  "real_run": "A_reproduce_upstream_s0",
+  "control_run": "CTRL_zero_reward_s0",
+  "control_label": "constant_zero reward (physics unchanged)",
+  "real": {
+    "run": "A_reproduce_upstream_s0",
+    "episodes": 2535,
+    "physics_frames_span": [
+      32000.0,
+      6992944.0
+    ],
+    "first_landing_episode": null,
+    "first_landing_frames": null,
+    "early": {
+      "n": 507,
+      "land_rate": 0.0,
+      "crash_rate": 0.9881656804733728,
+      "timeout_rate": 0.011834319526627219,
+      "mean_steps": 1652.5798816568047,
+      "mean_return": -101.61595175689315,
+      "mean_terminal_vy": NaN,
+      "mean_terminal_dist": NaN
+    },
+    "late": {
+      "n": 507,
+      "land_rate": 0.0,
+      "crash_rate": 0.7159763313609467,
+      "timeout_rate": 0.28402366863905326,
+      "mean_steps": 4222.090729783037,
+      "mean_return": -94.14344182306299,
+      "mean_terminal_vy": -0.009374801142512176,
+      "mean_terminal_dist": 813.0871223130987
+    },
+    "learning_from_experience_verdict": "landing rate did NOT rise; crash rate declined; mean episode length rose (1653\u21924222) \u2014 survival longer, not proof of landing skill; terminal contact metrics did NOT improve",
+    "failure_modes_declined": false
+  },
+  "control": {
+    "run": "CTRL_zero_reward_s0",
+    "episodes": 533,
+    "physics_frames_span": [
+      32000.0,
+      2998744.0
+    ],
+    "first_landing_episode": null,
+    "first_landing_frames": null,
+    "early": {
+      "n": 106,
+      "land_rate": 0.0,
+      "crash_rate": 0.0,
+      "timeout_rate": 1.0,
+      "mean_steps": 8000.0,
+      "mean_return": 0.0,
+      "mean_terminal_vy": -2.170118363712077,
+      "mean_terminal_dist": 17245.950306349958
+    },
+    "late": {
+      "n": 106,
+      "land_rate": 0.0,
+      "crash_rate": 0.44339622641509435,
+      "timeout_rate": 0.5566037735849056,
+      "mean_steps": 5762.38679245283,
+      "mean_return": 0.0,
+      "mean_terminal_vy": -0.5734631969557478,
+      "mean_terminal_dist": 3553.333473378123
+    },
+    "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve; terminal vy and/or pad distance improved",
+    "failure_modes_declined": true
+  },
+  "comparison": {
+    "real_steps_delta": 2569.5108481262323,
+    "ctrl_steps_delta": -2237.6132075471696,
+    "real_crash_delta": -0.2721893491124261,
+    "ctrl_crash_delta": 0.44339622641509435,
+    "interpretation": "If real-reward run shows larger structured behavioral change (e.g. longer flights / mode shift) than the zero-reward control on the same seed/config/budget, that supports reward causality. If both look similar, changes may be entropy drift / noise."
+  }
+}

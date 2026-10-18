@@ -1,0 +1,12 @@
+{
+  "tag": "final",
+  "path": "examples/apollolander/rl_overnight/results/C_timeout_eq_crash_s2/checkpoints/final.pt",
+  "sha256": "f2eb5326ed7633b743e76e13cbfbcd05a4a6926c5f5701e12878c60d94cc18f4",
+  "global_step": 3000320,
+  "physics_frames": 3000320,
+  "policy_decisions": 1500160,
+  "update_idx": 1465,
+  "reward_mode": "timeout_eq_crash",
+  "family": "C",
+  "backend": "upstream_vm_host"
+}

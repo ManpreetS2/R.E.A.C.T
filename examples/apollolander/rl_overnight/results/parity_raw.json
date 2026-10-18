@@ -1,0 +1,82 @@
+{
+  "browser": {
+    "ok": true,
+    "trajs": {
+      "hover_thrust_sequence": {
+        "frames_compared": 120,
+        "frame_mismatches": [],
+        "n_mismatches": 0,
+        "node_terminal": "flying",
+        "browser_terminal": "flying",
+        "exact_terminal": true,
+        "pass": true
+      },
+      "descent_near_pad": {
+        "frames_compared": 310,
+        "frame_mismatches": [],
+        "n_mismatches": 0,
+        "node_terminal": "flying",
+        "browser_terminal": "flying",
+        "exact_terminal": true,
+        "pass": true
+      },
+      "crash_boundary": {
+        "frames_compared": 115,
+        "frame_mismatches": [],
+        "n_mismatches": 0,
+        "node_terminal": "crashed",
+        "browser_terminal": "crashed",
+        "exact_terminal": true,
+        "pass": true
+      },
+      "long_coast": {
+        "frames_compared": 400,
+        "frame_mismatches": [],
+        "n_mismatches": 0,
+        "node_terminal": "flying",
+        "browser_terminal": "flying",
+        "exact_terminal": true,
+        "pass": true
+      }
+    }
+  },
+  "custom_vs_upstream": {
+    "trajs": {
+      "hover_thrust_sequence": {
+        "frames": 120,
+        "n_mismatches": 0,
+        "sample_mismatches": [],
+        "upstream_terminal": "flying",
+        "custom_terminal": "flying",
+        "exact_terminal": true
+      },
+      "descent_near_pad": {
+        "frames": 310,
+        "n_mismatches": 0,
+        "sample_mismatches": [],
+        "upstream_terminal": "flying",
+        "custom_terminal": "flying",
+        "exact_terminal": true
+      },
+      "crash_boundary": {
+        "frames": 115,
+        "n_mismatches": 1,
+        "sample_mismatches": [
+          "rotation: 0.0 vs 30.0 (tol=1e-09)"
+        ],
+        "upstream_terminal": "crashed",
+        "custom_terminal": "crashed",
+        "exact_terminal": true
+      },
+      "long_coast": {
+        "frames": 400,
+        "n_mismatches": 0,
+        "sample_mismatches": [],
+        "upstream_terminal": "flying",
+        "custom_terminal": "flying",
+        "exact_terminal": true
+      }
+    }
+  },
+  "hashes_ok": true
+}

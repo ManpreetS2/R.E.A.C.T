@@ -1,0 +1,80 @@
+[
+  {
+    "checkpoint": "step0",
+    "seed": 1000000,
+    "seed_chosen_before_outcomes": true,
+    "reward": -98.75778408528474,
+    "status": "crashed",
+    "landed": false,
+    "crashed": true,
+    "timed_out": false,
+    "replay_matched": true,
+    "video_artifact": "/opt/cursor/artifacts/apollolander_rl_step0_heldout_seed1000000.mp4",
+    "flight_record": "examples/apollolander/rl_pilot/results/ppo_pilot_v1/footage/apollo-ppo-step0-revision-1-ep-seed-1000000.flight.json"
+  },
+  {
+    "checkpoint": "step0",
+    "seed": 1000001,
+    "seed_chosen_before_outcomes": true,
+    "reward": -98.31707307615576,
+    "status": "crashed",
+    "landed": false,
+    "crashed": true,
+    "timed_out": false,
+    "replay_matched": true,
+    "video_artifact": "/opt/cursor/artifacts/apollolander_rl_step0_heldout_seed1000001.mp4",
+    "flight_record": "examples/apollolander/rl_pilot/results/ppo_pilot_v1/footage/apollo-ppo-step0-revision-1-ep-seed-1000001.flight.json"
+  },
+  {
+    "checkpoint": "step0",
+    "seed": 1000002,
+    "seed_chosen_before_outcomes": true,
+    "reward": -98.44412656267481,
+    "status": "crashed",
+    "landed": false,
+    "crashed": true,
+    "timed_out": false,
+    "replay_matched": true,
+    "video_artifact": "/opt/cursor/artifacts/apollolander_rl_step0_heldout_seed1000002.mp4",
+    "flight_record": "examples/apollolander/rl_pilot/results/ppo_pilot_v1/footage/apollo-ppo-step0-revision-1-ep-seed-1000002.flight.json"
+  },
+  {
+    "checkpoint": "final",
+    "seed": 1000000,
+    "seed_chosen_before_outcomes": true,
+    "reward": -105.02787425534868,
+    "status": "crashed",
+    "landed": false,
+    "crashed": true,
+    "timed_out": false,
+    "replay_matched": true,
+    "video_artifact": "/opt/cursor/artifacts/apollolander_rl_final_heldout_seed1000000.mp4",
+    "flight_record": "examples/apollolander/rl_pilot/results/ppo_pilot_v1/footage/apollo-ppo-final-revision-1-ep-seed-1000000.flight.json"
+  },
+  {
+    "checkpoint": "final",
+    "seed": 1000001,
+    "seed_chosen_before_outcomes": true,
+    "reward": -105.80626993452954,
+    "status": "crashed",
+    "landed": false,
+    "crashed": true,
+    "timed_out": false,
+    "replay_matched": true,
+    "video_artifact": "/opt/cursor/artifacts/apollolander_rl_final_heldout_seed1000001.mp4",
+    "flight_record": "examples/apollolander/rl_pilot/results/ppo_pilot_v1/footage/apollo-ppo-final-revision-1-ep-seed-1000001.flight.json"
+  },
+  {
+    "checkpoint": "final",
+    "seed": 1000002,
+    "seed_chosen_before_outcomes": true,
+    "reward": -108.43173849236483,
+    "status": "crashed",
+    "landed": false,
+    "crashed": true,
+    "timed_out": false,
+    "replay_matched": true,
+    "video_artifact": "/opt/cursor/artifacts/apollolander_rl_final_heldout_seed1000002.mp4",
+    "flight_record": "examples/apollolander/rl_pilot/results/ppo_pilot_v1/footage/apollo-ppo-final-revision-1-ep-seed-1000002.flight.json"
+  }
+]
