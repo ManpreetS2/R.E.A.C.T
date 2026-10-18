@@ -1,0 +1,22 @@
+{
+  "python_single": {
+    "backend": "python_port_single",
+    "physics_steps": 20000,
+    "wall_seconds": 1.1989159770000697,
+    "steps_per_sec": 16681.736154725408
+  },
+  "python_vectorized": {
+    "backend": "python_port_vectorized",
+    "n_envs": 16,
+    "action_repeat": 4,
+    "physics_steps": 50048,
+    "wall_seconds": 3.3165022140000247,
+    "steps_per_sec": 15090.597494170594
+  },
+  "node_ipc": {
+    "backend": "node_json_ipc_single",
+    "physics_steps": 10000,
+    "wall_seconds": 0.40500308599996515,
+    "steps_per_sec": 24691.169884075553
+  }
+}

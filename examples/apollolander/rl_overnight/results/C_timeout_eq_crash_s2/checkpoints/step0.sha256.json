@@ -1,0 +1,12 @@
+{
+  "tag": "step0",
+  "path": "examples/apollolander/rl_overnight/results/C_timeout_eq_crash_s2/checkpoints/step0.pt",
+  "sha256": "237d036ca6d594b2628dfa9631afd3da2bbaa7375847f7def4e1de8389aaf0d1",
+  "global_step": 0,
+  "physics_frames": 0,
+  "policy_decisions": 0,
+  "update_idx": 0,
+  "reward_mode": "timeout_eq_crash",
+  "family": "C",
+  "backend": "upstream_vm_host"
+}

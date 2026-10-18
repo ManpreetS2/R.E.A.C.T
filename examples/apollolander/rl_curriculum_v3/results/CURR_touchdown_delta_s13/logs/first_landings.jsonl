@@ -1,0 +1,1 @@
+{"event": "first_train_landing", "level": "apollolander.starts.curriculum_l0_v3", "frames": 8776, "status": "landed", "seed_unknown_vec_env": true, "native_outcome": {"kind": "landed", "perfect": true, "hard": false, "nativePoints": 100, "multiplier": 2, "designated": true, "vy": 0.06601615397293784, "rotation": 0}}

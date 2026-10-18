@@ -1,0 +1,12 @@
+{
+  "tag": "step3000000",
+  "path": "examples/apollolander/rl_overnight/results/B_stable_lowlr_s1/checkpoints/step3000000.pt",
+  "sha256": "69ec59361b9ee8e1edbc312b0888760db0dfcda878ea1eff8ef54034db96cd0a",
+  "global_step": 3000320,
+  "physics_frames": 3000320,
+  "policy_decisions": 1500160,
+  "update_idx": 2930,
+  "reward_mode": "research_shaped",
+  "family": "B",
+  "backend": "upstream_vm_host"
+}

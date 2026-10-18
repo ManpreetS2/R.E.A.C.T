@@ -1,0 +1,32 @@
+{
+  "run": "CTRL_zero_reward_s0",
+  "episodes": 533,
+  "physics_frames_span": [
+    32000.0,
+    2998744.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 106,
+    "land_rate": 0.0,
+    "crash_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_steps": 8000.0,
+    "mean_return": 0.0,
+    "mean_terminal_vy": -2.170118363712077,
+    "mean_terminal_dist": 17245.950306349958
+  },
+  "late": {
+    "n": 106,
+    "land_rate": 0.0,
+    "crash_rate": 0.44339622641509435,
+    "timeout_rate": 0.5566037735849056,
+    "mean_steps": 5762.38679245283,
+    "mean_return": 0.0,
+    "mean_terminal_vy": -0.5734631969557478,
+    "mean_terminal_dist": 3553.333473378123
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve; terminal vy and/or pad distance improved",
+  "failure_modes_declined": true
+}

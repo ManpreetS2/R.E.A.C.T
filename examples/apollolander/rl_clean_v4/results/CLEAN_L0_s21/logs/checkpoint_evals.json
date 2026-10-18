@@ -1,0 +1,386 @@
+[
+  {
+    "tag": "step0",
+    "global_step": 0,
+    "deterministic": {
+      "mode": "deterministic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -103.66627771313631,
+      "mean_duration": 183.625,
+      "diagnostic_frames": 7345,
+      "global_step_at_eval": 0,
+      "diagnostic_budget_spent": 7345
+    },
+    "stochastic": {
+      "mode": "stochastic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 23,
+        "timeout": 17
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -106.93258741910047,
+      "mean_duration": 341.425,
+      "diagnostic_frames": 13657,
+      "global_step_at_eval": 0,
+      "diagnostic_budget_spent": 21002
+    },
+    "vs_step0_deterministic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    },
+    "vs_step0_stochastic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    }
+  },
+  {
+    "tag": "step50176",
+    "global_step": 50176,
+    "deterministic": {
+      "mode": "deterministic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -103.63776254010236,
+      "mean_duration": 182.4,
+      "diagnostic_frames": 7296,
+      "global_step_at_eval": 50176,
+      "diagnostic_budget_spent": 43081
+    },
+    "stochastic": {
+      "mode": "stochastic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -103.75457287767809,
+      "mean_duration": 188.175,
+      "diagnostic_frames": 7527,
+      "global_step_at_eval": 50176,
+      "diagnostic_budget_spent": 50608
+    },
+    "vs_step0_deterministic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    },
+    "vs_step0_stochastic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    }
+  },
+  {
+    "tag": "step100352",
+    "global_step": 100352,
+    "deterministic": {
+      "mode": "deterministic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 0,
+        "timeout": 40
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -108.0129649847084,
+      "mean_duration": 400.0,
+      "diagnostic_frames": 16000,
+      "global_step_at_eval": 100352,
+      "diagnostic_budget_spent": 66608
+    },
+    "stochastic": {
+      "mode": "stochastic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 37,
+        "timeout": 3
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -105.38483990900063,
+      "mean_duration": 268.275,
+      "diagnostic_frames": 10731,
+      "global_step_at_eval": 100352,
+      "diagnostic_budget_spent": 77339
+    },
+    "vs_step0_deterministic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    },
+    "vs_step0_stochastic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    }
+  },
+  {
+    "tag": "step150016",
+    "global_step": 150016,
+    "deterministic": {
+      "mode": "deterministic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 0,
+        "timeout": 40
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -108.03230917483556,
+      "mean_duration": 400.0,
+      "diagnostic_frames": 16000,
+      "global_step_at_eval": 150016,
+      "diagnostic_budget_spent": 93339
+    },
+    "stochastic": {
+      "mode": "stochastic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 24,
+        "timeout": 16
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -106.82675506916493,
+      "mean_duration": 338.3,
+      "diagnostic_frames": 13532,
+      "global_step_at_eval": 150016,
+      "diagnostic_budget_spent": 106871
+    },
+    "vs_step0_deterministic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    },
+    "vs_step0_stochastic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    }
+  },
+  {
+    "tag": "step200192",
+    "global_step": 200192,
+    "deterministic": {
+      "mode": "deterministic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -103.64737468112278,
+      "mean_duration": 182.9,
+      "diagnostic_frames": 7316,
+      "global_step_at_eval": 200192,
+      "diagnostic_budget_spent": 114187
+    },
+    "stochastic": {
+      "mode": "stochastic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 32,
+        "timeout": 8
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -105.98520300263894,
+      "mean_duration": 297.15,
+      "diagnostic_frames": 11886,
+      "global_step_at_eval": 200192,
+      "diagnostic_budget_spent": 126073
+    },
+    "vs_step0_deterministic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    },
+    "vs_step0_stochastic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    }
+  },
+  {
+    "tag": "step250368",
+    "global_step": 250368,
+    "deterministic": {
+      "mode": "deterministic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -103.65860178199088,
+      "mean_duration": 183.475,
+      "diagnostic_frames": 7339,
+      "global_step_at_eval": 250368,
+      "diagnostic_budget_spent": 133412
+    },
+    "stochastic": {
+      "mode": "stochastic",
+      "level": "apollolander.starts.curriculum_l0_v3",
+      "n": 40,
+      "seed_start": 510000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 20,
+        "timeout": 20
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "mean_return": -107.2426482856396,
+      "mean_duration": 358.125,
+      "diagnostic_frames": 14325,
+      "global_step_at_eval": 250368,
+      "diagnostic_budget_spent": 147737
+    },
+    "vs_step0_deterministic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    },
+    "vs_step0_stochastic": {
+      "beats_step0": false,
+      "wilson_nonoverlap": false,
+      "two_proportion_p": 1.0,
+      "step0_landings": 0,
+      "ckpt_landings": 0
+    }
+  }
+]

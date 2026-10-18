@@ -1,0 +1,8 @@
+{
+  "tag": "first_land_L0_271136",
+  "path": "/workspace/examples/apollolander/rl_curriculum_v3/results/CURR_touchdown_s11/checkpoints/first_land_L0_271136.pt",
+  "sha256": "5711ce26350bb76eccaf6723212d068b8e65ac0c2864ef9408b3e9ff0516d64e",
+  "global_step": 271136,
+  "level": "apollolander.starts.curriculum_l0_v3",
+  "level_idx": 0
+}

@@ -1,0 +1,110 @@
+{
+  "probes": [
+    {
+      "name": "L0_random_absolute",
+      "mode": "random_absolute",
+      "n": 40,
+      "seed_start": 520000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 0,
+        "timeout": 40
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "diagnostic_frames": 16000
+    },
+    {
+      "name": "L0_near_random_delta",
+      "mode": "random_delta",
+      "n": 40,
+      "seed_start": 520000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 24,
+        "timeout": 16
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.08762453925039232
+      ],
+      "diagnostic_frames": 11495
+    },
+    {
+      "name": "L0_open_loop_soft_hold_solvability",
+      "mode": "open_loop_soft_hold",
+      "n": 40,
+      "seed_start": 520000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 37,
+        "hard": 3,
+        "crash": 0,
+        "timeout": 0
+      },
+      "landing_rate": 1.0,
+      "landing_wilson95": [
+        0.9123754607496077,
+        1.0
+      ],
+      "diagnostic_frames": 10413
+    },
+    {
+      "name": "L0_near_open_loop_soft_hold",
+      "mode": "open_loop_soft_hold",
+      "n": 40,
+      "seed_start": 520000,
+      "max_steps": 400,
+      "counts": {
+        "perfect": 40,
+        "hard": 0,
+        "crash": 0,
+        "timeout": 0
+      },
+      "landing_rate": 1.0,
+      "landing_wilson95": [
+        0.9123754607496077,
+        1.0
+      ],
+      "diagnostic_frames": 5140
+    },
+    {
+      "name": "L0_random_binary_thrust_delta",
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "crash": 40,
+        "timeout": 0
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0,
+        0.08762453925039232
+      ],
+      "diagnostic_frames": 8001,
+      "n": 40,
+      "seed_start": 521000
+    }
+  ],
+  "diagnostic_budget": {
+    "hard_cap": 400000,
+    "spent": 198786,
+    "remaining": 201214,
+    "ledger": [
+      {
+        "reason": "probe:L0_random_binary_thrust_delta",
+        "frames": 8001,
+        "spent_after": 198786
+      }
+    ]
+  },
+  "note": "Open-loop soft-hold is solvability diagnostic only; not used as a training prior. L0_near is a proposed closer start distribution for a future clean run."
+}

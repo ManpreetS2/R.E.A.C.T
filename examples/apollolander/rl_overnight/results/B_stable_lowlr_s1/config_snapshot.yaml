@@ -1,0 +1,34 @@
+# Family B: stability-oriented PPO (lower lr, higher entropy, GAE trunc fix).
+family: B
+reward_mode: research_shaped
+observation_kind: "state-observation RL, not visual learning"
+
+env:
+  max_steps: 8000
+  research_mode: true
+  start_schedule_version: apollolander.starts.v1
+  vary_fuel: false
+  action_repeat: 2
+  bonuses: false
+  locked_camera: true
+
+ppo:
+  total_env_steps: 3000000
+  n_envs: 4
+  rollout_steps: 128
+  learning_rate: 1.0e-4
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_coef: 0.2
+  ent_coef: 0.05
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  update_epochs: 3
+  minibatch_size: 256
+  hidden: 128
+  seed: 1
+  checkpoint_every_steps: 500000
+  device: cpu
+  train_seed_start: 10000
+  train_seed_count: 200000
+  run_name: B_stable_lowlr_s1

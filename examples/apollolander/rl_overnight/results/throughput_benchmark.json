@@ -1,0 +1,93 @@
+{
+  "cpu_count": 4,
+  "mem_total_gb": 15.628128051757812,
+  "torch_threads_recommendation": 1,
+  "max_simultaneous_trainers": 3,
+  "runs": [
+    {
+      "backend": "python_port_custom_sim",
+      "n_envs": 1,
+      "action_repeat": 2,
+      "physics_frames": 20000,
+      "episodes": 2,
+      "wall_seconds": 1.3310223409999935,
+      "physics_frames_per_sec": 15026.043804023646,
+      "decisions_per_sec": 7513.021902011823,
+      "rss_mb": 236.44921875
+    },
+    {
+      "backend": "python_port_custom_sim",
+      "n_envs": 4,
+      "action_repeat": 2,
+      "physics_frames": 40000,
+      "episodes": 4,
+      "wall_seconds": 2.5288803269999676,
+      "physics_frames_per_sec": 15817.276750083442,
+      "decisions_per_sec": 7908.638375041721,
+      "rss_mb": 235.47265625
+    },
+    {
+      "backend": "python_port_custom_sim",
+      "n_envs": 8,
+      "action_repeat": 2,
+      "physics_frames": 40000,
+      "episodes": 0,
+      "wall_seconds": 2.531346299000006,
+      "physics_frames_per_sec": 15801.867968757088,
+      "decisions_per_sec": 7900.933984378544,
+      "rss_mb": 235.4765625
+    },
+    {
+      "backend": "python_port_custom_sim",
+      "n_envs": 16,
+      "action_repeat": 2,
+      "physics_frames": 50016,
+      "episodes": 0,
+      "wall_seconds": 3.115676156999939,
+      "physics_frames_per_sec": 16053.01625704259,
+      "decisions_per_sec": 8026.508128521295,
+      "rss_mb": 235.48046875
+    },
+    {
+      "backend": "upstream_vm_host",
+      "n_envs": 1,
+      "action_repeat": 2,
+      "physics_frames": 4000,
+      "episodes": 0,
+      "wall_seconds": 0.3232147400000258,
+      "physics and_frames_per_sec": 12375.673213417434,
+      "physics_frames_per_sec": 12375.673213417434,
+      "decisions_per_sec": 6187.836606708717,
+      "rss_mb": 235.484375
+    },
+    {
+      "backend": "upstream_vm_host",
+      "n_envs": 2,
+      "action_repeat": 2,
+      "physics_frames": 4000,
+      "episodes": 0,
+      "wall_seconds": 0.3343409970000266,
+      "physics and_frames_per_sec": 11963.833439186883,
+      "physics_frames_per_sec": 11963.833439186883,
+      "decisions_per_sec": 5981.9167195934415,
+      "rss_mb": 235.484375
+    },
+    {
+      "backend": "upstream_vm_host",
+      "n_envs": 4,
+      "action_repeat": 2,
+      "physics_frames": 8000,
+      "episodes": 0,
+      "wall_seconds": 0.8721838640000215,
+      "physics and_frames_per_sec": 9172.377901272206,
+      "physics_frames_per_sec": 9172.377901272206,
+      "decisions_per_sec": 4586.188950636103,
+      "rss_mb": 235.484375
+    }
+  ],
+  "parallel_vs_serial": {
+    "max_abs_diff": 0.0,
+    "bit_identical": true,
+    "steps": 80
+  }
+}

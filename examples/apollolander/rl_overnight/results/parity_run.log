@@ -1,0 +1,10 @@
+Running custom vs upstream...
+{
+  "hover_thrust_sequence": 0,
+  "descent_near_pad": 0,
+  "crash_boundary": 1,
+  "long_coast": 0
+}
+Running browser parity...
+Wrote /workspace/docs/rl_overnight/PARITY_REPORT.md
+GATE: PASS

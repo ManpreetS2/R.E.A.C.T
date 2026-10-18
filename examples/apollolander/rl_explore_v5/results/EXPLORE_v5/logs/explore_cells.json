@@ -1,0 +1,2280 @@
+{
+  "diagnostic_hard_cap": 100000,
+  "diagnostic_budget": {
+    "hard_cap": 100000,
+    "spent": 89140,
+    "remaining": 10860,
+    "ledger": [
+      {
+        "reason": "open_loop_feasibility/L0",
+        "frames": 2029,
+        "spent_after": 2029
+      },
+      {
+        "reason": "open_loop_feasibility/L0_near",
+        "frames": 1064,
+        "spent_after": 3093
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep0",
+        "frames": 400,
+        "spent_after": 3493
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep1",
+        "frames": 400,
+        "spent_after": 3893
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep2",
+        "frames": 364,
+        "spent_after": 4257
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep3",
+        "frames": 400,
+        "spent_after": 4657
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep4",
+        "frames": 213,
+        "spent_after": 4870
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep5",
+        "frames": 400,
+        "spent_after": 5270
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep6",
+        "frames": 400,
+        "spent_after": 5670
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep7",
+        "frames": 400,
+        "spent_after": 6070
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep8",
+        "frames": 326,
+        "spent_after": 6396
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep9",
+        "frames": 303,
+        "spent_after": 6699
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep10",
+        "frames": 273,
+        "spent_after": 6972
+      },
+      {
+        "reason": "L0/cont_delta_ar1/random/ep11",
+        "frames": 240,
+        "spent_after": 7212
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep0",
+        "frames": 400,
+        "spent_after": 7612
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep1",
+        "frames": 400,
+        "spent_after": 8012
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep2",
+        "frames": 324,
+        "spent_after": 8336
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep3",
+        "frames": 400,
+        "spent_after": 8736
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep4",
+        "frames": 349,
+        "spent_after": 9085
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep5",
+        "frames": 400,
+        "spent_after": 9485
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep6",
+        "frames": 400,
+        "spent_after": 9885
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep7",
+        "frames": 400,
+        "spent_after": 10285
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep8",
+        "frames": 400,
+        "spent_after": 10685
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep9",
+        "frames": 400,
+        "spent_after": 11085
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep10",
+        "frames": 400,
+        "spent_after": 11485
+      },
+      {
+        "reason": "L0/cont_delta_ar4/random/ep11",
+        "frames": 400,
+        "spent_after": 11885
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep0",
+        "frames": 400,
+        "spent_after": 12285
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep1",
+        "frames": 400,
+        "spent_after": 12685
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep2",
+        "frames": 400,
+        "spent_after": 13085
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep3",
+        "frames": 400,
+        "spent_after": 13485
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep4",
+        "frames": 400,
+        "spent_after": 13885
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep5",
+        "frames": 202,
+        "spent_after": 14087
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep6",
+        "frames": 400,
+        "spent_after": 14487
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep7",
+        "frames": 400,
+        "spent_after": 14887
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep8",
+        "frames": 400,
+        "spent_after": 15287
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep9",
+        "frames": 323,
+        "spent_after": 15610
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep10",
+        "frames": 400,
+        "spent_after": 16010
+      },
+      {
+        "reason": "L0/cont_delta_ar8/random/ep11",
+        "frames": 400,
+        "spent_after": 16410
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep0",
+        "frames": 400,
+        "spent_after": 16810
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep1",
+        "frames": 400,
+        "spent_after": 17210
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep2",
+        "frames": 342,
+        "spent_after": 17552
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep3",
+        "frames": 400,
+        "spent_after": 17952
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep4",
+        "frames": 322,
+        "spent_after": 18274
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep5",
+        "frames": 400,
+        "spent_after": 18674
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep6",
+        "frames": 400,
+        "spent_after": 19074
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep7",
+        "frames": 400,
+        "spent_after": 19474
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep8",
+        "frames": 400,
+        "spent_after": 19874
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep9",
+        "frames": 400,
+        "spent_after": 20274
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep10",
+        "frames": 212,
+        "spent_after": 20486
+      },
+      {
+        "reason": "L0/cont_delta_ar16/random/ep11",
+        "frames": 400,
+        "spent_after": 20886
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep0",
+        "frames": 400,
+        "spent_after": 21286
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep1",
+        "frames": 400,
+        "spent_after": 21686
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep2",
+        "frames": 400,
+        "spent_after": 22086
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep3",
+        "frames": 400,
+        "spent_after": 22486
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep4",
+        "frames": 389,
+        "spent_after": 22875
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep5",
+        "frames": 400,
+        "spent_after": 23275
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep6",
+        "frames": 306,
+        "spent_after": 23581
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep7",
+        "frames": 356,
+        "spent_after": 23937
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep8",
+        "frames": 400,
+        "spent_after": 24337
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep9",
+        "frames": 280,
+        "spent_after": 24617
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep10",
+        "frames": 293,
+        "spent_after": 24910
+      },
+      {
+        "reason": "L0/disc4_delta_ar8/random/ep11",
+        "frames": 316,
+        "spent_after": 25226
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep0",
+        "frames": 400,
+        "spent_after": 25626
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep1",
+        "frames": 400,
+        "spent_after": 26026
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep2",
+        "frames": 400,
+        "spent_after": 26426
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep3",
+        "frames": 400,
+        "spent_after": 26826
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep4",
+        "frames": 400,
+        "spent_after": 27226
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep5",
+        "frames": 400,
+        "spent_after": 27626
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep6",
+        "frames": 400,
+        "spent_after": 28026
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep7",
+        "frames": 400,
+        "spent_after": 28426
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep8",
+        "frames": 400,
+        "spent_after": 28826
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep9",
+        "frames": 400,
+        "spent_after": 29226
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep10",
+        "frames": 323,
+        "spent_after": 29549
+      },
+      {
+        "reason": "L0/cont_absolute_ar8/random/ep11",
+        "frames": 400,
+        "spent_after": 29949
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep0",
+        "frames": 400,
+        "spent_after": 30349
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep1",
+        "frames": 400,
+        "spent_after": 30749
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep2",
+        "frames": 400,
+        "spent_after": 31149
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep3",
+        "frames": 400,
+        "spent_after": 31549
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep4",
+        "frames": 400,
+        "spent_after": 31949
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep5",
+        "frames": 400,
+        "spent_after": 32349
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep6",
+        "frames": 400,
+        "spent_after": 32749
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep7",
+        "frames": 400,
+        "spent_after": 33149
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep8",
+        "frames": 400,
+        "spent_after": 33549
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep9",
+        "frames": 400,
+        "spent_after": 33949
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep10",
+        "frames": 400,
+        "spent_after": 34349
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/random/ep11",
+        "frames": 400,
+        "spent_after": 34749
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep0",
+        "frames": 400,
+        "spent_after": 35149
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep1",
+        "frames": 152,
+        "spent_after": 35301
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep2",
+        "frames": 146,
+        "spent_after": 35447
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep3",
+        "frames": 199,
+        "spent_after": 35646
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep4",
+        "frames": 400,
+        "spent_after": 36046
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep5",
+        "frames": 146,
+        "spent_after": 36192
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep6",
+        "frames": 128,
+        "spent_after": 36320
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep7",
+        "frames": 223,
+        "spent_after": 36543
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep8",
+        "frames": 400,
+        "spent_after": 36943
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep9",
+        "frames": 133,
+        "spent_after": 37076
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep10",
+        "frames": 307,
+        "spent_after": 37383
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/random/ep11",
+        "frames": 258,
+        "spent_after": 37641
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep0",
+        "frames": 400,
+        "spent_after": 38041
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep1",
+        "frames": 400,
+        "spent_after": 38441
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep2",
+        "frames": 246,
+        "spent_after": 38687
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep3",
+        "frames": 400,
+        "spent_after": 39087
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep4",
+        "frames": 146,
+        "spent_after": 39233
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep5",
+        "frames": 400,
+        "spent_after": 39633
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep6",
+        "frames": 400,
+        "spent_after": 40033
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep7",
+        "frames": 400,
+        "spent_after": 40433
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep8",
+        "frames": 400,
+        "spent_after": 40833
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep9",
+        "frames": 400,
+        "spent_after": 41233
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep10",
+        "frames": 276,
+        "spent_after": 41509
+      },
+      {
+        "reason": "L0_near/cont_delta_ar4/random/ep11",
+        "frames": 400,
+        "spent_after": 41909
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep0",
+        "frames": 400,
+        "spent_after": 42309
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep1",
+        "frames": 351,
+        "spent_after": 42660
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep2",
+        "frames": 400,
+        "spent_after": 43060
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep3",
+        "frames": 390,
+        "spent_after": 43450
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep4",
+        "frames": 400,
+        "spent_after": 43850
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep5",
+        "frames": 400,
+        "spent_after": 44250
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep6",
+        "frames": 400,
+        "spent_after": 44650
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep7",
+        "frames": 400,
+        "spent_after": 45050
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep8",
+        "frames": 206,
+        "spent_after": 45256
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep9",
+        "frames": 400,
+        "spent_after": 45656
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep10",
+        "frames": 400,
+        "spent_after": 46056
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/random/ep11",
+        "frames": 320,
+        "spent_after": 46376
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep0",
+        "frames": 400,
+        "spent_after": 46776
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep1",
+        "frames": 111,
+        "spent_after": 46887
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep2",
+        "frames": 400,
+        "spent_after": 47287
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep3",
+        "frames": 400,
+        "spent_after": 47687
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep4",
+        "frames": 400,
+        "spent_after": 48087
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep5",
+        "frames": 400,
+        "spent_after": 48487
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep6",
+        "frames": 400,
+        "spent_after": 48887
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep7",
+        "frames": 400,
+        "spent_after": 49287
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep8",
+        "frames": 400,
+        "spent_after": 49687
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep9",
+        "frames": 400,
+        "spent_after": 50087
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep10",
+        "frames": 400,
+        "spent_after": 50487
+      },
+      {
+        "reason": "L0_near/cont_delta_ar16/random/ep11",
+        "frames": 400,
+        "spent_after": 50887
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep0",
+        "frames": 400,
+        "spent_after": 51287
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep1",
+        "frames": 400,
+        "spent_after": 51687
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep2",
+        "frames": 400,
+        "spent_after": 52087
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep3",
+        "frames": 400,
+        "spent_after": 52487
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep4",
+        "frames": 400,
+        "spent_after": 52887
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep5",
+        "frames": 400,
+        "spent_after": 53287
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep6",
+        "frames": 400,
+        "spent_after": 53687
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep7",
+        "frames": 372,
+        "spent_after": 54059
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep8",
+        "frames": 400,
+        "spent_after": 54459
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep9",
+        "frames": 400,
+        "spent_after": 54859
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep10",
+        "frames": 335,
+        "spent_after": 55194
+      },
+      {
+        "reason": "L0_near/disc4_delta_ar8/random/ep11",
+        "frames": 400,
+        "spent_after": 55594
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep0",
+        "frames": 400,
+        "spent_after": 55994
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep1",
+        "frames": 400,
+        "spent_after": 56394
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep2",
+        "frames": 400,
+        "spent_after": 56794
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep3",
+        "frames": 400,
+        "spent_after": 57194
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep4",
+        "frames": 400,
+        "spent_after": 57594
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep5",
+        "frames": 181,
+        "spent_after": 57775
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep6",
+        "frames": 246,
+        "spent_after": 58021
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep7",
+        "frames": 256,
+        "spent_after": 58277
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep8",
+        "frames": 400,
+        "spent_after": 58677
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep9",
+        "frames": 144,
+        "spent_after": 58821
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep10",
+        "frames": 400,
+        "spent_after": 59221
+      },
+      {
+        "reason": "L0_near/cont_absolute_ar8/random/ep11",
+        "frames": 400,
+        "spent_after": 59621
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep0",
+        "frames": 400,
+        "spent_after": 60021
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep1",
+        "frames": 400,
+        "spent_after": 60421
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep2",
+        "frames": 400,
+        "spent_after": 60821
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep3",
+        "frames": 400,
+        "spent_after": 61221
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep4",
+        "frames": 400,
+        "spent_after": 61621
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep5",
+        "frames": 400,
+        "spent_after": 62021
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep6",
+        "frames": 400,
+        "spent_after": 62421
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep7",
+        "frames": 400,
+        "spent_after": 62821
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep8",
+        "frames": 400,
+        "spent_after": 63221
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep9",
+        "frames": 400,
+        "spent_after": 63621
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep10",
+        "frames": 400,
+        "spent_after": 64021
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/random/ep11",
+        "frames": 400,
+        "spent_after": 64421
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep0",
+        "frames": 400,
+        "spent_after": 64821
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep1",
+        "frames": 400,
+        "spent_after": 65221
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep2",
+        "frames": 277,
+        "spent_after": 65498
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep3",
+        "frames": 400,
+        "spent_after": 65898
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep4",
+        "frames": 400,
+        "spent_after": 66298
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep5",
+        "frames": 400,
+        "spent_after": 66698
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep6",
+        "frames": 400,
+        "spent_after": 67098
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep7",
+        "frames": 400,
+        "spent_after": 67498
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep8",
+        "frames": 400,
+        "spent_after": 67898
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep9",
+        "frames": 400,
+        "spent_after": 68298
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep10",
+        "frames": 400,
+        "spent_after": 68698
+      },
+      {
+        "reason": "L0/cont_delta_ar1/untrained/ep11",
+        "frames": 331,
+        "spent_after": 69029
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep0",
+        "frames": 400,
+        "spent_after": 69429
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep1",
+        "frames": 400,
+        "spent_after": 69829
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep2",
+        "frames": 400,
+        "spent_after": 70229
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep3",
+        "frames": 400,
+        "spent_after": 70629
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep4",
+        "frames": 400,
+        "spent_after": 71029
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep5",
+        "frames": 400,
+        "spent_after": 71429
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep6",
+        "frames": 400,
+        "spent_after": 71829
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep7",
+        "frames": 400,
+        "spent_after": 72229
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep8",
+        "frames": 400,
+        "spent_after": 72629
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep9",
+        "frames": 400,
+        "spent_after": 73029
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep10",
+        "frames": 400,
+        "spent_after": 73429
+      },
+      {
+        "reason": "L0/cont_delta_ar8/untrained/ep11",
+        "frames": 400,
+        "spent_after": 73829
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep0",
+        "frames": 400,
+        "spent_after": 74229
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep1",
+        "frames": 328,
+        "spent_after": 74557
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep2",
+        "frames": 400,
+        "spent_after": 74957
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep3",
+        "frames": 400,
+        "spent_after": 75357
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep4",
+        "frames": 400,
+        "spent_after": 75757
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep5",
+        "frames": 400,
+        "spent_after": 76157
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep6",
+        "frames": 291,
+        "spent_after": 76448
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep7",
+        "frames": 322,
+        "spent_after": 76770
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep8",
+        "frames": 400,
+        "spent_after": 77170
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep9",
+        "frames": 400,
+        "spent_after": 77570
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep10",
+        "frames": 400,
+        "spent_after": 77970
+      },
+      {
+        "reason": "L0/cont_holdheavy_ar8/untrained/ep11",
+        "frames": 400,
+        "spent_after": 78370
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep0",
+        "frames": 400,
+        "spent_after": 78770
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep1",
+        "frames": 237,
+        "spent_after": 79007
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep2",
+        "frames": 400,
+        "spent_after": 79407
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep3",
+        "frames": 216,
+        "spent_after": 79623
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep4",
+        "frames": 400,
+        "spent_after": 80023
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep5",
+        "frames": 140,
+        "spent_after": 80163
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep6",
+        "frames": 400,
+        "spent_after": 80563
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep7",
+        "frames": 400,
+        "spent_after": 80963
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep8",
+        "frames": 400,
+        "spent_after": 81363
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep9",
+        "frames": 400,
+        "spent_after": 81763
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep10",
+        "frames": 400,
+        "spent_after": 82163
+      },
+      {
+        "reason": "L0_near/cont_delta_ar1/untrained/ep11",
+        "frames": 400,
+        "spent_after": 82563
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep0",
+        "frames": 133,
+        "spent_after": 82696
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep1",
+        "frames": 173,
+        "spent_after": 82869
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep2",
+        "frames": 148,
+        "spent_after": 83017
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep3",
+        "frames": 274,
+        "spent_after": 83291
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep4",
+        "frames": 213,
+        "spent_after": 83504
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep5",
+        "frames": 128,
+        "spent_after": 83632
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep6",
+        "frames": 202,
+        "spent_after": 83834
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep7",
+        "frames": 144,
+        "spent_after": 83978
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep8",
+        "frames": 201,
+        "spent_after": 84179
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep9",
+        "frames": 172,
+        "spent_after": 84351
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep10",
+        "frames": 142,
+        "spent_after": 84493
+      },
+      {
+        "reason": "L0_near/cont_delta_ar8/untrained/ep11",
+        "frames": 214,
+        "spent_after": 84707
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep0",
+        "frames": 400,
+        "spent_after": 85107
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep1",
+        "frames": 400,
+        "spent_after": 85507
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep2",
+        "frames": 400,
+        "spent_after": 85907
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep3",
+        "frames": 400,
+        "spent_after": 86307
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep4",
+        "frames": 400,
+        "spent_after": 86707
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep5",
+        "frames": 400,
+        "spent_after": 87107
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep6",
+        "frames": 400,
+        "spent_after": 87507
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep7",
+        "frames": 209,
+        "spent_after": 87716
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep8",
+        "frames": 400,
+        "spent_after": 88116
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep9",
+        "frames": 322,
+        "spent_after": 88438
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep10",
+        "frames": 302,
+        "spent_after": 88740
+      },
+      {
+        "reason": "L0_near/cont_holdheavy_ar8/untrained/ep11",
+        "frames": 400,
+        "spent_after": 89140
+      }
+    ]
+  },
+  "near_miss_definition": {
+    "pad_aligned_contact": "landable_contact AND within_pad",
+    "sole_failure_tolerances": {
+      "rotation_deg_abs_le": 10.0,
+      "vy_lt": 0.3,
+      "safe_vy": 0.15
+    },
+    "rule": "Near-miss iff pad-aligned contact, not a landing, exactly one of {rotation==0, vy<0.15} fails, and that failure is within tolerance."
+  },
+  "n_episodes_per_cell": 12,
+  "max_steps": 400,
+  "seed_start": 530000,
+  "cells": [
+    {
+      "start": "L0",
+      "rep": "cont_delta_ar1",
+      "policy": "random",
+      "action_repeat": 1,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Touch thrust slider continuous; setRotation \u00b110\u00b0/0 each decision (1 frame). Unlike keyboard, decisions every physics frame.",
+      "n": 12,
+      "seed_start": 530000,
+      "max_steps": 400,
+      "diagnostic_frames": 4119,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 1,
+        "pad_aligned_contact": 6,
+        "landable_contact": 6,
+        "crash": 6,
+        "timeout": 6
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.08333333333333333,
+      "near_miss_wilson95": [
+        0.014864709450773478,
+        0.35388592179859524
+      ],
+      "pad_aligned_contact_rate": 0.5,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 6,
+        "rotation_nonzero": 6
+      },
+      "joint_violations": {
+        "unknown": 6,
+        "rotation_nonzero": 6
+      }
+    },
+    {
+      "start": "L0",
+      "rep": "cont_delta_ar4",
+      "policy": "random",
+      "action_repeat": 4,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Same as keyboard-ish hold: one setRotation/thrust command held ~4 frames (\u224867ms), near the 80ms keyboard rotate rate limit.",
+      "n": 12,
+      "seed_start": 531000,
+      "max_steps": 400,
+      "diagnostic_frames": 4673,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 2,
+        "landable_contact": 2,
+        "crash": 2,
+        "timeout": 10
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.16666666666666666,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 10,
+        "rotation_nonzero": 2
+      },
+      "joint_violations": {
+        "unknown": 10,
+        "rotation_nonzero": 2
+      }
+    },
+    {
+      "start": "L0",
+      "rep": "cont_delta_ar8",
+      "policy": "random",
+      "action_repeat": 8,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Command held 8 frames (~133ms); slower than keyboard max rotate rate.",
+      "n": 12,
+      "seed_start": 532000,
+      "max_steps": 400,
+      "diagnostic_frames": 4525,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 2,
+        "landable_contact": 2,
+        "crash": 2,
+        "timeout": 10
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.16666666666666666,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 10,
+        "rotation_nonzero": 2
+      },
+      "joint_violations": {
+        "unknown": 10,
+        "rotation_nonzero": 2
+      }
+    },
+    {
+      "start": "L0",
+      "rep": "cont_delta_ar16",
+      "policy": "random",
+      "action_repeat": 16,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Command held 16 frames (~267ms); player holding a key / not re-tapping.",
+      "n": 12,
+      "seed_start": 533000,
+      "max_steps": 400,
+      "diagnostic_frames": 4476,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 3,
+        "landable_contact": 3,
+        "crash": 3,
+        "timeout": 9
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.25,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 9,
+        "rotation_nonzero": 3
+      },
+      "joint_violations": {
+        "unknown": 9,
+        "rotation_nonzero": 3
+      }
+    },
+    {
+      "start": "L0",
+      "rep": "disc4_delta_ar8",
+      "policy": "random",
+      "action_repeat": 8,
+      "thrust_mode": "discrete4",
+      "rotation_mode": "delta",
+      "player_mapping": "Thrust in {0,0.25,0.5,1} (UP key is binary 0/1; touch is continuous \u2014 discrete bins are a coarsening of touch). Delta setRotation as above.",
+      "n": 12,
+      "seed_start": 534000,
+      "max_steps": 400,
+      "diagnostic_frames": 4340,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 6,
+        "landable_contact": 6,
+        "crash": 6,
+        "timeout": 6
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.5,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 6,
+        "rotation_nonzero": 6
+      },
+      "joint_violations": {
+        "unknown": 6,
+        "rotation_nonzero": 6
+      }
+    },
+    {
+      "start": "L0",
+      "rep": "cont_absolute_ar8",
+      "policy": "random",
+      "action_repeat": 8,
+      "thrust_mode": "continuous",
+      "rotation_mode": "absolute",
+      "player_mapping": "Touch absolute angle via setRotation to one of 19 bins (-90..90/10\u00b0), held 8 frames.",
+      "n": 12,
+      "seed_start": 535000,
+      "max_steps": 400,
+      "diagnostic_frames": 4723,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 1,
+        "landable_contact": 1,
+        "crash": 1,
+        "timeout": 11
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.08333333333333333,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 11,
+        "rotation_nonzero": 1
+      },
+      "joint_violations": {
+        "unknown": 11,
+        "rotation_nonzero": 1
+      }
+    },
+    {
+      "start": "L0",
+      "rep": "cont_holdheavy_ar8",
+      "policy": "random",
+      "action_repeat": 8,
+      "thrust_mode": "continuous",
+      "rotation_mode": "hold_heavy_delta",
+      "player_mapping": "Action layout {-10,0,0,0,+10}: 3/5 mass on hold by layout (maps to releasing arrow keys), not NN bias. Held 8 frames.",
+      "n": 12,
+      "seed_start": 536000,
+      "max_steps": 400,
+      "diagnostic_frames": 4800,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 0,
+        "landable_contact": 0,
+        "crash": 0,
+        "timeout": 12
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.0,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 12
+      },
+      "joint_violations": {
+        "unknown": 12
+      }
+    },
+    {
+      "start": "L0_near",
+      "rep": "cont_delta_ar1",
+      "policy": "random",
+      "action_repeat": 1,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Touch thrust slider continuous; setRotation \u00b110\u00b0/0 each decision (1 frame). Unlike keyboard, decisions every physics frame.",
+      "n": 12,
+      "seed_start": 537000,
+      "max_steps": 400,
+      "diagnostic_frames": 2892,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 1,
+        "pad_aligned_contact": 9,
+        "landable_contact": 9,
+        "crash": 9,
+        "timeout": 3
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.08333333333333333,
+      "near_miss_wilson95": [
+        0.014864709450773478,
+        0.35388592179859524
+      ],
+      "pad_aligned_contact_rate": 0.75,
+      "top_violation": "rotation_nonzero",
+      "single_condition_violations": {
+        "timeout_no_contact": 3,
+        "rotation_nonzero": 9
+      },
+      "joint_violations": {
+        "unknown": 3,
+        "rotation_nonzero": 9
+      }
+    },
+    {
+      "start": "L0_near",
+      "rep": "cont_delta_ar4",
+      "policy": "random",
+      "action_repeat": 4,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Same as keyboard-ish hold: one setRotation/thrust command held ~4 frames (\u224867ms), near the 80ms keyboard rotate rate limit.",
+      "n": 12,
+      "seed_start": 538000,
+      "max_steps": 400,
+      "diagnostic_frames": 4268,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 3,
+        "landable_contact": 3,
+        "crash": 3,
+        "timeout": 9
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.25,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 9,
+        "rotation_nonzero": 3
+      },
+      "joint_violations": {
+        "unknown": 9,
+        "rotation_nonzero": 3
+      }
+    },
+    {
+      "start": "L0_near",
+      "rep": "cont_delta_ar8",
+      "policy": "random",
+      "action_repeat": 8,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Command held 8 frames (~133ms); slower than keyboard max rotate rate.",
+      "n": 12,
+      "seed_start": 539000,
+      "max_steps": 400,
+      "diagnostic_frames": 4467,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 4,
+        "landable_contact": 4,
+        "crash": 4,
+        "timeout": 8
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.3333333333333333,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 8,
+        "rotation_nonzero": 4
+      },
+      "joint_violations": {
+        "unknown": 8,
+        "rotation_nonzero": 4
+      }
+    },
+    {
+      "start": "L0_near",
+      "rep": "cont_delta_ar16",
+      "policy": "random",
+      "action_repeat": 16,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Command held 16 frames (~267ms); player holding a key / not re-tapping.",
+      "n": 12,
+      "seed_start": 540000,
+      "max_steps": 400,
+      "diagnostic_frames": 4511,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 1,
+        "landable_contact": 1,
+        "crash": 1,
+        "timeout": 11
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.08333333333333333,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 11,
+        "rotation_nonzero": 1
+      },
+      "joint_violations": {
+        "unknown": 11,
+        "rotation_nonzero": 1
+      }
+    },
+    {
+      "start": "L0_near",
+      "rep": "disc4_delta_ar8",
+      "policy": "random",
+      "action_repeat": 8,
+      "thrust_mode": "discrete4",
+      "rotation_mode": "delta",
+      "player_mapping": "Thrust in {0,0.25,0.5,1} (UP key is binary 0/1; touch is continuous \u2014 discrete bins are a coarsening of touch). Delta setRotation as above.",
+      "n": 12,
+      "seed_start": 541000,
+      "max_steps": 400,
+      "diagnostic_frames": 4707,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 2,
+        "landable_contact": 2,
+        "crash": 2,
+        "timeout": 10
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.16666666666666666,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 10,
+        "rotation_nonzero": 2
+      },
+      "joint_violations": {
+        "unknown": 10,
+        "rotation_nonzero": 2
+      }
+    },
+    {
+      "start": "L0_near",
+      "rep": "cont_absolute_ar8",
+      "policy": "random",
+      "action_repeat": 8,
+      "thrust_mode": "continuous",
+      "rotation_mode": "absolute",
+      "player_mapping": "Touch absolute angle via setRotation to one of 19 bins (-90..90/10\u00b0), held 8 frames.",
+      "n": 12,
+      "seed_start": 542000,
+      "max_steps": 400,
+      "diagnostic_frames": 4027,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 4,
+        "landable_contact": 4,
+        "crash": 4,
+        "timeout": 8
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.3333333333333333,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 8,
+        "rotation_nonzero": 4
+      },
+      "joint_violations": {
+        "unknown": 8,
+        "rotation_nonzero": 4
+      }
+    },
+    {
+      "start": "L0_near",
+      "rep": "cont_holdheavy_ar8",
+      "policy": "random",
+      "action_repeat": 8,
+      "thrust_mode": "continuous",
+      "rotation_mode": "hold_heavy_delta",
+      "player_mapping": "Action layout {-10,0,0,0,+10}: 3/5 mass on hold by layout (maps to releasing arrow keys), not NN bias. Held 8 frames.",
+      "n": 12,
+      "seed_start": 543000,
+      "max_steps": 400,
+      "diagnostic_frames": 4800,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 0,
+        "landable_contact": 0,
+        "crash": 0,
+        "timeout": 12
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.0,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 12
+      },
+      "joint_violations": {
+        "unknown": 12
+      }
+    },
+    {
+      "start": "L0",
+      "rep": "cont_delta_ar1",
+      "policy": "untrained",
+      "action_repeat": 1,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Touch thrust slider continuous; setRotation \u00b110\u00b0/0 each decision (1 frame). Unlike keyboard, decisions every physics frame.",
+      "n": 12,
+      "seed_start": 544000,
+      "max_steps": 400,
+      "diagnostic_frames": 4608,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 2,
+        "landable_contact": 2,
+        "crash": 2,
+        "timeout": 10
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.16666666666666666,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 10,
+        "rotation_nonzero": 2
+      },
+      "joint_violations": {
+        "unknown": 10,
+        "rotation_nonzero": 2
+      }
+    },
+    {
+      "start": "L0",
+      "rep": "cont_delta_ar8",
+      "policy": "untrained",
+      "action_repeat": 8,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Command held 8 frames (~133ms); slower than keyboard max rotate rate.",
+      "n": 12,
+      "seed_start": 545000,
+      "max_steps": 400,
+      "diagnostic_frames": 4800,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 0,
+        "landable_contact": 0,
+        "crash": 0,
+        "timeout": 12
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.0,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 12
+      },
+      "joint_violations": {
+        "unknown": 12
+      }
+    },
+    {
+      "start": "L0",
+      "rep": "cont_holdheavy_ar8",
+      "policy": "untrained",
+      "action_repeat": 8,
+      "thrust_mode": "continuous",
+      "rotation_mode": "hold_heavy_delta",
+      "player_mapping": "Action layout {-10,0,0,0,+10}: 3/5 mass on hold by layout (maps to releasing arrow keys), not NN bias. Held 8 frames.",
+      "n": 12,
+      "seed_start": 546000,
+      "max_steps": 400,
+      "diagnostic_frames": 4541,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 3,
+        "landable_contact": 3,
+        "crash": 3,
+        "timeout": 9
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.25,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 9,
+        "rotation_nonzero": 3
+      },
+      "joint_violations": {
+        "unknown": 9,
+        "rotation_nonzero": 3
+      }
+    },
+    {
+      "start": "L0_near",
+      "rep": "cont_delta_ar1",
+      "policy": "untrained",
+      "action_repeat": 1,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Touch thrust slider continuous; setRotation \u00b110\u00b0/0 each decision (1 frame). Unlike keyboard, decisions every physics frame.",
+      "n": 12,
+      "seed_start": 547000,
+      "max_steps": 400,
+      "diagnostic_frames": 4193,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 3,
+        "landable_contact": 3,
+        "crash": 3,
+        "timeout": 9
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.25,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 9,
+        "rotation_nonzero": 3
+      },
+      "joint_violations": {
+        "unknown": 9,
+        "rotation_nonzero": 3
+      }
+    },
+    {
+      "start": "L0_near",
+      "rep": "cont_delta_ar8",
+      "policy": "untrained",
+      "action_repeat": 8,
+      "thrust_mode": "continuous",
+      "rotation_mode": "delta",
+      "player_mapping": "Command held 8 frames (~133ms); slower than keyboard max rotate rate.",
+      "n": 12,
+      "seed_start": 548000,
+      "max_steps": 400,
+      "diagnostic_frames": 2144,
+      "counts": {
+        "perfect": 1,
+        "hard": 0,
+        "land": 1,
+        "near_miss": 1,
+        "pad_aligned_contact": 12,
+        "landable_contact": 12,
+        "crash": 11,
+        "timeout": 0
+      },
+      "landing_rate": 0.08333333333333333,
+      "landing_wilson95": [
+        0.014864709450773478,
+        0.35388592179859524
+      ],
+      "near_miss_rate": 0.08333333333333333,
+      "near_miss_wilson95": [
+        0.014864709450773478,
+        0.35388592179859524
+      ],
+      "pad_aligned_contact_rate": 1.0,
+      "top_violation": "rotation_nonzero",
+      "single_condition_violations": {
+        "rotation_nonzero": 11
+      },
+      "joint_violations": {
+        "rotation_nonzero": 11,
+        "none": 1
+      }
+    },
+    {
+      "start": "L0_near",
+      "rep": "cont_holdheavy_ar8",
+      "policy": "untrained",
+      "action_repeat": 8,
+      "thrust_mode": "continuous",
+      "rotation_mode": "hold_heavy_delta",
+      "player_mapping": "Action layout {-10,0,0,0,+10}: 3/5 mass on hold by layout (maps to releasing arrow keys), not NN bias. Held 8 frames.",
+      "n": 12,
+      "seed_start": 549000,
+      "max_steps": 400,
+      "diagnostic_frames": 4433,
+      "counts": {
+        "perfect": 0,
+        "hard": 0,
+        "land": 0,
+        "near_miss": 0,
+        "pad_aligned_contact": 3,
+        "landable_contact": 3,
+        "crash": 3,
+        "timeout": 9
+      },
+      "landing_rate": 0.0,
+      "landing_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "near_miss_rate": 0.0,
+      "near_miss_wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "pad_aligned_contact_rate": 0.25,
+      "top_violation": "timeout_no_contact",
+      "single_condition_violations": {
+        "timeout_no_contact": 9,
+        "rotation_nonzero": 3
+      },
+      "joint_violations": {
+        "unknown": 9,
+        "rotation_nonzero": 3
+      }
+    }
+  ],
+  "violation_detail_L0_cont_delta_ar1_random": {
+    "single": {
+      "timeout_no_contact": 6,
+      "rotation_nonzero": 6
+    },
+    "joint": {
+      "unknown": 6,
+      "rotation_nonzero": 6
+    },
+    "episode_terminals": [
+      {
+        "seed": 530000,
+        "outcome": "timeout",
+        "rotation": 28.66889897,
+        "vy": 0.04684262214197607,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "near_miss": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "frame": 400,
+        "fuel": 958.7236769780721
+      },
+      {
+        "seed": 530001,
+        "outcome": "timeout",
+        "rotation": -14.332049712211266,
+        "vy": 0.025913654144038796,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "near_miss": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "frame": 400,
+        "fuel": 961.2261541735439
+      },
+      {
+        "seed": 530002,
+        "outcome": "crash",
+        "rotation": 62.08480128014026,
+        "vy": 0.053925723326756526,
+        "vx": -0.042648199809242074,
+        "within_pad": true,
+        "landable_contact": true,
+        "near_miss": false,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "frame": 364,
+        "fuel": 964.7393056803819
+      },
+      {
+        "seed": 530003,
+        "outcome": "timeout",
+        "rotation": -43.793044113348856,
+        "vy": 0.0279111364664652,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "near_miss": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "frame": 400,
+        "fuel": 960.0996246861785
+      },
+      {
+        "seed": 530004,
+        "outcome": "crash",
+        "rotation": 51.73994677438757,
+        "vy": 0.0760693479626917,
+        "vx": 0.12741651491140027,
+        "within_pad": true,
+        "landable_contact": true,
+        "near_miss": false,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "frame": 213,
+        "fuel": 978.858468398158
+      },
+      {
+        "seed": 530005,
+        "outcome": "timeout",
+        "rotation": 19.44571515482842,
+        "vy": 0.010085615176768694,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "near_miss": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "frame": 400,
+        "fuel": 960.6736064915813
+      },
+      {
+        "seed": 530006,
+        "outcome": "timeout",
+        "rotation": -80.1894861338681,
+        "vy": 0.05631838245794484,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "near_miss": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "frame": 400,
+        "fuel": 960.4194754098291
+      },
+      {
+        "seed": 530007,
+        "outcome": "timeout",
+        "rotation": 46.28941088622222,
+        "vy": -0.0348815668351065,
+        "vx": 0.0,
+        "within_pad": false,
+        "landable_contact": false,
+        "near_miss": false,
+        "violations": [
+          "timeout_no_contact"
+        ],
+        "frame": 400,
+        "fuel": 959.8739162875578
+      },
+      {
+        "seed": 530008,
+        "outcome": "crash",
+        "rotation": 62.01212225770452,
+        "vy": 0.07194516207478721,
+        "vx": -0.01156143360441634,
+        "within_pad": true,
+        "landable_contact": true,
+        "near_miss": false,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "frame": 326,
+        "fuel": 968.6196823420788
+      },
+      {
+        "seed": 530009,
+        "outcome": "crash",
+        "rotation": -32.97152663954203,
+        "vy": 0.05613872200213829,
+        "vx": -0.14626441685987918,
+        "within_pad": true,
+        "landable_contact": true,
+        "near_miss": false,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "frame": 303,
+        "fuel": 969.9659400742331
+      },
+      {
+        "seed": 530010,
+        "outcome": "crash",
+        "rotation": -5.5052529,
+        "vy": 0.04880886563857982,
+        "vx": 0.09445659261543657,
+        "within_pad": true,
+        "landable_contact": true,
+        "near_miss": true,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "frame": 273,
+        "fuel": 974.5292668558516
+      },
+      {
+        "seed": 530011,
+        "outcome": "crash",
+        "rotation": 88.38664358086606,
+        "vy": 0.08816744326018493,
+        "vx": 0.1503499390608014,
+        "within_pad": true,
+        "landable_contact": true,
+        "near_miss": false,
+        "violations": [
+          "rotation_nonzero"
+        ],
+        "frame": 240,
+        "fuel": 976.709911074189
+      }
+    ]
+  },
+  "any_random_or_untrained_landing": true
+}
