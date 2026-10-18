@@ -1,0 +1,32 @@
+run: C_sparse_s3 family: C reward_mode: sparse_terminal_only
+backend: ORIGINAL upstream via Node vm host
+env_config_hash: ffc01771fc60f8232b7372d349ee06dad712a229a4d5754cee0d2983fa8429c6
+output: examples/apollolander/rl_overnight/results/C_sparse_s3
+update=1 step=2048 loss=-0.1407 ent=4.5537 mb_grads=8 total_grads=8 land=nan mean_r=nan eps=0 wall=0.6s
+update=2 step=4096 loss=-0.1383 ent=4.5530 mb_grads=8 total_grads=16 land=nan mean_r=nan eps=0 wall=1.1s
+update=3 step=6144 loss=-0.1385 ent=4.5520 mb_grads=8 total_grads=24 land=nan mean_r=nan eps=0 wall=1.6s
+update=4 step=8192 loss=-0.1385 ent=4.5507 mb_grads=8 total_grads=32 land=nan mean_r=nan eps=0 wall=2.1s
+update=5 step=10240 loss=-0.1386 ent=4.5486 mb_grads=8 total_grads=40 land=nan mean_r=nan eps=0 wall=2.5s
+update=6 step=12288 loss=-0.1394 ent=4.5458 mb_grads=8 total_grads=48 land=nan mean_r=nan eps=0 wall=3.1s
+update=7 step=14336 loss=-0.1398 ent=4.5425 mb_grads=8 total_grads=56 land=nan mean_r=nan eps=0 wall=3.5s
+update=8 step=16384 loss=-0.1390 ent=4.5355 mb_grads=8 total_grads=64 land=nan mean_r=nan eps=0 wall=3.9s
+update=9 step=18432 loss=-0.1404 ent=4.5234 mb_grads=8 total_grads=72 land=nan mean_r=nan eps=0 wall=4.3s
+update=10 step=20480 loss=-0.1397 ent=4.5085 mb_grads=8 total_grads=80 land=nan mean_r=nan eps=0 wall=4.7s
+update=11 step=22528 loss=-0.1417 ent=4.4881 mb_grads=8 total_grads=88 land=nan mean_r=nan eps=0 wall=5.1s
+update=12 step=24576 loss=-0.1409 ent=4.4556 mb_grads=8 total_grads=96 land=nan mean_r=nan eps=0 wall=5.5s
+update=13 step=26624 loss=-0.1396 ent=4.4183 mb_grads=8 total_grads=104 land=nan mean_r=nan eps=0 wall=5.9s
+update=14 step=28672 loss=-0.1407 ent=4.3942 mb_grads=8 total_grads=112 land=nan mean_r=nan eps=0 wall=6.3s
+update=15 step=30720 loss=-0.1407 ent=4.3646 mb_grads=8 total_grads=120 land=nan mean_r=nan eps=0 wall=6.7s
+update=16 step=32768 loss=4.7276 ent=4.4053 mb_grads=8 total_grads=128 land=0.000 mean_r=-25.00 eps=4 wall=7.1s
+update=17 step=34816 loss=-0.1346 ent=4.5230 mb_grads=8 total_grads=136 land=0.000 mean_r=-25.00 eps=4 wall=7.5s
+update=18 step=36864 loss=-0.1356 ent=4.5212 mb_grads=8 total_grads=144 land=0.000 mean_r=-25.00 eps=4 wall=7.9s
+update=19 step=38912 loss=-0.1367 ent=4.5147 mb_grads=8 total_grads=152 land=0.000 mean_r=-25.00 eps=4 wall=8.3s
+update=20 step=40960 loss=-0.1355 ent=4.5060 mb_grads=8 total_grads=160 land=0.000 mean_r=-25.00 eps=4 wall=8.7s
+update=21 step=43008 loss=-0.1353 ent=4.4835 mb_grads=8 total_grads=168 land=0.000 mean_r=-25.00 eps=4 wall=9.1s
+update=22 step=45056 loss=-0.1344 ent=4.4586 mb_grads=8 total_grads=176 land=0.000 mean_r=-25.00 eps=4 wall=9.5s
+update=23 step=47104 loss=-0.1338 ent=4.4327 mb_grads=8 total_grads=184 land=0.000 mean_r=-25.00 eps=4 wall=9.9s
+update=24 step=49152 loss=-0.1326 ent=4.3933 mb_grads=8 total_grads=192 land=0.000 mean_r=-25.00 eps=4 wall=10.4s
+update=25 step=51200 loss=-0.1292 ent=4.3520 mb_grads=8 total_grads=200 land=0.000 mean_r=-25.00 eps=4 wall=10.8s
+update=26 step=53248 loss=-0.1305 ent=4.3347 mb_grads=8 total_grads=208 land=0.000 mean_r=-25.00 eps=4 wall=11.2s
+update=27 step=55296 loss=-0.1324 ent=4.3487 mb_grads=8 total_grads=216 land=0.000 mean_r=-25.00 eps=4 wall=11.6s
+update=28 step=57344 loss=-0.1315 ent=4.3493 mb_grads=8 total_grads=224 land=0.000 mean_r=-25.00 eps=4 wall=12.0s

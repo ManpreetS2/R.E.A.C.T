@@ -1,0 +1,12 @@
+{
+  "tag": "step0",
+  "path": "examples/apollolander/rl_overnight/results/C_sparse_s3/checkpoints/step0.pt",
+  "sha256": "47710b5bb619d1f717e494a01339667682075f3e97fa9dd490f326a693ce2f0a",
+  "global_step": 0,
+  "physics_frames": 0,
+  "policy_decisions": 0,
+  "update_idx": 0,
+  "reward_mode": "sparse_terminal_only",
+  "family": "C",
+  "backend": "upstream_vm_host"
+}

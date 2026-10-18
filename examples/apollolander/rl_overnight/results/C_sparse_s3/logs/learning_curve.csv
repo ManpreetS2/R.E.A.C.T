@@ -1,0 +1,5 @@
+update,global_step,episodic_return,landing_success,crash,timeout,fuel_used,steps,status
+15,32000,-25.0,0,0,1,773.9607698649581,8000,timeout
+15,32000,-25.0,0,0,1,783.573821677573,8000,timeout
+15,32000,-25.0,0,0,1,791.2093794357248,8000,timeout
+15,32000,-25.0,0,0,1,786.3145425787653,8000,timeout
