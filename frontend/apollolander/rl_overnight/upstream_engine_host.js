@@ -518,7 +518,7 @@ function createEngine() {
       terminal = RESEARCH_REWARD.crash;
     }
 
-    const reward =
+    let reward =
       config.rewardMode === "native_score_only"
         ? (contact && contact.nativePoints) ||
           (status === "timeout"
@@ -528,14 +528,34 @@ function createEngine() {
               : 0)
         : shaped - fuelPenalty - stepCost + terminal;
 
+    // Reward-causality control: physics & native outcomes unchanged; learning
+    // signal is identically zero so any behavioral change is not reward-driven.
+    if (config.rewardMode === "constant_zero") {
+      reward = 0;
+      shaped = 0;
+      fuelPenalty = 0;
+      terminal = 0;
+    }
+
     totalReward += reward;
     return {
       reward,
-      breakdown: { shaping, fuelPenalty, terminal },
+      breakdown: { shaping: shaped, fuelPenalty, terminal, stepCost },
       done,
       status,
       applied: { thrust, rotation },
       nativeOutcome,
+      contactMetrics: done
+        ? {
+            vy: obs.vy,
+            altitude: obs.altitude,
+            dx_to_pad: obs.dx,
+            dy_to_pad: obs.dy,
+            dist_to_pad: Math.hypot(obs.dx, obs.dy),
+            rotation: obs.rotation,
+            fuel: obs.fuel,
+          }
+        : null,
     };
   }
 

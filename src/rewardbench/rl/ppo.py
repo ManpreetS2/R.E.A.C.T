@@ -187,13 +187,31 @@ class PPOTrainer:
     def _flush_metrics(self) -> None:
         if not self._metrics_rows:
             return
-        fieldnames = list(self._metrics_rows[0].keys())
-        write_header = not self._metrics_path.exists()
-        with self._metrics_path.open("a", newline="", encoding="utf-8") as handle:
-            writer = csv.DictWriter(handle, fieldnames=fieldnames)
-            if write_header:
+        new_keys = list(self._metrics_rows[0].keys())
+        if self._metrics_path.exists():
+            with self._metrics_path.open("r", encoding="utf-8") as handle:
+                reader = csv.DictReader(handle)
+                old_fields = list(reader.fieldnames or [])
+                prior = list(reader)
+            fieldnames = list(old_fields)
+            for key in new_keys:
+                if key not in fieldnames:
+                    fieldnames.append(key)
+            if fieldnames != old_fields:
+                with self._metrics_path.open("w", newline="", encoding="utf-8") as out:
+                    writer = csv.DictWriter(out, fieldnames=fieldnames, extrasaction="ignore")
+                    writer.writeheader()
+                    for old in prior:
+                        writer.writerow({k: old.get(k, "") for k in fieldnames})
+            with self._metrics_path.open("a", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="ignore")
+                for row in self._metrics_rows:
+                    writer.writerow({k: row.get(k, "") for k in fieldnames})
+        else:
+            with self._metrics_path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=new_keys, extrasaction="ignore")
                 writer.writeheader()
-            writer.writerows(self._metrics_rows)
+                writer.writerows(self._metrics_rows)
         self._metrics_rows.clear()
 
     def _recent_episode_summary(self) -> dict[str, float | int]:
@@ -230,6 +248,12 @@ class PPOTrainer:
                 "fuel_used": float(info.get("fuel_used", self._episode_fuel[i])),
                 "steps": int(info.get("steps", 0)),
                 "status": info.get("status", ""),
+                "terminal_vy": float(info.get("terminal_vy", float("nan"))),
+                "terminal_altitude": float(info.get("terminal_altitude", float("nan"))),
+                "terminal_dx_to_pad": float(info.get("terminal_dx_to_pad", float("nan"))),
+                "terminal_dy_to_pad": float(info.get("terminal_dy_to_pad", float("nan"))),
+                "terminal_dist_to_pad": float(info.get("terminal_dist_to_pad", float("nan"))),
+                "terminal_rotation": float(info.get("terminal_rotation", float("nan"))),
             }
             self._metrics_rows.append(row)
             self._episode_returns[i] = 0.0

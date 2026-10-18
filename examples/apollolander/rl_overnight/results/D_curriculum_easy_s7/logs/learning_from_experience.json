@@ -1,0 +1,32 @@
+{
+  "run": "D_curriculum_easy_s7",
+  "episodes": 926,
+  "physics_frames_span": [
+    16000.0,
+    2995640.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 185,
+    "land_rate": 0.0,
+    "crash_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_steps": 4000.0,
+    "mean_return": -140.00000000000068,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "late": {
+    "n": 185,
+    "land_rate": 0.0,
+    "crash_rate": 0.10810810810810811,
+    "timeout_rate": 0.8918918918918919,
+    "mean_steps": 3672.2432432432433,
+    "mean_return": -136.722432432433,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve",
+  "failure_modes_declined": false
+}

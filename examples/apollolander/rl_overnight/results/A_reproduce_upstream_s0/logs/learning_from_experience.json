@@ -1,0 +1,32 @@
+{
+  "run": "A_reproduce_upstream_s0",
+  "episodes": 1416,
+  "physics_frames_span": [
+    32000.0,
+    3000240.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 283,
+    "land_rate": 0.0,
+    "crash_rate": 0.9787985865724381,
+    "timeout_rate": 0.02120141342756184,
+    "mean_steps": 1630.9363957597172,
+    "mean_return": -100.64784126208349,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "late": {
+    "n": 283,
+    "land_rate": 0.0,
+    "crash_rate": 0.9540636042402827,
+    "timeout_rate": 0.045936395759717315,
+    "mean_steps": 2982.2049469964663,
+    "mean_return": -107.07806190103408,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve; mean episode length rose (1631\u21922982) \u2014 survival longer, not proof of landing skill",
+  "failure_modes_declined": false
+}

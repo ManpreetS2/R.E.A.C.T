@@ -1,0 +1,132 @@
+/workspace/examples/apollolander/rl_overnight/analyze_learning_from_experience.py:75: RuntimeWarning: Mean of empty slice
+  "mean_terminal_vy": float(np.nanmean([fget(r, "terminal_vy") for r in chunk])),
+/workspace/examples/apollolander/rl_overnight/analyze_learning_from_experience.py:76: RuntimeWarning: Mean of empty slice
+  "mean_terminal_dist": float(np.nanmean([fget(r, "terminal_dist_to_pad") for r in chunk])),
+{
+  "run": "A_reproduce_upstream_s0",
+  "episodes": 1416,
+  "physics_frames_span": [
+    32000.0,
+    3000240.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 283,
+    "land_rate": 0.0,
+    "crash_rate": 0.9787985865724381,
+    "timeout_rate": 0.02120141342756184,
+    "mean_steps": 1630.9363957597172,
+    "mean_return": -100.64784126208349,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "late": {
+    "n": 283,
+    "land_rate": 0.0,
+    "crash_rate": 0.9540636042402827,
+    "timeout_rate": 0.045936395759717315,
+    "mean_steps": 2982.2049469964663,
+    "mean_return": -107.07806190103408,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve; mean episode length rose (1631\u21922982) \u2014 survival longer, not proof of landing skill",
+  "failure_modes_declined": false
+}
+{
+  "run": "B_stable_lowlr_s1",
+  "episodes": 1505,
+  "physics_frames_span": [
+    32000.0,
+    2997720.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 301,
+    "land_rate": 0.0,
+    "crash_rate": 0.9601328903654485,
+    "timeout_rate": 0.03986710963455149,
+    "mean_steps": 2025.3023255813953,
+    "mean_return": -101.77289171822979,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "late": {
+    "n": 301,
+    "land_rate": 0.0,
+    "crash_rate": 1.0,
+    "timeout_rate": 0.0,
+    "mean_steps": 2653.2923588039866,
+    "mean_return": -107.97357286978735,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve; mean episode length rose (2025\u21922653) \u2014 survival longer, not proof of landing skill",
+  "failure_modes_declined": false
+}
+{
+  "run": "C_step_cost_s6",
+  "episodes": 500,
+  "physics_frames_span": [
+    32000.0,
+    4000000.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 100,
+    "land_rate": 0.0,
+    "crash_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_steps": 8000.0,
+    "mean_return": -180.00000000000125,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "late": {
+    "n": 100,
+    "land_rate": 0.0,
+    "crash_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_steps": 8000.0,
+    "mean_return": -180.00000000000125,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve",
+  "failure_modes_declined": false
+}
+{
+  "run": "D_curriculum_easy_s7",
+  "episodes": 926,
+  "physics_frames_span": [
+    16000.0,
+    2995640.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 185,
+    "land_rate": 0.0,
+    "crash_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_steps": 4000.0,
+    "mean_return": -140.00000000000068,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "late": {
+    "n": 185,
+    "land_rate": 0.0,
+    "crash_rate": 0.10810810810810811,
+    "timeout_rate": 0.8918918918918919,
+    "mean_steps": 3672.2432432432433,
+    "mean_return": -136.722432432433,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve",
+  "failure_modes_declined": false
+}

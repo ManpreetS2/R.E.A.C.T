@@ -2,44 +2,54 @@
 
 **Branch:** `cursor/apollolander-rl-overnight-v2`  
 **PR:** https://github.com/ManpreetS2/R.E.A.C.T/pull/4  
-**Started from:** `cursor/apollolander-rl-pilot-2f7b` @ `efb025f`  
-**Resources:** 4 CPU, ~15 GiB RAM, $0 CPU-only
+**Resources:** 4 CPU, ~15 GiB RAM, $0 · ≤30M physics frames · ≤3 trainers
+
+## Owner direction (binding) — learning from experience
+
+1. **Fewer, longer CONTINUOUS runs.** After random init, keep training the same
+   policy (weights + optimizer + counters). Resumes marked in
+   `logs/resume_events.jsonl`. No cross-run / pilot weight loading.
+2. **Learning-from-experience evidence** per run: chronological crash/timeout/landing
+   rates; report if failure modes decline (honest if not). See
+   `logs/learning_from_experience.json` + `plots/learning_from_experience.png`.
+3. **Reward-causality CONTROL:** `CTRL_zero_reward_s0` — same seed/config as Family A,
+   `reward_mode: constant_zero`. Counts inside the 30M frame budget.
+
+Obs use **fixed** `OBS_SCALE` (no running Welford stats to carry).
 
 ## Milestones
 
 | Phase | Status | Notes |
 | --- | --- | --- |
-| 1 Original-game backend + parity | **PASS** | `PARITY_REPORT.md` |
-| 2 Pilot root-cause | **DONE** | `PILOT_ROOT_CAUSE.md`; GAE trunc fix |
-| 3 Throughput benchmark | **DONE** | upstream ~9–12k fps; parallel≡serial |
-| 4/5 Experiments A–D | **DONE** | ~18.0M physics frames; **0 native landings** |
-| 7 Held-out eval | **DONE** | Seeds `1000100–1000299`; all policies 0 land |
-| 8 Videos (original renderer) | **DONE** | `/opt/cursor/artifacts/rl_overnight/*.mp4` |
-| 9/11 Report + handoff | **DONE** | `OVERNIGHT_REPORT.md`, `WINDOWS_GPU_HANDOFF.md` |
+| 1 Parity gate | **PASS** | upstream `0da09dc` |
+| 2 Pilot root-cause | **DONE** | GAE trunc fix |
+| 3 Throughput | **DONE** | |
+| 4/5 Initial A–D | **DONE** | ~18.0M frames; 0 landings |
+| 7 Held-out (phase1) | **DONE** | 0/200 on A/B/C_step/D |
+| 8 Videos | **DONE** | `/opt/cursor/artifacts/rl_overnight/` |
+| **Continuous continues** | **RUNNING** | A→7M, D→6M from own finals |
+| **Reward causality CTRL** | **RUNNING** | zero-reward, seed 0, 3M |
+| LFE analysis + report update | pending after continues | |
 
-## Budget ledger (physics frames)
+## Budget ledger
 
-| Run | Frames | Landings |
-| --- | ---: | ---: |
-| smoke_A | 16,384 | 0 |
-| A_reproduce_upstream_s0 | 3,000,320 | 0 |
-| B_stable_lowlr_s1 | 3,000,320 | 0 |
-| C_timeout_eq_crash_s2 | 3,000,320 | 0 |
-| C_sparse_s3 | 2,000,896 | 0 |
-| C_step_cost_s6 | 4,001,792 | 0 |
-| D_curriculum_easy_s7 | 3,000,320 | 0 |
-| **Total** | **~18,020,352** | **0** |
-| Cap | 30,000,000 | — |
+| Run | Frames | Mode | Landings |
+| --- | ---: | --- | ---: |
+| Phase-1 runs (A–D + smoke) | ~18,020,352 | completed | 0 |
+| A_reproduce continuous | →7,000,000 target | resume @ 3,000,320 | TBD |
+| D_curriculum continuous | →6,000,000 target | resume @ 3,000,320 | TBD |
+| CTRL_zero_reward_s0 | 3,000,000 target | fresh random (control) | TBD |
+| **Cap** | **30,000,000** | | |
 
-## Held-out test (frozen seeds 1000100–1000299, n=200)
+Approx remaining before these continues: ~11.98M. Planned add ≈ 4M + 3M + 3M = 10M.
 
-| Policy | Land (Wilson 95%) | Crash | Timeout |
-| --- | --- | --- | --- |
-| random open-loop | 0.000 [0, 0.019] | 0.000 | 1.000 |
-| untrained net | 0.000 [0, 0.019] | 0.520 | 0.480 |
-| A step0 | 0.000 [0, 0.019] | 1.000 | 0.000 |
-| A final | 0.000 [0, 0.019] | 1.000 | 0.000 |
-| C_step_cost final | 0.000 [0, 0.019] | 0.000 | 1.000 |
-| D curriculum final | 0.000 [0, 0.019] | 1.000 | 0.000 |
+## Phase-1 learning-from-experience (honest)
 
-**Conclusion:** No genuine learned landing on unseen starts.
+| Run | Verdict |
+| --- | --- |
+| A | Landing did **not** rise; episode length rose (~2.0k→2.7k steps) — longer survival, **not** landing skill |
+| B | Same pattern; crash→100%; longer flights |
+| C_step_cost | Frozen 100% timeout entire run — **no** behavioral learning |
+| D | Early 100% timeout → late mostly timeout with some crashes; **no** landings |
+
+Failure modes did **not** decline into landings in phase 1.

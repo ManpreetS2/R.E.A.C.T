@@ -1,0 +1,93 @@
+run: A_reproduce_upstream_s0 family: A reward_mode: research_shaped
+backend: ORIGINAL upstream via Node vm host
+env_config_hash: ffc01771fc60f8232b7372d349ee06dad712a229a4d5754cee0d2983fa8429c6
+output: examples/apollolander/rl_overnight/results/A_reproduce_upstream_s0
+CONTINUOUS RESUME from examples/apollolander/rl_overnight/results/A_reproduce_upstream_s0/checkpoints/final.pt
+carrying forward: policy weights, optimizer state, global_step/update counters (obs uses fixed OBS_SCALE — no running norm stats)
+{
+  "event": "continuous_resume",
+  "checkpoint": "examples/apollolander/rl_overnight/results/A_reproduce_upstream_s0/checkpoints/final.pt",
+  "global_step_at_resume": 3000320,
+  "update_idx_at_resume": 1465,
+  "total_env_steps_target": 7000000,
+  "reward_mode": "research_shaped",
+  "family": "A",
+  "note": "Same continuous run \u2014 not a fresh random init. Do not load weights from other runs/pilots.",
+  "wall_time_utc": "2026-10-18T08:42:40Z"
+}
+update=1466 step=3002368 loss=-0.0608 ent=2.8725 mb_grads=8 total_grads=11728 land=0.000 mean_r=-104.35 eps=1416 wall=0.5s
+update=1467 step=3004416 loss=-0.0658 ent=2.7834 mb_grads=8 total_grads=11736 land=0.000 mean_r=-104.35 eps=1416 wall=1.1s
+update=1468 step=3006464 loss=0.1364 ent=2.7494 mb_grads=8 total_grads=11744 land=0.000 mean_r=-104.35 eps=1416 wall=1.6s
+update=1469 step=3008512 loss=3.8597 ent=2.7163 mb_grads=8 total_grads=11752 land=0.000 mean_r=-104.35 eps=1417 wall=2.2s
+update=1470 step=3010560 loss=1.7535 ent=2.5652 mb_grads=8 total_grads=11760 land=0.000 mean_r=-104.35 eps=1419 wall=2.8s
+update=1471 step=3012608 loss=1.9438 ent=2.5995 mb_grads=8 total_grads=11768 land=0.000 mean_r=-104.35 eps=1420 wall=3.3s
+update=1472 step=3014656 loss=0.2621 ent=2.6974 mb_grads=8 total_grads=11776 land=0.000 mean_r=-104.35 eps=1420 wall=3.8s
+update=1473 step=3016704 loss=8.1686 ent=2.5873 mb_grads=8 total_grads=11784 land=0.000 mean_r=-104.36 eps=1421 wall=4.3s
+update=1474 step=3018752 loss=1.8620 ent=2.6798 mb_grads=8 total_grads=11792 land=0.000 mean_r=-104.36 eps=1422 wall=4.8s
+update=1475 step=3020800 loss=5.5042 ent=2.5753 mb_grads=8 total_grads=11800 land=0.000 mean_r=-104.36 eps=1424 wall=5.3s
+update=1476 step=3022848 loss=1.7026 ent=2.6095 mb_grads=8 total_grads=11808 land=0.000 mean_r=-104.36 eps=1425 wall=5.8s
+update=1477 step=3024896 loss=-0.0152 ent=2.7133 mb_grads=8 total_grads=11816 land=0.000 mean_r=-104.36 eps=1425 wall=6.2s
+update=1478 step=3026944 loss=2.0734 ent=2.6435 mb_grads=8 total_grads=11824 land=0.000 mean_r=-104.36 eps=1426 wall=6.7s
+update=1479 step=3028992 loss=0.8679 ent=2.7102 mb_grads=8 total_grads=11832 land=0.000 mean_r=-104.36 eps=1426 wall=7.2s
+update=1480 step=3031040 loss=1.8497 ent=2.5580 mb_grads=8 total_grads=11840 land=0.000 mean_r=-104.37 eps=1428 wall=7.6s
+update=1481 step=3033088 loss=2.2488 ent=2.6771 mb_grads=8 total_grads=11848 land=0.000 mean_r=-104.37 eps=1429 wall=8.0s
+update=1482 step=3035136 loss=0.0554 ent=2.7306 mb_grads=8 total_grads=11856 land=0.000 mean_r=-104.37 eps=1429 wall=8.5s
+update=1483 step=3037184 loss=6.0829 ent=2.6838 mb_grads=8 total_grads=11864 land=0.000 mean_r=-104.38 eps=1430 wall=8.9s
+update=1484 step=3039232 loss=0.1012 ent=2.7939 mb_grads=8 total_grads=11872 land=0.000 mean_r=-104.38 eps=1430 wall=9.4s
+update=1485 step=3041280 loss=1.3563 ent=2.6114 mb_grads=8 total_grads=11880 land=0.000 mean_r=-104.38 eps=1432 wall=9.8s
+update=1486 step=3043328 loss=0.5473 ent=2.6318 mb_grads=8 total_grads=11888 land=0.000 mean_r=-104.38 eps=1433 wall=10.3s
+update=1487 step=3045376 loss=0.3177 ent=2.7406 mb_grads=8 total_grads=11896 land=0.000 mean_r=-104.38 eps=1434 wall=10.7s
+update=1488 step=3047424 loss=4.5051 ent=2.7794 mb_grads=8 total_grads=11904 land=0.000 mean_r=-104.38 eps=1434 wall=11.1s
+update=1489 step=3049472 loss=2.6530 ent=2.8940 mb_grads=8 total_grads=11912 land=0.000 mean_r=-104.38 eps=1434 wall=11.6s
+update=1490 step=3051520 loss=5.7089 ent=2.6937 mb_grads=8 total_grads=11920 land=0.000 mean_r=-104.39 eps=1437 wall=12.0s
+update=1491 step=3053568 loss=1.0730 ent=2.7586 mb_grads=8 total_grads=11928 land=0.000 mean_r=-104.39 eps=1438 wall=12.5s
+update=1492 step=3055616 loss=-0.0641 ent=2.8402 mb_grads=8 total_grads=11936 land=0.000 mean_r=-104.39 eps=1438 wall=12.9s
+update=1493 step=3057664 loss=1.9619 ent=2.6668 mb_grads=8 total_grads=11944 land=0.000 mean_r=-104.39 eps=1439 wall=13.4s
+update=1494 step=3059712 loss=1.9890 ent=2.6057 mb_grads=8 total_grads=11952 land=0.000 mean_r=-104.40 eps=1442 wall=13.9s
+update=1495 step=3061760 loss=-0.0559 ent=2.7795 mb_grads=8 total_grads=11960 land=0.000 mean_r=-104.40 eps=1442 wall=14.3s
+update=1496 step=3063808 loss=1.1911 ent=2.8285 mb_grads=8 total_grads=11968 land=0.000 mean_r=-104.39 eps=1443 wall=14.8s
+update=1497 step=3065856 loss=7.7004 ent=2.5849 mb_grads=8 total_grads=11976 land=0.000 mean_r=-104.40 eps=1444 wall=15.2s
+update=1498 step=3067904 loss=1.4859 ent=2.9373 mb_grads=8 total_grads=11984 land=0.000 mean_r=-104.40 eps=1444 wall=15.7s
+update=1499 step=3069952 loss=0.9432 ent=2.8114 mb_grads=8 total_grads=11992 land=0.000 mean_r=-104.40 eps=1445 wall=16.1s
+update=1500 step=3072000 loss=1.5218 ent=2.8386 mb_grads=8 total_grads=12000 land=0.000 mean_r=-104.40 eps=1446 wall=16.6s
+update=1501 step=3074048 loss=2.8081 ent=2.7192 mb_grads=8 total_grads=12008 land=0.000 mean_r=-104.40 eps=1446 wall=17.0s
+update=1502 step=3076096 loss=3.0097 ent=2.8210 mb_grads=8 total_grads=12016 land=0.000 mean_r=-104.40 eps=1446 wall=17.5s
+update=1503 step=3078144 loss=2.2481 ent=2.8744 mb_grads=8 total_grads=12024 land=0.000 mean_r=-104.40 eps=1447 wall=17.9s
+update=1504 step=3080192 loss=1.6474 ent=2.9526 mb_grads=8 total_grads=12032 land=0.000 mean_r=-104.40 eps=1448 wall=18.3s
+update=1505 step=3082240 loss=0.4172 ent=3.0368 mb_grads=8 total_grads=12040 land=0.000 mean_r=-104.40 eps=1448 wall=18.8s
+update=1506 step=3084288 loss=16.2778 ent=2.9445 mb_grads=8 total_grads=12048 land=0.000 mean_r=-104.41 eps=1450 wall=19.2s
+update=1507 step=3086336 loss=0.6340 ent=2.9791 mb_grads=8 total_grads=12056 land=0.000 mean_r=-104.41 eps=1450 wall=19.7s
+update=1508 step=3088384 loss=0.7436 ent=2.8859 mb_grads=8 total_grads=12064 land=0.000 mean_r=-104.41 eps=1450 wall=20.1s
+update=1509 step=3090432 loss=0.4238 ent=2.8987 mb_grads=8 total_grads=12072 land=0.000 mean_r=-104.41 eps=1451 wall=20.6s
+update=1510 step=3092480 loss=13.1337 ent=2.7291 mb_grads=8 total_grads=12080 land=0.000 mean_r=-104.43 eps=1453 wall=21.0s
+update=1511 step=3094528 loss=3.6891 ent=2.8206 mb_grads=8 total_grads=12088 land=0.000 mean_r=-104.43 eps=1454 wall=21.4s
+update=1512 step=3096576 loss=1.1276 ent=2.8537 mb_grads=8 total_grads=12096 land=0.000 mean_r=-104.43 eps=1455 wall=21.9s
+update=1513 step=3098624 loss=6.2333 ent=2.6934 mb_grads=8 total_grads=12104 land=0.000 mean_r=-104.43 eps=1455 wall=22.3s
+update=1514 step=3100672 loss=12.1078 ent=2.7747 mb_grads=8 total_grads=12112 land=0.000 mean_r=-104.43 eps=1457 wall=22.8s
+update=1515 step=3102720 loss=0.6336 ent=3.0140 mb_grads=8 total_grads=12120 land=0.000 mean_r=-104.43 eps=1457 wall=23.2s
+update=1516 step=3104768 loss=12.4493 ent=2.8107 mb_grads=8 total_grads=12128 land=0.000 mean_r=-104.43 eps=1459 wall=23.6s
+update=1517 step=3106816 loss=-0.0582 ent=2.9578 mb_grads=8 total_grads=12136 land=0.000 mean_r=-104.43 eps=1459 wall=24.1s
+update=1518 step=3108864 loss=0.3314 ent=2.9241 mb_grads=8 total_grads=12144 land=0.000 mean_r=-104.43 eps=1459 wall=24.5s
+update=1519 step=3110912 loss=5.5357 ent=2.8370 mb_grads=8 total_grads=12152 land=0.000 mean_r=-104.44 eps=1461 wall=24.9s
+update=1520 step=3112960 loss=2.8804 ent=2.9840 mb_grads=8 total_grads=12160 land=0.000 mean_r=-104.44 eps=1462 wall=25.4s
+update=1521 step=3115008 loss=1.1196 ent=2.8941 mb_grads=8 total_grads=12168 land=0.000 mean_r=-104.44 eps=1463 wall=25.8s
+update=1522 step=3117056 loss=-0.0426 ent=3.0265 mb_grads=8 total_grads=12176 land=0.000 mean_r=-104.44 eps=1463 wall=26.2s
+update=1523 step=3119104 loss=0.9485 ent=2.9658 mb_grads=8 total_grads=12184 land=0.000 mean_r=-104.44 eps=1463 wall=26.7s
+update=1524 step=3121152 loss=5.4602 ent=2.7463 mb_grads=8 total_grads=12192 land=0.000 mean_r=-104.45 eps=1466 wall=27.1s
+update=1525 step=3123200 loss=0.5089 ent=2.9614 mb_grads=8 total_grads=12200 land=0.000 mean_r=-104.45 eps=1466 wall=27.5s
+update=1526 step=3125248 loss=1.2771 ent=2.8618 mb_grads=8 total_grads=12208 land=0.000 mean_r=-104.45 eps=1467 wall=28.0s
+update=1527 step=3127296 loss=-0.0741 ent=3.0207 mb_grads=8 total_grads=12216 land=0.000 mean_r=-104.45 eps=1467 wall=28.4s
+update=1528 step=3129344 loss=0.1930 ent=2.9961 mb_grads=8 total_grads=12224 land=0.000 mean_r=-104.45 eps=1467 wall=28.9s
+update=1529 step=3131392 loss=6.5700 ent=2.6826 mb_grads=8 total_grads=12232 land=0.000 mean_r=-104.46 eps=1469 wall=29.3s
+update=1530 step=3133440 loss=2.4589 ent=2.8339 mb_grads=8 total_grads=12240 land=0.000 mean_r=-104.46 eps=1469 wall=29.7s
+update=1531 step=3135488 loss=2.7088 ent=2.9779 mb_grads=8 total_grads=12248 land=0.000 mean_r=-104.47 eps=1470 wall=30.2s
+update=1532 step=3137536 loss=0.1664 ent=3.0625 mb_grads=8 total_grads=12256 land=0.000 mean_r=-104.47 eps=1470 wall=30.6s
+update=1533 step=3139584 loss=4.0222 ent=2.7508 mb_grads=8 total_grads=12264 land=0.000 mean_r=-104.47 eps=1471 wall=31.1s
+update=1534 step=3141632 loss=7.1533 ent=2.5113 mb_grads=8 total_grads=12272 land=0.000 mean_r=-104.47 eps=1471 wall=31.5s
+update=1535 step=3143680 loss=11.4472 ent=2.5015 mb_grads=8 total_grads=12280 land=0.000 mean_r=-104.47 eps=1472 wall=32.0s
+update=1536 step=3145728 loss=0.3440 ent=3.1015 mb_grads=8 total_grads=12288 land=0.000 mean_r=-104.47 eps=1472 wall=32.4s
+update=1537 step=3147776 loss=0.0420 ent=3.1296 mb_grads=8 total_grads=12296 land=0.000 mean_r=-104.47 eps=1472 wall=32.9s
+update=1538 step=3149824 loss=3.6209 ent=2.6829 mb_grads=8 total_grads=12304 land=0.000 mean_r=-104.47 eps=1473 wall=33.3s
+update=1539 step=3151872 loss=2.0899 ent=3.1046 mb_grads=8 total_grads=12312 land=0.000 mean_r=-104.47 eps=1474 wall=33.7s
+update=1540 step=3153920 loss=0.4173 ent=3.1349 mb_grads=8 total_grads=12320 land=0.000 mean_r=-104.47 eps=1474 wall=34.2s
+update=1541 step=3155968 loss=1.4008 ent=3.1171 mb_grads=8 total_grads=12328 land=0.000 mean_r=-104.44 eps=1475 wall=34.6s

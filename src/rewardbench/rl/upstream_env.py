@@ -154,6 +154,8 @@ class ApolloLanderUpstreamEnv:
         obs = _obs_from_raw(last["observation"])
         self._obs = obs
         result = last["result"]
+        obs_raw = last["observation"]
+        contact = last["step"].get("contactMetrics") or {}
         info = {
             "status": result["status"],
             "landed": bool(result.get("landed")),
@@ -166,6 +168,15 @@ class ApolloLanderUpstreamEnv:
             "action_repeat": self.config.action_repeat,
             "native_outcome": result.get("nativeOutcome"),
             "backend": "upstream_vm",
+            # Failure-mode / learning-from-experience metrics at episode end.
+            "terminal_vy": float(contact.get("vy", obs_raw.get("vy", 0.0))),
+            "terminal_altitude": float(contact.get("altitude", obs_raw.get("altitude", 0.0))),
+            "terminal_dx_to_pad": float(contact.get("dx_to_pad", obs_raw.get("dx", 0.0))),
+            "terminal_dy_to_pad": float(contact.get("dy_to_pad", obs_raw.get("dy", 0.0))),
+            "terminal_dist_to_pad": float(
+                contact.get("dist_to_pad", (obs_raw.get("dx", 0.0) ** 2 + obs_raw.get("dy", 0.0) ** 2) ** 0.5)
+            ),
+            "terminal_rotation": float(contact.get("rotation", obs_raw.get("rotation", 0.0))),
         }
         return obs.copy(), float(total_reward), terminated, truncated, info
 

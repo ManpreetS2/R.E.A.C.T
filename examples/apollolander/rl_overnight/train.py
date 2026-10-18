@@ -104,6 +104,13 @@ class OvernightPPOTrainer(PPOTrainer):
         upstream_commit = (
             ROOT / "frontend/apollolander/upstream/UPSTREAM_COMMIT.txt"
         ).read_text(encoding="utf-8").strip()
+        path = self.output_dir / "run_metadata.json"
+        prior = {}
+        if path.exists():
+            try:
+                prior = json.loads(path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError:
+                prior = {}
         meta = {
             "run_id": self.run_id,
             "family": self.family,
@@ -137,11 +144,18 @@ class OvernightPPOTrainer(PPOTrainer):
                 int(self.cfg.train_seed_start),
                 int(self.cfg.train_seed_start + self.cfg.train_seed_count - 1),
             ],
-            "started_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "started_at": prior.get("started_at")
+            or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "continuous_run": True,
+            "obs_normalization": "fixed OBS_SCALE (not running Welford stats)",
+            "weight_init_policy": (
+                "random at step0 of THIS run only; never loads other runs/pilots"
+            ),
         }
-        (self.output_dir / "run_metadata.json").write_text(
-            json.dumps(meta, indent=2) + "\n", encoding="utf-8"
-        )
+        if prior.get("started_at"):
+            meta["prior_metadata_preserved"] = True
+            meta["resumed_or_reopened_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        path.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
 
     def save_checkpoint(self, tag: str) -> Path:
         path = super().save_checkpoint(tag)
@@ -233,8 +247,35 @@ def main() -> None:
     print("output:", out)
     trainer = OvernightPPOTrainer(env_cfg, ppo_cfg, out, reward_mode=reward_mode, family=family)
     if args.resume is not None:
-        print("resuming from", args.resume)
+        print("CONTINUOUS RESUME from", args.resume)
+        print(
+            "carrying forward: policy weights, optimizer state, global_step/update "
+            "counters (obs uses fixed OBS_SCALE — no running norm stats)"
+        )
         trainer.load_checkpoint(args.resume)
+        resume_meta = {
+            "event": "continuous_resume",
+            "checkpoint": str(args.resume),
+            "global_step_at_resume": trainer.global_step,
+            "update_idx_at_resume": trainer.update_idx,
+            "total_env_steps_target": ppo_cfg.total_env_steps,
+            "reward_mode": reward_mode,
+            "family": family,
+            "note": (
+                "Same continuous run — not a fresh random init. "
+                "Do not load weights from other runs/pilots."
+            ),
+            "wall_time_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        }
+        resume_log = out / "logs" / "resume_events.jsonl"
+        with resume_log.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(resume_meta) + "\n")
+        print(json.dumps(resume_meta, indent=2))
+        if trainer.global_step >= ppo_cfg.total_env_steps:
+            raise SystemExit(
+                f"resume global_step={trainer.global_step} already >= "
+                f"total_env_steps={ppo_cfg.total_env_steps}; raise --total-env-steps"
+            )
     summary = trainer.train()
     print(json.dumps(summary, indent=2))
 

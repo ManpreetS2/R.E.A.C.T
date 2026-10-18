@@ -19,7 +19,7 @@
   },
   "env_config_hash": "dd96d0bc77836400ad66c8a2f3044b63e6937fbd408e597285d1e6e9a364a462",
   "ppo_config": {
-    "total_env_steps": 3000000,
+    "total_env_steps": 6000000,
     "n_envs": 4,
     "rollout_steps": 256,
     "learning_rate": 0.0003,
@@ -45,7 +45,7 @@
   "simulator_label": "ORIGINAL upstream ApolloLander (Seb Lee-Delisle) via headless vm host",
   "parity_status": "PASS \u2014 see docs/rl_overnight/PARITY_REPORT.md",
   "upstream_commit": "0da09dccbadf0d6ee6efcce1f72e9ae206d341d2",
-  "source_commit": "a2f41ea1e56e606f352a8f6138a19b14028af04e",
+  "source_commit": "5278705148d632a173be4e72ac69c6b13c74af7c",
   "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
   "node": "v22.14.0",
   "torch_version": "2.14.1+cpu",
@@ -61,5 +61,10 @@
     10000,
     209999
   ],
-  "started_at": "2026-10-18T07:59:26Z"
+  "started_at": "2026-10-18T07:59:26Z",
+  "continuous_run": true,
+  "obs_normalization": "fixed OBS_SCALE (not running Welford stats)",
+  "weight_init_policy": "random at step0 of THIS run only; never loads other runs/pilots",
+  "prior_metadata_preserved": true,
+  "resumed_or_reopened_at": "2026-10-18T08:42:40Z"
 }
