@@ -31,7 +31,10 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "src"))
 
 from rewardbench.environments.apollolander.starts import CURRICULUM_V3_LEVELS  # noqa: E402
-from rewardbench.rl.continuous_policy import ContinuousThrustActorCritic  # noqa: E402
+from rewardbench.rl.continuous_policy import (  # noqa: E402
+    ROTATION_DELTAS,
+    ContinuousThrustActorCritic,
+)
 from rewardbench.rl.env import EnvConfig  # noqa: E402
 from rewardbench.rl.reserved_seeds import assert_seed_allowed, assert_seeds_allowed  # noqa: E402
 from rewardbench.rl.upstream_env import VectorApolloLanderUpstreamEnv  # noqa: E402
@@ -81,6 +84,8 @@ class TrainConfig:
     val_seed_start: int = 400_000
     device: str = "cpu"
     run_name: str = "CURR_touchdown_s11"
+    # absolute: 19 bins × 10°; delta: {-10,0,+10} applied to last commanded angle.
+    rotation_mode: str = "absolute"
 
 
 class CurriculumTrainer:
@@ -100,7 +105,9 @@ class CurriculumTrainer:
         self.env = VectorApolloLanderUpstreamEnv(
             cfg.n_envs, self.env_config, reward_mode="touchdown_v1"
         )
-        self.policy = ContinuousThrustActorCritic(hidden=cfg.hidden).to(self.device)
+        self.policy = ContinuousThrustActorCritic(
+            hidden=cfg.hidden, rotation_mode=cfg.rotation_mode
+        ).to(self.device)
         self.optimizer = torch.optim.Adam(self.policy.parameters(), lr=cfg.learning_rate, eps=1e-5)
 
         self.global_step = 0
@@ -108,6 +115,8 @@ class CurriculumTrainer:
         self.update_idx = 0
         self.total_minibatch_grad_steps = 0
         self._rng = np.random.default_rng(cfg.seed + 17)
+        # Last commanded absolute rotation per env (for delta mode).
+        self._cmd_rotation = np.zeros(cfg.n_envs, dtype=np.int64)
         self._train_seeds = np.arange(
             cfg.train_seed_start, cfg.train_seed_start + cfg.train_seed_count, dtype=np.int64
         )
@@ -156,7 +165,12 @@ class CurriculumTrainer:
             "reward_doc": "docs/rl_curriculum_v3/REWARD_TOUCHDOWN_V1.md",
             "action_space": {
                 "thrust": "continuous [0,1] via sigmoid-squashed Gaussian",
-                "rotation": "categorical 19 bins × 10° in [-90,90]",
+                "rotation": (
+                    "delta {-10,0,+10} → setRotation"
+                    if self.cfg.rotation_mode == "delta"
+                    else "categorical 19 bins × 10° in [-90,90]"
+                ),
+                "rotation_mode": self.cfg.rotation_mode,
             },
             "parity_status": "PASS — docs/rl_curriculum_v3/PARITY_REPORT_V2.md",
             "upstream_commit": upstream,
@@ -237,11 +251,22 @@ class CurriculumTrainer:
     def _commands_from_actions(
         self, thrust: torch.Tensor, rot_idx: torch.Tensor
     ) -> list[dict[str, float | int]]:
-        rots = self.policy.decode_rotation(rot_idx).detach().cpu().numpy()
         thrusts = thrust.detach().cpu().numpy()
-        return [
-            {"thrust": float(thrusts[i]), "rotation": int(rots[i])} for i in range(len(thrusts))
-        ]
+        idx = rot_idx.detach().cpu().numpy().astype(np.int64)
+        commands: list[dict[str, float | int]] = []
+        for i in range(len(thrusts)):
+            if self.cfg.rotation_mode == "delta":
+                delta = int(ROTATION_DELTAS[int(idx[i])])
+                abs_rot = int(np.clip(self._cmd_rotation[i] + delta, -90, 90))
+                # Quantize to 10° (setRotation does this too).
+                abs_rot = int(round(abs_rot / 10.0) * 10)
+                self._cmd_rotation[i] = abs_rot
+                commands.append({"thrust": float(thrusts[i]), "rotation": abs_rot})
+            else:
+                abs_rot = int(self.policy.decode_rotation(rot_idx[i : i + 1]).item())
+                self._cmd_rotation[i] = abs_rot
+                commands.append({"thrust": float(thrusts[i]), "rotation": abs_rot})
+        return commands
 
     def evaluate_frozen(
         self,
@@ -276,23 +301,26 @@ class CurriculumTrainer:
             for i in range(n):
                 seed = seed_start + i
                 assert_seed_allowed(seed, context="curriculum.gate_eval")
-                obs, _ = env.reset(seed)
+                obs, info0 = env.reset(seed)
                 done = False
                 ep_ret = 0.0
                 steps = 0
                 info: dict[str, Any] = {}
+                cmd_rot = int(round(float(info0["start"]["rotation"]) / 10.0) * 10)
                 while not done:
                     with torch.no_grad():
                         t = torch.as_tensor(obs[None], dtype=torch.float32, device=self.device)
                         if deterministic:
                             thrust, rot_idx, _ = self.policy.act_deterministic(t)
-                            raw = None
                         else:
-                            thrust, rot_idx, raw, _, _ = self.policy.act(t)
-                        command = {
-                            "thrust": float(thrust.item()),
-                            "rotation": int(self.policy.decode_rotation(rot_idx).item()),
-                        }
+                            thrust, rot_idx, _, _, _ = self.policy.act(t)
+                        if self.cfg.rotation_mode == "delta":
+                            delta = int(ROTATION_DELTAS[int(rot_idx.item())])
+                            cmd_rot = int(np.clip(cmd_rot + delta, -90, 90))
+                            cmd_rot = int(round(cmd_rot / 10.0) * 10)
+                        else:
+                            cmd_rot = int(self.policy.decode_rotation(rot_idx).item())
+                        command = {"thrust": float(thrust.item()), "rotation": cmd_rot}
                     obs, reward, terminated, truncated, info = env.step_command(command)
                     ep_ret += reward
                     steps += self.cfg.action_repeat  # approx; host counts true frames
@@ -466,8 +494,11 @@ class CurriculumTrainer:
                 seed_iter = iter(seeds.tolist())
                 for i, done in enumerate(dones):
                     if done:
-                        o, _ = self.env.envs[i].reset(int(next(seed_iter)))
+                        o, info = self.env.envs[i].reset(int(next(seed_iter)))
                         next_obs[i] = o
+                        self._cmd_rotation[i] = int(
+                            round(float(info["start"]["rotation"]) / 10.0) * 10
+                        )
             obs = next_obs
 
         # GAE with truncation bootstrap
@@ -560,11 +591,17 @@ class CurriculumTrainer:
     def train(self) -> dict[str, Any]:
         cfg = self.cfg
         seeds = self._sample_train_seeds(cfg.n_envs)
-        obs, _ = self.env.reset(seeds)
-        next_gate_at = cfg.gate_every_frames
-        next_ckpt_at = cfg.checkpoint_every_frames
+        obs, infos = self.env.reset(seeds)
+        for i, info in enumerate(infos):
+            self._cmd_rotation[i] = int(round(float(info["start"]["rotation"]) / 10.0) * 10)
+        next_gate_at = self.global_step + cfg.gate_every_frames
+        next_ckpt_at = self.global_step + cfg.checkpoint_every_frames
         learning_check_done = self.global_step >= cfg.l0_learning_check_frames
         early_stop_reason = None
+        # For a continued budget after a failed seed, allow a fresh L0 check window.
+        l0_check_at = self.global_step + cfg.l0_learning_check_frames if self.global_step > 0 else cfg.l0_learning_check_frames
+        if self.global_step == 0:
+            l0_check_at = cfg.l0_learning_check_frames
 
         # Baseline snapshot for L0 learning check comparison (loaded from file if present).
         baseline_path = RESULTS / "baseline_rates.json"
@@ -589,10 +626,14 @@ class CurriculumTrainer:
                 self.maybe_gate()
                 # After advance, reset obs
                 seeds = self._sample_train_seeds(cfg.n_envs)
-                obs, _ = self.env.reset(seeds)
+                obs, infos = self.env.reset(seeds)
+                for i, info in enumerate(infos):
+                    self._cmd_rotation[i] = int(
+                        round(float(info["start"]["rotation"]) / 10.0) * 10
+                    )
                 next_gate_at = self.global_step + cfg.gate_every_frames
 
-            if (not learning_check_done) and self.global_step >= cfg.l0_learning_check_frames:
+            if (not learning_check_done) and self.global_step >= l0_check_at:
                 learning_check_done = True
                 # Only meaningful if still on L0 or to verify L0 skill.
                 check = self.evaluate_frozen(

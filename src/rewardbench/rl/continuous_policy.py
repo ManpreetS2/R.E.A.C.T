@@ -18,15 +18,30 @@ from torch.distributions import Categorical, Normal
 
 from rewardbench.rl.physics_python import N_ROTATION, OBS_DIM, ROTATION_BINS
 
+# Player-legal relative setRotation steps (still commanded via absolute setRotation).
+ROTATION_DELTAS = (-10, 0, 10)
+N_ROTATION_DELTAS = len(ROTATION_DELTAS)
+
 
 class ContinuousThrustActorCritic(nn.Module):
     """Randomly initialized hybrid policy/value network."""
 
-    def __init__(self, obs_dim: int = OBS_DIM, n_rotations: int = N_ROTATION, hidden: int = 128) -> None:
+    def __init__(
+        self,
+        obs_dim: int = OBS_DIM,
+        n_rotations: int = N_ROTATION,
+        hidden: int = 128,
+        rotation_mode: str = "absolute",
+    ) -> None:
         super().__init__()
         self.obs_dim = obs_dim
+        self.rotation_mode = rotation_mode
+        if rotation_mode == "delta":
+            n_rotations = N_ROTATION_DELTAS
+            self.rotation_bins = torch.as_tensor(ROTATION_DELTAS, dtype=torch.float32)
+        else:
+            self.rotation_bins = torch.as_tensor(ROTATION_BINS, dtype=torch.float32)
         self.n_rotations = n_rotations
-        self.rotation_bins = torch.as_tensor(ROTATION_BINS, dtype=torch.float32)
         self.trunk = nn.Sequential(
             nn.Linear(obs_dim, hidden),
             nn.Tanh(),
