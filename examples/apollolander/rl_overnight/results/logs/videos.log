@@ -1,0 +1,132 @@
+RECORD random 1000100
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+{
+  "checkpoint_id": "random",
+  "env_version": "upstream_vm_host + browser_rl_bridge (original Lander/Landscape render)",
+  "seed": 1000100,
+  "start": {
+    "x": 6739.762568694901,
+    "y": 159.81363639681774,
+    "vx": 0.4980341371702393,
+    "vy": -0.010724334143898558,
+    "rotation": -50.0,
+    "fuel": 1000.0,
+    "scale": 0.25
+  },
+  "native_outcome_env": "timeout",
+  "video": "/opt/cursor/artifacts/rl_overnight/random_seed1000100.mp4",
+  "native_outcome_replay": "flying",
+  "outcome_match": false,
+  "n_frames": 5000
+}
+exit 0
+RECORD A_step0 1000100
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+{
+  "checkpoint_id": "examples/apollolander/rl_overnight/results/A_reproduce_upstream_s0/checkpoints/step0.pt",
+  "env_version": "upstream_vm_host + browser_rl_bridge (original Lander/Landscape render)",
+  "seed": 1000100,
+  "start": {
+    "x": 6739.762568694901,
+    "y": 159.81363639681774,
+    "vx": 0.4980341371702393,
+    "vy": -0.010724334143898558,
+    "rotation": -50.0,
+    "fuel": 1000.0,
+    "scale": 0.25
+  },
+  "native_outcome_env": "crashed",
+  "video": "/opt/cursor/artifacts/rl_overnight/A_step0_seed1000100.mp4",
+  "native_outcome_replay": "crashed",
+  "outcome_match": true,
+  "n_frames": 1417
+}
+exit 0
+RECORD A_step1500000 1000101
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+{
+  "checkpoint_id": "examples/apollolander/rl_overnight/results/A_reproduce_upstream_s0/checkpoints/step1500000.pt",
+  "env_version": "upstream_vm_host + browser_rl_bridge (original Lander/Landscape render)",
+  "seed": 1000101,
+  "start": {
+    "x": 6798.746136301934,
+    "y": 193.20263502629373,
+    "vx": 0.29860194413707536,
+    "vy": 0.046681226057695334,
+    "rotation": -70.0,
+    "fuel": 1000.0,
+    "scale": 0.25
+  },
+  "native_outcome_env": "crashed",
+  "video": "/opt/cursor/artifacts/rl_overnight/A_step1500000_seed1000101.mp4",
+  "native_outcome_replay": "crashed",
+  "outcome_match": true,
+  "n_frames": 1307
+}
+exit 0
+RECORD A_final 1000102
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+{
+  "checkpoint_id": "examples/apollolander/rl_overnight/results/A_reproduce_upstream_s0/checkpoints/final.pt",
+  "env_version": "upstream_vm_host + browser_rl_bridge (original Lander/Landscape render)",
+  "seed": 1000102,
+  "start": {
+    "x": 6840.794210507389,
+    "y": 109.86036165164919,
+    "vx": 0.22381986283052463,
+    "vy": 0.02303607874660458,
+    "rotation": -60.0,
+    "fuel": 1000.0,
+    "scale": 0.25
+  },
+  "native_outcome_env": "crashed",
+  "video": "/opt/cursor/artifacts/rl_overnight/A_final_seed1000102.mp4",
+  "native_outcome_replay": "crashed",
+  "outcome_match": true,
+  "n_frames": 1550
+}
+exit 0
+RECORD A_final_fail 1000150
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+{
+  "checkpoint_id": "examples/apollolander/rl_overnight/results/A_reproduce_upstream_s0/checkpoints/final.pt",
+  "env_version": "upstream_vm_host + browser_rl_bridge (original Lander/Landscape render)",
+  "seed": 1000150,
+  "start": {
+    "x": 6873.184496091371,
+    "y": 108.59580681972545,
+    "vx": 0.5848700027333841,
+    "vy": 0.03285531968006929,
+    "rotation": -90.0,
+    "fuel": 1000.0,
+    "scale": 0.25
+  },
+  "native_outcome_env": "crashed",
+  "video": "/opt/cursor/artifacts/rl_overnight/A_final_fail_seed1000150.mp4",
+  "native_outcome_replay": "crashed",
+  "outcome_match": true,
+  "n_frames": 1964
+}
+exit 0
+RECORD D_final 5000
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (800, 600) to (800, 608) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+{
+  "checkpoint_id": "examples/apollolander/rl_overnight/results/D_curriculum_easy_s7/checkpoints/final.pt",
+  "env_version": "upstream_vm_host + browser_rl_bridge (original Lander/Landscape render)",
+  "seed": 5000,
+  "start": {
+    "x": 6813.026966901933,
+    "y": 150.72687647371964,
+    "vx": 0.22752572020570921,
+    "vy": 0.022216206385050653,
+    "rotation": -90.0,
+    "fuel": 1000.0,
+    "scale": 0.25
+  },
+  "native_outcome_env": "crashed",
+  "video": "/opt/cursor/artifacts/rl_overnight/D_final_seed5000.mp4",
+  "native_outcome_replay": "crashed",
+  "outcome_match": true,
+  "n_frames": 3377
+}
+exit 0

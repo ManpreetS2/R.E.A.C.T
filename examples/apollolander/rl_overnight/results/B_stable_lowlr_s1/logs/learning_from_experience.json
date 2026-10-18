@@ -1,0 +1,32 @@
+{
+  "run": "B_stable_lowlr_s1",
+  "episodes": 1505,
+  "physics_frames_span": [
+    32000.0,
+    2997720.0
+  ],
+  "first_landing_episode": null,
+  "first_landing_frames": null,
+  "early": {
+    "n": 301,
+    "land_rate": 0.0,
+    "crash_rate": 0.9601328903654485,
+    "timeout_rate": 0.03986710963455149,
+    "mean_steps": 2025.3023255813953,
+    "mean_return": -101.77289171822979,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "late": {
+    "n": 301,
+    "land_rate": 0.0,
+    "crash_rate": 1.0,
+    "timeout_rate": 0.0,
+    "mean_steps": 2653.2923588039866,
+    "mean_return": -107.97357286978735,
+    "mean_terminal_vy": NaN,
+    "mean_terminal_dist": NaN
+  },
+  "learning_from_experience_verdict": "landing rate did NOT rise; crash/timeout mix did not clearly improve; mean episode length rose (2025\u21922653) \u2014 survival longer, not proof of landing skill",
+  "failure_modes_declined": false
+}

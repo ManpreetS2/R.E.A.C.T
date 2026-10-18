@@ -22,4 +22,5 @@ credentials.json
 *.mp4
 examples/lunarlander/output/
 examples/apollolander/output/
+examples/apollolander/rl_pilot/output/
 node_modules/

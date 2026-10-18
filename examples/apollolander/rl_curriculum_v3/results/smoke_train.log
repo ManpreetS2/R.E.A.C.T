@@ -1,0 +1,20 @@
+Training CURR_smoke_s11 budget 20000
+{
+  "run_id": "CURR_smoke_s11",
+  "physics_frames": 20480,
+  "policy_decisions": 10240,
+  "updates": 20,
+  "highest_level_idx": 0,
+  "highest_level": "apollolander.starts.curriculum_l0_v3",
+  "first_landing_frames": {
+    "apollolander.starts.curriculum_l0_v3": null,
+    "apollolander.starts.curriculum_l1_v3": null,
+    "apollolander.starts.curriculum_l2_v3": null,
+    "apollolander.starts.curriculum_l3_v3": null,
+    "apollolander.starts.curriculum_l4_v3": null
+  },
+  "gate_checks": 0,
+  "wall_seconds": 19.98432159423828,
+  "early_stop_reason": null,
+  "budget": 20000
+}

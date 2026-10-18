@@ -1,0 +1,1 @@
+{"event": "resume", "checkpoint": "examples/apollolander/rl_curriculum_v3/results/CURR_touchdown_delta_s13/checkpoints/first_land_L0_8776.pt", "global_step": 8776, "level": "apollolander.starts.curriculum_l0_v3"}

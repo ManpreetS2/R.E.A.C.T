@@ -1,0 +1,7 @@
+{
+  "tag": "final",
+  "path": "/workspace/examples/apollolander/rl_v6/results/V6_L0near_s31/checkpoints/final.pt",
+  "sha256": "bcb50c4480c81240a7e5cc75c541336e00aca3b6a0e46f07f3f4abb4bcbeffe2",
+  "global_step": 249856,
+  "train_budget_spent": 249856
+}

@@ -1,0 +1,17 @@
+{
+  "step0_path": "/workspace/examples/apollolander/rl_clean_v4/results/CLEAN_L0_s21/checkpoints/step0.pt",
+  "step0_sha256": "90c5c1e10b648bbe03735619bc00d93dd6536e58f9df686ca32fbb2c34747fa4",
+  "batch_size": 64,
+  "obs_seed": 12345,
+  "max_abs_diff": 0.0,
+  "diffs": {
+    "thrust_mean": 0.0,
+    "thrust_std": 0.0,
+    "rotation_logits": 0.0,
+    "value": 0.0,
+    "det_thrust": 0.0,
+    "det_rotation_idx": 0.0
+  },
+  "bit_exact": true,
+  "passed": true
+}

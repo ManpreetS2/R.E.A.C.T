@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "soft_thrust_prior_false",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hold_attitude_prior_false",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "init_orthogonal_zero_bias",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "rotation_delta",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "action_repeat_8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "max_steps_400",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_l0_near_v6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "train_cap",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "diag_cap",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "diag_cap_not_raised",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "utc": "2026-10-18T18:47:16Z"
+}

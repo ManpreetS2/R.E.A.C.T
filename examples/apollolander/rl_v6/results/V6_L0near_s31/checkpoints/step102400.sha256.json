@@ -1,0 +1,7 @@
+{
+  "tag": "step102400",
+  "path": "/workspace/examples/apollolander/rl_v6/results/V6_L0near_s31/checkpoints/step102400.pt",
+  "sha256": "a17965287f63f9d13e3a562f521f18863d8d8bd2d18b14a0c27221a1bb88fffe",
+  "global_step": 102400,
+  "train_budget_spent": 102400
+}

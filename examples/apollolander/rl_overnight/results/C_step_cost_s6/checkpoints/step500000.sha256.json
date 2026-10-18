@@ -1,0 +1,12 @@
+{
+  "tag": "step500000",
+  "path": "examples/apollolander/rl_overnight/results/C_step_cost_s6/checkpoints/step500000.pt",
+  "sha256": "29b0a4399ff63a71f589bb6b359470feabbba2762f02acd3cccfcc3cfa52f9c7",
+  "global_step": 501760,
+  "physics_frames": 501760,
+  "policy_decisions": 250880,
+  "update_idx": 245,
+  "reward_mode": "step_cost",
+  "family": "C",
+  "backend": "upstream_vm_host"
+}

@@ -1,0 +1,12 @@
+{
+  "tag": "step3000000",
+  "path": "examples/apollolander/rl_overnight/results/CTRL_zero_reward_s0/checkpoints/step3000000.pt",
+  "sha256": "6a08bf13570994d0cbbd7635ecad7c706708568661c7503549a4e4453e8da5b6",
+  "global_step": 3000320,
+  "physics_frames": 3000320,
+  "policy_decisions": 1500160,
+  "update_idx": 1465,
+  "reward_mode": "constant_zero",
+  "family": "CTRL",
+  "backend": "upstream_vm_host"
+}

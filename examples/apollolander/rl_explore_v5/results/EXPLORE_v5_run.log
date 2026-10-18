@@ -1,0 +1,171 @@
+{
+  "stationary": {
+    "bins_10deg": [
+      -9,
+      -8,
+      -7,
+      -6,
+      -5,
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "P_at_0": 0.05263157894736842,
+    "P_at_0_closed_form_uniform_approx": 0.05263157894736842,
+    "note": "Lazy reflecting walk on 19 bins; stationary P(\u03b8=0)\u22481/19\u22480.0526 if nearly uniform. Exact via power iteration.",
+    "exact_stationary_P0": 0.05263157894736842
+  },
+  "unbounded_P_at_0_after_t_steps_p_hold_1_3": {
+    "1": 0.3333333333333333,
+    "5": 0.2098765432098766,
+    "10": 0.15161984114887642,
+    "20": 0.10823134601949266,
+    "50": 0.06883977251577478,
+    "100": 0.048768648573746666,
+    "180": 0.036380347609044156
+  },
+  "mc_at_contact_180_steps": {
+    "n_episodes": 5000,
+    "contact_steps": 180,
+    "p_hold": 0.3333333333333333,
+    "fraction_at_0": 0.0554,
+    "count_at_0": 277
+  },
+  "mc_vs_p_hold": {
+    "0.3333333333333333": {
+      "n_episodes": 5000,
+      "contact_steps": 180,
+      "p_hold": 0.3333333333333333,
+      "fraction_at_0": 0.0506,
+      "count_at_0": 253
+    },
+    "0.6": {
+      "n_episodes": 5000,
+      "contact_steps": 180,
+      "p_hold": 0.6,
+      "fraction_at_0": 0.0538,
+      "count_at_0": 269
+    },
+    "0.8": {
+      "n_episodes": 5000,
+      "contact_steps": 180,
+      "p_hold": 0.8,
+      "fraction_at_0": 0.068,
+      "count_at_0": 340
+    }
+  },
+  "action_repeat_effect_approx": {
+    "1": {
+      "decisions_to_contact_approx": 180,
+      "unbounded_P_at_0_after_decisions": 0.036380347609044156,
+      "mc": {
+        "n_episodes": 5000,
+        "contact_steps": 180,
+        "p_hold": 0.3333333333333333,
+        "fraction_at_0": 0.0494,
+        "count_at_0": 247
+      }
+    },
+    "4": {
+      "decisions_to_contact_approx": 45,
+      "unbounded_P_at_0_after_decisions": 0.07253316001320331,
+      "mc": {
+        "n_episodes": 5000,
+        "contact_steps": 45,
+        "p_hold": 0.3333333333333333,
+        "fraction_at_0": 0.0678,
+        "count_at_0": 339
+      }
+    },
+    "8": {
+      "decisions_to_contact_approx": 22,
+      "unbounded_P_at_0_after_decisions": 0.10328317677553678,
+      "mc": {
+        "n_episodes": 5000,
+        "contact_steps": 22,
+        "p_hold": 0.3333333333333333,
+        "fraction_at_0": 0.102,
+        "count_at_0": 510
+      }
+    },
+    "16": {
+      "decisions_to_contact_approx": 11,
+      "unbounded_P_at_0_after_decisions": 0.14481193584988744,
+      "mc": {
+        "n_episodes": 5000,
+        "contact_steps": 11,
+        "p_hold": 0.3333333333333333,
+        "fraction_at_0": 0.147,
+        "count_at_0": 735
+      }
+    }
+  },
+  "keyboard_vs_rl": {
+    "game_fps": 60,
+    "keyboard_rotate_min_interval_ms": 80,
+    "keyboard_max_rotate_hz": 12.5,
+    "physics_frames_per_allowed_rotate": 4.8,
+    "keyboard_step_degrees": 15,
+    "setRotation_quantization_deg": 10,
+    "rl_delta_per_physics_frame_deg": [
+      -10,
+      0,
+      10
+    ],
+    "implication": "A human holding no arrow key issues zero rotate() calls, so targetRotation is unchanged and attitude settles to the held angle. An RL policy that samples {-10,0,+10} every physics frame (60 Hz) perturbs attitude ~12\u00d7 more often than the keyboard rate limit allows, making sustained rotation==0 rare unless hold is sampled repeatedly."
+  },
+  "root_cause_statement": "Landing requires lander.rotation==0 exactly at contact. Uniform random delta {-10,0,+10} each physics frame yields \u22480.055 chance of being at 0 after ~180 steps (stationary \u22480.053). Keyboard play naturally holds attitude by not pressing rotate (80ms rate limit); per-frame RL delta does not."
+}
+CELL random L0 cont_delta_ar1 spent=3093
+  land=0 near=1 pad=6 top=timeout_no_contact frames=4119
+CELL random L0 cont_delta_ar4 spent=7212
+  land=0 near=0 pad=2 top=timeout_no_contact frames=4673
+CELL random L0 cont_delta_ar8 spent=11885
+  land=0 near=0 pad=2 top=timeout_no_contact frames=4525
+CELL random L0 cont_delta_ar16 spent=16410
+  land=0 near=0 pad=3 top=timeout_no_contact frames=4476
+CELL random L0 disc4_delta_ar8 spent=20886
+  land=0 near=0 pad=6 top=timeout_no_contact frames=4340
+CELL random L0 cont_absolute_ar8 spent=25226
+  land=0 near=0 pad=1 top=timeout_no_contact frames=4723
+CELL random L0 cont_holdheavy_ar8 spent=29949
+  land=0 near=0 pad=0 top=timeout_no_contact frames=4800
+CELL random L0_near cont_delta_ar1 spent=34749
+  land=0 near=1 pad=9 top=rotation_nonzero frames=2892
+CELL random L0_near cont_delta_ar4 spent=37641
+  land=0 near=0 pad=3 top=timeout_no_contact frames=4268
+CELL random L0_near cont_delta_ar8 spent=41909
+  land=0 near=0 pad=4 top=timeout_no_contact frames=4467
+CELL random L0_near cont_delta_ar16 spent=46376
+  land=0 near=0 pad=1 top=timeout_no_contact frames=4511
+CELL random L0_near disc4_delta_ar8 spent=50887
+  land=0 near=0 pad=2 top=timeout_no_contact frames=4707
+CELL random L0_near cont_absolute_ar8 spent=55594
+  land=0 near=0 pad=4 top=timeout_no_contact frames=4027
+CELL random L0_near cont_holdheavy_ar8 spent=59621
+  land=0 near=0 pad=0 top=timeout_no_contact frames=4800
+CELL untrained L0 cont_delta_ar1 spent=64421
+  land=0 near=0 pad=2 top=timeout_no_contact
+CELL untrained L0 cont_delta_ar8 spent=69029
+  land=0 near=0 pad=0 top=timeout_no_contact
+CELL untrained L0 cont_holdheavy_ar8 spent=73829
+  land=0 near=0 pad=3 top=timeout_no_contact
+CELL untrained L0_near cont_delta_ar1 spent=78370
+  land=0 near=0 pad=3 top=timeout_no_contact
+CELL untrained L0_near cont_delta_ar8 spent=82563
+  land=1 near=1 pad=12 top=rotation_nonzero
+CELL untrained L0_near cont_holdheavy_ar8 spent=84707
+  land=0 near=0 pad=3 top=timeout_no_contact
+DONE spent 89140 remaining 10860
+any landing True
