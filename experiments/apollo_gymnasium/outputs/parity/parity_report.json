@@ -1,0 +1,14 @@
+{
+  "engine": "upstream-original",
+  "passed": true,
+  "failures": [],
+  "reset_obs_max_delta": 0.0,
+  "trace_obs_max_delta": 0.0,
+  "trace_final_status": "flying",
+  "parallel_xa": 6923.200000000001,
+  "parallel_xb": 6863.200000000001,
+  "pad_width_a": 179.19999999999982,
+  "observed_statuses": [
+    "timeout"
+  ]
+}

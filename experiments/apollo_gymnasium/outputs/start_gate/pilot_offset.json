@@ -1,0 +1,343 @@
+{
+  "distribution": "pilot_offset",
+  "start": {
+    "x": 6863.200000000001,
+    "y": 220.0,
+    "vx": 0.2,
+    "vy": 0.0,
+    "rotation": -60.0,
+    "fuel": 1000.0,
+    "scale": 0.25
+  },
+  "meta": {
+    "label": "pilot_offset",
+    "rationale": "dx\u2248\u2212100, rotation=\u221260; requires translation and attitude.",
+    "start": {
+      "x": 6863.200000000001,
+      "y": 220.0,
+      "vx": 0.2,
+      "vy": 0.0,
+      "rotation": -60.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    }
+  },
+  "episodes": [
+    {
+      "policy": "noop",
+      "seed": 1000,
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "physics_frames": 1270,
+      "fuel_remaining": 607,
+      "native_score": 0
+    },
+    {
+      "policy": "noop",
+      "seed": 1001,
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "physics_frames": 1270,
+      "fuel_remaining": 629,
+      "native_score": 0
+    },
+    {
+      "policy": "noop",
+      "seed": 1002,
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "physics_frames": 1270,
+      "fuel_remaining": 651,
+      "native_score": 0
+    },
+    {
+      "policy": "noop",
+      "seed": 1003,
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "physics_frames": 1270,
+      "fuel_remaining": 673,
+      "native_score": 0
+    },
+    {
+      "policy": "noop",
+      "seed": 1004,
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "physics_frames": 1270,
+      "fuel_remaining": 695,
+      "native_score": 0
+    },
+    {
+      "policy": "noop",
+      "seed": 1005,
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "physics_frames": 1270,
+      "fuel_remaining": 717,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 1000,
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "physics_frames": 4004,
+      "fuel_remaining": 216.34816789439446,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 1001,
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "physics_frames": 3193,
+      "fuel_remaining": 353.21316888565593,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 1002,
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "physics_frames": 6703,
+      "fuel_remaining": 102.9432987596445,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 1003,
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "physics_frames": 4907,
+      "fuel_remaining": 128.86006134863408,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 1004,
+      "status": "timeout",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 8000,
+      "fuel_remaining": 179.66315879073647,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 1005,
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "physics_frames": 5847,
+      "fuel_remaining": 64.98117802967852,
+      "native_score": 0
+    },
+    {
+      "policy": "reference_continuous",
+      "seed": 1000,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5193,
+      "fuel_remaining": 704.3418862908328,
+      "native_score": 50
+    },
+    {
+      "policy": "reference_continuous",
+      "seed": 1001,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5193,
+      "fuel_remaining": 704.3418862908328,
+      "native_score": 50
+    },
+    {
+      "policy": "reference_continuous",
+      "seed": 1002,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5193,
+      "fuel_remaining": 704.3418862908328,
+      "native_score": 50
+    },
+    {
+      "policy": "reference_continuous",
+      "seed": 1003,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5193,
+      "fuel_remaining": 704.3418862908328,
+      "native_score": 50
+    },
+    {
+      "policy": "reference_continuous",
+      "seed": 1004,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5193,
+      "fuel_remaining": 704.3418862908328,
+      "native_score": 50
+    },
+    {
+      "policy": "reference_continuous",
+      "seed": 1005,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5193,
+      "fuel_remaining": 704.3418862908328,
+      "native_score": 50
+    },
+    {
+      "policy": "reference_multidiscrete",
+      "seed": 1000,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5018,
+      "fuel_remaining": 716.5488051788138,
+      "native_score": 50
+    },
+    {
+      "policy": "reference_multidiscrete",
+      "seed": 1001,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5018,
+      "fuel_remaining": 716.5488051788138,
+      "native_score": 50
+    },
+    {
+      "policy": "reference_multidiscrete",
+      "seed": 1002,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5018,
+      "fuel_remaining": 716.5488051788138,
+      "native_score": 50
+    },
+    {
+      "policy": "reference_multidiscrete",
+      "seed": 1003,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5018,
+      "fuel_remaining": 716.5488051788138,
+      "native_score": 50
+    },
+    {
+      "policy": "reference_multidiscrete",
+      "seed": 1004,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5018,
+      "fuel_remaining": 716.5488051788138,
+      "native_score": 50
+    },
+    {
+      "policy": "reference_multidiscrete",
+      "seed": 1005,
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "physics_frames": 5018,
+      "fuel_remaining": 716.5488051788138,
+      "native_score": 50
+    }
+  ],
+  "noop_land_rate": 0.0,
+  "noop_crash_rate": 1.0,
+  "noop_timeout_rate": 0.0,
+  "noop_statuses": [
+    "crashed"
+  ],
+  "random_land_rate": 0.0,
+  "random_crash_rate": 0.8333333333333334,
+  "random_timeout_rate": 0.16666666666666666,
+  "random_statuses": [
+    "crashed",
+    "timeout"
+  ],
+  "reference_continuous_land_rate": 1.0,
+  "reference_continuous_crash_rate": 0.0,
+  "reference_continuous_timeout_rate": 0.0,
+  "reference_continuous_statuses": [
+    "landed"
+  ],
+  "reference_multidiscrete_land_rate": 1.0,
+  "reference_multidiscrete_crash_rate": 0.0,
+  "reference_multidiscrete_timeout_rate": 0.0,
+  "reference_multidiscrete_statuses": [
+    "landed"
+  ],
+  "gate_noop_fails": true,
+  "gate_reference_can_land": true,
+  "gate_pass": true
+}
