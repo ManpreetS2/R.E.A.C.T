@@ -1,0 +1,97 @@
+{
+  "spaces": {
+    "passed": true,
+    "failures": [],
+    "obs_dim": 10,
+    "action_nvec": [
+      5,
+      3
+    ],
+    "ar": 4,
+    "start": "sh_contact",
+    "short_horizon_version": "short_horizon.v1"
+  },
+  "seeds": {
+    "passed": true,
+    "overlaps": [],
+    "n_train_runs": 12,
+    "train_bases": {
+      "A-0": 900000,
+      "A-1": 910000,
+      "A-2": 920000,
+      "B-0": 930000,
+      "B-1": 940000,
+      "B-2": 950000,
+      "C-0": 960000,
+      "C-1": 970000,
+      "C-2": 980000,
+      "D-0": 990000,
+      "D-1": 1000000,
+      "D-2": 1010000
+    },
+    "reward_modes": {
+      "A": "abcd_a",
+      "B": "abcd_b",
+      "C": "abcd_c",
+      "D": "abcd_d"
+    },
+    "train_seeds": [
+      0,
+      1,
+      2
+    ],
+    "conditions": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "heldout_n": 100,
+    "dev_n": 50,
+    "gaps_ok": true
+  },
+  "budget_guard": {
+    "passed": true,
+    "logic": {
+      "199996": true,
+      "199997": false,
+      "199998": false,
+      "199999": false,
+      "200000": false
+    },
+    "exact_cap_continue_after": false,
+    "exact_cap_frames": 200000,
+    "max_physics_frames_per_run": 200000,
+    "max_total_study_frames": 2400000
+  },
+  "ppo": {
+    "passed": true,
+    "frozen": {
+      "policy": "MlpPolicy",
+      "learning_rate": 0.0003,
+      "n_steps": 256,
+      "batch_size": 64,
+      "gamma": 0.99,
+      "action_repeat": 4,
+      "episode_max_frames": 2000,
+      "max_physics_frames": 200000,
+      "checkpoint_every_gym_steps": 5000,
+      "train_seeds": [
+        0,
+        1,
+        2
+      ],
+      "independent_init": true,
+      "alpha": 10.0,
+      "time_cost": 0.005
+    }
+  },
+  "v3_reference": {
+    "passed": true,
+    "path": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_40000_steps.zip",
+    "role": "historical_feasibility_reference_only",
+    "not_condition_A": true
+  },
+  "passed": true
+}
+ABCD FAIRNESS PASSED

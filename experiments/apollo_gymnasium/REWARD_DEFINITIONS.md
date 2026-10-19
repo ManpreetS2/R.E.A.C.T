@@ -76,10 +76,24 @@ timeouts marked `terminated` for PPO. No upright+slow occupancy bonus.
 > **Code bug note (PR #11):** `progress_a` and `progress_c` previously both returned
 > \(\Delta\Phi-0.05\). Spec and implementation must diverge before any A/B/C run.
 
-## Experiment D — Sparse / outcome-only (blocked)
+## Experiment D — Sparse / outcome-only
+
+### Primary A/B/C/D study D (`abcd_d`) — frozen
 
 \[
 R_t^{D} =
+\begin{cases}
+0 & \text{non-terminal} \\
++100 / +40 / -100 / -100 & \text{same native terminals as A/B/C}
+\end{cases}
+\]
+
+See `ABCD_REWARD_FREEZE.md`. Isolates intermediate feedback frequency under matched terminal scale.
+
+### Legacy ±1 sparse (`sparse_d`) — future experiment only
+
+\[
+R_t =
 \begin{cases}
 0 & \text{non-terminal} \\
 +1 & \text{native landing (perfect or hard)} \\
@@ -87,8 +101,7 @@ R_t^{D} =
 \end{cases}
 \]
 
-Same physics, obs, legal actions, PPO, starts, and held-out eval as A/B/C.
-**Do not train until A lands and budget is approved.**
+**Not interchangeable** with primary study D. Do not mix into A/B/C/D claims.
 
 ## Optional E — Zero reward (negative control, blocked)
 

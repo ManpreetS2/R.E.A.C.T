@@ -20,6 +20,15 @@ A_PRIME_ALPHA = 10.0
 A_PRIME_TIME_COST = 0.005
 A_PRIME_MODES = frozenset({"progress_a_prime", "a_prime", "progress_a_prime_v5", "a_prime_v5"})
 
+# A/B/C/D study modes (frozen — see ABCD_REWARD_FREEZE.md). Always 10-D; no V5 latch.
+ABCD_MODES = frozenset({"abcd_a", "abcd_b", "abcd_c", "abcd_d"})
+ABCD_SHAPED_MODES = frozenset({"abcd_a", "abcd_b", "abcd_c"})
+PPO_GAMMA = 0.99  # SB3 default; used for C's γ-corrected potential shaping
+HOVER_ROT_DEG = 10.0
+HOVER_SPEED = 0.2  # sqrt(vx^2+vy^2) world units
+# Soft-land vertical-speed threshold (game / native), used by Φ_C excess-vy only.
+SAFE_VY = 0.15
+
 # V5 late-approach commitment (frozen from development diagnostics — do not retune mid-run).
 # Penalize inappropriate soft ascent after having approached the pad; not occupancy,
 # not unsafe-fall reward, not blanket anti-climb. See V5_COMMITMENT.md.
@@ -31,6 +40,7 @@ COMMIT_BETA = 1.0  # coefficient on ascent rate max(0, -vy)
 
 
 def _potential(obs: np.ndarray) -> float:
+    """A′ / B progress potential (normalized obs features 0–4)."""
     dx, alt, vx, vy, ang = obs[0], obs[1], obs[2], obs[3], obs[4]
     return float(
         -1.0 * abs(dx)
@@ -38,6 +48,26 @@ def _potential(obs: np.ndarray) -> float:
         - 0.8 * abs(vx)
         - 1.0 * max(vy, 0.0)
         - 1.5 * abs(ang)
+    )
+
+
+def _potential_c(obs: np.ndarray) -> float:
+    """Condition C safe-touchdown potential — distinct from A′ Φ.
+
+    Stateless. Does **not** reward unlimited downward velocity: only *excess*
+    descent above SAFE_VY (normalized) lowers Φ. Soft controlled descent is not
+    improved by braking to zero mid-air. Stronger lateral / attitude costs than A′.
+    """
+    dx, alt, vx, vy, ang = obs[0], obs[1], obs[2], obs[3], obs[4]
+    # obs vy is world_vy / 2 (see OBSERVATIONS.md)
+    vy_soft_n = SAFE_VY / 2.0
+    excess_vy = max(0.0, float(vy) - vy_soft_n)
+    return float(
+        -1.2 * abs(dx)
+        - 1.0 * max(float(alt), 0.0)
+        - 1.0 * abs(vx)
+        - 2.0 * excess_vy
+        - 2.0 * abs(ang)
     )
 
 
@@ -79,18 +109,23 @@ class ApolloLanderGym(gym.Env):
         self.potential_scale = float(potential_scale)
         self.time_cost = time_cost
         mode_l = self.reward_mode.lower()
-        # V5 modes always enable commitment; otherwise honor explicit flag (default off).
-        if commitment_shaping is None:
+        # V5 modes always enable commitment; ABCD and default never do.
+        if mode_l in ABCD_MODES:
+            self.commitment_shaping = False
+        elif commitment_shaping is None:
             self.commitment_shaping = mode_l in ("progress_a_prime_v5", "a_prime_v5")
         else:
             self.commitment_shaping = bool(commitment_shaping)
-        # A′ defaults: α=10, c=0.005 unless explicitly overridden.
-        if mode_l in A_PRIME_MODES:
+        # A′ / ABCD shaped defaults: α=10, c=0.005 unless explicitly overridden.
+        if mode_l in A_PRIME_MODES or mode_l in ABCD_SHAPED_MODES:
             if self.potential_scale == 1.0:
                 self.potential_scale = A_PRIME_ALPHA
             if self.time_cost is None:
                 self.time_cost = A_PRIME_TIME_COST
-            # V3 experimental task: frame budget is a terminal failure (not SB3 bootstrap).
+            if not timeout_as_terminated:
+                self.timeout_as_terminated = True
+        if mode_l == "abcd_d":
+            # Same timeout semantics as A/B/C; no dense shaping defaults required.
             if not timeout_as_terminated:
                 self.timeout_as_terminated = True
 
@@ -222,7 +257,7 @@ class ApolloLanderGym(gym.Env):
 
         self._update_approached(raw)
         obs = self._raw_to_obs(raw, self._cmd_angle)
-        self._prev_phi = _potential(obs)
+        self._prev_phi = self._phi_for_mode(obs)
         info = {
             "engine": "upstream-original",
             "start": boot.get("start"),
@@ -233,8 +268,20 @@ class ApolloLanderGym(gym.Env):
             "native_score": raw.get("native_score"),
             "raw": raw,
             "approached": bool(self._approached),
+            "reward_mode": self.reward_mode,
         }
         return obs, info
+
+    def _phi_for_mode(self, obs: np.ndarray) -> float:
+        mode = self.reward_mode.lower()
+        if mode in ("abcd_c",):
+            return _potential_c(obs)
+        return _potential(obs)
+
+    def _hover_bonus(self, raw: dict[str, Any]) -> float:
+        ang = abs(float(raw.get("rotation", 0.0)))
+        speed = float(np.hypot(raw.get("vx", 0.0), raw.get("vy", 0.0)))
+        return 1.0 if (ang < HOVER_ROT_DEG and speed < HOVER_SPEED) else 0.0
 
     @property
     def cmd_angle(self) -> float:
@@ -260,6 +307,8 @@ class ApolloLanderGym(gym.Env):
         raw: dict[str, Any],
     ) -> float:
         mode = self.reward_mode.lower()
+
+        # Legacy ±1 sparse (NOT the A/B/C/D primary D — see ABCD_REWARD_FREEZE.md).
         if mode in ("sparse_d", "d"):
             if result.get("landed"):
                 return 1.0
@@ -270,9 +319,14 @@ class ApolloLanderGym(gym.Env):
         if mode in ("zero_e", "e"):
             return 0.0
 
+        # Primary study D: zero dense; same native terminals as A/B/C.
+        if mode == "abcd_d":
+            terminal = self._terminal_reward(result, timed_out)
+            return 0.0 if terminal is None else float(terminal)
+
         terminal = self._terminal_reward(result, timed_out)
 
-        # A′ and A/B/C all use the same native terminal constants.
+        # Shared native terminals for shaped A/B/C (and legacy shaped modes).
         shaped_modes = (
             "progress_a",
             "a",
@@ -284,27 +338,50 @@ class ApolloLanderGym(gym.Env):
             "a_prime",
             "progress_a_prime_v5",
             "a_prime_v5",
+            "abcd_a",
+            "abcd_b",
+            "abcd_c",
         )
         if terminal is not None and mode in shaped_modes:
-            self._prev_phi = _potential(obs)
+            # Terminals are outcome payoffs only — no Φ bootstrap into the terminal step.
+            self._prev_phi = self._phi_for_mode(obs)
             return float(terminal)
 
-        phi = _potential(obs)
-        delta = 0.0 if self._prev_phi is None else (phi - self._prev_phi)
+        phi = self._phi_for_mode(obs)
+        prev = self._prev_phi
         self._prev_phi = phi
         commit = self._commitment_reward(raw)
-
-        if mode in A_PRIME_MODES:
-            return float(self.potential_scale * delta - float(self.time_cost) + commit)
-
-        c_time = 0.05 if self.time_cost is None else float(self.time_cost)
         alpha = self.potential_scale
+        c_time = (
+            float(self.time_cost)
+            if self.time_cost is not None
+            else (0.005 if mode in ABCD_SHAPED_MODES else 0.05)
+        )
+
+        # --- A/B/C/D study dense rewards ---
+        if mode == "abcd_a":
+            delta = 0.0 if prev is None else (phi - prev)
+            return float(alpha * delta - c_time)
+
+        if mode == "abcd_b":
+            delta = 0.0 if prev is None else (phi - prev)
+            return float(alpha * delta - c_time + self._hover_bonus(raw))
+
+        if mode == "abcd_c":
+            # γ-corrected potential shaping: F = γ Φ(s') − Φ(s) (Ng et al.), then ×α − c.
+            if prev is None:
+                shaped = 0.0
+            else:
+                shaped = PPO_GAMMA * phi - prev
+            return float(alpha * shaped - c_time)
+
+        # --- Legacy / pilot modes ---
+        delta = 0.0 if prev is None else (phi - prev)
+        if mode in A_PRIME_MODES:
+            return float(alpha * delta - float(self.time_cost) + commit)
 
         if mode in ("progress_b", "b"):
-            ang = abs(float(raw.get("rotation", 0.0)))
-            speed = float(np.hypot(raw.get("vx", 0.0), raw.get("vy", 0.0)))
-            hover_bonus = 1.0 if (ang < 10.0 and speed < 0.2) else 0.0
-            return float(alpha * delta - c_time + hover_bonus)
+            return float(alpha * delta - c_time + self._hover_bonus(raw))
 
         if mode in ("progress_c", "c"):
             return float(3.0 * delta - 0.02)

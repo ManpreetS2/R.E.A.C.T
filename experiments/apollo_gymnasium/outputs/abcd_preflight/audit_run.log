@@ -1,0 +1,112 @@
+Collecting diagnostic scenarios on ABCD_AUDIT_SEEDS...
+  abcd_a ← perfect_landing (seed=55001, policy=reference)
+  abcd_a ← crash (seed=55000, policy=noop)
+  abcd_a ← unsafe_high_speed_descent (seed=55000, policy=noop)
+  abcd_a ← timeout (seed=55005, policy=hover_thrust)
+  abcd_a ← post_approach_reascent (seed=55005, policy=hover_thrust)
+  abcd_a ← upright_hover (seed=55015, policy=forced_hover_absolute)
+  abcd_a ← hard_landing (seed=55001, policy=reference)
+  abcd_b ← perfect_landing (seed=55001, policy=reference)
+  abcd_b ← crash (seed=55000, policy=noop)
+  abcd_b ← unsafe_high_speed_descent (seed=55000, policy=noop)
+  abcd_b ← timeout (seed=55005, policy=hover_thrust)
+  abcd_b ← post_approach_reascent (seed=55005, policy=hover_thrust)
+  abcd_b ← upright_hover (seed=55015, policy=forced_hover_absolute)
+  abcd_b ← hard_landing (seed=55001, policy=reference)
+  abcd_c ← perfect_landing (seed=55001, policy=reference)
+  abcd_c ← crash (seed=55000, policy=noop)
+  abcd_c ← unsafe_high_speed_descent (seed=55000, policy=noop)
+  abcd_c ← timeout (seed=55005, policy=hover_thrust)
+  abcd_c ← post_approach_reascent (seed=55005, policy=hover_thrust)
+  abcd_c ← upright_hover (seed=55015, policy=forced_hover_absolute)
+  abcd_c ← hard_landing (seed=55001, policy=reference)
+  abcd_d ← perfect_landing (seed=55001, policy=reference)
+  abcd_d ← crash (seed=55000, policy=noop)
+  abcd_d ← unsafe_high_speed_descent (seed=55000, policy=noop)
+  abcd_d ← timeout (seed=55005, policy=hover_thrust)
+  abcd_d ← post_approach_reascent (seed=55005, policy=hover_thrust)
+  abcd_d ← upright_hover (seed=55015, policy=forced_hover_absolute)
+  abcd_d ← hard_landing (seed=55001, policy=reference)
+{
+  "passed": true,
+  "gates": [
+    {
+      "name": "abcd_a_land_beats_crash",
+      "passed": true,
+      "land": 101.94573176383972,
+      "crash": -100.13784145832062
+    },
+    {
+      "name": "abcd_c_land_beats_crash",
+      "passed": true,
+      "land": 102.56365461081266,
+      "crash": -98.63895524859429
+    },
+    {
+      "name": "abcd_d_land_beats_crash",
+      "passed": true,
+      "land": 100.0,
+      "crash": -100.0
+    },
+    {
+      "name": "abcd_d_intermediate_zero",
+      "passed": true,
+      "terminal": -100.0
+    },
+    {
+      "name": "abcd_b_hover_bait_vs_a",
+      "passed": true,
+      "A": 103.43711520373822,
+      "B": 135.43711520373822,
+      "B_minus_A": 32.0,
+      "hover_steps_B": 33
+    },
+    {
+      "name": "abcd_c_distinct_from_a_dense",
+      "passed": true,
+      "A_dense": 1.9457317638397216,
+      "C_dense": 2.5636546108126645
+    },
+    {
+      "name": "shared_perfect_terminal_100",
+      "passed": true,
+      "terminals": {
+        "abcd_a": 100.0,
+        "abcd_b": 100.0,
+        "abcd_c": 100.0,
+        "abcd_d": 100.0
+      }
+    },
+    {
+      "name": "upstream_engine",
+      "passed": true
+    },
+    {
+      "name": "physics_outcome_match",
+      "passed": true
+    },
+    {
+      "name": "numerical_stability",
+      "passed": true
+    },
+    {
+      "name": "heldout_untouched",
+      "passed": true,
+      "heldout_pool": [
+        800000,
+        800001,
+        800002,
+        "..."
+      ],
+      "audit_pool": [
+        55000,
+        55001,
+        55002,
+        55003,
+        55004,
+        "..."
+      ]
+    }
+  ],
+  "missing": []
+}

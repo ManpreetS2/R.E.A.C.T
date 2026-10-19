@@ -101,8 +101,11 @@ def main() -> None:
     monitor_dir.mkdir(parents=True, exist_ok=True)
 
     v5_modes = ("progress_a_prime_v5", "a_prime_v5")
-    a_prime_modes = ("progress_a_prime", "a_prime", *v5_modes)
+    abcd_modes = ("abcd_a", "abcd_b", "abcd_c", "abcd_d")
+    a_prime_modes = ("progress_a_prime", "a_prime", *v5_modes, *abcd_modes)
     commitment = bool(args.commitment_shaping) or args.reward_mode.lower() in v5_modes
+    if args.reward_mode.lower() in abcd_modes:
+        commitment = False  # A/B/C/D study: never enable V5 latch / 11-D obs
     meta = {
         "start": args.start,
         "start_template": args.start_template,
