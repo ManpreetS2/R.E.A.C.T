@@ -1,0 +1,61 @@
+{
+  "unit_tests": {
+    "passed": true,
+    "stdout": "........                                                                 [100%]\n",
+    "stderr": ""
+  },
+  "seed_variation": {
+    "passed": true,
+    "failures": [],
+    "bare_reset_unique": 5
+  },
+  "trajectories": {
+    "passed": true,
+    "failures": [],
+    "cases": {
+      "noop": {
+        "status": "crashed",
+        "landed": false,
+        "crashed": true,
+        "terminal_reward": -100.0,
+        "terminated": true,
+        "truncated": false,
+        "frames": 99
+      },
+      "ref_legal": {
+        "status": "landed",
+        "landed": true,
+        "perfect": true,
+        "terminal_reward": 100.0,
+        "terminated": true,
+        "truncated": false,
+        "frames": 152,
+        "native_score": 50,
+        "nonterminal_sample": 0.8584904026985168
+      },
+      "timeout": {
+        "status": "timeout",
+        "reward": -100.0,
+        "terminated": true,
+        "truncated": false,
+        "timeout": true
+      }
+    },
+    "seed_pools": {
+      "train_base": 100000,
+      "dev": [
+        200000,
+        200001,
+        200002,
+        "..."
+      ],
+      "heldout": [
+        300000,
+        300001,
+        300002,
+        "..."
+      ]
+    }
+  },
+  "all_passed": true
+}

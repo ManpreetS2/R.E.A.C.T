@@ -1,0 +1,119 @@
+{
+  "seed": 300001,
+  "start": {
+    "x": 6956.697458566349,
+    "y": 665.8001876688659,
+    "vx": 0.014620802409157307,
+    "vy": 0.14926601312062615,
+    "rotation": 10,
+    "fuel": 1000,
+    "scale": 0.25
+  },
+  "status": "landed",
+  "perfect": true,
+  "hard_landing": false,
+  "native_score": 50,
+  "physics_frames": 94,
+  "fuel_remaining": 1032.5999999906485,
+  "actions": [
+    [
+      3,
+      0
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      1
+    ]
+  ],
+  "model_path": "experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/final_model.zip",
+  "model_sha256": "3b102ddd1c47d23373d6f77d0bd0a8e27355f904c054b9f796f5bbcb5a6f4155",
+  "noop_also_lands": false
+}

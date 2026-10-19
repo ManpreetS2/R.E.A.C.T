@@ -92,10 +92,11 @@ Optional E (zero-reward negative control) likewise gated.
 
 ---
 
-## Follow-up: root-cause (no new training)
+## Follow-up: root-cause → V3 pilot (approved, bounded)
 
-See **`ROOT_CAUSE_ANALYSIS.md`**. Primary failure mode: time penalty overwhelms ΣΔΦ
-(expert continuous land return **−111** vs crash **−114**). Proposed next pilot
-`ppo_pilot_v3_contact_Aprime` uses `sh_contact` + reward A′ — **awaiting approval**.
+See **`ROOT_CAUSE_ANALYSIS.md`** and **`outputs/ppo_pilot_v3_contact_Aprime/V3_RESULTS.md`**.
 
-Do **not** merge as a solved-landing claim. Preserve v1 hover and v2 crash results.
+V3 (`sh_contact` + A′, 200k physics frames): held-out **deterministic land rate 40%**
+vs noop/random/step0 **0%**. Timeout still common; stochastic 0%. Not A/B/C/D.
+
+Do **not** merge as a full original-start solve. Preserve v1/v2 negatives and V3 evidence.
