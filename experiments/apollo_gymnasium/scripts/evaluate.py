@@ -21,7 +21,7 @@ from env.controllers import (  # noqa: E402
     reference_continuous_command,
     reference_guidance_action,
 )
-from env.seeds import DEV_EVAL_SEEDS, HELD_OUT_SEEDS  # noqa: E402
+from env.seeds import DEV_EVAL_SEEDS, HELD_OUT_SEEDS, V4_HELD_OUT_SEEDS  # noqa: E402
 from env.starts import SHORT_HORIZON_TEMPLATES, resolve_start  # noqa: E402
 
 
@@ -109,7 +109,11 @@ def main() -> None:
     ap.add_argument("--start-template", default=None)
     ap.add_argument("--model", default=None, help="Path to PPO .zip")
     ap.add_argument("--policies", default="noop,random,reference,ppo")
-    ap.add_argument("--seed-pool", choices=["dev", "heldout", "custom"], default="dev")
+    ap.add_argument(
+        "--seed-pool",
+        choices=["dev", "heldout", "v4_heldout", "custom"],
+        default="dev",
+    )
     ap.add_argument("--seed-start", type=int, default=None)
     ap.add_argument("--episodes", type=int, default=None)
     ap.add_argument("--action-repeat", type=int, default=4)
@@ -122,6 +126,8 @@ def main() -> None:
         seeds = list(DEV_EVAL_SEEDS)
     elif args.seed_pool == "heldout":
         seeds = list(HELD_OUT_SEEDS)
+    elif args.seed_pool == "v4_heldout":
+        seeds = list(V4_HELD_OUT_SEEDS)
     else:
         n = args.episodes or 20
         base = args.seed_start if args.seed_start is not None else 50_000

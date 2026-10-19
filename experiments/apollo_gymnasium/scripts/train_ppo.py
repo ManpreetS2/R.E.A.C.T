@@ -23,11 +23,17 @@ from env.starts import SHORT_HORIZON_TEMPLATES, resolve_start  # noqa: E402
 
 
 class PhysicsBudgetCallback(BaseCallback):
-    """Stop when cumulative *actual* engine physics frames hit the hard cap."""
+    """Stop without exceeding the approved physics-frame hard cap.
 
-    def __init__(self, max_physics_frames: int, verbose: int = 0):
+    Counts actual ``physics_frames_delta`` from the env. Stops when the next
+    Gym step could push the total over ``max_physics_frames`` (worst-case
+    ``action_repeat``), so the run never overshoots like V3's 200003.
+    """
+
+    def __init__(self, max_physics_frames: int, action_repeat: int = 4, verbose: int = 0):
         super().__init__(verbose)
-        self.max_physics_frames = max_physics_frames
+        self.max_physics_frames = int(max_physics_frames)
+        self.action_repeat = int(action_repeat)
         self.physics_frames = 0
 
     def _on_step(self) -> bool:
@@ -37,6 +43,14 @@ class PhysicsBudgetCallback(BaseCallback):
             if self.verbose:
                 print(
                     f"Physics budget reached: {self.physics_frames} >= {self.max_physics_frames}"
+                )
+            return False
+        # Refuse another step if worst-case action_repeat would exceed the cap.
+        if self.physics_frames + self.action_repeat > self.max_physics_frames:
+            if self.verbose:
+                print(
+                    f"Physics budget guard: {self.physics_frames} + ar={self.action_repeat} "
+                    f"> {self.max_physics_frames}; stopping under budget"
                 )
             return False
         return True
@@ -140,7 +154,9 @@ def main() -> None:
         save_path=str(models / "checkpoints"),
         name_prefix="ppo_apollo",
     )
-    budget = PhysicsBudgetCallback(args.max_physics_frames, verbose=1)
+    budget = PhysicsBudgetCallback(
+        args.max_physics_frames, action_repeat=args.action_repeat, verbose=1
+    )
 
     t0 = time.time()
     model.learn(total_timesteps=max_gym_steps, callback=[ckpt, budget], progress_bar=False)

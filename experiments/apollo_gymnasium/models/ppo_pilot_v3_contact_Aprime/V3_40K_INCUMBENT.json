@@ -1,0 +1,8 @@
+{
+  "path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_40000_steps.zip",
+  "sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975",
+  "freeze_manifest_sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975",
+  "role": "primary_incumbent_for_V4",
+  "do_not_overwrite": true,
+  "dev_land_rate": 0.6
+}

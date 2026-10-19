@@ -1,0 +1,97 @@
+{
+  "budget_guard": {
+    "passed": true,
+    "remaining_checks": {
+      "frames_199996": true,
+      "frames_199997": false,
+      "frames_199998": false,
+      "frames_199999": false,
+      "frames_200000": false
+    },
+    "expect_remaining": {
+      "frames_199996": true,
+      "frames_199997": false,
+      "frames_199998": false,
+      "frames_199999": false,
+      "frames_200000": false
+    },
+    "exact_to_cap": {
+      "continue": false,
+      "frames": 200000
+    },
+    "remaining_3_callback_continue": false,
+    "cases": [
+      {
+        "name": "exact_cap_after_step",
+        "continue": true,
+        "frames": 199996,
+        "expect_continue": false
+      },
+      {
+        "name": "take_exact_4_to_cap",
+        "continue_after": false,
+        "frames": 200000,
+        "expect_continue_after": false,
+        "expect_frames": 200000
+      }
+    ],
+    "note": "Stops when frames+ar > cap so fewer-than-4 remaining cannot overshoot"
+  },
+  "spaces": {
+    "passed": true,
+    "failures": [],
+    "obs_dim": 10,
+    "action_nvec": [
+      5,
+      3
+    ],
+    "time_cost": 0.02,
+    "alpha": 10.0,
+    "engine_note": "upstream-original via Playwright bridge"
+  },
+  "v3_40k_frozen": {
+    "passed": true,
+    "sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975",
+    "matches_freeze_manifest": true,
+    "expected": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975",
+    "marker": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/V3_40K_INCUMBENT.json"
+  },
+  "v4_heldout_unused": {
+    "passed": true,
+    "pool": [
+      400000,
+      400001,
+      400002,
+      400003,
+      400004,
+      400005,
+      400006,
+      400007,
+      400008,
+      400009,
+      400010,
+      400011,
+      400012,
+      400013,
+      400014,
+      400015,
+      400016,
+      400017,
+      400018,
+      400019
+    ],
+    "contamination_hits": [],
+    "disjoint_ok": true,
+    "note": "Pool reserved; must not appear in prior train/eval episode records"
+  },
+  "time_cost_only": {
+    "passed": true,
+    "v3_time_cost": 0.005,
+    "v4_time_cost": 0.02,
+    "unexpected_diffs": [],
+    "unavoidable_implementation_diffs": [
+      "PhysicsBudgetCallback refuses next Gym step when frames+action_repeat > cap (fixes V3 200003 overshoot)"
+    ]
+  },
+  "passed": true
+}
