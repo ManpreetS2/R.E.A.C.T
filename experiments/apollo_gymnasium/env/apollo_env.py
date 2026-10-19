@@ -18,7 +18,16 @@ STEER_DELTAS = np.array([-10.0, 0.0, 10.0], dtype=np.float64)
 # A′ defaults (explicit; also overridable via constructor).
 A_PRIME_ALPHA = 10.0
 A_PRIME_TIME_COST = 0.005
-A_PRIME_MODES = frozenset({"progress_a_prime", "a_prime"})
+A_PRIME_MODES = frozenset({"progress_a_prime", "a_prime", "progress_a_prime_v5", "a_prime_v5"})
+
+# V5 late-approach commitment (frozen from development diagnostics — do not retune mid-run).
+# Penalize inappropriate soft ascent after having approached the pad; not occupancy,
+# not unsafe-fall reward, not blanket anti-climb. See V5_COMMITMENT.md.
+COMMIT_H_APP = 25.0  # altitude (world) to latch "approached"
+COMMIT_D_APP = 60.0  # |dx| (world) to latch "approached"
+COMMIT_V_SOFT = 0.15  # native soft-land vy threshold; faster falls may abort freely
+COMMIT_R_SOFT = 15.0  # |rotation| deg; large attitude errors may recover freely
+COMMIT_BETA = 1.0  # coefficient on ascent rate max(0, -vy)
 
 
 def _potential(obs: np.ndarray) -> float:
@@ -53,6 +62,7 @@ class ApolloLanderGym(gym.Env):
         timeout_as_terminated: bool = False,
         potential_scale: float = 1.0,
         time_cost: float | None = None,
+        commitment_shaping: bool | None = None,
     ) -> None:
         super().__init__()
         self.action_repeat = int(action_repeat)
@@ -68,8 +78,14 @@ class ApolloLanderGym(gym.Env):
         self.timeout_as_terminated = bool(timeout_as_terminated)
         self.potential_scale = float(potential_scale)
         self.time_cost = time_cost
+        mode_l = self.reward_mode.lower()
+        # V5 modes always enable commitment; otherwise honor explicit flag (default off).
+        if commitment_shaping is None:
+            self.commitment_shaping = mode_l in ("progress_a_prime_v5", "a_prime_v5")
+        else:
+            self.commitment_shaping = bool(commitment_shaping)
         # A′ defaults: α=10, c=0.005 unless explicitly overridden.
-        if self.reward_mode.lower() in A_PRIME_MODES:
+        if mode_l in A_PRIME_MODES:
             if self.potential_scale == 1.0:
                 self.potential_scale = A_PRIME_ALPHA
             if self.time_cost is None:
@@ -78,7 +94,10 @@ class ApolloLanderGym(gym.Env):
             if not timeout_as_terminated:
                 self.timeout_as_terminated = True
 
-        self.observation_space = spaces.Box(low=-5.0, high=5.0, shape=(10,), dtype=np.float32)
+        obs_dim = 11 if self.commitment_shaping else 10
+        self.observation_space = spaces.Box(
+            low=-5.0, high=5.0, shape=(obs_dim,), dtype=np.float32
+        )
         self.action_space = spaces.MultiDiscrete([len(THRUST_LEVELS), len(STEER_DELTAS)])
 
         self._pw = None
@@ -91,6 +110,7 @@ class ApolloLanderGym(gym.Env):
         self._seed_used = 0
         self._auto_episode_idx = 0
         self._last_start: dict[str, float] | None = None
+        self._approached = False
 
     def _ensure_page(self) -> None:
         if self._page is not None:
@@ -106,22 +126,46 @@ class ApolloLanderGym(gym.Env):
         finally:
             self._page = self._context = self._browser = self._pw = None
 
+    def _update_approached(self, raw: dict[str, Any]) -> None:
+        """Latch approached once near pad; never clears within an episode."""
+        if not self.commitment_shaping:
+            return
+        alt = float(raw.get("altitude", 0.0))
+        dx = float(raw.get("dx", 0.0))
+        if alt < COMMIT_H_APP and abs(dx) < COMMIT_D_APP:
+            self._approached = True
+
+    def _commitment_reward(self, raw: dict[str, Any]) -> float:
+        """Late-approach inappropriate-ascent penalty (Markov given approached flag in obs)."""
+        if not self.commitment_shaping:
+            return 0.0
+        self._update_approached(raw)
+        if not self._approached:
+            return 0.0
+        vy = float(raw.get("vy", 0.0))
+        rot = float(raw.get("rotation", 0.0))
+        # Preserve hard-fall braking / attitude recovery: no penalty unless already soft+upright.
+        if vy >= COMMIT_V_SOFT or abs(rot) >= COMMIT_R_SOFT:
+            return 0.0
+        ascent = max(0.0, -vy)  # down-positive convention
+        return float(-COMMIT_BETA * ascent)
+
     def _raw_to_obs(self, raw: dict[str, Any], cmd_angle: float) -> np.ndarray:
-        obs = np.array(
-            [
-                float(raw.get("dx", 0.0)) / 200.0,
-                float(raw.get("altitude", 0.0)) / 300.0,
-                float(raw.get("vx", 0.0)) / 2.0,
-                float(raw.get("vy", 0.0)) / 2.0,
-                float(raw.get("rotation", 0.0)) / 90.0,
-                float(cmd_angle) / 90.0,
-                float(raw.get("fuel", 0.0)) / 1000.0,
-                float(raw.get("thrust", 0.0)) / 3.0,
-                float(raw.get("pad_width", 0.0)) / 200.0,
-                float(raw.get("dy", 0.0)) / 300.0,
-            ],
-            dtype=np.float32,
-        )
+        feats = [
+            float(raw.get("dx", 0.0)) / 200.0,
+            float(raw.get("altitude", 0.0)) / 300.0,
+            float(raw.get("vx", 0.0)) / 2.0,
+            float(raw.get("vy", 0.0)) / 2.0,
+            float(raw.get("rotation", 0.0)) / 90.0,
+            float(cmd_angle) / 90.0,
+            float(raw.get("fuel", 0.0)) / 1000.0,
+            float(raw.get("thrust", 0.0)) / 3.0,
+            float(raw.get("pad_width", 0.0)) / 200.0,
+            float(raw.get("dy", 0.0)) / 300.0,
+        ]
+        if self.commitment_shaping:
+            feats.append(1.0 if self._approached else 0.0)
+        obs = np.array(feats, dtype=np.float32)
         return np.clip(obs, -5.0, 5.0)
 
     def _resolve_episode_seed(self, seed: int | None) -> int:
@@ -157,6 +201,7 @@ class ApolloLanderGym(gym.Env):
         override = self._resolve_start_override(self._seed_used, options)
         self._cmd_angle = float(override.get("rotation", -90.0))
         self._last_start = dict(override)
+        self._approached = False
 
         cfg: dict[str, Any] = {
             "seed": self._seed_used,
@@ -175,6 +220,7 @@ class ApolloLanderGym(gym.Env):
         elif boot.get("start"):
             self._cmd_angle = float(boot["start"].get("rotation", self._cmd_angle))
 
+        self._update_approached(raw)
         obs = self._raw_to_obs(raw, self._cmd_angle)
         self._prev_phi = _potential(obs)
         info = {
@@ -186,6 +232,7 @@ class ApolloLanderGym(gym.Env):
             "start_template": self.start_template,
             "native_score": raw.get("native_score"),
             "raw": raw,
+            "approached": bool(self._approached),
         }
         return obs, info
 
@@ -235,6 +282,8 @@ class ApolloLanderGym(gym.Env):
             "c",
             "progress_a_prime",
             "a_prime",
+            "progress_a_prime_v5",
+            "a_prime_v5",
         )
         if terminal is not None and mode in shaped_modes:
             self._prev_phi = _potential(obs)
@@ -243,9 +292,10 @@ class ApolloLanderGym(gym.Env):
         phi = _potential(obs)
         delta = 0.0 if self._prev_phi is None else (phi - self._prev_phi)
         self._prev_phi = phi
+        commit = self._commitment_reward(raw)
 
         if mode in A_PRIME_MODES:
-            return float(self.potential_scale * delta - float(self.time_cost))
+            return float(self.potential_scale * delta - float(self.time_cost) + commit)
 
         c_time = 0.05 if self.time_cost is None else float(self.time_cost)
         alpha = self.potential_scale
@@ -259,12 +309,11 @@ class ApolloLanderGym(gym.Env):
         if mode in ("progress_c", "c"):
             return float(3.0 * delta - 0.02)
 
-        return float(alpha * delta - c_time)
+        return float(alpha * delta - c_time + commit)
 
     def _finish_step(self, last: dict[str, Any]):
         raw = last["observation"]
         result = dict(last["result"])
-        obs = self._raw_to_obs(raw, self._cmd_angle)
 
         native_done = bool(result.get("done"))
         timed_out = (not native_done) and (self._physics_frames >= self.max_physics_frames)
@@ -281,6 +330,10 @@ class ApolloLanderGym(gym.Env):
         else:
             terminated, truncated = native_done, False
 
+        # Latch approached before building obs so reward history is visible to the policy.
+        if self.commitment_shaping:
+            self._update_approached(raw)
+        obs = self._raw_to_obs(raw, self._cmd_angle)
         reward = self._train_reward(obs, result, timed_out, raw)
         info = {
             "engine": "upstream-original",
@@ -301,6 +354,7 @@ class ApolloLanderGym(gym.Env):
             "applied": last.get("applied"),
             "raw": raw,
             "result": result,
+            "approached": bool(self._approached),
         }
         return obs, reward, terminated, truncated, info
 

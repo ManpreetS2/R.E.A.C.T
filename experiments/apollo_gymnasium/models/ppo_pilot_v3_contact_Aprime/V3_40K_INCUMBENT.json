@@ -1,8 +1,14 @@
 {
-  "path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_40000_steps.zip",
+  "path": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_40000_steps.zip",
   "sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975",
-  "freeze_manifest_sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975",
-  "role": "primary_incumbent_for_V4",
+  "role": "frozen_champion_evaluation_only",
   "do_not_overwrite": true,
-  "dev_land_rate": 0.6
+  "start_distribution": "sh_contact",
+  "not_original_full_game": true,
+  "validation_pool": "CHAMPION_VAL_SEEDS",
+  "n_validation_seeds": 100,
+  "seed_range": [
+    600000,
+    600099
+  ]
 }

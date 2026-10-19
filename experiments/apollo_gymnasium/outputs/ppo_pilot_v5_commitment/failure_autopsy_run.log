@@ -1,0 +1,32 @@
+V5 final crash seed=500000
+V5 final crash seed=500001
+V5 final crash seed=500002
+V5 final crash seed=500003
+V5 mid reascent seed=200000
+V5 mid reascent seed=200002
+V5 mid reascent seed=200004
+V5 mid reascent seed=200006
+V3-40k reascent seed=200000
+V3-40k reascent seed=200002
+V3-40k reascent seed=200004
+V3-40k reascent seed=200006
+reference seed=200001
+reference seed=200003
+reference seed=200005
+reference seed=500006
+{
+  "question": "Does accumulating ~-261 commitment make early crash preferable to reascent timeout?",
+  "mean_undiscounted_v5_crash": -97.58200776398182,
+  "mean_undiscounted_v5_mid_reascent": -218.0567738191974,
+  "mean_undiscounted_v5_on_v3_reascent_actions": -400.8898047814905,
+  "mean_undiscounted_v5_reference_land": 103.10259872992833,
+  "crash_beats_mid_reascent_undiscounted": true,
+  "crash_beats_v3_reascent_actions_undiscounted": true,
+  "land_beats_crash_undiscounted": true,
+  "mean_discounted_v5_crash": -78.31094574932551,
+  "mean_discounted_v5_mid_reascent": -12.853869759413044,
+  "mean_discounted_v5_reference_land": 69.87065463864043,
+  "crash_beats_mid_reascent_discounted": false,
+  "interpretation": "YES \u2014 under V5 reward, early crash returns exceed reascent-timeout returns. Commitment penalties on long ascents can make aborting by crash economically rational relative to lingering, even though land still dominates crash when achieved."
+}
+Wrote /Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/outputs/ppo_pilot_v5_commitment/failure_autopsy/FAILURE_AUTOPSY.md

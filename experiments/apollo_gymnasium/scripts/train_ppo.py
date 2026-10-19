@@ -67,6 +67,12 @@ def main() -> None:
     p.add_argument("--reward-mode", default="progress_a")
     p.add_argument("--potential-scale", type=float, default=1.0)
     p.add_argument("--time-cost", type=float, default=None)
+    p.add_argument(
+        "--commitment-shaping",
+        action="store_true",
+        default=False,
+        help="Enable V5 late-approach commitment term (+ approached obs feature)",
+    )
     p.add_argument("--timeout-as-terminated", action="store_true", default=False)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--action-repeat", type=int, default=4)
@@ -94,14 +100,18 @@ def main() -> None:
     models.mkdir(parents=True, exist_ok=True)
     monitor_dir.mkdir(parents=True, exist_ok=True)
 
+    v5_modes = ("progress_a_prime_v5", "a_prime_v5")
+    a_prime_modes = ("progress_a_prime", "a_prime", *v5_modes)
+    commitment = bool(args.commitment_shaping) or args.reward_mode.lower() in v5_modes
     meta = {
         "start": args.start,
         "start_template": args.start_template,
         "reward_mode": args.reward_mode,
         "potential_scale": args.potential_scale,
         "time_cost": args.time_cost,
+        "commitment_shaping": commitment,
         "timeout_as_terminated": args.timeout_as_terminated
-        or args.reward_mode.lower() in ("progress_a_prime", "a_prime"),
+        or args.reward_mode.lower() in a_prime_modes,
         "seed": args.seed,
         "action_repeat": args.action_repeat,
         "episode_max_frames": args.episode_max_frames,
@@ -112,6 +122,9 @@ def main() -> None:
     }
     (out / "run_config.json").write_text(json.dumps(meta, indent=2))
 
+    # Ensure tensorboard / tee log dirs exist before any external tee.
+    (ROOT / "logs" / args.run_name).mkdir(parents=True, exist_ok=True)
+
     def make_env_logged(rank: int = 0):
         def _thunk():
             kwargs = dict(
@@ -121,6 +134,7 @@ def main() -> None:
                 reward_mode=args.reward_mode,
                 potential_scale=args.potential_scale,
                 time_cost=args.time_cost,
+                commitment_shaping=commitment,
                 timeout_as_terminated=args.timeout_as_terminated,
                 headless=True,
                 port=args.port + rank,

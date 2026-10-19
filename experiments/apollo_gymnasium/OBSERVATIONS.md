@@ -17,6 +17,9 @@ Engine: Seb Lee-Delisle ApolloLander via `frontend/apollolander/original/`
 | 7 | `thrust_norm` | `lander.thrustLevel` (build) | ≈ [0, 3] internally; passed as reported |
 | 8 | `pad_width_norm` | Designated landable segment width ÷ 200 | Terrain geometry cue |
 | 9 | `dy_pad_norm` | Vertical offset to pad line y ÷ 300 | Pad-relative height |
+| 10 | `approached` | **V5 only** — latched 1 once `alt < 25` and `|dx| < 60` | Episodic; required so commitment reward is not hidden-state |
+
+Default / V3 A′ observation is **10-D** (indices 0–9). V5 commitment training uses **11-D**.
 
 Clipped to [−5, 5] after normalization for numerical safety.
 

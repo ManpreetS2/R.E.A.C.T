@@ -94,11 +94,22 @@ Same physics, obs, legal actions, PPO, starts, and held-out eval as A/B/C.
 
 \(R_t^{E}=0\) always. Pipeline sanity only; clearly labeled.
 
+## V5 — A′ + late-approach commitment (frozen)
+
+\[
+R_t^{V5} = R_t^{A'} + r_{\mathrm{commit}}
+\]
+
+with \(r_{\mathrm{commit}}\) as in `V5_COMMITMENT.md` (β=1, soft-ascent after pad approach).
+Observation gains an explicit `approached` bit (11-D). Time cost stays **0.005**.
+
 ## Historical pilots (frozen)
 
 | Run | Timeout reward | \(c_{\mathrm{time}}\) | Result |
 |-----|----------------|------------------------|--------|
 | v1 | −20 (truncated) | 0.01 | 100% timeout hover |
 | v2 | −100 (truncated) | 0.05 | 100% crash, 0% land |
+| v3 A′ 40k | −100 (terminated) | 0.005 | **incumbent** ~60% DEV / 50% held-out land |
+| v4 | −100 (terminated) | 0.02 | **negative** — more re-ascent timeouts |
 
 Do not rewrite these results; cite them as negative evidence.

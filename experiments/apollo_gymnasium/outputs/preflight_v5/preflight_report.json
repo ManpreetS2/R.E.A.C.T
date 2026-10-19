@@ -1,0 +1,244 @@
+{
+  "frozen_constants": {
+    "passed": true,
+    "failures": [],
+    "frozen": {
+      "H_app": 25.0,
+      "D_app": 60.0,
+      "V_soft": 0.15,
+      "R_soft": 15.0,
+      "beta": 1.0,
+      "alpha": 10.0,
+      "time_cost": 0.005
+    }
+  },
+  "spaces_and_controls": {
+    "passed": true,
+    "failures": [],
+    "obs_dim": 11,
+    "approached_at_reset": false,
+    "thrust_levels": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "steer_deltas": [
+      -10.0,
+      0.0,
+      10.0
+    ]
+  },
+  "v3_incumbent_frozen": {
+    "passed": true,
+    "sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975",
+    "matches_freeze": true,
+    "expected": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975",
+    "incumbent_marker_exists": true
+  },
+  "v5_heldout_reserved": {
+    "passed": true,
+    "pool": [
+      500000,
+      500001,
+      500002,
+      500003,
+      500004,
+      500005,
+      500006,
+      500007,
+      500008,
+      500009,
+      500010,
+      500011,
+      500012,
+      500013,
+      500014,
+      500015,
+      500016,
+      500017,
+      500018,
+      500019
+    ],
+    "disjoint_ok": true
+  },
+  "formula_unit": {
+    "passed": true,
+    "failures": []
+  },
+  "log_dirs": {
+    "passed": true,
+    "outputs": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/outputs/ppo_pilot_v5_commitment",
+    "logs": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/logs/ppo_pilot_v5_commitment",
+    "models": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment"
+  },
+  "v4_negative_preserved": {
+    "passed": true,
+    "path": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/outputs/ppo_pilot_v4_timecost/V4_RESULTS.md"
+  },
+  "reward_replay": {
+    "passed": true,
+    "failures": [],
+    "land_replays": [
+      {
+        "seed": 200001,
+        "landed": true,
+        "timeout": false,
+        "crashed": false,
+        "perfect": true,
+        "frames": 170,
+        "min_alt_proxy": -0.004112750784202035,
+        "sum_train_reward_v5": 103.92318425416947,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "min_alt": -0.004112750784202035,
+        "max_alt": 10.361883068425072,
+        "v5_landed": true,
+        "v5_timeout": false,
+        "v5_status": "landed"
+      },
+      {
+        "seed": 200003,
+        "landed": true,
+        "timeout": false,
+        "crashed": false,
+        "perfect": false,
+        "frames": 83,
+        "min_alt_proxy": -0.08673136432912543,
+        "sum_train_reward_v5": 41.99787040948868,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "min_alt": -0.08673136432912543,
+        "max_alt": 9.888459120863786,
+        "v5_landed": true,
+        "v5_timeout": false,
+        "v5_status": "hard_landing"
+      },
+      {
+        "seed": 200005,
+        "landed": true,
+        "timeout": false,
+        "crashed": false,
+        "perfect": false,
+        "frames": 84,
+        "min_alt_proxy": -0.0865384315288793,
+        "sum_train_reward_v5": 41.8989001750946,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "min_alt": -0.0865384315288793,
+        "max_alt": 10.29905920525357,
+        "v5_landed": true,
+        "v5_timeout": false,
+        "v5_status": "hard_landing"
+      },
+      {
+        "seed": 200009,
+        "landed": true,
+        "timeout": false,
+        "crashed": false,
+        "perfect": true,
+        "frames": 109,
+        "min_alt_proxy": -0.040005852364060956,
+        "sum_train_reward_v5": 102.08325614571572,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "min_alt": -0.040005852364060956,
+        "max_alt": 8.462843731694988,
+        "v5_landed": true,
+        "v5_timeout": false,
+        "v5_status": "landed"
+      }
+    ],
+    "timeout_replays": [
+      {
+        "seed": 200000,
+        "landed": false,
+        "timeout": true,
+        "crashed": false,
+        "perfect": false,
+        "frames": 2000,
+        "min_alt_proxy": 1037.3710021991571,
+        "sum_train_reward_v5": -415.323391755657,
+        "sum_commit": -270.60867175878366,
+        "n_commit_penalty_steps": 466,
+        "min_alt": 4.642256063206332,
+        "max_alt": 1037.3710021991571,
+        "v5_landed": false,
+        "v5_timeout": true,
+        "v5_status": "timeout"
+      },
+      {
+        "seed": 200002,
+        "landed": false,
+        "timeout": true,
+        "crashed": false,
+        "perfect": false,
+        "frames": 2000,
+        "min_alt_proxy": 1030.0174722169527,
+        "sum_train_reward_v5": -370.5174839009781,
+        "sum_commit": -268.5112823323926,
+        "n_commit_penalty_steps": 464,
+        "min_alt": 5.675633242179288,
+        "max_alt": 1030.0174722169527,
+        "v5_landed": false,
+        "v5_timeout": true,
+        "v5_status": "timeout"
+      },
+      {
+        "seed": 200004,
+        "landed": false,
+        "timeout": true,
+        "crashed": false,
+        "perfect": false,
+        "frames": 2000,
+        "min_alt_proxy": 962.0165705489698,
+        "sum_train_reward_v5": -354.7104228086116,
+        "sum_commit": -252.29949551840375,
+        "n_commit_penalty_steps": 450,
+        "min_alt": 2.5045223588563204,
+        "max_alt": 970.0347221735988,
+        "v5_landed": false,
+        "v5_timeout": true,
+        "v5_status": "timeout"
+      },
+      {
+        "seed": 200006,
+        "landed": false,
+        "timeout": true,
+        "crashed": false,
+        "perfect": false,
+        "frames": 2000,
+        "min_alt_proxy": 1012.9175948579133,
+        "sum_train_reward_v5": -357.38313553545964,
+        "sum_commit": -252.62543349235145,
+        "n_commit_penalty_steps": 450,
+        "min_alt": 3.194012909975072,
+        "max_alt": 1012.9175948579133,
+        "v5_landed": false,
+        "v5_timeout": true,
+        "v5_status": "timeout"
+      }
+    ],
+    "reference_replay": {
+      "seed": 200001,
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "timeout": false,
+      "physics_frames": 152,
+      "sum_train_reward": 124.77870360255245,
+      "sum_commit": 0.0,
+      "n_commit_penalty_steps": 0,
+      "min_alt": -0.04302088107669988,
+      "max_alt": 10.361883068425072,
+      "approached": true,
+      "status": "landed"
+    },
+    "mean_land_commit": 0.0,
+    "mean_timeout_commit": -261.01122077548285,
+    "note": "Success should have ~0 commit; post-approach ascent timeouts strongly negative"
+  },
+  "passed": true
+}

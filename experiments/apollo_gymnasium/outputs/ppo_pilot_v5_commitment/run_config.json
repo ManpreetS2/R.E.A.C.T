@@ -1,0 +1,16 @@
+{
+  "start": "pilot_near",
+  "start_template": "sh_contact",
+  "reward_mode": "progress_a_prime_v5",
+  "potential_scale": 10.0,
+  "time_cost": 0.005,
+  "commitment_shaping": true,
+  "timeout_as_terminated": true,
+  "seed": 0,
+  "action_repeat": 4,
+  "episode_max_frames": 2000,
+  "max_physics_frames": 200000,
+  "auto_seed_base": 100000,
+  "engine": "upstream-original",
+  "note": "Training reward Python-only; native score unchanged. Physics cap counts engine steps."
+}
