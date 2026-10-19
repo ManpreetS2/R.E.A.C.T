@@ -1,0 +1,26 @@
+{
+  "env_id": "LunarLander-v3",
+  "algo": "PPO",
+  "policy": "MlpPolicy",
+  "net_arch": [
+    64,
+    64
+  ],
+  "timesteps": 1000000,
+  "seed": 0,
+  "n_envs": 4,
+  "reward_mode": "hover_bad",
+  "reward": {
+    "label": "native_plus_hover_bonus",
+    "equation": "R = r_native + 1[|angle|<0.2 and speed<0.5]",
+    "upright_thresh": 0.2,
+    "speed_thresh": 0.5
+  },
+  "eval_callback_reward": "native_only",
+  "eval_seed_base": 10000,
+  "checkpoint_selection": "EvalCallback best mean native reward",
+  "started_unix": 1792381287.7242749,
+  "finished_unix": 1792381548.851928,
+  "elapsed_seconds": 259.5195782184601,
+  "final_model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/simple_lunarlander/models/ppo_hover_bad/ppo_lunar_final.zip"
+}

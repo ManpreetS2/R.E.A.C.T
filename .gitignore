@@ -20,6 +20,18 @@ reports/
 *.key
 credentials.json
 *.mp4
+!experiments/simple_lunarlander/videos/phase4_*/**/*.mp4
+!experiments/simple_lunarlander/videos/successful_landing/**/*.mp4
 examples/lunarlander/output/
 examples/apollolander/output/
+# Simple LunarLander: ignore bulky intermediates; keep showcase evidence tracked
+experiments/simple_lunarlander/logs/
+experiments/simple_lunarlander/models/*/checkpoints/
+experiments/simple_lunarlander/outputs/*/monitor/
+experiments/simple_lunarlander/outputs/*/train_stdout.log
+experiments/simple_lunarlander/outputs/*/train.pid
+experiments/simple_lunarlander/videos/phase1_random/
+experiments/simple_lunarlander/videos/random_policy/
+experiments/simple_lunarlander/videos/early_checkpoint/
+experiments/simple_lunarlander/videos/trained_final/
 node_modules/
