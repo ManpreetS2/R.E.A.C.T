@@ -1,0 +1,11 @@
+# Simple Gymnasium LunarLander + PPO (CPU-friendly)
+gymnasium[box2d]>=1.0.0
+stable-baselines3>=2.3.0
+torch>=2.0.0
+matplotlib>=3.8.0
+numpy>=1.26.0
+moviepy>=1.0.3
+imageio>=2.34.0
+imageio-ffmpeg>=0.5.0
+pandas>=2.0.0
+tensorboard>=2.14.0
