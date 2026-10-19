@@ -1,0 +1,562 @@
+{
+  "template": "sh_tilt30_low",
+  "meta": {
+    "label": "sh_tilt30_low",
+    "target_ttc_frames": "100\u2013250",
+    "rationale": "Lower altitude, \u221230\u00b0; shorter horizon, still no-op crash.",
+    "base": {
+      "x": 6943.200000000001,
+      "y": 600.0,
+      "vx": 0.03,
+      "vy": 0.1,
+      "rotation": -30.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "vary": {
+      "dx": [
+        -12.0,
+        12.0
+      ],
+      "y": [
+        -15.0,
+        5.0
+      ],
+      "vx": [
+        -0.02,
+        0.05
+      ],
+      "vy": [
+        -0.02,
+        0.04
+      ],
+      "rotations": [
+        -40.0,
+        -30.0,
+        -20.0,
+        20.0,
+        30.0,
+        40.0
+      ]
+    }
+  },
+  "action_repeat": 4,
+  "episodes": [
+    {
+      "policy": "noop",
+      "seed": 2000,
+      "start": {
+        "x": 6937.068190867485,
+        "y": 594.2272604615232,
+        "vx": 0.06404398143054363,
+        "vy": 0.1322322878269384,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 367,
+      "native_score": 0
+    },
+    {
+      "policy": "noop",
+      "seed": 2001,
+      "start": {
+        "x": 6949.093984384793,
+        "y": 598.7989783886272,
+        "vx": 0.016269990402157933,
+        "vy": 0.11664276002952063,
+        "rotation": -30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 371,
+      "native_score": 0
+    },
+    {
+      "policy": "noop",
+      "seed": 2002,
+      "start": {
+        "x": 6952.065498369464,
+        "y": 600.2578077575221,
+        "vx": 0.04973016264473029,
+        "vy": 0.08539646531926239,
+        "rotation": 30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 407,
+      "native_score": 0
+    },
+    {
+      "policy": "noop",
+      "seed": 2003,
+      "start": {
+        "x": 6948.183661039496,
+        "y": 596.6555339478635,
+        "vx": 0.030409520077259382,
+        "vy": 0.1263139559727154,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 366,
+      "native_score": 0
+    },
+    {
+      "policy": "noop",
+      "seed": 2004,
+      "start": {
+        "x": 6944.509178054225,
+        "y": 585.1769726967293,
+        "vx": 0.02647368711644458,
+        "vy": 0.11303308748064124,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 419,
+      "native_score": 0
+    },
+    {
+      "policy": "noop",
+      "seed": 2005,
+      "start": {
+        "x": 6935.038943483964,
+        "y": 588.3878065946419,
+        "vx": 0.06062474506232464,
+        "vy": 0.1159900965576049,
+        "rotation": -30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 405,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 2000,
+      "start": {
+        "x": 6937.068190867485,
+        "y": 594.2272604615232,
+        "vx": 0.06404398143054363,
+        "vy": 0.1322322878269384,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 1600,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 2001,
+      "start": {
+        "x": 6949.093984384793,
+        "y": 598.7989783886272,
+        "vx": 0.016269990402157933,
+        "vy": 0.11664276002952063,
+        "rotation": -30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 449,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 2002,
+      "start": {
+        "x": 6952.065498369464,
+        "y": 600.2578077575221,
+        "vx": 0.04973016264473029,
+        "vy": 0.08539646531926239,
+        "rotation": 30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 1259,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 2003,
+      "start": {
+        "x": 6948.183661039496,
+        "y": 596.6555339478635,
+        "vx": 0.030409520077259382,
+        "vy": 0.1263139559727154,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 614,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 2004,
+      "start": {
+        "x": 6944.509178054225,
+        "y": 585.1769726967293,
+        "vx": 0.02647368711644458,
+        "vy": 0.11303308748064124,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 995,
+      "native_score": 0
+    },
+    {
+      "policy": "random",
+      "seed": 2005,
+      "start": {
+        "x": 6935.038943483964,
+        "y": 588.3878065946419,
+        "vx": 0.06062474506232464,
+        "vy": 0.1159900965576049,
+        "rotation": -30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "crashed": true,
+      "physics_frames": 1159,
+      "native_score": 0
+    },
+    {
+      "policy": "ref_cont",
+      "seed": 2000,
+      "start": {
+        "x": 6937.068190867485,
+        "y": 594.2272604615232,
+        "vx": 0.06404398143054363,
+        "vy": 0.1322322878269384,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1517,
+      "native_score": 50
+    },
+    {
+      "policy": "ref_cont",
+      "seed": 2001,
+      "start": {
+        "x": 6949.093984384793,
+        "y": 598.7989783886272,
+        "vx": 0.016269990402157933,
+        "vy": 0.11664276002952063,
+        "rotation": -30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1446,
+      "native_score": 50
+    },
+    {
+      "policy": "ref_cont",
+      "seed": 2002,
+      "start": {
+        "x": 6952.065498369464,
+        "y": 600.2578077575221,
+        "vx": 0.04973016264473029,
+        "vy": 0.08539646531926239,
+        "rotation": 30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1465,
+      "native_score": 50
+    },
+    {
+      "policy": "ref_cont",
+      "seed": 2003,
+      "start": {
+        "x": 6948.183661039496,
+        "y": 596.6555339478635,
+        "vx": 0.030409520077259382,
+        "vy": 0.1263139559727154,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1470,
+      "native_score": 50
+    },
+    {
+      "policy": "ref_cont",
+      "seed": 2004,
+      "start": {
+        "x": 6944.509178054225,
+        "y": 585.1769726967293,
+        "vx": 0.02647368711644458,
+        "vy": 0.11303308748064124,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1560,
+      "native_score": 50
+    },
+    {
+      "policy": "ref_cont",
+      "seed": 2005,
+      "start": {
+        "x": 6935.038943483964,
+        "y": 588.3878065946419,
+        "vx": 0.06062474506232464,
+        "vy": 0.1159900965576049,
+        "rotation": -30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1635,
+      "native_score": 50
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 2000,
+      "start": {
+        "x": 6937.068190867485,
+        "y": 594.2272604615232,
+        "vx": 0.06404398143054363,
+        "vy": 0.1322322878269384,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1429,
+      "native_score": 50
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 2001,
+      "start": {
+        "x": 6949.093984384793,
+        "y": 598.7989783886272,
+        "vx": 0.016269990402157933,
+        "vy": 0.11664276002952063,
+        "rotation": -30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1350,
+      "native_score": 50
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 2002,
+      "start": {
+        "x": 6952.065498369464,
+        "y": 600.2578077575221,
+        "vx": 0.04973016264473029,
+        "vy": 0.08539646531926239,
+        "rotation": 30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1366,
+      "native_score": 50
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 2003,
+      "start": {
+        "x": 6948.183661039496,
+        "y": 596.6555339478635,
+        "vx": 0.030409520077259382,
+        "vy": 0.1263139559727154,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1375,
+      "native_score": 50
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 2004,
+      "start": {
+        "x": 6944.509178054225,
+        "y": 585.1769726967293,
+        "vx": 0.02647368711644458,
+        "vy": 0.11303308748064124,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1473,
+      "native_score": 50
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 2005,
+      "start": {
+        "x": 6935.038943483964,
+        "y": 588.3878065946419,
+        "vx": 0.06062474506232464,
+        "vy": 0.1159900965576049,
+        "rotation": -30,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "crashed": false,
+      "physics_frames": 1535,
+      "native_score": 50
+    }
+  ],
+  "by_policy": {
+    "noop": {
+      "land_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "mean_physics_frames": 389.1666666666667,
+      "max_physics_frames": 419,
+      "statuses": [
+        "crashed"
+      ]
+    },
+    "random": {
+      "land_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "mean_physics_frames": 1012.6666666666666,
+      "max_physics_frames": 1600,
+      "statuses": [
+        "crashed"
+      ]
+    },
+    "ref_cont": {
+      "land_rate": 1.0,
+      "crash_rate": 0.0,
+      "timeout_rate": 0.0,
+      "mean_physics_frames": 1515.5,
+      "max_physics_frames": 1635,
+      "statuses": [
+        "landed"
+      ]
+    },
+    "ref_legal": {
+      "land_rate": 1.0,
+      "crash_rate": 0.0,
+      "timeout_rate": 0.0,
+      "mean_physics_frames": 1421.3333333333333,
+      "max_physics_frames": 1535,
+      "statuses": [
+        "landed"
+      ]
+    }
+  },
+  "gate_noop_fails": true,
+  "gate_random_not_trivial": true,
+  "gate_ref_legal_lands": true,
+  "gate_short": false,
+  "gate_pass": true,
+  "start_diversity": {
+    "unique_x": 6,
+    "unique_y": 6,
+    "unique_rotation": 3,
+    "x_range": [
+      6935.038943483964,
+      6952.065498369464
+    ],
+    "y_range": [
+      585.1769726967293,
+      600.2578077575221
+    ]
+  }
+}

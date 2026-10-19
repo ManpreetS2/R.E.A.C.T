@@ -1,0 +1,269 @@
+{
+  "obs_pilot_near": {
+    "label": "pilot_near",
+    "n": 5,
+    "feature_mean": {
+      "dx_n": 0.20000000298023224,
+      "alt_n": 1.3510960340499878,
+      "vx_n": 0.02500000037252903,
+      "vy_n": 0.009999999776482582,
+      "ang_n": -0.3333333432674408,
+      "cmd_n": -0.3333333432674408,
+      "fuel_n": 1.0,
+      "thrust_n": 0.0,
+      "pad_w_n": 0.8960000276565552,
+      "dy_n": 1.33145272731781
+    },
+    "feature_std": {
+      "dx_n": 0.0,
+      "alt_n": 0.0,
+      "vx_n": 0.0,
+      "vy_n": 0.0,
+      "ang_n": 0.0,
+      "cmd_n": 0.0,
+      "fuel_n": 0.0,
+      "thrust_n": 0.0,
+      "pad_w_n": 0.0,
+      "dy_n": 0.0
+    },
+    "feature_abs_mean": {
+      "dx_n": 0.20000000298023224,
+      "alt_n": 1.3510960340499878,
+      "vx_n": 0.02500000037252903,
+      "vy_n": 0.009999999776482582,
+      "ang_n": 0.3333333432674408,
+      "cmd_n": 0.3333333432674408,
+      "fuel_n": 1.0,
+      "thrust_n": 0.0,
+      "pad_w_n": 0.8960000276565552,
+      "dy_n": 1.33145272731781
+    },
+    "raw_vy_abs_mean": 0.02,
+    "raw_vx_abs_mean": 0.05,
+    "note": "vx,vy divided by 2.0 \u2192 typical |vy|~0.1 becomes 0.05 in obs (small vs ang/alt). Angle /90 keeps O(0.1\u20131). Velocity features may be under-scaled for learning.",
+    "samples": [
+      {
+        "seed": 0,
+        "obs": [
+          0.20000000298023224,
+          1.3510960340499878,
+          0.02500000037252903,
+          0.009999999776482582,
+          -0.3333333432674408,
+          -0.3333333432674408,
+          1.0,
+          0.0,
+          0.8960000276565552,
+          1.33145272731781
+        ],
+        "raw": {
+          "dx": 40.0,
+          "altitude": 405.3288129966991,
+          "vx": 0.05,
+          "vy": 0.02,
+          "rotation": -30.0,
+          "fuel": 1000.0,
+          "thrust": 0.0,
+          "pad_width": 179.19999999999982
+        },
+        "start": {
+          "x": 6923.200000000001,
+          "y": 280,
+          "vx": 0.05,
+          "vy": 0.02,
+          "rotation": -30,
+          "fuel": 1000,
+          "scale": 0.25
+        }
+      },
+      {
+        "seed": 1,
+        "obs": [
+          0.20000000298023224,
+          1.3510960340499878,
+          0.02500000037252903,
+          0.009999999776482582,
+          -0.3333333432674408,
+          -0.3333333432674408,
+          1.0,
+          0.0,
+          0.8960000276565552,
+          1.33145272731781
+        ],
+        "raw": {
+          "dx": 40.0,
+          "altitude": 405.3288129966991,
+          "vx": 0.05,
+          "vy": 0.02,
+          "rotation": -30.0,
+          "fuel": 1000.0,
+          "thrust": 0.0,
+          "pad_width": 179.19999999999982
+        },
+        "start": {
+          "x": 6923.200000000001,
+          "y": 280,
+          "vx": 0.05,
+          "vy": 0.02,
+          "rotation": -30,
+          "fuel": 1000,
+          "scale": 0.25
+        }
+      },
+      {
+        "seed": 2,
+        "obs": [
+          0.20000000298023224,
+          1.3510960340499878,
+          0.02500000037252903,
+          0.009999999776482582,
+          -0.3333333432674408,
+          -0.3333333432674408,
+          1.0,
+          0.0,
+          0.8960000276565552,
+          1.33145272731781
+        ],
+        "raw": {
+          "dx": 40.0,
+          "altitude": 405.3288129966991,
+          "vx": 0.05,
+          "vy": 0.02,
+          "rotation": -30.0,
+          "fuel": 1000.0,
+          "thrust": 0.0,
+          "pad_width": 179.19999999999982
+        },
+        "start": {
+          "x": 6923.200000000001,
+          "y": 280,
+          "vx": 0.05,
+          "vy": 0.02,
+          "rotation": -30,
+          "fuel": 1000,
+          "scale": 0.25
+        }
+      }
+    ]
+  },
+  "obs_short_varied": {
+    "label": "sh_tilt30_low_varied",
+    "obs_std": [
+      0.04036279022693634,
+      0.0,
+      0.007705782540142536,
+      0.00995531678199768,
+      0.3307189345359802,
+      0.3307189345359802,
+      0.0,
+      0.0,
+      5.960464477539063e-08,
+      0.01935456693172455
+    ],
+    "obs_mean": [
+      0.09557085484266281,
+      1.3510960340499878,
+      0.019016867503523827,
+      0.05545973777770996,
+      -0.01388888992369175,
+      -0.01388888992369175,
+      1.0,
+      0.0,
+      0.8959999680519104,
+      0.2842055559158325
+    ]
+  },
+  "upright_reachability": {
+    "action_repeat": 4,
+    "steer_deltas": [
+      -10.0,
+      0.0,
+      10.0
+    ],
+    "thrust_levels": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "from_minus_30_reaches_exact_zero": true,
+    "gym_steps_to_zero": 3,
+    "physics_frames_to_zero": 12,
+    "path": [
+      -30.0,
+      -20.0,
+      -10.0,
+      0.0
+    ],
+    "note": "setRotation snaps to 10\u00b0 in upstream; \u00b110\u00b0 relative steer can hit exactly 0. action_repeat holds the command for N physics frames (angle lerp still applies)."
+  },
+  "action_repeat_sweep": {
+    "template": "sh_tilt30_low",
+    "action_repeat_sweep": [
+      {
+        "action_repeat": 1,
+        "ref_legal_land_rate": 1.0,
+        "ref_cont_land_rate": 1.0,
+        "ref_legal_mean_frames": 1418.0
+      },
+      {
+        "action_repeat": 2,
+        "ref_legal_land_rate": 1.0,
+        "ref_cont_land_rate": 1.0,
+        "ref_legal_mean_frames": 1420.0
+      },
+      {
+        "action_repeat": 4,
+        "ref_legal_land_rate": 1.0,
+        "ref_cont_land_rate": 1.0,
+        "ref_legal_mean_frames": 1422.75
+      },
+      {
+        "action_repeat": 8,
+        "ref_legal_land_rate": 1.0,
+        "ref_cont_land_rate": 1.0,
+        "ref_legal_mean_frames": 1399.75
+      }
+    ]
+  },
+  "start_variation": {
+    "pilot_near_identical_across_seeds": true,
+    "short_horizon_unique_states": 10,
+    "short_horizon_x_values": [
+      6934.8,
+      6954.95,
+      6951.44,
+      6945.6,
+      6937.09,
+      6954.36,
+      6939.66,
+      6934.77,
+      6938.59,
+      6952.47
+    ],
+    "short_horizon_rotations": [
+      -40.0,
+      40.0,
+      -30.0,
+      20.0,
+      30.0,
+      -30.0,
+      20.0,
+      -20.0,
+      40.0,
+      -30.0
+    ],
+    "reproducible_seed_7": true,
+    "fixed_seed_repro": {
+      "x": 6934.7748226663625,
+      "y": 599.1467224202781,
+      "vx": 0.016226607327144607,
+      "vy": 0.12040092931989949,
+      "rotation": -20.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    }
+  },
+  "scaling_recommendation": "Consider vx,vy scale \u00f70.5 or \u00f70.3 (instead of \u00f72) so velocity errors are O(0.1\u20131) like angle/altitude; keep potential coeffs retuned accordingly. Do not change scaling and action space in the same pilot."
+}

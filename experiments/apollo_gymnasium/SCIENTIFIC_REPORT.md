@@ -92,11 +92,10 @@ Optional E (zero-reward negative control) likewise gated.
 
 ---
 
-## Next justified research steps (priority order)
+## Follow-up: root-cause (no new training)
 
-1. **Reward / terminal audit:** confirm potential features provide a usable gradient to upright+on-pad contact (v2 may still lack credit assignment for the final upright snap).
-2. **Action representation:** try `action_repeat∈{1,2,4,8}` and/or absolute-angle bins; MultiDiscrete relative steer may be hard to explore for exact `rotation==0` landings.
-3. **Shorter-horizon curriculum:** starts closer in *time-to-contact* while keeping no-op failure (avoid the old “free landing” mistake).
-4. Only after a repeatable learned landing: A/B/C + D under a fixed budget.
+See **`ROOT_CAUSE_ANALYSIS.md`**. Primary failure mode: time penalty overwhelms ΣΔΦ
+(expert continuous land return **−111** vs crash **−114**). Proposed next pilot
+`ppo_pilot_v3_contact_Aprime` uses `sh_contact` + reward A′ — **awaiting approval**.
 
-Do **not** merge this branch as a “solved landing” claim. Preserve v1 hover and v2 crash as published negative/partial results.
+Do **not** merge as a solved-landing claim. Preserve v1 hover and v2 crash results.

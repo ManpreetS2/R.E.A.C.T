@@ -1,0 +1,71 @@
+{
+  "templates": [
+    {
+      "template": "sh_tilt20_mid",
+      "gate_pass": true,
+      "gate_short": false,
+      "noop_land": 0.0,
+      "random_land": 0.0,
+      "ref_legal_land": 0.8333333333333334,
+      "ref_legal_mean_frames": 1847.3333333333333,
+      "start_diversity": {
+        "unique_x": 6,
+        "unique_y": 6,
+        "unique_rotation": 4,
+        "x_range": [
+          6935.513214611626,
+          6952.993654265249
+        ],
+        "y_range": [
+          542.5302666283397,
+          568.8904352590794
+        ]
+      }
+    },
+    {
+      "template": "sh_tilt30_low",
+      "gate_pass": true,
+      "gate_short": false,
+      "noop_land": 0.0,
+      "random_land": 0.0,
+      "ref_legal_land": 1.0,
+      "ref_legal_mean_frames": 1421.3333333333333,
+      "start_diversity": {
+        "unique_x": 6,
+        "unique_y": 6,
+        "unique_rotation": 3,
+        "x_range": [
+          6935.038943483964,
+          6952.065498369464
+        ],
+        "y_range": [
+          585.1769726967293,
+          600.2578077575221
+        ]
+      }
+    },
+    {
+      "template": "sh_upright_offset",
+      "gate_pass": true,
+      "gate_short": false,
+      "noop_land": 0.0,
+      "random_land": 0.0,
+      "ref_legal_land": 0.8333333333333334,
+      "ref_legal_mean_frames": 1911.6666666666667,
+      "start_diversity": {
+        "unique_x": 6,
+        "unique_y": 6,
+        "unique_rotation": 4,
+        "x_range": [
+          6897.36599729331,
+          6914.855970964833
+        ],
+        "y_range": [
+          567.1935332419895,
+          582.1360951409783
+        ]
+      }
+    }
+  ],
+  "chosen": "sh_tilt20_mid"
+}

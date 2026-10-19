@@ -1,0 +1,98 @@
+[
+  {
+    "policy": "noop",
+    "seed": 50000,
+    "n_gym_steps": 305,
+    "physics_frames": 1220,
+    "status": "crashed",
+    "landed": false,
+    "crashed": true,
+    "native_score": 0,
+    "sum_reward": -114.22403575181961,
+    "sum_delta_phi": 0.9759642481803894,
+    "sum_time_pen": -15.200000000000001,
+    "sum_comps": {
+      "dx": 0.1452479213476181,
+      "alt": 1.1286021765321492,
+      "vx": 0.00611405074596405,
+      "vy": -0.3040000107139349,
+      "ang": 0.0
+    },
+    "terminal_reward": -100.0,
+    "mean_abs_dense_reward": 0.04678959128888029,
+    "mean_abs_delta_phi": 0.006143055268024143,
+    "dense_vs_terminal_ratio": -0.1422403575181961
+  },
+  {
+    "policy": "reference_continuous",
+    "seed": 50000,
+    "n_gym_steps": 4232,
+    "physics_frames": 4232,
+    "status": "landed",
+    "landed": true,
+    "crashed": false,
+    "native_score": 50,
+    "sum_reward": -110.86479083746673,
+    "sum_delta_phi": 0.6852091625332832,
+    "sum_time_pen": -211.55,
+    "sum_comps": {
+      "dx": 0.17526761069893837,
+      "alt": -2.6971130864680783e-05,
+      "vx": 0.019987349897564857,
+      "vy": -0.010018840432167053,
+      "ang": 0.5000000149011612
+    },
+    "terminal_reward": 100.0,
+    "mean_abs_dense_reward": 0.04990650179417976,
+    "mean_abs_delta_phi": 0.0009903032601203685,
+    "dense_vs_terminal_ratio": -2.1086479083746674
+  },
+  {
+    "policy": "reference_multidiscrete",
+    "seed": 50000,
+    "n_gym_steps": 1017,
+    "physics_frames": 4066,
+    "status": "landed",
+    "landed": true,
+    "crashed": false,
+    "native_score": 50,
+    "sum_reward": 49.88373698741197,
+    "sum_delta_phi": 0.6837369874119759,
+    "sum_time_pen": -50.800000000000004,
+    "sum_comps": {
+      "dx": 0.17642547748982906,
+      "alt": -0.00022360181319532952,
+      "vx": 0.01999428348754009,
+      "vy": -0.01245918683707714,
+      "ang": 0.5000000149011612
+    },
+    "terminal_reward": 100.0,
+    "mean_abs_dense_reward": 0.05007524256132485,
+    "mean_abs_delta_phi": 0.00407371084081141,
+    "dense_vs_terminal_ratio": -0.5011626301258802
+  },
+  {
+    "policy": "ppo",
+    "seed": 50000,
+    "n_gym_steps": 346,
+    "physics_frames": 1382,
+    "status": "crashed",
+    "landed": false,
+    "crashed": true,
+    "native_score": 0,
+    "sum_reward": -116.80831205844879,
+    "sum_delta_phi": 0.4416879415512085,
+    "sum_time_pen": -17.25,
+    "sum_comps": {
+      "dx": 0.13338541984558105,
+      "alt": -0.003244038764387287,
+      "vx": 0.007529012113809586,
+      "vy": -0.19598247669637203,
+      "ang": 0.5000000149011612
+    },
+    "terminal_reward": -100.0,
+    "mean_abs_dense_reward": 0.05003841420878534,
+    "mean_abs_delta_phi": 0.009722265644349914,
+    "dense_vs_terminal_ratio": -0.1680831205844879
+  }
+]

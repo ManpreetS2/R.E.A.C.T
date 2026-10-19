@@ -41,6 +41,9 @@ class ApolloLanderGym(gym.Env):
         headless: bool = True,
         port: int = 18770,
         render_mode: str | None = None,
+        timeout_as_terminated: bool = False,
+        potential_scale: float = 1.0,
+        time_cost: float | None = None,
     ) -> None:
         super().__init__()
         self.action_repeat = int(action_repeat)
@@ -51,6 +54,10 @@ class ApolloLanderGym(gym.Env):
         self.headless = headless
         self.port = port
         self.render_mode = render_mode
+        # Proposed A′ knobs (defaults preserve PR #11 pilot v2 behaviour).
+        self.timeout_as_terminated = bool(timeout_as_terminated)
+        self.potential_scale = float(potential_scale)
+        self.time_cost = time_cost
 
         self.observation_space = spaces.Box(low=-5.0, high=5.0, shape=(10,), dtype=np.float32)
         self.action_space = spaces.MultiDiscrete([len(THRUST_LEVELS), len(STEER_DELTAS)])
@@ -181,31 +188,44 @@ class ApolloLanderGym(gym.Env):
         delta = 0.0 if self._prev_phi is None else (phi - self._prev_phi)
         self._prev_phi = phi
 
+        # Per-mode defaults; constructor overrides apply to A when set.
+        c_time = 0.05 if self.time_cost is None else float(self.time_cost)
+        alpha = self.potential_scale
+
         if mode in ("progress_b", "b"):
             # Intentionally problematic: pay for occupying upright+slow each step
             ang = abs(float(raw.get("rotation", 0.0)))
             speed = float(np.hypot(raw.get("vx", 0.0), raw.get("vy", 0.0)))
             hover_bonus = 1.0 if (ang < 10.0 and speed < 0.2) else 0.0
-            return float(delta - 0.05 + hover_bonus)
+            return float(alpha * delta - c_time + hover_bonus)
 
         if mode in ("progress_c", "c"):
-            # Explicit time cost retained (stronger than early A) without occupancy bonus
-            return float(delta - 0.05)
+            # Distinct from A: amplify potential deltas; milder time cost (not trained yet)
+            return float(3.0 * delta - 0.02)
 
-        # progress_a: potential delta + mild per-step time cost
-        return float(delta - 0.05)
+        if mode in ("progress_a_prime", "a_prime"):
+            # Proposed next pilot: α=10, c=0.005 (constructor may override)
+            a = 10.0 if self.potential_scale == 1.0 else alpha
+            c = 0.005 if self.time_cost is None else c_time
+            return float(a * delta - c)
+
+        # progress_a: historical pilot v2 scale unless constructor overrides
+        return float(alpha * delta - c_time)
 
     def _finish_step(self, last: dict[str, Any]):
         raw = last["observation"]
         result = last["result"]
         obs = self._raw_to_obs(raw, self._cmd_angle)
         terminated = bool(result.get("done"))
-        truncated = (not terminated) and (self._physics_frames >= self.max_physics_frames)
-        if truncated and not terminated:
+        timed_out = (not terminated) and (self._physics_frames >= self.max_physics_frames)
+        truncated = timed_out and not self.timeout_as_terminated
+        if timed_out and self.timeout_as_terminated:
+            terminated = True
+        if timed_out:
             result = dict(result)
             result["status"] = "timeout"
             result["timeout"] = True
-        reward = self._train_reward(obs, result, truncated, raw)
+        reward = self._train_reward(obs, result, timed_out, raw)
         info = {
             "engine": "upstream-original",
             "native_score": result.get("native_score"),

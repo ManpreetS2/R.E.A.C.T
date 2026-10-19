@@ -1,0 +1,527 @@
+{
+  "by_policy": {
+    "noop": {
+      "land_rate": 0.0,
+      "mean_frames": 84.125,
+      "max_frames": 95,
+      "statuses": [
+        "crashed"
+      ]
+    },
+    "random": {
+      "land_rate": 0.0,
+      "mean_frames": 104.0,
+      "max_frames": 128,
+      "statuses": [
+        "crashed"
+      ]
+    },
+    "ref_legal": {
+      "land_rate": 0.75,
+      "mean_frames": 163.125,
+      "max_frames": 199,
+      "statuses": [
+        "crashed",
+        "landed"
+      ]
+    }
+  },
+  "ref_reward_scale": {
+    "mean_sum_dphi": 0.2442347357670466,
+    "mean_sum_time_pen_old": -2.0,
+    "mean_gym_steps": 40.0,
+    "proposed_c_time_0.005_mean": -0.19999999999999998,
+    "proposed_alpha10_dphi": 2.442347357670466
+  },
+  "diversity": {
+    "unique_x": 8,
+    "unique_rot": 3,
+    "x_range": [
+      6943.69904856991,
+      6957.677248261784
+    ]
+  },
+  "gate_pass": true,
+  "episodes": [
+    {
+      "policy": "noop",
+      "seed": 4000,
+      "start": {
+        "x": 6953.8934556463255,
+        "y": 666.3844617341634,
+        "vx": 0.05008905452007388,
+        "vy": 0.11418022161092432,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 75,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "noop",
+      "seed": 4001,
+      "start": {
+        "x": 6950.189495743823,
+        "y": 663.4052324924581,
+        "vx": 0.01640084652780754,
+        "vy": 0.1459764710030234,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 78,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "noop",
+      "seed": 4002,
+      "start": {
+        "x": 6956.375492691667,
+        "y": 663.4844124820675,
+        "vx": 0.0122158696686257,
+        "vy": 0.1153560294972092,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 92,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "noop",
+      "seed": 4003,
+      "start": {
+        "x": 6943.69904856991,
+        "y": 666.2886853242153,
+        "vx": 0.021527482606238834,
+        "vy": 0.14036459323772138,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 64,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "noop",
+      "seed": 4004,
+      "start": {
+        "x": 6944.824738691691,
+        "y": 663.3228765003604,
+        "vx": 0.0537582725751507,
+        "vy": 0.11702002460123533,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 93,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "noop",
+      "seed": 4005,
+      "start": {
+        "x": 6957.550157187954,
+        "y": 664.124892344683,
+        "vx": 0.023709584284196623,
+        "vy": 0.11477770653270286,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 89,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "noop",
+      "seed": 4006,
+      "start": {
+        "x": 6957.677248261784,
+        "y": 663.6392825392542,
+        "vx": 0.026468178934550262,
+        "vy": 0.12423173948182907,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 87,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "noop",
+      "seed": 4007,
+      "start": {
+        "x": 6945.713678697948,
+        "y": 662.942134185792,
+        "vx": 0.0009242282927468676,
+        "vy": 0.11660675767237144,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 95,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "random",
+      "seed": 4000,
+      "start": {
+        "x": 6953.8934556463255,
+        "y": 666.3844617341634,
+        "vx": 0.05008905452007388,
+        "vy": 0.11418022161092432,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 101,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "random",
+      "seed": 4001,
+      "start": {
+        "x": 6950.189495743823,
+        "y": 663.4052324924581,
+        "vx": 0.01640084652780754,
+        "vy": 0.1459764710030234,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 89,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "random",
+      "seed": 4002,
+      "start": {
+        "x": 6956.375492691667,
+        "y": 663.4844124820675,
+        "vx": 0.0122158696686257,
+        "vy": 0.1153560294972092,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 117,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "random",
+      "seed": 4003,
+      "start": {
+        "x": 6943.69904856991,
+        "y": 666.2886853242153,
+        "vx": 0.021527482606238834,
+        "vy": 0.14036459323772138,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 70,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "random",
+      "seed": 4004,
+      "start": {
+        "x": 6944.824738691691,
+        "y": 663.3228765003604,
+        "vx": 0.0537582725751507,
+        "vy": 0.11702002460123533,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 128,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "random",
+      "seed": 4005,
+      "start": {
+        "x": 6957.550157187954,
+        "y": 664.124892344683,
+        "vx": 0.023709584284196623,
+        "vy": 0.11477770653270286,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 106,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "random",
+      "seed": 4006,
+      "start": {
+        "x": 6957.677248261784,
+        "y": 663.6392825392542,
+        "vx": 0.026468178934550262,
+        "vy": 0.12423173948182907,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 102,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "random",
+      "seed": 4007,
+      "start": {
+        "x": 6945.713678697948,
+        "y": 662.942134185792,
+        "vx": 0.0009242282927468676,
+        "vy": 0.11660675767237144,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 119,
+      "native_score": 0,
+      "sum_dphi": null,
+      "sum_time": null,
+      "gym_steps": null
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 4000,
+      "start": {
+        "x": 6953.8934556463255,
+        "y": 666.3844617341634,
+        "vx": 0.05008905452007388,
+        "vy": 0.11418022161092432,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 131,
+      "native_score": 0,
+      "sum_dphi": 0.22011632472276688,
+      "sum_time": -1.6000000000000008,
+      "gym_steps": 32
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 4001,
+      "start": {
+        "x": 6950.189495743823,
+        "y": 663.4052324924581,
+        "vx": 0.01640084652780754,
+        "vy": 0.1459764710030234,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "frames": 137,
+      "native_score": 50,
+      "sum_dphi": 0.22084710001945496,
+      "sum_time": -1.7000000000000008,
+      "gym_steps": 34
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 4002,
+      "start": {
+        "x": 6956.375492691667,
+        "y": 663.4844124820675,
+        "vx": 0.0122158696686257,
+        "vy": 0.1153560294972092,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "frames": 192,
+      "native_score": 50,
+      "sum_dphi": 0.21304744482040405,
+      "sum_time": -2.3499999999999996,
+      "gym_steps": 47
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 4003,
+      "start": {
+        "x": 6943.69904856991,
+        "y": 666.2886853242153,
+        "vx": 0.021527482606238834,
+        "vy": 0.14036459323772138,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "frames": 99,
+      "native_score": 50,
+      "sum_dphi": 0.21218284964561462,
+      "sum_time": -1.2000000000000004,
+      "gym_steps": 24
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 4004,
+      "start": {
+        "x": 6944.824738691691,
+        "y": 663.3228765003604,
+        "vx": 0.0537582725751507,
+        "vy": 0.11702002460123533,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "frames": 198,
+      "native_score": 0,
+      "sum_dphi": 0.09105303883552551,
+      "sum_time": -2.4499999999999993,
+      "gym_steps": 49
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 4005,
+      "start": {
+        "x": 6957.550157187954,
+        "y": 664.124892344683,
+        "vx": 0.023709584284196623,
+        "vy": 0.11477770653270286,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "frames": 179,
+      "native_score": 50,
+      "sum_dphi": 0.22255214303731918,
+      "sum_time": -2.2,
+      "gym_steps": 44
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 4006,
+      "start": {
+        "x": 6957.677248261784,
+        "y": 663.6392825392542,
+        "vx": 0.026468178934550262,
+        "vy": 0.12423173948182907,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "frames": 170,
+      "native_score": 50,
+      "sum_dphi": 0.3937937244772911,
+      "sum_time": -2.1000000000000005,
+      "gym_steps": 42
+    },
+    {
+      "policy": "ref_legal",
+      "seed": 4007,
+      "start": {
+        "x": 6945.713678697948,
+        "y": 662.942134185792,
+        "vx": 0.0009242282927468676,
+        "vy": 0.11660675767237144,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "landed",
+      "landed": true,
+      "frames": 199,
+      "native_score": 50,
+      "sum_dphi": 0.20298515260219574,
+      "sum_time": -2.4499999999999993,
+      "gym_steps": 49
+    }
+  ]
+}
