@@ -1,0 +1,98 @@
+{
+  "engine": "upstream-original",
+  "directly_tested": [
+    "reference_continuous \u2192 native landed/perfect + score",
+    "noop \u2192 crash",
+    "short max_frames + hover \u2192 truncated timeout",
+    "upright free-drop near pad \u2192 hard_landing or crash (native classifier)",
+    "short_horizon.v1 seed reproducibility + variation",
+    "action-trace reproducibility (physics fields)"
+  ],
+  "inherited_assumptions": [
+    "Collision / LANDED rules from vendored Lander.js (rotation==0, vy thresholds)",
+    "Terrain from Landscape.js noise.seed(12039) \u2014 pad x\u2208[6873.6,7052.8]",
+    "Headless Chromium uses same JS as browser page; GPU raster may differ cosmetically"
+  ],
+  "outcomes": {
+    "reference_perfect_or_land": {
+      "status": "landed",
+      "landed": true,
+      "perfect": true,
+      "hard_landing": false,
+      "crashed": false,
+      "timeout": false,
+      "native_score": 50,
+      "physics_frames": 4231,
+      "fuel_remaining": 769.9464042235494,
+      "terminated": true,
+      "truncated": false
+    },
+    "noop_crash": {
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "native_score": 0,
+      "physics_frames": 1220,
+      "fuel_remaining": 788,
+      "terminated": true,
+      "truncated": false
+    },
+    "forced_timeout": {
+      "status": "timeout",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": false,
+      "timeout": true,
+      "native_score": 0,
+      "physics_frames": 40,
+      "fuel_remaining": 997.479962781616,
+      "terminated": false,
+      "truncated": true
+    },
+    "upright_drop": {
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "native_score": 0,
+      "physics_frames": 153,
+      "fuel_remaining": 631,
+      "terminated": true,
+      "truncated": false
+    }
+  },
+  "passed": true,
+  "failures": [],
+  "start_schedule": {
+    "seed42_repro": true,
+    "seed42_vs_43_differ": true,
+    "sample_42": {
+      "x": 6954.669686616225,
+      "y": 601.4293901186358,
+      "vx": 0.0794603214327395,
+      "vy": 0.12906473644768837,
+      "rotation": -20.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    },
+    "sample_43": {
+      "x": 6931.4663781185,
+      "y": 601.0001295785348,
+      "vx": 0.06736704271467209,
+      "vy": 0.11951121512971612,
+      "rotation": 20.0,
+      "fuel": 1000.0,
+      "scale": 0.25
+    }
+  },
+  "trace_repro": {
+    "match": true,
+    "len": 10
+  }
+}

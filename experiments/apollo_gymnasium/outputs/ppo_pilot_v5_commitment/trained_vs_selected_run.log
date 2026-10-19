@@ -1,0 +1,102 @@
+eval heldout_v5_selected_step0_det...
+eval heldout_v5_trained_final_det...
+eval heldout_v5_trained_25k_det...
+{
+  "purpose": "distinguish_selected_step0_from_trained_v5",
+  "seed_pool": "V5_HELD_OUT_SEEDS",
+  "selected_is_step0": true,
+  "by_checkpoint": {
+    "heldout_v5_selected_step0_det": {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 20,
+      "timeout_count": 0,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 89.7,
+      "mean_fuel_remaining": 720.1101530757162,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "crash": 20
+      },
+      "reascent_count": 0,
+      "reascent_rate": 0.0,
+      "label": "heldout_v5_selected_step0_det",
+      "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/step0_random_init.zip",
+      "deterministic": true,
+      "commitment_env": true,
+      "sha256": "f98153e1032b5f283970cc0d70372c772c50f2d81e527485da143670c076b5e4"
+    },
+    "heldout_v5_trained_final_det": {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 20,
+      "timeout_count": 0,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 96.75,
+      "mean_fuel_remaining": 697.5124999711948,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "crash": 20
+      },
+      "reascent_count": 0,
+      "reascent_rate": 0.0,
+      "label": "heldout_v5_trained_final_det",
+      "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/final_model.zip",
+      "deterministic": true,
+      "commitment_env": true,
+      "sha256": "5733007d1d9d62f28a40df3257fe66d5df1cfd4b6921c4746269c2026685e4b1"
+    },
+    "heldout_v5_trained_25k_det": {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 5,
+      "timeout_count": 15,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.25,
+      "timeout_rate": 0.75,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 1526.1,
+      "mean_fuel_remaining": 684.609999997785,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 15,
+        "crash": 5
+      },
+      "reascent_count": 15,
+      "reascent_rate": 0.75,
+      "label": "heldout_v5_trained_25k_det",
+      "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_25000_steps.zip",
+      "deterministic": true,
+      "commitment_env": true,
+      "sha256": "5c8908d07dfdcf6df7954b1dafcb04ac5647102efbb511a79b2610f665731c68"
+    }
+  },
+  "note": "DEV land rate was 0% for every checkpoint, so selection rule chose step0. Trained checkpoints are reported here for honesty; they were NOT selected."
+}

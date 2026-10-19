@@ -1,0 +1,7 @@
+{
+  "gymnasium": {
+    "land_crash": "terminated=True (bootstrap target 0 in SB3)",
+    "timeout": "truncated=True (SB3 bootstraps V(s') \u2014 timeout is NOT a hard terminal for value)"
+  },
+  "implication": "Pilot put \u2212100 on truncated timeouts. SB3 still bootstraps the critic on truncated transitions, so the timeout penalty is a reward spike without zeroing continuation value. Prefer treating failure timeouts as terminated=True for learning, or use a TimeLimit wrapper consistently with done flags documented for PPO."
+}

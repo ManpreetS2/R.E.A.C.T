@@ -1,0 +1,261 @@
+{
+  "seed_pool": "V5_HELD_OUT_SEEDS",
+  "seeds": [
+    500000,
+    500001,
+    500002,
+    500003,
+    500004,
+    500005,
+    500006,
+    500007,
+    500008,
+    500009,
+    500010,
+    500011,
+    500012,
+    500013,
+    500014,
+    500015,
+    500016,
+    500017,
+    500018,
+    500019
+  ],
+  "by_policy": {
+    "v5_selected_det": {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 20,
+      "timeout_count": 0,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 89.6,
+      "mean_fuel_remaining": 720.1201530785904,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "crash": 20
+      },
+      "reascent_count": 0,
+      "reascent_rate": 0.0,
+      "label": "v5_selected_det",
+      "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/step0_random_init.zip",
+      "deterministic": true,
+      "commitment_env": true
+    },
+    "v5_selected_stoch": {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 20,
+      "timeout_count": 0,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 113.95,
+      "mean_fuel_remaining": 699.0473726250825,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "crash": 20
+      },
+      "reascent_count": 0,
+      "reascent_rate": 0.0,
+      "label": "v5_selected_stoch",
+      "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/step0_random_init.zip",
+      "deterministic": false,
+      "commitment_env": true
+    },
+    "v3_40k_det": {
+      "n": 20,
+      "land_count": 8,
+      "perfect_count": 1,
+      "hard_landing_count": 7,
+      "crash_count": 0,
+      "timeout_count": 12,
+      "land_rate": 0.4,
+      "perfect_rate": 0.05,
+      "hard_landing_rate": 0.35,
+      "crash_rate": 0.0,
+      "timeout_rate": 0.6,
+      "land_rate_wilson95": [
+        0.21880396741419272,
+        0.613422057684794
+      ],
+      "mean_physics_frames": 1237.5,
+      "mean_fuel_remaining": 817.5020284109255,
+      "mean_native_score": 7.75,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 12
+      },
+      "reascent_count": 12,
+      "reascent_rate": 0.6,
+      "label": "v3_40k_det",
+      "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_40000_steps.zip",
+      "deterministic": true,
+      "commitment_env": false
+    },
+    "v5_step0_det": {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 20,
+      "timeout_count": 0,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 89.7,
+      "mean_fuel_remaining": 720.1101530757162,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "crash": 20
+      },
+      "reascent_count": 0,
+      "reascent_rate": 0.0,
+      "label": "v5_step0_det",
+      "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/step0_random_init.zip",
+      "deterministic": true,
+      "commitment_env": true
+    },
+    "noop": {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 20,
+      "timeout_count": 0,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 85.8,
+      "mean_fuel_remaining": 704.5,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "crash": 20
+      },
+      "reascent_count": 0,
+      "reascent_rate": 0.0,
+      "label": "noop"
+    },
+    "random": {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 20,
+      "timeout_count": 0,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 116.65,
+      "mean_fuel_remaining": 684.0152590557376,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "crash": 20
+      },
+      "reascent_count": 0,
+      "reascent_rate": 0.0,
+      "label": "random"
+    },
+    "reference": {
+      "n": 20,
+      "land_count": 16,
+      "perfect_count": 15,
+      "hard_landing_count": 1,
+      "crash_count": 4,
+      "timeout_count": 0,
+      "land_rate": 0.8,
+      "perfect_rate": 0.75,
+      "hard_landing_rate": 0.05,
+      "crash_rate": 0.2,
+      "timeout_rate": 0.0,
+      "land_rate_wilson95": [
+        0.5839782779742401,
+        0.9193436467288
+      ],
+      "mean_physics_frames": 163.15,
+      "mean_fuel_remaining": 971.0069063655832,
+      "mean_native_score": 38.25,
+      "failure_modes": {
+        "crash": 4
+      },
+      "reascent_count": 0,
+      "reascent_rate": 0.0,
+      "label": "reference"
+    }
+  },
+  "paired_landing_diff_v5_vs_v3": {
+    "n_paired": 20,
+    "both_land": 0,
+    "v5_only_land": 0,
+    "v3_only_land": 8,
+    "neither_land": 12,
+    "net_v5_minus_v3": -8
+  },
+  "reascent_comparison": {
+    "v5_reascent_rate": 0.0,
+    "v3_reascent_rate": 0.6,
+    "v5_reascent_count": 0,
+    "v3_reascent_count": 12,
+    "reduced_reascent": true
+  },
+  "v5_vs_v3_40k": {
+    "v5_land_rate": 0.0,
+    "v3_land_rate": 0.4,
+    "v5_land_wilson95": [
+      0.0,
+      0.16113012549493322
+    ],
+    "v3_land_wilson95": [
+      0.21880396741419272,
+      0.613422057684794
+    ],
+    "delta_land_rate": -0.4,
+    "v5_improved": false,
+    "v5_timeout_rate": 0.0,
+    "v3_timeout_rate": 0.6,
+    "v5_perfect_rate": 0.0,
+    "v3_perfect_rate": 0.05,
+    "v5_hard_landing_rate": 0.0,
+    "v3_hard_landing_rate": 0.35,
+    "v5_mean_frames": 89.6,
+    "v3_mean_frames": 1237.5,
+    "v5_mean_fuel": 720.1201530785904,
+    "v3_mean_fuel": 817.5020284109255
+  },
+  "warning": "ONE-SHOT held-out. Not used for selection or retraining."
+}

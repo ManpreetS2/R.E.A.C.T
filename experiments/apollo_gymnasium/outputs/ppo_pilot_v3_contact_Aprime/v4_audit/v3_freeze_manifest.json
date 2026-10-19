@@ -1,0 +1,86 @@
+{
+  "artifacts": {
+    "final_model": {
+      "path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/final_model.zip",
+      "sha256": "3b102ddd1c47d23373d6f77d0bd0a8e27355f904c054b9f796f5bbcb5a6f4155",
+      "bytes": 155255
+    },
+    "step0": {
+      "path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/step0_random_init.zip",
+      "sha256": "6f2ab08fae7ec6609692a1faaad6227017ea57c15051bf6ca4f61cdc895b7e0a",
+      "bytes": 59434
+    },
+    "train_summary": {
+      "path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/outputs/ppo_pilot_v3_contact_Aprime/train_summary.json",
+      "sha256": "8c778804885a0a68b6292e8e63d2ccaef78695d3890ca71503808dd38aa7eb37",
+      "bytes": 852
+    },
+    "run_config": {
+      "path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/outputs/ppo_pilot_v3_contact_Aprime/run_config.json",
+      "sha256": "1a729521c3fd308df894450cd0905cafed4b1dfa565d9464b24c815635badcaf",
+      "bytes": 437
+    },
+    "eval_heldout": {
+      "path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/outputs/ppo_pilot_v3_contact_Aprime/eval_heldout_final.json",
+      "sha256": "4a8307db9e02d2c04f24d36e6a3903d4c3841ce5a5d6a3ce1f48183aecd44767",
+      "bytes": 65940
+    },
+    "eval_dev_final": {
+      "path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/outputs/ppo_pilot_v3_contact_Aprime/eval_dev_final.json",
+      "sha256": "a47852cde605e4fcc7669d0904af936efe4db03176a822a868546729b785c46a",
+      "bytes": 26699
+    },
+    "landing_meta": {
+      "path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/outputs/ppo_pilot_v3_contact_Aprime/landing_evidence/landing_meta.json",
+      "sha256": "df5f278bd7ad332d30366e2a64da8aa0daaa155f4564d24bc0a5ba89bf4f0e82",
+      "bytes": 1317
+    },
+    "v3_results": {
+      "path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/outputs/ppo_pilot_v3_contact_Aprime/V3_RESULTS.md",
+      "sha256": "164e9b1b34d291f4eb82b2a6e8b562fb36cd35e061dd4fd17761fee335c00834",
+      "bytes": 2551
+    }
+  },
+  "checkpoints": {
+    "ppo_apollo_10000_steps.zip": {
+      "sha256": "9b174cfe366535f9037f71cbfaf00f76b6ac138b97109b2ba86827cc88450ce2",
+      "bytes": 155197
+    },
+    "ppo_apollo_15000_steps.zip": {
+      "sha256": "cac08d571fc99e4953a128303d190ba4a3de88ddc26c59c2d5630c1a636d1b81",
+      "bytes": 155217
+    },
+    "ppo_apollo_20000_steps.zip": {
+      "sha256": "9575e427897047774ab3ac75f518143bd5c26bb2b971d16ec895db6ea5454ee7",
+      "bytes": 155217
+    },
+    "ppo_apollo_25000_steps.zip": {
+      "sha256": "c976e427c0d896ab7fa928a8ad36d047ef6196f0d42d95a9b126fea71a65800e",
+      "bytes": 155229
+    },
+    "ppo_apollo_30000_steps.zip": {
+      "sha256": "752fe046e2ed414245715d00254e2b3b3ca5e66aa8d5a32c8e785f86bd5a4665",
+      "bytes": 155226
+    },
+    "ppo_apollo_35000_steps.zip": {
+      "sha256": "a9c510bd754d0bac0d8a4cfbd100d57127c1858d5fedd7ebb6143376f0f29808",
+      "bytes": 155242
+    },
+    "ppo_apollo_40000_steps.zip": {
+      "sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975",
+      "bytes": 155247
+    },
+    "ppo_apollo_45000_steps.zip": {
+      "sha256": "8f312e1ef29532cf9eb2e226eac55d44d4e1cf0f385dcc053001a34326888d85",
+      "bytes": 155250
+    },
+    "ppo_apollo_50000_steps.zip": {
+      "sha256": "84a19cd58ddcb0854f84c0f77a77b8f03f50a32ea9dcbc0467be28dca4808113",
+      "bytes": 155255
+    },
+    "ppo_apollo_5000_steps.zip": {
+      "sha256": "fc0a07fb07d6ef519909daae73de24fbb0e05b80bf193f0fe309562bddda467e",
+      "bytes": 155200
+    }
+  }
+}

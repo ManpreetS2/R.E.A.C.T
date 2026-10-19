@@ -1,0 +1,594 @@
+{
+  "label": "step0_heldout_POSTHOC",
+  "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/step0_random_init.zip",
+  "n": 20,
+  "land_rate": 0.0,
+  "perfect_rate": 0.0,
+  "hard_landing_rate": 0.0,
+  "crash_rate": 1.0,
+  "timeout_rate": 0.0,
+  "mean_physics_frames": 85.0,
+  "episodes": [
+    {
+      "seed": 300000,
+      "start": {
+        "x": 6952.471973631406,
+        "y": 664.6418461766622,
+        "vx": 0.04896395174278836,
+        "vy": 0.09570098630787316,
+        "rotation": 20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 100,
+      "fuel_remaining": 785.1999999999588,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.09897144303363348,
+        "vx": 0.08131317776568847,
+        "vy": 0.14116177428371526,
+        "rotation": 0.0,
+        "dx": 4.326496960428813,
+        "thrust": 0.2499999999490741
+      }
+    },
+    {
+      "seed": 300001,
+      "start": {
+        "x": 6956.697458566349,
+        "y": 665.8001876688659,
+        "vx": 0.014620802409157307,
+        "vy": 0.14926601312062615,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 65,
+      "fuel_remaining": 704.9499998995659,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.050685498631537484,
+        "vx": 0.03441412523275231,
+        "vy": 0.1758799270927648,
+        "rotation": 0.0,
+        "dx": 4.996733067741843,
+        "thrust": 0.2499998744579653
+      }
+    },
+    {
+      "seed": 300002,
+      "start": {
+        "x": 6957.96765918034,
+        "y": 667.9400654532064,
+        "vx": 0.05221549118497469,
+        "vy": 0.12759713518293309,
+        "rotation": 20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 60,
+      "fuel_remaining": 655.1999996935004,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.07448868073311132,
+        "vx": 0.07040038019773331,
+        "vy": 0.1530579231587752,
+        "rotation": 0.0,
+        "dx": 1.6163470495621368,
+        "thrust": 0.24999961687611477
+      }
+    },
+    {
+      "seed": 300003,
+      "start": {
+        "x": 6956.889675652588,
+        "y": 663.0489686454493,
+        "vx": 0.044723394741504933,
+        "vy": 0.15254250848471204,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 79,
+      "fuel_remaining": 654.2499999955824,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.06612858827645596,
+        "vx": 0.06890551367870221,
+        "vy": 0.18615642245685068,
+        "rotation": 0.0,
+        "dx": 1.933838760583967,
+        "thrust": 0.24999999447860294
+      }
+    },
+    {
+      "seed": 300004,
+      "start": {
+        "x": 6943.172050461375,
+        "y": 666.9425493590494,
+        "vx": 0.03302757906493792,
+        "vy": 0.1320482150922893,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 65,
+      "fuel_remaining": 771.9499998995659,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.07389031697368864,
+        "vx": 0.05246539388469392,
+        "vy": 0.15866212906442795,
+        "rotation": 0.0,
+        "dx": 17.33711449324437,
+        "thrust": 0.2499998744579653
+      }
+    },
+    {
+      "seed": 300005,
+      "start": {
+        "x": 6956.912067791963,
+        "y": 662.7645631035676,
+        "vx": 0.010704034624014619,
+        "vy": 0.1257397423851837,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 95,
+      "fuel_remaining": 635.4499999998751,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.06626528675167265,
+        "vx": 0.03901832702660773,
+        "vy": 0.16445247934504348,
+        "rotation": 0.0,
+        "dx": 4.148743235535221,
+        "thrust": 0.24999999984458648
+      }
+    },
+    {
+      "seed": 300006,
+      "start": {
+        "x": 6946.717901654923,
+        "y": 663.4947301430362,
+        "vx": 0.01837787814459218,
+        "vy": 0.13284117537689008,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 87,
+      "fuel_remaining": 651.8499999992583,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.11663716173836747,
+        "vx": 0.043585062812108596,
+        "vy": 0.16755391233674985,
+        "rotation": 0.0,
+        "dx": 13.985883573568572,
+        "thrust": 0.2499999990736633
+      }
+    },
+    {
+      "seed": 300007,
+      "start": {
+        "x": 6956.287171141491,
+        "y": 667.5930650067652,
+        "vx": 0.012017227272321894,
+        "vy": 0.125579447754418,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 63,
+      "fuel_remaining": 766.0499998430721,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.0010493642745359466,
+        "vx": 0.031129848475301453,
+        "vy": 0.15119336172655665,
+        "rotation": 0.0,
+        "dx": 5.63801367819724,
+        "thrust": 0.24999980384057077
+      }
+    },
+    {
+      "seed": 300008,
+      "start": {
+        "x": 6955.671093442594,
+        "y": 666.7818910527319,
+        "vx": 0.02558940349411299,
+        "vy": 0.10566893131052046,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 80,
+      "fuel_remaining": 689.1999999964657,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.07114115976719404,
+        "vx": 0.048089820800415586,
+        "vy": 0.1368816682703802,
+        "rotation": 0.0,
+        "dx": 4.760133845368728,
+        "thrust": 0.24999999558288236
+      }
+    },
+    {
+      "seed": 300009,
+      "start": {
+        "x": 6949.543028934686,
+        "y": 665.6529997464363,
+        "vx": 0.005685311795400539,
+        "vy": 0.09198921275724782,
+        "rotation": 20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 95,
+      "fuel_remaining": 620.4499999998751,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.05919765408020794,
+        "vx": 0.03749670210813825,
+        "vy": 0.1349500007330899,
+        "rotation": 0.0,
+        "dx": 11.712655954519505,
+        "thrust": 0.24999999984458648
+      }
+    },
+    {
+      "seed": 300010,
+      "start": {
+        "x": 6945.873605970229,
+        "y": 667.7905453578634,
+        "vx": 0.02657280381964623,
+        "vy": 0.1323092084643108,
+        "rotation": -10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 60,
+      "fuel_remaining": 643.1999996935004,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.04557872871873769,
+        "vx": 0.04182370780961902,
+        "vy": 0.15352194542417055,
+        "rotation": 0.0,
+        "dx": 15.392569355831256,
+        "thrust": 0.24999961687611477
+      }
+    },
+    {
+      "seed": 300011,
+      "start": {
+        "x": 6947.360788781233,
+        "y": 666.262709984216,
+        "vx": 0.0441664735245042,
+        "vy": 0.14421391651711837,
+        "rotation": 20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 64,
+      "fuel_remaining": 791.9999998744576,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.07583890976570729,
+        "vx": 0.06391888380963505,
+        "vy": 0.1716747044929605,
+        "rotation": 0.0,
+        "dx": 12.448292880505505,
+        "thrust": 0.24999984307245662
+      }
+    },
+    {
+      "seed": 300012,
+      "start": {
+        "x": 6951.485137712107,
+        "y": 660.7617695719068,
+        "vx": 0.016357442567555263,
+        "vy": 0.08762710494092395,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 134,
+      "fuel_remaining": 672.4999999999998,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.06136867499310483,
+        "vx": 0.06098232237149193,
+        "vy": 0.14874101891306263,
+        "rotation": 0.0,
+        "dx": 6.7309130339617695,
+        "thrust": 0.2499999999999742
+      }
+    },
+    {
+      "seed": 300013,
+      "start": {
+        "x": 6958.4776359627685,
+        "y": 660.9801122020674,
+        "vx": 0.015064328803755071,
+        "vy": 0.09860109842107323,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 123,
+      "fuel_remaining": 734.0499999999993,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.026361295168157994,
+        "vx": 0.05580647121393672,
+        "vy": 0.15421501239321192,
+        "rotation": 0.0,
+        "dx": 0.5459568041096645,
+        "thrust": 0.2499999999996994
+      }
+    },
+    {
+      "seed": 300014,
+      "start": {
+        "x": 6941.3998795396865,
+        "y": 663.7493617477462,
+        "vx": 0.03069086947302825,
+        "vy": 0.09768999114382523,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 105,
+      "fuel_remaining": 667.9499999999861,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.009574353658081236,
+        "vx": 0.06448334651694669,
+        "vy": 0.14430390511596392,
+        "rotation": 0.0,
+        "dx": 16.958162005984377,
+        "thrust": 0.2499999999833126
+      }
+    },
+    {
+      "seed": 300015,
+      "start": {
+        "x": 6960.867132294474,
+        "y": 663.5175158877842,
+        "vx": 0.00029937797863582166,
+        "vy": 0.1256824440743581,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 89,
+      "fuel_remaining": 685.7499999995251,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.02819432265823707,
+        "vx": 0.029189477042038725,
+        "vy": 0.16429635804649675,
+        "rotation": 0.0,
+        "dx": 1.1496493046242904,
+        "thrust": 0.2499999994071445
+      }
+    },
+    {
+      "seed": 300016,
+      "start": {
+        "x": 6954.36198499496,
+        "y": 664.9826874246834,
+        "vx": 0.045814981701508724,
+        "vy": 0.15825934481790105,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 66,
+      "fuel_remaining": 672.8999999196526,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.0026250735618305043,
+        "vx": 0.06536120656365119,
+        "vy": 0.18537325879003969,
+        "rotation": 0.0,
+        "dx": 5.258547269786504,
+        "thrust": 0.24999989956637222
+      }
+    },
+    {
+      "seed": 300017,
+      "start": {
+        "x": 6942.9710773510515,
+        "y": 666.1040589616362,
+        "vx": 0.04540414724616154,
+        "vy": 0.10164263688201375,
+        "rotation": 20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 85,
+      "fuel_remaining": 783.9499999988415,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.00879791255397322,
+        "vx": 0.07257297151514815,
+        "vy": 0.13960342485785585,
+        "rotation": 0.0,
+        "dx": 15.309387366472947,
+        "thrust": 0.2499999985525989
+      }
+    },
+    {
+      "seed": 300018,
+      "start": {
+        "x": 6960.522837190341,
+        "y": 663.5586518678974,
+        "vx": 0.030639798219717386,
+        "vy": 0.09305486966680629,
+        "rotation": 10,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 110,
+      "fuel_remaining": 609.699999999995,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.03552063691699914,
+        "vx": 0.06621057952733601,
+        "vy": 0.14216878363894497,
+        "rotation": 0.0,
+        "dx": -2.4871147654448578,
+        "thrust": 0.24999999999453187
+      }
+    },
+    {
+      "seed": 300019,
+      "start": {
+        "x": 6942.626097300215,
+        "y": 667.739993329356,
+        "vx": 0.008734378934032085,
+        "vy": 0.10234778308786381,
+        "rotation": -20,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "status": "crashed",
+      "landed": false,
+      "perfect": false,
+      "hard_landing": false,
+      "crashed": true,
+      "timeout": false,
+      "physics_frames": 75,
+      "fuel_remaining": 630.4499999892155,
+      "native_score": 0,
+      "final_raw": {
+        "altitude": -0.03637667105738274,
+        "vx": 0.02818095180064063,
+        "vy": 0.12959419809770162,
+        "rotation": 0.0,
+        "dx": 19.38688988494596,
+        "thrust": 0.24999998652002667
+      }
+    }
+  ],
+  "warning": "POST-HOC comparison only. Held-out already inspected for V3 final. Do not use for model selection or hyperparameter tuning."
+}

@@ -1,0 +1,10 @@
+{
+  "start": "pilot_near",
+  "policy": "ppo",
+  "seed": 50000,
+  "frames": 436,
+  "status": "crashed",
+  "landed": false,
+  "native_score": 0,
+  "credit": "Seb Lee-Delisle ApolloLander (MIT) \u2014 unmodified renderer frames"
+}

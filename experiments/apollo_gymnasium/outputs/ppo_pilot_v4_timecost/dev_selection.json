@@ -1,0 +1,357 @@
+{
+  "selection_rule": "max land_rate, then min timeout_rate, then min mean_physics_frames",
+  "seed_pool": "DEV_EVAL_SEEDS",
+  "checkpoints": [
+    {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 20,
+      "timeout_count": 0,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 91.75,
+      "mean_fuel_remaining": 691.7124999873218,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "crash": 20
+      },
+      "label": "step0_random_init",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/step0_random_init.zip",
+      "deterministic": true
+    },
+    {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 2,
+      "timeout_count": 18,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.1,
+      "timeout_rate": 0.9,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 1810.05,
+      "mean_fuel_remaining": 606.9299804970678,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 18,
+        "crash": 2
+      },
+      "label": "ppo_apollo_5000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_5000_steps.zip",
+      "deterministic": true
+    },
+    {
+      "n": 20,
+      "land_count": 2,
+      "perfect_count": 2,
+      "hard_landing_count": 0,
+      "crash_count": 0,
+      "timeout_count": 18,
+      "land_rate": 0.1,
+      "perfect_rate": 0.1,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.0,
+      "timeout_rate": 0.9,
+      "land_rate_wilson95": [
+        0.027865893984153206,
+        0.30103820641179335
+      ],
+      "mean_physics_frames": 1810.1,
+      "mean_fuel_remaining": 643.779999999911,
+      "mean_native_score": 5.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 18
+      },
+      "label": "ppo_apollo_10000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_10000_steps.zip",
+      "deterministic": true
+    },
+    {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 2,
+      "timeout_count": 18,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.1,
+      "timeout_rate": 0.9,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 1810.05,
+      "mean_fuel_remaining": 606.3899999999094,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 18,
+        "crash": 2
+      },
+      "label": "ppo_apollo_15000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_15000_steps.zip",
+      "deterministic": true
+    },
+    {
+      "n": 20,
+      "land_count": 2,
+      "perfect_count": 2,
+      "hard_landing_count": 0,
+      "crash_count": 0,
+      "timeout_count": 18,
+      "land_rate": 0.1,
+      "perfect_rate": 0.1,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.0,
+      "timeout_rate": 0.9,
+      "land_rate_wilson95": [
+        0.027865893984153206,
+        0.30103820641179335
+      ],
+      "mean_physics_frames": 1810.15,
+      "mean_fuel_remaining": 697.4811933437719,
+      "mean_native_score": 5.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 18
+      },
+      "label": "ppo_apollo_20000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_20000_steps.zip",
+      "deterministic": true
+    },
+    {
+      "n": 20,
+      "land_count": 2,
+      "perfect_count": 2,
+      "hard_landing_count": 0,
+      "crash_count": 1,
+      "timeout_count": 17,
+      "land_rate": 0.1,
+      "perfect_rate": 0.1,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.05,
+      "timeout_rate": 0.85,
+      "land_rate_wilson95": [
+        0.027865893984153206,
+        0.30103820641179335
+      ],
+      "mean_physics_frames": 1716.15,
+      "mean_fuel_remaining": 814.329999999839,
+      "mean_native_score": 5.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 17,
+        "crash": 1
+      },
+      "label": "ppo_apollo_25000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_25000_steps.zip",
+      "deterministic": true
+    },
+    {
+      "n": 20,
+      "land_count": 2,
+      "perfect_count": 2,
+      "hard_landing_count": 0,
+      "crash_count": 1,
+      "timeout_count": 17,
+      "land_rate": 0.1,
+      "perfect_rate": 0.1,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.05,
+      "timeout_rate": 0.85,
+      "land_rate_wilson95": [
+        0.027865893984153206,
+        0.30103820641179335
+      ],
+      "mean_physics_frames": 1716.15,
+      "mean_fuel_remaining": 825.6499999998416,
+      "mean_native_score": 5.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 17,
+        "crash": 1
+      },
+      "label": "ppo_apollo_30000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_30000_steps.zip",
+      "deterministic": true
+    },
+    {
+      "n": 20,
+      "land_count": 2,
+      "perfect_count": 2,
+      "hard_landing_count": 0,
+      "crash_count": 0,
+      "timeout_count": 18,
+      "land_rate": 0.1,
+      "perfect_rate": 0.1,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.0,
+      "timeout_rate": 0.9,
+      "land_rate_wilson95": [
+        0.027865893984153206,
+        0.30103820641179335
+      ],
+      "mean_physics_frames": 1810.15,
+      "mean_fuel_remaining": 786.5299999999486,
+      "mean_native_score": 5.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 18
+      },
+      "label": "ppo_apollo_35000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_35000_steps.zip",
+      "deterministic": true
+    },
+    {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 2,
+      "timeout_count": 18,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.1,
+      "timeout_rate": 0.9,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 1810.05,
+      "mean_fuel_remaining": 697.9499999999322,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 18,
+        "crash": 2
+      },
+      "label": "ppo_apollo_40000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_40000_steps.zip",
+      "deterministic": true
+    },
+    {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 2,
+      "timeout_count": 18,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.1,
+      "timeout_rate": 0.9,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 1810.1,
+      "mean_fuel_remaining": 658.4699999999227,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 18,
+        "crash": 2
+      },
+      "label": "ppo_apollo_45000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_45000_steps.zip",
+      "deterministic": true
+    },
+    {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 2,
+      "timeout_count": 18,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.1,
+      "timeout_rate": 0.9,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 1810.1,
+      "mean_fuel_remaining": 611.829999999911,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 18,
+        "crash": 2
+      },
+      "label": "ppo_apollo_50000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_50000_steps.zip",
+      "deterministic": true
+    },
+    {
+      "n": 20,
+      "land_count": 0,
+      "perfect_count": 0,
+      "hard_landing_count": 0,
+      "crash_count": 2,
+      "timeout_count": 18,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.1,
+      "timeout_rate": 0.9,
+      "land_rate_wilson95": [
+        0.0,
+        0.16113012549493322
+      ],
+      "mean_physics_frames": 1810.1,
+      "mean_fuel_remaining": 611.829999999911,
+      "mean_native_score": 0.0,
+      "failure_modes": {
+        "timeout_post_approach_reascent": 18,
+        "crash": 2
+      },
+      "label": "final_model",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/final_model.zip",
+      "deterministic": true
+    }
+  ],
+  "selected": {
+    "n": 20,
+    "land_count": 2,
+    "perfect_count": 2,
+    "hard_landing_count": 0,
+    "crash_count": 1,
+    "timeout_count": 17,
+    "land_rate": 0.1,
+    "perfect_rate": 0.1,
+    "hard_landing_rate": 0.0,
+    "crash_rate": 0.05,
+    "timeout_rate": 0.85,
+    "land_rate_wilson95": [
+      0.027865893984153206,
+      0.30103820641179335
+    ],
+    "mean_physics_frames": 1716.15,
+    "mean_fuel_remaining": 814.329999999839,
+    "mean_native_score": 5.0,
+    "failure_modes": {
+      "timeout_post_approach_reascent": 17,
+      "crash": 1
+    },
+    "label": "ppo_apollo_25000_steps",
+    "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_25000_steps.zip",
+    "deterministic": true
+  },
+  "selected_path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v4_timecost/checkpoints/ppo_apollo_25000_steps.zip",
+  "selected_sha256": "7c785d8a7f3c10dfa97ac847bb5461d0c9e2a2dc50ae0943943c64f5822f495c",
+  "incumbent_v3_40k_dev_land_rate": 0.6,
+  "beats_v3_40k_on_dev": false
+}

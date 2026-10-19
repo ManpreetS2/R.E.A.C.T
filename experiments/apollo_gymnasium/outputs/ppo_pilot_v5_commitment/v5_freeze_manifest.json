@@ -1,0 +1,167 @@
+{
+  "run": "ppo_pilot_v5_commitment",
+  "role": "negative_result_vs_v3_40k",
+  "do_not_overwrite": true,
+  "train_summary": {
+    "start": "pilot_near",
+    "start_template": "sh_contact",
+    "reward_mode": "progress_a_prime_v5",
+    "potential_scale": 10.0,
+    "time_cost": 0.005,
+    "commitment_shaping": true,
+    "timeout_as_terminated": true,
+    "seed": 0,
+    "action_repeat": 4,
+    "episode_max_frames": 2000,
+    "max_physics_frames": 200000,
+    "auto_seed_base": 100000,
+    "engine": "upstream-original",
+    "note": "Training reward Python-only; native score unchanged. Physics cap counts engine steps.",
+    "elapsed_sec": 285.46371579170227,
+    "gym_timesteps": 50292,
+    "actual_physics_frames": 199999,
+    "approx_physics_frames_gym_x_ar": 201168,
+    "init_path": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/step0_random_init.zip",
+    "final_path": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/final_model.zip"
+  },
+  "physics_frames_verified": true,
+  "physics_frames": 199999,
+  "models": {
+    "step0_random_init.zip": {
+      "path": "models/ppo_pilot_v5_commitment/step0_random_init.zip",
+      "sha256": "f98153e1032b5f283970cc0d70372c772c50f2d81e527485da143670c076b5e4",
+      "bytes": 59982
+    },
+    "final_model.zip": {
+      "path": "models/ppo_pilot_v5_commitment/final_model.zip",
+      "sha256": "5733007d1d9d62f28a40df3257fe66d5df1cfd4b6921c4746269c2026685e4b1",
+      "bytes": 156786
+    },
+    "selected/selected_model.zip": {
+      "path": "models/ppo_pilot_v5_commitment/selected/selected_model.zip",
+      "sha256": "f98153e1032b5f283970cc0d70372c772c50f2d81e527485da143670c076b5e4",
+      "bytes": 59982
+    }
+  },
+  "selected_is_step0": true,
+  "checkpoints": {
+    "ppo_apollo_10000_steps.zip": {
+      "path": "models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_10000_steps.zip",
+      "sha256": "9ffed82a2ba2bb2f854798ca9c38118dfff825a30f89e437c60766928c092413",
+      "bytes": 156777
+    },
+    "ppo_apollo_15000_steps.zip": {
+      "path": "models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_15000_steps.zip",
+      "sha256": "a0976fcce30b2a39366a2f66ef0589eb10680232ef7837144b1671bf8c1ea497",
+      "bytes": 156793
+    },
+    "ppo_apollo_20000_steps.zip": {
+      "path": "models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_20000_steps.zip",
+      "sha256": "5be5eb0c76fa337f2d63e6b1e5c3de2ef194c95acd35240d6ddf2c825e7ebbc1",
+      "bytes": 156781
+    },
+    "ppo_apollo_25000_steps.zip": {
+      "path": "models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_25000_steps.zip",
+      "sha256": "5c8908d07dfdcf6df7954b1dafcb04ac5647102efbb511a79b2610f665731c68",
+      "bytes": 156797
+    },
+    "ppo_apollo_30000_steps.zip": {
+      "path": "models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_30000_steps.zip",
+      "sha256": "6bdd7f0b98dc2806c37be784c73363ddee5c114465cb1b424a1438d1122cfcfd",
+      "bytes": 156790
+    },
+    "ppo_apollo_35000_steps.zip": {
+      "path": "models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_35000_steps.zip",
+      "sha256": "2abee2a68e2d5ea437431ea74c20b47b09bd3d9fa94b1c414cf6e3492f30a071",
+      "bytes": 156794
+    },
+    "ppo_apollo_40000_steps.zip": {
+      "path": "models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_40000_steps.zip",
+      "sha256": "7ada6b05c79e02094734115049ed30f5656e1c0ceab40271057050d0493a4d80",
+      "bytes": 156783
+    },
+    "ppo_apollo_45000_steps.zip": {
+      "path": "models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_45000_steps.zip",
+      "sha256": "67444441794e3b4020e6b8f0cb2383491634c30e1b6ffb80102702ce6212d141",
+      "bytes": 156782
+    },
+    "ppo_apollo_50000_steps.zip": {
+      "path": "models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_50000_steps.zip",
+      "sha256": "a56ddb3d4896f38c2ad56f754cf1b0da98e34dece915c9299fd62d685c022a85",
+      "bytes": 156787
+    },
+    "ppo_apollo_5000_steps.zip": {
+      "path": "models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_5000_steps.zip",
+      "sha256": "951b2fb1a5bac8d71b311a9a41c0ad522ed92ce83a5cd19a817cf3208d562383",
+      "bytes": 156780
+    }
+  },
+  "outputs": {
+    "V5_RESULTS.md": {
+      "path": "outputs/ppo_pilot_v5_commitment/V5_RESULTS.md",
+      "sha256": "771413eb6aede9b4d9f5ee9fa47a12f22eb1c5ffbe327745f834a4ae1ca5615f",
+      "bytes": 3006
+    },
+    "V5_RESULTS.json": {
+      "path": "outputs/ppo_pilot_v5_commitment/V5_RESULTS.json",
+      "sha256": "e7c868e83df2115e424bb0b50e6c762f137f7b2488ca2e96224e72ed5b808f55",
+      "bytes": 10197
+    },
+    "train_summary.json": {
+      "path": "outputs/ppo_pilot_v5_commitment/train_summary.json",
+      "sha256": "971f983268bf1dcca5a2ec3b646860aa25648e3933754a2852ad769f37687291",
+      "bytes": 887
+    },
+    "run_config.json": {
+      "path": "outputs/ppo_pilot_v5_commitment/run_config.json",
+      "sha256": "e082caed15d230c1cb1298288befecf12117fbfe8874d836af920471c98589eb",
+      "bytes": 470
+    },
+    "dev_selection.json": {
+      "path": "outputs/ppo_pilot_v5_commitment/dev_selection.json",
+      "sha256": "2a0bc560e2b7d4aa1e4772acc0cbb0e2b49c7c8c2a0313363ee6a2bafebd0e37",
+      "bytes": 11723
+    },
+    "heldout_comparison.json": {
+      "path": "outputs/ppo_pilot_v5_commitment/heldout_comparison.json",
+      "sha256": "d3305b9a47461d6d6d8762d49dee20a0f8f3f7ea7cf7eef471ba714e0ead2c8f",
+      "bytes": 6700
+    },
+    "evidence/failure_500000/native.mp4": {
+      "path": "outputs/ppo_pilot_v5_commitment/evidence/failure_500000/native.mp4",
+      "sha256": "5075843f9deb132fde0d24309327a6fc304d6a86646f0f14df3759578e1a21c5",
+      "bytes": 30917
+    },
+    "evidence/failure_500000/meta.json": {
+      "path": "outputs/ppo_pilot_v5_commitment/evidence/failure_500000/meta.json",
+      "sha256": "518f4b697334700bce97713d73dcca2078141d596ed16aae807a2131af0c1244",
+      "bytes": 240
+    },
+    "heldout_trained_vs_selected.json": {
+      "path": "outputs/ppo_pilot_v5_commitment/heldout_trained_vs_selected.json",
+      "sha256": "ca1b0450b0f8ab2b277ec70a2e234df8331fe2c30b933d8b1c637758f897cc38",
+      "bytes": 3250
+    },
+    "heldout_v5_trained_final_det.json": {
+      "path": "outputs/ppo_pilot_v5_commitment/heldout_v5_trained_final_det.json",
+      "sha256": "64be3758f09cb80cce970364ee433b3e288f0aa0fc19c510cfaa12608adfc6b9",
+      "bytes": 147639
+    },
+    "heldout_v5_trained_25k_det.json": {
+      "path": "outputs/ppo_pilot_v5_commitment/heldout_v5_trained_25k_det.json",
+      "sha256": "abda57c36a0c83d336f8f113178dc0466726eb6c028c65fe6c1620b341e88ddd",
+      "bytes": 219655
+    },
+    "failure_autopsy/FAILURE_AUTOPSY.md": {
+      "path": "outputs/ppo_pilot_v5_commitment/failure_autopsy/FAILURE_AUTOPSY.md",
+      "sha256": "1761eb1b5384cbde269c57535fc754f7353e955c04d1ee860dd5a262c2cb2a0e",
+      "bytes": 2098
+    },
+    "failure_autopsy/failure_autopsy.json": {
+      "path": "outputs/ppo_pilot_v5_commitment/failure_autopsy/failure_autopsy.json",
+      "sha256": "e46f3824c1ce85795574c1abab52cb55f4681ea8407f619b72351c2558fd95e3",
+      "bytes": 34252
+    }
+  },
+  "v3_40k_incumbent_sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975"
+}

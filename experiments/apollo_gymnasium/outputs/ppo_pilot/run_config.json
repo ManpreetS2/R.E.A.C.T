@@ -1,0 +1,10 @@
+{
+  "start": "pilot_near",
+  "reward_mode": "progress_a",
+  "seed": 0,
+  "action_repeat": 4,
+  "max_physics_frames": 500000,
+  "max_gym_steps": 125000,
+  "engine": "upstream-original",
+  "note": "Training reward is Python-only; native score unchanged."
+}

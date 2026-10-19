@@ -1,0 +1,1030 @@
+{
+  "gamma": 0.99,
+  "commitment_constants": {
+    "H_app": 25.0,
+    "D_app": 60.0,
+    "V_soft": 0.15,
+    "R_soft": 15.0,
+    "beta": 1.0
+  },
+  "obs_feature_vs_reward": {
+    "v5_obs_dim": 11,
+    "v3_obs_dim": 10,
+    "cannot_load_v5_policy_in_10d": true,
+    "cannot_load_v3_policy_in_11d": true,
+    "ablation_method": "Same action traces replayed under commitment ON vs OFF isolates the reward penalty from the 11th observation (actions were generated under their native obs; reward comparison is action-conditional).",
+    "v5_final_sha256": "5733007d1d9d62f28a40df3257fe66d5df1cfd4b6921c4746269c2026685e4b1",
+    "v5_step0_sha256": "f98153e1032b5f283970cc0d70372c772c50f2d81e527485da143670c076b5e4",
+    "v5_mid_25k_sha256": "5c8908d07dfdcf6df7954b1dafcb04ac5647102efbb511a79b2610f665731c68",
+    "v3_40k_sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975",
+    "selected_equals_step0": true
+  },
+  "economics_by_group": {
+    "v5_final_crash": {
+      "undiscounted_v5": {
+        "n": 4,
+        "mean": -97.58200776398182,
+        "median": -97.64133127808572,
+        "min": -98.13354320526123,
+        "max": -96.91182529449463,
+        "std": 0.5280307302475027
+      },
+      "discounted_v5": {
+        "n": 4,
+        "mean": -78.31094574932551,
+        "median": -78.14514729129277,
+        "min": -84.09881357874511,
+        "max": -72.85467483597142,
+        "std": 4.3517623333156745
+      },
+      "undiscounted_a_prime": {
+        "n": 4,
+        "mean": -97.58200776398182,
+        "median": -97.64133127808572,
+        "min": -98.13354320526123,
+        "max": -96.91182529449463,
+        "std": 0.5280307302475027
+      },
+      "discounted_a_prime": {
+        "n": 4,
+        "mean": -78.31094574932551,
+        "median": -78.14514729129277,
+        "min": -84.09881357874511,
+        "max": -72.85467483597142,
+        "std": 4.3517623333156745
+      },
+      "sum_commit": {
+        "n": 4,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "std": 0.0
+      },
+      "commit_delta_undiscounted": {
+        "n": 4,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "std": 0.0
+      },
+      "commit_delta_discounted": {
+        "n": 4,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "std": 0.0
+      },
+      "n_episodes": 4,
+      "outcomes": [
+        "crash",
+        "crash",
+        "crash",
+        "crash"
+      ]
+    },
+    "v5_mid_reascent": {
+      "undiscounted_v5": {
+        "n": 4,
+        "mean": -218.0567738191974,
+        "median": -218.10017379404775,
+        "min": -218.96216962130697,
+        "max": -217.06457806738706,
+        "std": 0.9055881933246948
+      },
+      "discounted_v5": {
+        "n": 4,
+        "mean": -12.853869759413044,
+        "median": -12.917825958254829,
+        "min": -13.698164082589974,
+        "max": -11.881663038552546,
+        "std": 0.645717674645692
+      },
+      "undiscounted_a_prime": {
+        "n": 4,
+        "mean": -197.56606773555276,
+        "median": -200.66217848181722,
+        "min": -201.63324915885923,
+        "max": -187.30666481971738,
+        "std": 5.947816535203078
+      },
+      "discounted_a_prime": {
+        "n": 4,
+        "mean": -3.9794268182053,
+        "median": -6.862813526706217,
+        "min": -8.774825996298842,
+        "max": 6.582745776890077,
+        "std": 6.149078983422391
+      },
+      "sum_commit": {
+        "n": 4,
+        "mean": -17.10755955921529,
+        "median": -17.351195362529793,
+        "min": -18.11894351142736,
+        "max": -15.608904000374219,
+        "std": 0.969340668223199
+      },
+      "commit_delta_undiscounted": {
+        "n": 4,
+        "mean": -20.49070608364461,
+        "median": -17.351195362529793,
+        "min": -31.65152960914463,
+        "max": -15.608904000374224,
+        "std": 6.489990967168259
+      },
+      "commit_delta_discounted": {
+        "n": 4,
+        "mean": -8.874442941207743,
+        "median": -5.522763851208174,
+        "min": -19.528905976123497,
+        "max": -4.923338086291132,
+        "std": 6.16060472027625
+      },
+      "n_episodes": 4,
+      "outcomes": [
+        "timeout_post_approach_reascent",
+        "timeout_post_approach_reascent",
+        "timeout_post_approach_reascent",
+        "timeout_post_approach_reascent"
+      ]
+    },
+    "v3_40k_reascent_actions": {
+      "undiscounted_v5": {
+        "n": 4,
+        "mean": -400.8898047814905,
+        "median": -397.84154517199636,
+        "min": -412.0123278607865,
+        "max": -395.86380092118264,
+        "std": 6.614530963161647
+      },
+      "discounted_v5": {
+        "n": 4,
+        "mean": -11.929778887862373,
+        "median": -14.896593580925204,
+        "min": -16.56866367410688,
+        "max": -1.3572647154921995,
+        "std": 6.176114029250925
+      },
+      "undiscounted_a_prime": {
+        "n": 4,
+        "mean": -144.90216092288492,
+        "median": -144.6910788965225,
+        "min": -145.86916291236875,
+        "max": -144.35732298612592,
+        "std": 0.5753622445920439
+      },
+      "discounted_a_prime": {
+        "n": 4,
+        "mean": -0.47126311400896537,
+        "median": -0.17633590187679482,
+        "min": -1.718922846234051,
+        "max": 0.18654219395177934,
+        "std": 0.7354582751369134
+      },
+      "sum_commit": {
+        "n": 4,
+        "mean": -261.01122077548285,
+        "median": -260.56835791237205,
+        "min": -270.6086717587836,
+        "max": -252.2994955184037,
+        "std": 8.581631168476328
+      },
+      "commit_delta_undiscounted": {
+        "n": 4,
+        "mean": -255.98764385860554,
+        "median": -252.70464197197435,
+        "min": -267.36071021933753,
+        "max": -251.18058127113594,
+        "std": 6.649847480571208
+      },
+      "commit_delta_discounted": {
+        "n": 4,
+        "mean": -11.458515773853408,
+        "median": -14.130403254784069,
+        "min": -16.403919716847895,
+        "max": -1.1693368689975951,
+        "std": 6.012590162125399
+      },
+      "n_episodes": 4,
+      "outcomes": [
+        "timeout_post_approach_reascent",
+        "timeout_post_approach_reascent",
+        "timeout_post_approach_reascent",
+        "timeout_post_approach_reascent"
+      ]
+    },
+    "reference_land": {
+      "undiscounted_v5": {
+        "n": 3,
+        "mean": 103.10259872992833,
+        "median": 103.50416827440262,
+        "min": 102.07421952962875,
+        "max": 103.72940838575363,
+        "std": 0.7329648066344253
+      },
+      "discounted_v5": {
+        "n": 3,
+        "mean": 69.87065463864043,
+        "median": 72.53727058592563,
+        "min": 56.52114168582329,
+        "max": 80.5535516441724,
+        "std": 9.990739464099613
+      },
+      "undiscounted_a_prime": {
+        "n": 3,
+        "mean": 103.10259872992833,
+        "median": 103.50416827440262,
+        "min": 102.07421952962875,
+        "max": 103.72940838575363,
+        "std": 0.7329648066344253
+      },
+      "discounted_a_prime": {
+        "n": 3,
+        "mean": 69.87065463864043,
+        "median": 72.53727058592563,
+        "min": 56.52114168582329,
+        "max": 80.5535516441724,
+        "std": 9.990739464099613
+      },
+      "sum_commit": {
+        "n": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "std": 0.0
+      },
+      "commit_delta_undiscounted": {
+        "n": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "std": 0.0
+      },
+      "commit_delta_discounted": {
+        "n": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "std": 0.0
+      },
+      "n_episodes": 3,
+      "outcomes": [
+        "land",
+        "land",
+        "land"
+      ]
+    }
+  },
+  "crash_vs_reascent_preference": {
+    "question": "Does accumulating ~-261 commitment make early crash preferable to reascent timeout?",
+    "mean_undiscounted_v5_crash": -97.58200776398182,
+    "mean_undiscounted_v5_mid_reascent": -218.0567738191974,
+    "mean_undiscounted_v5_on_v3_reascent_actions": -400.8898047814905,
+    "mean_undiscounted_v5_reference_land": 103.10259872992833,
+    "crash_beats_mid_reascent_undiscounted": true,
+    "crash_beats_v3_reascent_actions_undiscounted": true,
+    "land_beats_crash_undiscounted": true,
+    "mean_discounted_v5_crash": -78.31094574932551,
+    "mean_discounted_v5_mid_reascent": -12.853869759413044,
+    "mean_discounted_v5_reference_land": 69.87065463864043,
+    "crash_beats_mid_reascent_discounted": false,
+    "interpretation": "MIXED \u2014 UNDISCOUNTED V5 returns: early crash \u226b reascent timeout (commitment \u2248 \u2212261 on V3-style ascents makes long aborts very costly). PPO-DISCOUNTED (\u03b3=0.99): distant timeout/commit is diluted, so mid-reascent discounted return can EXCEED crash (\u221212.9 > \u221278.3). Late crash collapse is therefore not fully explained by \u03b3-return preferring crash; the 11-D obs change and optimization dynamics remain confounded with the penalty. Land still best (+103)."
+  },
+  "episodes": [
+    {
+      "group": "v5_final_crash",
+      "seed": 500000,
+      "behavior": {
+        "seed": 500000,
+        "outcome": "crash",
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "frames": 116,
+        "min_alt": -0.087307616256453,
+        "max_alt": 10.396320262283666,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/final_model.zip",
+        "model_sha256": "5733007d1d9d62f28a40df3257fe66d5df1cfd4b6921c4746269c2026685e4b1"
+      },
+      "n_actions": 29,
+      "reward_v5": {
+        "n_steps": 29,
+        "undiscounted_return": -97.22008825778961,
+        "discounted_return_gamma_0_99": -72.85467483597142,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": 0.09928256222179968,
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "status": "crashed",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 29,
+        "undiscounted_return": -97.22008825778961,
+        "discounted_return_gamma_0_99": -72.85467483597142,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": 0.09928256222179968,
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "status": "crashed",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": 0.0,
+      "commit_delta_discounted": 0.0
+    },
+    {
+      "group": "v5_final_crash",
+      "seed": 500001,
+      "behavior": {
+        "seed": 500001,
+        "outcome": "crash",
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "frames": 77,
+        "min_alt": -0.040397933742156056,
+        "max_alt": 10.099256829648425,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/final_model.zip",
+        "model_sha256": "5733007d1d9d62f28a40df3257fe66d5df1cfd4b6921c4746269c2026685e4b1"
+      },
+      "n_actions": 20,
+      "reward_v5": {
+        "n_steps": 20,
+        "undiscounted_return": -98.0625742983818,
+        "discounted_return_gamma_0_99": -80.63774203117168,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": 0.10196977376937877,
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "status": "crashed",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 20,
+        "undiscounted_return": -98.0625742983818,
+        "discounted_return_gamma_0_99": -80.63774203117168,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": 0.10196977376937877,
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "status": "crashed",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": 0.0,
+      "commit_delta_discounted": 0.0
+    },
+    {
+      "group": "v5_final_crash",
+      "seed": 500002,
+      "behavior": {
+        "seed": 500002,
+        "outcome": "crash",
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "frames": 64,
+        "min_alt": -0.0045307371746048375,
+        "max_alt": 8.455220550140325,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/final_model.zip",
+        "model_sha256": "5733007d1d9d62f28a40df3257fe66d5df1cfd4b6921c4746269c2026685e4b1"
+      },
+      "n_actions": 16,
+      "reward_v5": {
+        "n_steps": 16,
+        "undiscounted_return": -98.13354320526123,
+        "discounted_return_gamma_0_99": -84.09881357874511,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": 0.12443045298258475,
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "status": "crashed",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 16,
+        "undiscounted_return": -98.13354320526123,
+        "discounted_return_gamma_0_99": -84.09881357874511,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": 0.12443045298258475,
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "status": "crashed",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": 0.0,
+      "commit_delta_discounted": 0.0
+    },
+    {
+      "group": "v5_final_crash",
+      "seed": 500003,
+      "behavior": {
+        "seed": 500003,
+        "outcome": "crash",
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "frames": 98,
+        "min_alt": -0.019900755847288565,
+        "max_alt": 9.750753835763703,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/final_model.zip",
+        "model_sha256": "5733007d1d9d62f28a40df3257fe66d5df1cfd4b6921c4746269c2026685e4b1"
+      },
+      "n_actions": 25,
+      "reward_v5": {
+        "n_steps": 25,
+        "undiscounted_return": -96.91182529449463,
+        "discounted_return_gamma_0_99": -75.65255255141385,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": 0.1286739460627239,
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "status": "crashed",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 25,
+        "undiscounted_return": -96.91182529449463,
+        "discounted_return_gamma_0_99": -75.65255255141385,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": 0.1286739460627239,
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "status": "crashed",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": 0.0,
+      "commit_delta_discounted": 0.0
+    },
+    {
+      "group": "v5_mid_reascent",
+      "seed": 200000,
+      "behavior": {
+        "seed": 200000,
+        "outcome": "timeout_post_approach_reascent",
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "frames": 2000,
+        "min_alt": 6.570686869770157,
+        "max_alt": 1313.1995248109156,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_25000_steps.zip",
+        "model_sha256": "5c8908d07dfdcf6df7954b1dafcb04ac5647102efbb511a79b2610f665731c68"
+      },
+      "n_actions": 500,
+      "reward_v5": {
+        "n_steps": 500,
+        "undiscounted_return": -218.95819442886202,
+        "discounted_return_gamma_0_99": -12.94616019923342,
+        "sum_commit": -18.11894351142736,
+        "n_commit_penalty_steps": 69,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.23839317520814018,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 500,
+        "undiscounted_return": -187.30666481971738,
+        "discounted_return_gamma_0_99": 6.582745776890077,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.17496325615173813,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": -31.65152960914463,
+      "commit_delta_discounted": -19.528905976123497
+    },
+    {
+      "group": "v5_mid_reascent",
+      "seed": 200002,
+      "behavior": {
+        "seed": 200002,
+        "outcome": "timeout_post_approach_reascent",
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "frames": 2000,
+        "min_alt": 7.783083282357097,
+        "max_alt": 1296.5641926079275,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_25000_steps.zip",
+        "model_sha256": "5c8908d07dfdcf6df7954b1dafcb04ac5647102efbb511a79b2610f665731c68"
+      },
+      "n_actions": 500,
+      "reward_v5": {
+        "n_steps": 500,
+        "undiscounted_return": -218.96216962130697,
+        "discounted_return_gamma_0_99": -12.889491717276238,
+        "sum_commit": -17.781835892516714,
+        "n_commit_penalty_steps": 68,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.2384011415256652,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 500,
+        "undiscounted_return": -201.18033372879026,
+        "discounted_return_gamma_0_99": -7.038182209919988,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.20276619985729508,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": -17.78183589251671,
+      "commit_delta_discounted": -5.85130950735625
+    },
+    {
+      "group": "v5_mid_reascent",
+      "seed": 200004,
+      "behavior": {
+        "seed": 200004,
+        "outcome": "timeout_post_approach_reascent",
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "frames": 2000,
+        "min_alt": 6.727246417188894,
+        "max_alt": 1215.268808942978,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_25000_steps.zip",
+        "model_sha256": "5c8908d07dfdcf6df7954b1dafcb04ac5647102efbb511a79b2610f665731c68"
+      },
+      "n_actions": 500,
+      "reward_v5": {
+        "n_steps": 500,
+        "undiscounted_return": -217.24215315923345,
+        "discounted_return_gamma_0_99": -13.698164082589974,
+        "sum_commit": -15.608904000374219,
+        "n_commit_penalty_steps": 64,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.23495421474796271,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 500,
+        "undiscounted_return": -201.63324915885923,
+        "discounted_return_gamma_0_99": -8.774825996298842,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.20367384600973787,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": -15.608904000374224,
+      "commit_delta_discounted": -4.923338086291132
+    },
+    {
+      "group": "v5_mid_reascent",
+      "seed": 200006,
+      "behavior": {
+        "seed": 200006,
+        "outcome": "timeout_post_approach_reascent",
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "frames": 2000,
+        "min_alt": 7.288967898939859,
+        "max_alt": 1287.7923293725398,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v5_commitment/checkpoints/ppo_apollo_25000_steps.zip",
+        "model_sha256": "5c8908d07dfdcf6df7954b1dafcb04ac5647102efbb511a79b2610f665731c68"
+      },
+      "n_actions": 500,
+      "reward_v5": {
+        "n_steps": 500,
+        "undiscounted_return": -217.06457806738706,
+        "discounted_return_gamma_0_99": -11.881663038552546,
+        "sum_commit": -16.92055483254287,
+        "n_commit_penalty_steps": 66,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.2345983528404549,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 500,
+        "undiscounted_return": -200.14402323484418,
+        "discounted_return_gamma_0_99": -6.687444843492448,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.20068942532032896,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": -16.920554832542877,
+      "commit_delta_discounted": -5.194218195060098
+    },
+    {
+      "group": "v3_40k_reascent_actions",
+      "seed": 200000,
+      "behavior": {
+        "seed": 200000,
+        "outcome": "timeout_post_approach_reascent",
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "frames": 2000,
+        "min_alt": 4.642256063206332,
+        "max_alt": 1037.3710021991571,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_40000_steps.zip",
+        "model_sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975"
+      },
+      "n_actions": 500,
+      "reward_v5": {
+        "n_steps": 500,
+        "undiscounted_return": -399.77196892126074,
+        "discounted_return_gamma_0_99": -1.3572647154921995,
+        "sum_commit": -270.6086717587836,
+        "n_commit_penalty_steps": 466,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.6007454286999213,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 500,
+        "undiscounted_return": -145.86916291236875,
+        "discounted_return_gamma_0_99": -0.18792784649460448,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.09192217016506764,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": -253.902806008892,
+      "commit_delta_discounted": -1.1693368689975951
+    },
+    {
+      "group": "v3_40k_reascent_actions",
+      "seed": 200002,
+      "behavior": {
+        "seed": 200002,
+        "outcome": "timeout_post_approach_reascent",
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "frames": 2000,
+        "min_alt": 5.675633242179288,
+        "max_alt": 1030.0174722169527,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_40000_steps.zip",
+        "model_sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975"
+      },
+      "n_actions": 500,
+      "reward_v5": {
+        "n_steps": 500,
+        "undiscounted_return": -412.0123278607865,
+        "discounted_return_gamma_0_99": -16.56866367410688,
+        "sum_commit": -268.5112823323927,
+        "n_commit_penalty_steps": 464,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.6252752061338406,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 500,
+        "undiscounted_return": -144.65161764144895,
+        "discounted_return_gamma_0_99": -0.16474395725898516,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.08948219968226243,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": -267.36071021933753,
+      "commit_delta_discounted": -16.403919716847895
+    },
+    {
+      "group": "v3_40k_reascent_actions",
+      "seed": 200004,
+      "behavior": {
+        "seed": 200004,
+        "outcome": "timeout_post_approach_reascent",
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "frames": 2000,
+        "min_alt": 2.5045223588563204,
+        "max_alt": 970.0347221735988,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_40000_steps.zip",
+        "model_sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975"
+      },
+      "n_actions": 500,
+      "reward_v5": {
+        "n_steps": 500,
+        "undiscounted_return": -395.911121422732,
+        "discounted_return_gamma_0_99": -15.812085573865202,
+        "sum_commit": -252.2994955184037,
+        "n_commit_penalty_steps": 450,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.5930082593641923,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 500,
+        "undiscounted_return": -144.73054015159605,
+        "discounted_return_gamma_0_99": -1.718922846234051,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.08964036102524259,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": -251.18058127113594,
+      "commit_delta_discounted": -14.093162727631151
+    },
+    {
+      "group": "v3_40k_reascent_actions",
+      "seed": 200006,
+      "behavior": {
+        "seed": 200006,
+        "outcome": "timeout_post_approach_reascent",
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "frames": 2000,
+        "min_alt": 3.194012909975072,
+        "max_alt": 1012.9175948579133,
+        "model": "/Users/manpreetsingh/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_40000_steps.zip",
+        "model_sha256": "4a1f2c85e2b87e30e6257bbdde3e4a6a88df9d543f135ed620c3027290a78975"
+      },
+      "n_actions": 500,
+      "reward_v5": {
+        "n_steps": 500,
+        "undiscounted_return": -395.86380092118264,
+        "discounted_return_gamma_0_99": -13.981101587985206,
+        "sum_commit": -252.6254334923514,
+        "n_commit_penalty_steps": 450,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.5929134286997648,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 500,
+        "undiscounted_return": -144.35732298612592,
+        "discounted_return_gamma_0_99": 0.18654219395177934,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": -100.0,
+        "mean_step_reward_excl_terminal": -0.08889243083391968,
+        "landed": false,
+        "crashed": false,
+        "timeout": true,
+        "status": "timeout",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": -251.50647793505672,
+      "commit_delta_discounted": -14.167643781936986
+    },
+    {
+      "group": "reference_land",
+      "seed": 200001,
+      "behavior": {
+        "seed": 200001,
+        "outcome": "land",
+        "landed": true,
+        "crashed": false,
+        "timeout": false,
+        "frames": 152,
+        "min_alt": -0.016216705495935457,
+        "max_alt": 10.363133568087733,
+        "model": "reference",
+        "model_sha256": null
+      },
+      "n_actions": 38,
+      "reward_v5": {
+        "n_steps": 38,
+        "undiscounted_return": 103.72940838575363,
+        "discounted_return_gamma_0_99": 72.53727058592563,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": 100.0,
+        "mean_step_reward_excl_terminal": 0.10079482123658466,
+        "landed": true,
+        "crashed": false,
+        "timeout": false,
+        "status": "landed",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 38,
+        "undiscounted_return": 103.72940838575363,
+        "discounted_return_gamma_0_99": 72.53727058592563,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": 100.0,
+        "mean_step_reward_excl_terminal": 0.10079482123658466,
+        "landed": true,
+        "crashed": false,
+        "timeout": false,
+        "status": "landed",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": 0.0,
+      "commit_delta_discounted": 0.0
+    },
+    {
+      "group": "reference_nonland",
+      "seed": 200003,
+      "behavior": {
+        "seed": 200003,
+        "outcome": "crash",
+        "landed": false,
+        "crashed": true,
+        "timeout": false,
+        "frames": 96,
+        "min_alt": -0.018582852451459075,
+        "max_alt": 9.889686681969351,
+        "model": "reference",
+        "model_sha256": null
+      },
+      "skipped_reward": true
+    },
+    {
+      "group": "reference_land",
+      "seed": 200005,
+      "behavior": {
+        "seed": 200005,
+        "outcome": "land",
+        "landed": true,
+        "crashed": false,
+        "timeout": false,
+        "frames": 98,
+        "min_alt": -0.04298094585112722,
+        "max_alt": 10.300347038938298,
+        "model": "reference",
+        "model_sha256": null
+      },
+      "n_actions": 25,
+      "reward_v5": {
+        "n_steps": 25,
+        "undiscounted_return": 102.07421952962875,
+        "discounted_return_gamma_0_99": 80.5535516441724,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": 100.0,
+        "mean_step_reward_excl_terminal": 0.0864258137345314,
+        "landed": true,
+        "crashed": false,
+        "timeout": false,
+        "status": "landed",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 25,
+        "undiscounted_return": 102.07421952962875,
+        "discounted_return_gamma_0_99": 80.5535516441724,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": 100.0,
+        "mean_step_reward_excl_terminal": 0.0864258137345314,
+        "landed": true,
+        "crashed": false,
+        "timeout": false,
+        "status": "landed",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": 0.0,
+      "commit_delta_discounted": 0.0
+    },
+    {
+      "group": "reference_land",
+      "seed": 500006,
+      "behavior": {
+        "seed": 500006,
+        "outcome": "land",
+        "landed": true,
+        "crashed": false,
+        "timeout": false,
+        "frames": 251,
+        "min_alt": -0.017472777093303193,
+        "max_alt": 13.447857953941593,
+        "model": "reference",
+        "model_sha256": null
+      },
+      "n_actions": 63,
+      "reward_v5": {
+        "n_steps": 63,
+        "undiscounted_return": 103.50416827440262,
+        "discounted_return_gamma_0_99": 56.52114168582329,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": 100.0,
+        "mean_step_reward_excl_terminal": 0.05651884313552612,
+        "landed": true,
+        "crashed": false,
+        "timeout": false,
+        "status": "landed",
+        "approached_final": true
+      },
+      "reward_a_prime_same_actions": {
+        "n_steps": 63,
+        "undiscounted_return": 103.50416827440262,
+        "discounted_return_gamma_0_99": 56.52114168582329,
+        "sum_commit": 0.0,
+        "n_commit_penalty_steps": 0,
+        "terminal_reward": 100.0,
+        "mean_step_reward_excl_terminal": 0.05651884313552612,
+        "landed": true,
+        "crashed": false,
+        "timeout": false,
+        "status": "landed",
+        "approached_final": false
+      },
+      "commit_delta_undiscounted": 0.0,
+      "commit_delta_discounted": 0.0
+    }
+  ],
+  "no_training": true,
+  "obs_vs_reward_summary": {
+    "commit_delta_on_v3_reascent_mean": -255.98764385860554,
+    "commit_delta_on_v5_mid_mean": -20.49070608364461,
+    "commit_delta_on_crash_mean": 0.0,
+    "commit_delta_on_land_mean": 0.0,
+    "note": "Delta = V5 return \u2212 A\u2032 return on identical actions (reward-only ablation)."
+  }
+}

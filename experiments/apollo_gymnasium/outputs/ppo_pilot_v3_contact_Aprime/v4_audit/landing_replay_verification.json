@@ -1,0 +1,27 @@
+{
+  "start_match": true,
+  "status": "landed",
+  "landed": true,
+  "perfect": true,
+  "native_score": 50,
+  "physics_frames": 94,
+  "expected_status": "landed",
+  "expected_perfect": true,
+  "expected_frames": 94,
+  "replay_matches_meta": true,
+  "n_actions_applied": 24,
+  "final_raw": {
+    "x": 6958.084183655094,
+    "y": 676.2323259337944,
+    "vx": 0.014643685783703977,
+    "vy": 0.0658249334829596,
+    "rotation": 0.0,
+    "altitude": -0.04651817904971267,
+    "fuel": 1032.5999999906485
+  },
+  "noop_on_same_start": {
+    "landed": false,
+    "status": "crashed"
+  },
+  "passed": true
+}

@@ -1,0 +1,9 @@
+{
+  "seed": 400006,
+  "status": "hard_landing",
+  "landed": true,
+  "perfect": false,
+  "physics_frames": 66,
+  "native_score": 15,
+  "model_sha256": "7c785d8a7f3c10dfa97ac847bb5461d0c9e2a2dc50ae0943943c64f5822f495c"
+}

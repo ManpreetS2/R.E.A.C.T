@@ -1,0 +1,182 @@
+[
+  {
+    "name": "ultra_low_tilt20",
+    "ar": 1,
+    "noop": {
+      "status": "crashed",
+      "frames": 254,
+      "landed": false
+    },
+    "fast_legal": {
+      "status": "timeout",
+      "frames": 800,
+      "landed": false,
+      "perfect": false
+    },
+    "random": {
+      "status": "crashed",
+      "frames": 369,
+      "landed": false
+    }
+  },
+  {
+    "name": "ultra_low_tilt20",
+    "ar": 2,
+    "noop": {
+      "status": "crashed",
+      "frames": 254,
+      "landed": false
+    },
+    "fast_legal": {
+      "status": "timeout",
+      "frames": 800,
+      "landed": false,
+      "perfect": false
+    },
+    "random": {
+      "status": "crashed",
+      "frames": 470,
+      "landed": false
+    }
+  },
+  {
+    "name": "ultra_low_tilt20",
+    "ar": 4,
+    "noop": {
+      "status": "crashed",
+      "frames": 254,
+      "landed": false
+    },
+    "fast_legal": {
+      "status": "timeout",
+      "frames": 800,
+      "landed": false,
+      "perfect": false
+    },
+    "random": {
+      "status": "crashed",
+      "frames": 730,
+      "landed": false
+    }
+  },
+  {
+    "name": "ultra_low_tilt30",
+    "ar": 1,
+    "noop": {
+      "status": "crashed",
+      "frames": 181,
+      "landed": false
+    },
+    "fast_legal": {
+      "status": "timeout",
+      "frames": 800,
+      "landed": false,
+      "perfect": false
+    },
+    "random": {
+      "status": "crashed",
+      "frames": 257,
+      "landed": false
+    }
+  },
+  {
+    "name": "ultra_low_tilt30",
+    "ar": 2,
+    "noop": {
+      "status": "crashed",
+      "frames": 181,
+      "landed": false
+    },
+    "fast_legal": {
+      "status": "timeout",
+      "frames": 800,
+      "landed": false,
+      "perfect": false
+    },
+    "random": {
+      "status": "crashed",
+      "frames": 318,
+      "landed": false
+    }
+  },
+  {
+    "name": "ultra_low_tilt30",
+    "ar": 4,
+    "noop": {
+      "status": "crashed",
+      "frames": 181,
+      "landed": false
+    },
+    "fast_legal": {
+      "status": "timeout",
+      "frames": 800,
+      "landed": false,
+      "perfect": false
+    },
+    "random": {
+      "status": "crashed",
+      "frames": 463,
+      "landed": false
+    }
+  },
+  {
+    "name": "sh_tilt30_base",
+    "ar": 1,
+    "noop": {
+      "status": "crashed",
+      "frames": 388,
+      "landed": false
+    },
+    "fast_legal": {
+      "status": "timeout",
+      "frames": 800,
+      "landed": false,
+      "perfect": false
+    },
+    "random": {
+      "status": "crashed",
+      "frames": 545,
+      "landed": false
+    }
+  },
+  {
+    "name": "sh_tilt30_base",
+    "ar": 2,
+    "noop": {
+      "status": "crashed",
+      "frames": 388,
+      "landed": false
+    },
+    "fast_legal": {
+      "status": "timeout",
+      "frames": 800,
+      "landed": false,
+      "perfect": false
+    },
+    "random": {
+      "status": "crashed",
+      "frames": 633,
+      "landed": false
+    }
+  },
+  {
+    "name": "sh_tilt30_base",
+    "ar": 4,
+    "noop": {
+      "status": "crashed",
+      "frames": 388,
+      "landed": false
+    },
+    "fast_legal": {
+      "status": "timeout",
+      "frames": 800,
+      "landed": false,
+      "perfect": false
+    },
+    "random": {
+      "status": "timeout",
+      "frames": 800,
+      "landed": false
+    }
+  }
+]

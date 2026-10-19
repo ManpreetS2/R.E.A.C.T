@@ -1,0 +1,9 @@
+{
+  "seed": 400000,
+  "status": "timeout",
+  "landed": false,
+  "perfect": false,
+  "physics_frames": 2000,
+  "native_score": 0,
+  "model_sha256": "7c785d8a7f3c10dfa97ac847bb5461d0c9e2a2dc50ae0943943c64f5822f495c"
+}

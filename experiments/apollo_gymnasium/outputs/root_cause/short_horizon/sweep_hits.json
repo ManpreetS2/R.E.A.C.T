@@ -1,0 +1,646 @@
+{
+  "hits": [
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": -20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 209,
+      "noop_status": "crashed",
+      "ref_frames": 479,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": -20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 154,
+      "noop_status": "crashed",
+      "ref_frames": 400,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": -20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 119,
+      "noop_status": "crashed",
+      "ref_frames": 308,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": -10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 209,
+      "noop_status": "crashed",
+      "ref_frames": 479,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": -10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 154,
+      "noop_status": "crashed",
+      "ref_frames": 400,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": -10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 119,
+      "noop_status": "crashed",
+      "ref_frames": 309,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": 10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 209,
+      "noop_status": "crashed",
+      "ref_frames": 479,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": 10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 154,
+      "noop_status": "crashed",
+      "ref_frames": 400,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": 10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 119,
+      "noop_status": "crashed",
+      "ref_frames": 309,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": 20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 209,
+      "noop_status": "crashed",
+      "ref_frames": 479,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": 20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 154,
+      "noop_status": "crashed",
+      "ref_frames": 400,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": 20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 119,
+      "noop_status": "crashed",
+      "ref_frames": 308,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": -20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 135,
+      "noop_status": "crashed",
+      "ref_frames": 252,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": -20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 92,
+      "noop_status": "crashed",
+      "ref_frames": 173,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": -20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 68,
+      "noop_status": "crashed",
+      "ref_frames": 106,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": -10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 135,
+      "noop_status": "crashed",
+      "ref_frames": 252,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": -10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 92,
+      "noop_status": "crashed",
+      "ref_frames": 173,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": -10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 68,
+      "noop_status": "crashed",
+      "ref_frames": 106,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": 10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 135,
+      "noop_status": "crashed",
+      "ref_frames": 252,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": 10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 92,
+      "noop_status": "crashed",
+      "ref_frames": 173,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": 10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 68,
+      "noop_status": "crashed",
+      "ref_frames": 106,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": 20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 135,
+      "noop_status": "crashed",
+      "ref_frames": 252,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": 20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 92,
+      "noop_status": "crashed",
+      "ref_frames": 173,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": 20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 68,
+      "noop_status": "crashed",
+      "ref_frames": 106,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    }
+  ],
+  "good": [
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": -20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 119,
+      "noop_status": "crashed",
+      "ref_frames": 308,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": -10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 119,
+      "noop_status": "crashed",
+      "ref_frames": 309,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": 10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 119,
+      "noop_status": "crashed",
+      "ref_frames": 309,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 655.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": 20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 119,
+      "noop_status": "crashed",
+      "ref_frames": 308,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": -20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 135,
+      "noop_status": "crashed",
+      "ref_frames": 252,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": -20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 92,
+      "noop_status": "crashed",
+      "ref_frames": 173,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": -20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 68,
+      "noop_status": "crashed",
+      "ref_frames": 106,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": -10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 135,
+      "noop_status": "crashed",
+      "ref_frames": 252,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": -10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 92,
+      "noop_status": "crashed",
+      "ref_frames": 173,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": -10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 68,
+      "noop_status": "crashed",
+      "ref_frames": 106,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": 10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 135,
+      "noop_status": "crashed",
+      "ref_frames": 252,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": 10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 92,
+      "noop_status": "crashed",
+      "ref_frames": 173,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": 10.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 68,
+      "noop_status": "crashed",
+      "ref_frames": 106,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.05,
+        "rotation": 20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 135,
+      "noop_status": "crashed",
+      "ref_frames": 252,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.1,
+        "rotation": 20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 92,
+      "noop_status": "crashed",
+      "ref_frames": 173,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    },
+    {
+      "start": {
+        "x": 6951.200000000001,
+        "y": 665.0,
+        "vx": 0.02,
+        "vy": 0.15,
+        "rotation": 20.0,
+        "fuel": 1000,
+        "scale": 0.25
+      },
+      "noop_frames": 68,
+      "noop_status": "crashed",
+      "ref_frames": 106,
+      "ref_status": "landed",
+      "random_land_rate": 0.0
+    }
+  ]
+}

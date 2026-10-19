@@ -1,0 +1,15 @@
+{
+  "start": "pilot_near",
+  "reward_mode": "progress_a",
+  "seed": 0,
+  "action_repeat": 4,
+  "max_physics_frames": 500000,
+  "max_gym_steps": 125000,
+  "engine": "upstream-original",
+  "note": "Training reward is Python-only; native score unchanged.",
+  "elapsed_sec": 390.17265486717224,
+  "gym_timesteps": 125000,
+  "approx_physics_frames": 500000,
+  "init_path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot/step0_random_init.zip",
+  "final_path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot/final_model.zip"
+}

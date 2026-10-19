@@ -1,0 +1,21 @@
+{
+  "start": "pilot_near",
+  "start_template": "sh_contact",
+  "reward_mode": "progress_a_prime",
+  "potential_scale": 10.0,
+  "time_cost": 0.005,
+  "timeout_as_terminated": true,
+  "seed": 0,
+  "action_repeat": 4,
+  "episode_max_frames": 2000,
+  "max_physics_frames": 200000,
+  "auto_seed_base": 100000,
+  "engine": "upstream-original",
+  "note": "Training reward Python-only; native score unchanged. Physics cap counts engine steps.",
+  "elapsed_sec": 144.09103679656982,
+  "gym_timesteps": 50164,
+  "actual_physics_frames": 200003,
+  "approx_physics_frames_gym_x_ar": 200656,
+  "init_path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/step0_random_init.zip",
+  "final_path": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/final_model.zip"
+}

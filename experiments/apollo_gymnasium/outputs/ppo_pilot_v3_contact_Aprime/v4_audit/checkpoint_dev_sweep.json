@@ -1,0 +1,151 @@
+{
+  "seed_pool": "DEV_EVAL_SEEDS",
+  "n_seeds": 20,
+  "checkpoints": [
+    {
+      "label": "step0_random_init",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/step0_random_init.zip",
+      "n": 20,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "mean_physics_frames": 91.75
+    },
+    {
+      "label": "ppo_apollo_5000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_5000_steps.zip",
+      "n": 20,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 1.0,
+      "timeout_rate": 0.0,
+      "mean_physics_frames": 114.8
+    },
+    {
+      "label": "ppo_apollo_10000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_10000_steps.zip",
+      "n": 20,
+      "land_rate": 0.05,
+      "perfect_rate": 0.05,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.05,
+      "timeout_rate": 0.9,
+      "mean_physics_frames": 1810.05
+    },
+    {
+      "label": "ppo_apollo_15000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_15000_steps.zip",
+      "n": 20,
+      "land_rate": 0.5,
+      "perfect_rate": 0.2,
+      "hard_landing_rate": 0.3,
+      "crash_rate": 0.5,
+      "timeout_rate": 0.0,
+      "mean_physics_frames": 126.05
+    },
+    {
+      "label": "ppo_apollo_20000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_20000_steps.zip",
+      "n": 20,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.6,
+      "timeout_rate": 0.4,
+      "mean_physics_frames": 868.05
+    },
+    {
+      "label": "ppo_apollo_25000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_25000_steps.zip",
+      "n": 20,
+      "land_rate": 0.0,
+      "perfect_rate": 0.0,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.6,
+      "timeout_rate": 0.4,
+      "mean_physics_frames": 867.45
+    },
+    {
+      "label": "ppo_apollo_30000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_30000_steps.zip",
+      "n": 20,
+      "land_rate": 0.4,
+      "perfect_rate": 0.25,
+      "hard_landing_rate": 0.15,
+      "crash_rate": 0.2,
+      "timeout_rate": 0.4,
+      "mean_physics_frames": 870.5
+    },
+    {
+      "label": "ppo_apollo_35000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_35000_steps.zip",
+      "n": 20,
+      "land_rate": 0.05,
+      "perfect_rate": 0.05,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.55,
+      "timeout_rate": 0.4,
+      "mean_physics_frames": 871.15
+    },
+    {
+      "label": "ppo_apollo_40000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_40000_steps.zip",
+      "n": 20,
+      "land_rate": 0.6,
+      "perfect_rate": 0.4,
+      "hard_landing_rate": 0.2,
+      "crash_rate": 0.0,
+      "timeout_rate": 0.4,
+      "mean_physics_frames": 871.45
+    },
+    {
+      "label": "ppo_apollo_45000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_45000_steps.zip",
+      "n": 20,
+      "land_rate": 0.55,
+      "perfect_rate": 0.35,
+      "hard_landing_rate": 0.2,
+      "crash_rate": 0.0,
+      "timeout_rate": 0.45,
+      "mean_physics_frames": 964.2
+    },
+    {
+      "label": "ppo_apollo_50000_steps",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_50000_steps.zip",
+      "n": 20,
+      "land_rate": 0.1,
+      "perfect_rate": 0.1,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.0,
+      "timeout_rate": 0.9,
+      "mean_physics_frames": 1809.7
+    },
+    {
+      "label": "final_model",
+      "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/final_model.zip",
+      "n": 20,
+      "land_rate": 0.1,
+      "perfect_rate": 0.1,
+      "hard_landing_rate": 0.0,
+      "crash_rate": 0.0,
+      "timeout_rate": 0.9,
+      "mean_physics_frames": 1809.7
+    }
+  ],
+  "best_by_land_rate": {
+    "label": "ppo_apollo_40000_steps",
+    "model": "/Users/manpreet/Projects/R.E.A.C.T/experiments/apollo_gymnasium/models/ppo_pilot_v3_contact_Aprime/checkpoints/ppo_apollo_40000_steps.zip",
+    "n": 20,
+    "land_rate": 0.6,
+    "perfect_rate": 0.4,
+    "hard_landing_rate": 0.2,
+    "crash_rate": 0.0,
+    "timeout_rate": 0.4,
+    "mean_physics_frames": 871.45
+  },
+  "final_land_rate": 0.1,
+  "best_beats_final": true
+}

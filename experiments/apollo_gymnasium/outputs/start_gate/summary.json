@@ -1,0 +1,29 @@
+{
+  "reports": [
+    {
+      "name": "pilot_near",
+      "gate_pass": true,
+      "noop_land_rate": 0.0,
+      "random_land_rate": 0.0,
+      "reference_continuous_land_rate": 1.0,
+      "reference_multidiscrete_land_rate": 1.0
+    },
+    {
+      "name": "pilot_offset",
+      "gate_pass": true,
+      "noop_land_rate": 0.0,
+      "random_land_rate": 0.0,
+      "reference_continuous_land_rate": 1.0,
+      "reference_multidiscrete_land_rate": 1.0
+    },
+    {
+      "name": "original_fixed",
+      "gate_pass": true,
+      "noop_land_rate": 0.0,
+      "random_land_rate": 0.0,
+      "reference_continuous_land_rate": 1.0,
+      "reference_multidiscrete_land_rate": 1.0
+    }
+  ],
+  "chosen_pilot_start": "pilot_near"
+}

@@ -1,0 +1,10 @@
+{
+  "seed": 500000,
+  "status": "crashed",
+  "landed": false,
+  "perfect": false,
+  "physics_frames": 105,
+  "native_score": 0,
+  "model_sha256": "f98153e1032b5f283970cc0d70372c772c50f2d81e527485da143670c076b5e4",
+  "commitment_env": true
+}

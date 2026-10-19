@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>Apollo Lander — original runtime bridge</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <style type="text/css">
+    @font-face {
+      font-family: 'HersheySimplex';
+      src: url('../upstream/fonts/avhersheysimplexmedium-webfont.woff2') format('woff2'),
+           url('../upstream/fonts/avhersheysimplexmedium-webfont.woff') format('woff');
+      font-weight: bold;
+      font-style: normal;
+    }
+    body {
+      background-color: #000006;
+      margin: 0px;
+      overflow: hidden;
+    }
+    .infoBox, .titleBox {
+      font-family: 'HersheySimplex';
+      font-size: 14pt;
+      letter-spacing: 0.15em;
+      line-height: 1.3em;
+      color: '#F0F6FF';
+      text-transform: uppercase;
+    }
+    .titleBox {
+      font-size: 18pt;
+      line-height: 1.4em;
+    }
+    #bridge-banner {
+      position: fixed;
+      left: 12px;
+      bottom: 12px;
+      z-index: 20;
+      color: #d6de7a;
+      font-family: HersheySimplex, monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="bridge-banner">ORIGINAL UPSTREAM RUNTIME · FIXED START · EXPERIMENT BRIDGE</div>
+  <script>var WEB_SOCKET_URL = "lunartrails.local:8087/p5websocket";</script>
+  <script src="../upstream/libs/Vector2.js"></script>
+  <script src="../upstream/libs/KeyTracker.js"></script>
+  <script src="../upstream/TouchController.js"></script>
+  <script src="../upstream/perlin.js"></script>
+  <script src="../upstream/Landscape.js"></script>
+  <script src="../upstream/InfoDisplay.js"></script>
+  <script src="../upstream/Lander.js"></script>
+  <script src="../upstream/libs/rAF.js"></script>
+  <script src="../upstream/libs/audio.js"></script>
+  <script src="../upstream/libs/jsfx.js"></script>
+  <script src="../upstream/libs/jsfxlib.js"></script>
+  <script src="../upstream/Sounds.js"></script>
+  <script src="../upstream/game.js"></script>
+  <script src="bridge.js"></script>
+  <script>
+    window.addEventListener("load", function () {
+      if (window.ApolloOriginal) {
+        window.ApolloOriginal.enterStepMode();
+        window.__originalBridgeReady = true;
+      }
+    });
+  </script>
+</body>
+</html>

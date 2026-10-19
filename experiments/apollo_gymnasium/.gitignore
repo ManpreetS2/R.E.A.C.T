@@ -1,0 +1,8 @@
+outputs/videos/**/frames/
+outputs/**/evidence/**/frames/
+outputs/**/train_stdout.log
+outputs/**/monitor/
+logs/
+__pycache__/
+*.pyc
+.DS_Store
