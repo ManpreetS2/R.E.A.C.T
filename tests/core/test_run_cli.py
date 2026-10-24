@@ -58,6 +58,7 @@ def test_paired_offline_configs_match_except_feedback() -> None:
         withheld.episodes_per_revision,
     )
     assert schedule_a == schedule_b
+    assert len(set(schedule_a)) == 1
 
 
 def test_prepare_config_rejects_invalid_budget(tmp_path: Path) -> None:
@@ -88,6 +89,25 @@ def test_live_mode_requires_paid_acknowledgment() -> None:
         env.close()
 
 
+def test_mock_mode_rejects_live_provider_identity(tmp_path: Path) -> None:
+    from dataclasses import replace
+    config = replace(load_config(NUMERICAL), provider="openai", model_id="paid-model")
+    with pytest.raises(ConfigError, match="provider=mock"):
+        build_model(config, mode="mock")
+
+
+def test_cli_rejects_heldout_before_model_construction(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    import rewardbench.run.cli as cli
+    payload = yaml.safe_load(NUMERICAL.read_text())
+    payload["split"] = "held_out"
+    config_path = tmp_path / "heldout.yaml"
+    config_path.write_text(yaml.safe_dump(payload))
+    def forbidden(*args: object, **kwargs: object) -> None:
+        pytest.fail("model constructed for held-out adaptation")
+    monkeypatch.setattr(cli, "build_model", forbidden)
+    assert main(["--config", str(config_path), "--database", str(tmp_path / "unused.sqlite")]) == 2
+
+
 def test_adapter_kwargs_reach_research_mode_on_apollo_adapter() -> None:
     config = load_config(NUMERICAL)
     kwargs = adapter_kwargs_from_metadata(config.metadata)
@@ -109,6 +129,14 @@ def test_unsupported_adapter_kwargs_fail_closed(tmp_path: Path) -> None:
     path.write_text(yaml.safe_dump(payload), encoding="utf-8")
     config = prepare_config(path)
     with pytest.raises(ConfigError, match="does not accept metadata.adapter_kwargs"):
+        build_environment(config)
+
+
+def test_declared_environment_version_must_match_adapter() -> None:
+    from dataclasses import replace
+    config = load_config(NUMERICAL)
+    config = replace(config, metadata={**config.metadata, "environment_version": "invented"})
+    with pytest.raises(ConfigError, match="environment_version"):
         build_environment(config)
 
 

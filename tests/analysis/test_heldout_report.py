@@ -108,15 +108,15 @@ def test_report_summarizes_heldout_tables(tmp_path: Path) -> None:
         """
         INSERT INTO heldout_evaluations VALUES (
             'hev_1', 'frz_1', 'exp_demo', 'apollolander', 'apollolander.env.v1',
-            'apollolander.starts.v1', 0, '[2000000,2000001]', 100, 'completed',
+            'apollolander.starts.v1', 0, '[1000000,1000001]', 100, 'completed',
             'abc123controllerhash', 't', 't', 2, NULL
         )
         """
     )
     for idx, (seed, reward, success, crashed, truncated, replay) in enumerate(
         [
-            (2_000_000, 10.0, 1, 0, 0, "runs/flights/a.flight.json"),
-            (2_000_001, -5.0, 0, 0, 1, None),
+            (1_000_000, 10.0, 1, 0, 0, "runs/flights/a.flight.json"),
+            (1_000_001, -5.0, 0, 0, 1, None),
         ]
     ):
         con.execute(

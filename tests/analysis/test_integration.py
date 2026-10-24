@@ -21,7 +21,7 @@ from rewardbench.analysis.load import load_logs
 from rewardbench.analysis.plots import draw_reward_vs_revision
 from rewardbench.analysis.report import write_report
 from rewardbench.analysis.sessions import session_summaries
-from rewardbench.contracts import FeedbackCondition, Split
+from rewardbench.contracts import ConfigError, FeedbackCondition, Split
 from rewardbench.core.runner import ExperimentRunner
 from rewardbench.environments.apollolander import ApolloLanderAdapter, constant_controller
 from rewardbench.storage import SqliteStore
@@ -137,15 +137,13 @@ def test_held_out_episodes_stay_out_of_development(tmp_path: Path) -> None:
     dev_summary = ExperimentRunner(
         development, fakes.FakeModel([fakes.proposal({"gain": 1})]), dev_env, store
     ).run()
-    hold_summary = ExperimentRunner(
-        held_out, fakes.FakeModel([fakes.proposal({"gain": 1})]), hold_env, store
-    ).run()
-    assert dev_summary.experiment_id != hold_summary.experiment_id
+    hold_model = fakes.FakeModel([fakes.proposal({"gain": 1})])
+    with pytest.raises(ConfigError, match="split=development"):
+        ExperimentRunner(held_out, hold_model, hold_env, store)
+    assert not hold_model.requests
     dev_seeds = {episode.seed for episode in store.fetch_episodes(dev_summary.experiment_id)}
-    hold_seeds = {episode.seed for episode in store.fetch_episodes(hold_summary.experiment_id)}
     assert dev_seeds.isdisjoint(development.held_out_seeds)
-    assert hold_seeds.isdisjoint(held_out.development_seeds)
-    assert dev_seeds.isdisjoint(hold_seeds)
+    assert {row.split for row in load_logs(database).episodes} == {"development"}
     assert seed_leakage(load_logs(database)) == []
     store.close()
 

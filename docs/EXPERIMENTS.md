@@ -14,7 +14,7 @@ Each config file is one experiment. `feedback_condition` and `split` change the 
 | `configs/lunarlander_development_nofeedback.yaml` | `no_feedback` | `development` |
 | `configs/lunarlander_heldout_numerical.yaml` | `numerical_reward` | `held_out` |
 
-Use the development configs while debugging the pipeline. Use the held-out config only for the evaluation that will be reported. Do not run held-out seeds during development. The core `SplitGuard` rejects that mix, and the analysis report flags it if a log contains it anyway.
+Use development configs for adaptation. The legacy `split=held_out` file is a schema example only: the runner now rejects held-out adaptation. Freeze a completed ApolloLander development controller and score it with `python -m rewardbench.heldout` as documented in `examples/heldout/README.md`. Do not run held-out seeds during development. Gymnasium frozen evaluation is not implemented by that CLI.
 
 ## What the runner records
 
@@ -40,7 +40,7 @@ From the repository root:
 python -m rewardbench.analysis export --logs runs/rewardbench.sqlite --out exports/run.jsonl
 ```
 
-The JSONL file has one object per line. `record_type` is `episode`, `attempt`, or `error`. The export is a copy of the log. It is not a new run. `report` accepts either the SQLite file or this JSONL file.
+The JSONL file has one object per line. `record_type` is `episode`, `attempt`, or `error`. The export contains development observations, attempt usage/provenance and errors. It is not a new run. Dedicated freezes and held-out tables remain in SQLite; JSONL does not carry those tables. `report` accepts either the SQLite file or this JSONL file.
 
 Keep the SQLite file as the source of truth. Record its SHA-256 from the generated report next to any figure you share.
 
@@ -65,7 +65,7 @@ The reward curve plots the mean of session means against controller revision.
 - Error bars are 95% Student-t intervals across sessions. One session has a point and no interval.
 - Alphabetical order and color are stable labels. They are not a ranking.
 
-Landing success uses the episode index on the x-axis. That index is an attempt inside the revision's evaluation, not a new controller.
+Landing success uses a zero-based episode ordinal ordered by `(revision_index, episode_index)`; episode indices themselves restart each revision. Experiment rollups rebuild trajectories across resumes, including revisions split between sessions. Simulator settings and providers remain separate report strata.
 
 Initial versus final connects the first scored revision to the last scored revision for each session. Improvement per dollar divides that change by the session's total estimated cost, including retries. A session with zero recorded cost has an undefined ratio.
 

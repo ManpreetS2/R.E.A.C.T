@@ -28,6 +28,7 @@ from rewardbench.core.heldout import (
     SELECTION_RULES,
     adapter_settings_from_source_config,
     evaluate_frozen_controller,
+    evaluation_id_for,
     freeze_controller_from_experiment,
     load_source_config,
 )
@@ -78,7 +79,7 @@ def main(argv: list[str] | None = None) -> int:
         "--record-dir",
         type=Path,
         default=None,
-        help="optional directory for flight-record provenance pointers",
+        help="optional directory for flight records and SQLite replay pointers",
     )
     args = parser.parse_args(argv)
 
@@ -130,10 +131,22 @@ def main(argv: list[str] | None = None) -> int:
         if not isinstance(env_config.feedback_condition, FeedbackCondition):
             raise ConfigError("source feedback_condition is invalid")
 
-        overrides: dict[str, Any] = {"experiment_id": source_id}
+        overrides: dict[str, Any] = {
+            "experiment_id": source_id,
+            "split": "held_out",
+            "origin": "deterministic_mock" if frozen.provider == "mock" else "model_generated",
+        }
+        record_dir = None
         if args.record_dir is not None:
-            args.record_dir.mkdir(parents=True, exist_ok=True)
-            overrides["record_dir"] = str(args.record_dir)
+            evaluation_id = evaluation_id_for(
+                freeze_id=frozen.freeze_id, held_out_seeds=held_out_seeds,
+                start_schedule_version=str(adapter["start_schedule_version"]),
+                environment_version=ENVIRONMENT_VERSION, vary_fuel=bool(adapter["vary_fuel"]),
+                max_episode_steps=max_steps,
+            )
+            record_dir = (args.record_dir / evaluation_id).resolve()
+            record_dir.mkdir(parents=True, exist_ok=True)
+            overrides["record_dir"] = str(record_dir)
             overrides["record_video"] = False
         if max_steps is not None:
             env_config = replace(env_config, max_episode_steps=max_steps)
@@ -149,7 +162,7 @@ def main(argv: list[str] | None = None) -> int:
             vary_fuel=bool(adapter["vary_fuel"]),
             max_episode_steps=max_steps,
             environment_version=ENVIRONMENT_VERSION,
-            record_dir=args.record_dir,
+            record_dir=record_dir,
         )
     except ConfigError as exc:
         print(f"error: {exc}", file=sys.stderr)

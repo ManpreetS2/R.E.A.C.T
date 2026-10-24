@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -24,6 +25,7 @@ from rewardbench.contracts import (
     StoredAttempt,
 )
 from rewardbench.core.evaluation import SplitGuard
+from rewardbench.environments.apollolander.flight_record import flight_record_stem
 from rewardbench.environments.apollolander.starts import (
     START_SCHEDULE_VERSION,
     assert_schedules_disjoint,
@@ -260,8 +262,38 @@ def evaluate_frozen_controller(
     """Score a frozen controller on held-out starts without any model call."""
 
     store.initialize()
+    persisted = store.get_frozen_controller(frozen.freeze_id)
+    if persisted is None or persisted != frozen:
+        raise ConfigError("supplied controller does not match the persisted freeze")
+    source = load_source_config(store, frozen.source_experiment_id)
+    source_settings = adapter_settings_from_source_config(source)
+    if (
+        bool(vary_fuel) != source_settings["vary_fuel"]
+        or start_schedule_version != source_settings["start_schedule_version"]
+    ):
+        raise ConfigError("evaluation start settings do not match the development experiment")
+    chosen = select_final_controller(store.fetch_attempts(frozen.source_experiment_id), rule=frozen.selection_rule)
+    if (
+        chosen.attempt_id != frozen.source_attempt_id
+        or chosen.revision_index != frozen.source_revision_index
+        or chosen.call_index != frozen.source_call_index
+        or controller_hash(chosen.parameters) != frozen.controller_hash
+    ):
+        raise ConfigError("persisted freeze does not match the selected development attempt")
+    if tuple(held_out_seeds) != tuple(source.get("held_out_seeds", ())):
+        raise ConfigError("held-out seeds do not match the source experiment's sealed schedule")
+    if tuple(development_seeds) != tuple(source.get("development_seeds", ())):
+        raise ConfigError("development seeds do not match the source experiment")
     if not held_out_seeds:
         raise ConfigError("held_out_seeds must be non-empty")
+    if max_episode_steps is not None and (
+        isinstance(max_episode_steps, bool) or not isinstance(max_episode_steps, int) or max_episode_steps < 1
+    ):
+        raise ConfigError("max_episode_steps must be a positive integer")
+    if bool(getattr(environment, "vary_fuel", False)) != bool(vary_fuel):
+        raise ConfigError("adapter vary_fuel does not match the recorded evaluation settings")
+    if getattr(environment, "environment_version", None) != environment_version:
+        raise ConfigError("environment_version does not match the executing adapter")
     guard = SplitGuard(Split.HELD_OUT, development_seeds, held_out_seeds)
     for seed in held_out_seeds:
         guard.check(seed)
@@ -378,6 +410,7 @@ def evaluate_frozen_controller(
 
     rewards: list[float] = []
     successes = 0
+    episodes_recorded = 0
     try:
         for episode_index, seed in enumerate(held_out_seeds):
             guard.check(seed)
@@ -391,12 +424,24 @@ def evaluate_frozen_controller(
             )
             if result.seed != seed:
                 raise ConfigError("episode result seed does not match the sealed held-out seed")
+            if result.revision_index != frozen.source_revision_index or result.episode_index != episode_index:
+                raise ConfigError("episode result indexes do not match the held-out request")
+            if result.error is not None:
+                raise ConfigError(f"held-out episode failed: {result.error}")
+            if (
+                isinstance(result.total_reward, bool)
+                or not isinstance(result.total_reward, (int, float))
+                or not math.isfinite(result.total_reward)
+            ):
+                raise ConfigError("held-out total_reward must be finite")
             if frozen.controller_hash != controller_hash(frozen.parameters):
                 raise ConfigError("controller hash changed during evaluation; aborting")
             replay_path = None
             if record_dir is not None:
-                # Provenance pointer only; Agent 2 owns flight file format.
-                candidate = Path(record_dir) / f"heldout-{evaluation_id}-seed-{seed}.flight.json"
+                candidate = Path(record_dir) / (
+                    flight_record_stem(frozen.model_id, frozen.source_revision_index, episode_index, seed)
+                    + ".flight.json"
+                )
                 if candidate.is_file():
                     replay_path = str(candidate)
             metrics = dict(result.metrics)
@@ -421,6 +466,7 @@ def evaluate_frozen_controller(
                     "created_at": utc_now(),
                 }
             )
+            episodes_recorded += 1
             if result.error is None and result.total_reward is not None:
                 rewards.append(float(result.total_reward))
             if result.success:
@@ -435,7 +481,7 @@ def evaluate_frozen_controller(
         store.update_heldout_evaluation(
             evaluation_id,
             status="failed",
-            completed_episodes=len(rewards),
+            completed_episodes=episodes_recorded,
             error=str(exc),
         )
         raise

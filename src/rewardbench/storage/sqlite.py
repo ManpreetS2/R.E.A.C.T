@@ -76,19 +76,26 @@ class SqliteStore:
         script = _SCHEMA_PATH.read_text(encoding="utf-8")
         with self._lock:
             self._conn.executescript(script)
-            row = self._conn.execute(
-                "SELECT value FROM schema_meta WHERE key = 'schema_version'"
-            ).fetchone()
-            if row is None:
-                self._conn.execute(
-                    "INSERT INTO schema_meta (key, value) VALUES ('schema_version', ?)",
-                    (str(SCHEMA_VERSION),),
-                )
-            elif int(row["value"]) != SCHEMA_VERSION:
-                raise ResumeError(
-                    f"database schema version is {row['value']}, expected {SCHEMA_VERSION}"
-                )
-            self._conn.commit()
+            with self._conn:
+                # Serialize version initialization and additive migrations across
+                # independent connections opening the same new database.
+                self._conn.execute("BEGIN IMMEDIATE")
+                row = self._conn.execute(
+                    "SELECT value FROM schema_meta WHERE key = 'schema_version'"
+                ).fetchone()
+                if row is None:
+                    self._conn.execute(
+                        "INSERT INTO schema_meta (key, value) VALUES ('schema_version', ?)",
+                        (str(SCHEMA_VERSION),),
+                    )
+                elif int(row["value"]) != SCHEMA_VERSION:
+                    raise ResumeError(
+                        f"database schema version is {row['value']}, expected {SCHEMA_VERSION}"
+                    )
+                # Additive v1 migration: old rows have no provider provenance.
+                columns = {row["name"] for row in self._conn.execute("PRAGMA table_info(attempts)")}
+                if "usage_json" not in columns:
+                    self._conn.execute("ALTER TABLE attempts ADD COLUMN usage_json TEXT NOT NULL DEFAULT '{}'")
 
     def create_experiment(self, record: ExperimentRecord) -> None:
         with self._lock:
@@ -214,8 +221,8 @@ class SqliteStore:
                         selected, parameters_json, raw_response, valid,
                         validation_error, prompt_tokens, completion_tokens,
                         reasoning_tokens, total_tokens, latency_seconds,
-                        estimated_cost_usd, model_id, provider, error, created_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        estimated_cost_usd, model_id, provider, error, created_at, usage_json
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         record.experiment_id,
@@ -237,6 +244,7 @@ class SqliteStore:
                         record.provider,
                         record.error,
                         created_at,
+                        _dump(dict(record.usage)),
                     ),
                 )
             except sqlite3.IntegrityError as exc:
@@ -738,6 +746,7 @@ def _attempt_from_row(row: sqlite3.Row) -> StoredAttempt:
         error=row["error"],
         created_at=row["created_at"],
         attempt_id=row["attempt_id"],
+        usage=_load(row["usage_json"]),
     )
 
 

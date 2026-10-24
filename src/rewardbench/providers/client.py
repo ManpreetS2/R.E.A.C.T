@@ -121,12 +121,32 @@ class RewardModelClient:
                 attempts,
                 quote,
             )
-        except BudgetExceeded:
+        except Exception as exc:
+            if not attempts:
+                if reserved:
+                    self._spending.release(reserved)
+                raise
+            # Even a failed HTTP response may report billed usage. Preserve it
+            # independently of whether settling the charge itself raises.
+            response = self._response_from_completion(
+                Completion("", None, None, 0, 0, 0, 0, 0.0, None, {}, {}, {}),
+                attempts, quote, failure=_redact(str(exc), self._secrets),
+            )
+            response = self._prepare_accounting(response, settings, reserved)
+            try:
+                self._settle_or_release(reserved, response, quote, attempts)
+            except (ModelClientError, BudgetExceeded) as settlement_error:
+                settlement_error.response = self._annotate(response, quote)
+                raise settlement_error from exc
+            if isinstance(exc, (ModelClientError, BudgetExceeded)):
+                exc.response = self._annotate(response, quote)
             raise
-        except Exception:
-            self._record_failed_usage(attempts, reserved)
+        response = self._prepare_accounting(response, settings, reserved)
+        try:
+            self._settle_or_release(reserved, response, quote, attempts)
+        except (ModelClientError, BudgetExceeded) as exc:
+            exc.response = self._annotate(response, quote)
             raise
-        self._settle_or_release(reserved, response, quote, attempts)
         return self._annotate(response, quote)
 
     def _complete_with_retries(
@@ -151,9 +171,20 @@ class RewardModelClient:
                 failed["error"] = _redact(str(failed["error"]), self._secrets)
                 attempts.append(failed)
                 self._log_attempt(attempts[-1])
+                cache_read, cache_write = _cache_tokens(attempts)
+                if cache_read or cache_write:
+                    prompt, output, reasoning, _, _ = _sum_attempts(attempts)
+                    priced = self._catalog.estimate(
+                        self.provider, self.model_id, prompt_tokens=prompt,
+                        completion_tokens=output, reasoning_tokens=reasoning,
+                        cache_read_tokens=cache_read, cache_write_tokens=cache_write,
+                    )
+                    if priced.status != "priced":
+                        # Settle the failed call in propose(), but never buy a
+                        # retry after usage has escaped the configured pricing.
+                        raise ModelClientError(priced.note or priced.status, retryable=False)
                 retryable = bool(getattr(exc, "retryable", False))
                 if not retryable or attempt >= self._retry.max_retries:
-                    self._remember(attempts, error=_redact(str(exc), self._secrets))
                     raise ModelClientError(
                         _redact(str(exc), self._secrets),
                         retryable=retryable,
@@ -178,11 +209,13 @@ class RewardModelClient:
         completion: Completion,
         attempts: list[dict[str, Any]],
         quote: PriceQuote,
+        *,
+        failure: str | None = None,
     ) -> ModelResponse:
         prompt_tokens, completion_tokens, reasoning_tokens, total_tokens, latency = _sum_attempts(
             attempts
         )
-        cache_read, cache_write = _cache_tokens(completion)
+        cache_read, cache_write = _cache_tokens(attempts)
         cost = self._catalog.estimate(
             self.provider,
             self.model_id,
@@ -192,7 +225,7 @@ class RewardModelClient:
             cache_read_tokens=cache_read,
             cache_write_tokens=cache_write,
         )
-        parameters, parse_error = parse_controller(completion.text)
+        parameters, parse_error = (None, failure) if failure else parse_controller(completion.text)
         truncated = _is_truncated(completion.finish_reason)
         if truncated and parse_error:
             parse_error = (
@@ -246,33 +279,16 @@ class RewardModelClient:
             attempts=self._retry.max_retries + 1,
         )
 
-    def _record_failed_usage(self, attempts: list[dict[str, Any]], reserved: float) -> None:
-        """Keep token charges from a failed call instead of releasing them."""
-
-        if self.provider == "mock":
-            if reserved:
-                self._spending.release(reserved)
-            return
-        if not attempts:
-            if reserved:
-                self._spending.release(reserved)
-            return
-        prompt, completion, reasoning, _total, _latency = _sum_attempts(attempts)
-        if prompt == 0 and completion == 0 and reasoning == 0:
-            if reserved:
-                self._spending.release(reserved)
-            return
-        cost = self._catalog.estimate(
-            self.provider,
-            self.model_id,
-            prompt_tokens=prompt,
-            completion_tokens=completion,
-            reasoning_tokens=reasoning,
-        )
-        charge = cost.usd if cost.usd > 0 else reserved
-        self._charge(reserved, charge, cost.status, cost.note)
-        if cost.status != "priced":
-            self._spending.stop(cost.note or "provider usage is not covered by the catalog")
+    def _prepare_accounting(
+        self, response: ModelResponse, settings: Mapping[str, Any], reserved: float,
+    ) -> ModelResponse:
+        usage = dict(response.usage)
+        usage["requested_settings"] = dict(settings)
+        charge = response.estimated_cost_usd
+        if self.provider != "mock" and usage.get("cost_status") != "priced" and charge <= 0:
+            charge = reserved
+            usage["charge_basis"] = "reservation_fallback"
+        return replace(response, usage=usage, estimated_cost_usd=charge)
 
     def _settle_or_release(
         self,
@@ -322,7 +338,10 @@ class RewardModelClient:
         actual = response.estimated_cost_usd
         usage["spent_usd"] = self._spending.spent_usd
         usage["held_usd"] = self._spending.held_usd
-        usage["budget_exceeded"] = False
+        usage["budget_exceeded"] = bool(
+            self._spending.max_spend_usd is not None
+            and self._spending.spent_usd > self._spending.max_spend_usd + 1e-9
+        )
         usage["reservation_exceeded"] = bool(quote.available and actual > quote.usd + 1e-12)
         usage["spending_scope"] = "in_process_only"
         return replace(response, usage=usage)
@@ -492,7 +511,12 @@ def _failed_attempt(index: int, exc: Exception) -> dict[str, Any]:
         "completion_tokens": int(usage.get("completion_tokens", 0) or 0),
         "reasoning_tokens": int(usage.get("reasoning_tokens", 0) or 0),
         "total_tokens": int(usage.get("total_tokens", 0) or 0),
-        "request_id": None,
+        "request_id": getattr(exc, "request_id", None),
+        "extra_usage": {
+            key: int(usage.get(key, 0) or 0) for key in (
+                "cache_read_input_tokens", "cache_creation_input_tokens", "cache_write_input_tokens"
+            ) if usage.get(key)
+        },
     }
 
 
@@ -533,11 +557,13 @@ def _sum_attempts(
     return prompt, completion, reasoning, total, latency
 
 
-def _cache_tokens(completion: Completion) -> tuple[int, int]:
-    extra = completion.extra_usage
-    read = extra.get("cache_read_input_tokens") or 0
-    write = extra.get("cache_write_input_tokens") or extra.get("cache_creation_input_tokens") or 0
-    return int(read), int(write)
+def _cache_tokens(attempts: Sequence[Mapping[str, Any]]) -> tuple[int, int]:
+    read = write = 0
+    for attempt in attempts:
+        extra = attempt.get("extra_usage", {})
+        read += int(extra.get("cache_read_input_tokens") or 0)
+        write += int(extra.get("cache_write_input_tokens") or extra.get("cache_creation_input_tokens") or 0)
+    return read, write
 
 
 def _usage_payload(
@@ -553,6 +579,12 @@ def _usage_payload(
     quote: PriceQuote,
 ) -> dict[str, Any]:
     last = attempts[-1]
+    extra_usage = dict(completion.extra_usage)
+    read, write = _cache_tokens(attempts)
+    if read:
+        extra_usage["cache_read_input_tokens"] = read
+    if write:
+        extra_usage["cache_write_input_tokens"] = write
     return {
         "prompt_template": prompt_template,
         "pricing_version": catalog_version,
@@ -571,7 +603,7 @@ def _usage_payload(
         "finish_reason": completion.finish_reason,
         "applied_settings": dict(completion.applied_settings),
         "ignored_settings": dict(completion.ignored_settings),
-        "extra_usage": dict(completion.extra_usage),
+        "extra_usage": extra_usage,
         "provider_differences": list(PROVIDER_DIFFERENCES.get(provider, ())),
         "calls": [_public_call(item) for item in attempts],
         "spent_usd": spent_usd,
@@ -590,6 +622,12 @@ def _public_call(item: Mapping[str, Any]) -> dict[str, Any]:
         "completion_tokens": item["completion_tokens"],
         "reasoning_tokens": item["reasoning_tokens"],
         "error": item["error"],
+        "total_tokens": item["total_tokens"],
+        "request_id": item.get("request_id"),
+        "response_model_id": item.get("response_model_id"),
+        "applied_settings": dict(item.get("applied_settings", {})),
+        "ignored_settings": dict(item.get("ignored_settings", {})),
+        "extra_usage": dict(item.get("extra_usage", {})),
     }
 
 

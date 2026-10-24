@@ -29,7 +29,10 @@ from rewardbench.environments.apollolander.flight_record import (
     build_flight_record,
     compare_observations,
     compare_terminal,
+    controller_hash,
+    flight_record_stem,
     load_flight_record,
+    trace_hash,
     write_flight_record,
 )
 from rewardbench.environments.apollolander.recording import write_flight_video
@@ -60,6 +63,7 @@ class ApolloLanderAdapter:
     """Fixed lunar map with optional seed-derived research starts."""
 
     environment_id = ENVIRONMENT_ID
+    environment_version = ENVIRONMENT_VERSION
 
     def __init__(
         self,
@@ -72,6 +76,8 @@ class ApolloLanderAdapter:
         start_schedule_version: str = START_SCHEDULE_VERSION,
         vary_fuel: bool = False,
         experiment_id: str | None = None,
+        split: str | None = None,
+        origin: str = "unspecified",
     ) -> None:
         self.max_steps = max_steps
         self.locked_camera = locked_camera
@@ -81,6 +87,8 @@ class ApolloLanderAdapter:
         self.start_schedule_version = start_schedule_version
         self.vary_fuel = bool(vary_fuel)
         self.experiment_id = experiment_id
+        self.split = split
+        self.origin = origin
         # Validate the schedule version at construction time.
         schedule_document(self.start_schedule_version)
 
@@ -168,6 +176,8 @@ class ApolloLanderAdapter:
             output=self.record_dir,
             model=getattr(policy, "model_id", None) or "unspecified",
             episode_index=episode_index,
+            split=self.split,
+            origin=self.origin,
         )
         elapsed = time.perf_counter() - started
         verified = episode.get("verified") or {}
@@ -340,11 +350,15 @@ class ApolloLanderAdapter:
             payload = load_flight_record(record)
         else:
             payload = dict(record)
+        if payload.get("environment_version") != self.environment_version:
+            raise ValueError("flight record environment version does not match this adapter")
         if payload.get("research_mode") and not self.research_mode:
             raise ValueError("flight record requires research_mode=True on this adapter")
         if (not payload.get("research_mode")) and self.research_mode:
             raise ValueError("flight record is fixed-start; construct adapter with research_mode=False")
         if payload.get("research_mode"):
+            if bool(payload.get("vary_fuel")) != self.vary_fuel:
+                raise ValueError("flight record vary_fuel does not match this adapter")
             version = payload.get("start_schedule_version")
             if version != self.start_schedule_version:
                 raise ValueError(
@@ -380,6 +394,12 @@ class ApolloLanderAdapter:
             "steps": observed_result["steps"],
         }
         mismatches = compare_terminal(expected_terminal, observed_terminal, reward_tol=reward_tol)
+        if payload.get("trace_hash") != trace_hash(trace):
+            mismatches.append("trace_hash does not match the recorded actions")
+        if payload.get("controller_hash") != controller_hash(payload["controller"]):
+            mismatches.append("controller_hash does not match the recorded controller")
+        if payload.get("trace_length") != len(trace):
+            mismatches.append("trace_length does not match the recorded actions")
         if replayed["frames"]:
             mismatches.extend(
                 compare_observations(
@@ -495,8 +515,7 @@ class ApolloLanderAdapter:
 
         video_path = None
         flight_record_path = None
-        episode_tag = f"ep-{episode_index}" if episode_index is not None else "ep"
-        stem = f"apollo-{_slug(model)}-revision-{revision}-{episode_tag}-seed-{seed}"
+        stem = flight_record_stem(model, revision, episode_index, seed)
         if record and output is not None:
             video_file = output / f"{stem}.mp4"
             write_flight_video(
@@ -591,11 +610,6 @@ def _frame(session: "_Session", observation: Mapping[str, Any], result: Mapping[
         "observation": dict(observation),
         "result": dict(result),
     }
-
-
-def _slug(value: str) -> str:
-    cleaned = "".join(character if character.isalnum() or character in "-_" else "-" for character in value)
-    return cleaned or "flight"
 
 
 def _action(

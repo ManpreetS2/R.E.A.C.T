@@ -9,6 +9,7 @@ def test_seed_schedule_is_deterministic_and_cycles() -> None:
     first = build_seed_schedule(11, (4, 1, 9), 2, 2)
     second = build_seed_schedule(11, (9, 4, 1), 2, 2)
     assert first == second
+    assert first[0] == first[1]
     assert len(first) == 2
     assert len(first[0]) == 2
     flat = [seed for row in first for seed in row]

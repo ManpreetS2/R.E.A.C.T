@@ -170,13 +170,26 @@ class SplitGuard:
 `config_hash`. The hash is SHA-256 of the canonical JSON (`sort_keys=True`,
 compact separators). `database_path` and `notes` are not hashed. The same
 config always yields the same id. Changing the feedback condition, split,
-model id, seeds, or budget changes the id.
+model id, seeds, or budget changes the id. The schedule implementation version
+`matched-development.v2` is also hashed; older rotating-panel evidence keeps its
+original identity and is never silently resumed with the new schedule.
+
+Before constructing a CLI model or creating a runner experiment/session, the
+database is checked for the unchanged config's pre-versioned identity. A matching
+legacy run (completed or interrupted) raises `ResumeError` rather than silently
+starting again with a fresh history/budget. Preserve its original database and
+code for historical analysis/resume. A new matched study needs an explicit new
+experiment name or separate database; legacy rows/checkpoints are not migrated
+to a different seed schedule. Report/export grouping retains the recorded
+`seed_schedule_version`; missing historical provenance stays `unrecorded` and
+does not pool with `matched-development.v2`.
 
 `new_session_id` is `ses_` plus a UUID. A resumed experiment keeps its
 experiment id and opens a new session.
 
 `build_seed_schedule` orders `allowed_seeds` by SHA-256 of
-`"{master_seed}:{seed}"` and cycles that permutation. It does not use
+`"{master_seed}:{seed}"` and takes the same `episodes_per_revision` panel
+(repeating the permutation if necessary) for **every** revision. It does not use
 `random.Random`. A development run receives only `development_seeds`.
 `SplitGuard.check` raises `SplitViolation` for any other seed, including a
 held-out seed during development.
@@ -413,6 +426,7 @@ class StoredAttempt:
     error: str | None
     created_at: str
     attempt_id: int | None = None
+    usage: Mapping[str, Any] = field(default_factory=dict)
     def as_policy(self) -> CandidatePolicy: ...
 
 @dataclass(frozen=True)
@@ -596,35 +610,21 @@ See ``examples/heldout/README.md``.
 
 Optional mapping of JSON-serializable constructor arguments for the
 environment adapter. Core validates the mapping and passes accepted keys to
-``make_environment``. Unsupported keys are dropped with a warning so older
-adapters keep working.
+``make_environment``. Unsupported keys fail closed with `ConfigError`; physics settings are never
+silently ignored.
 
-### Agent 2 dependency — ApolloLander ``research_mode``
+### ApolloLander research mode and recording provenance
 
-Core forwards ``metadata.adapter_kwargs.research_mode`` when
-``ApolloLanderAdapter.__init__`` accepts that keyword. Agent 2 owns the
-physics meaning. Until the constructor exposes it, offline configs may still
-list ``research_mode: true``; Core warns and continues without changing
-physics.
+The integrated adapter accepts `research_mode`, `start_schedule_version`,
+`vary_fuel`, `max_steps`, `locked_camera`, `record_dir`, `record_video`,
+`experiment_id`, `split`, and `origin`. CLI runtime provenance does not alter the
+config hash. Mock flights use `origin=deterministic_mock`; scoring flights are
+labeled `split=held_out`.
 
-Agent 2 should expose, without breaking existing callers:
-
-```python
-class ApolloLanderAdapter:
-    def __init__(
-        self,
-        *,
-        max_steps: int = 8000,
-        locked_camera: bool = True,
-        record_dir: str | Path | None = None,
-        record_video: bool = False,
-        research_mode: bool = False,
-    ) -> None: ...
-```
-
-When ``research_mode`` is true, Agent 2's deterministic research starts and
-recording interface apply. Core does not interpret the flag beyond forwarding
-it.
+`--record-dir` on the held-out CLI writes manifests in an evaluation-id
+subdirectory and stores their actual absolute paths in SQLite. Separate freezes
+and step caps cannot overwrite each other's recordings. Replay checks action and
+controller hashes, environment/fuel settings, initial state, and terminal outcome.
 
 ## Runner
 
@@ -688,6 +688,12 @@ class ExperimentRunner:
     def run(self) -> ExperimentSummary: ...
 ```
 
+`ExperimentRunner` accepts only `split=development`. The general CLI rejects
+held-out adaptation before constructing a model. Use `rewardbench.heldout` for
+frozen ApolloLander scoring; legacy held-out adaptation configs are descriptive
+fixtures, not executable evaluation commands. Mock CLI configs must declare
+`provider=mock`, preventing a scripted run from occupying a live study identity.
+
 `run` creates the experiment or resumes it. A completed experiment returns
 its summary and does not call the model again. Resume rebuilds spend from
 stored attempts and episodes, keeps elapsed time from the checkpoint, and
@@ -743,7 +749,15 @@ Handled stops:
   re-raised.
 
 Rewards are written for both feedback conditions. Only the `ModelRequest`
-history changes.
+history changes. The numerical arm currently includes simulator outcome, step,
+and state metrics as well as reward; it is a richer-feedback intervention, not a
+scalar-reward-only causal test.
+
+Billed failures and post-call budget overruns retain their reported cost, tokens,
+latency, and usage in the attempt before the runner stops. `attempts.usage_json`
+is an additive v1 migration (old rows default to `{}`) and survives JSONL export.
+Provider request ids, pricing/prompt versions, resolved model and settings are
+stored when returned; unavailable historical provenance cannot be recovered.
 
 ## Reward history
 
@@ -775,12 +789,12 @@ Analysis should treat these rows as the source of truth:
 - errors: `errors`, plus `attempts.error` and `episodes.error`
 - split and condition: `experiments.split`, `experiments.feedback_condition`
 
-Development rows and held-out rows are different experiment ids because
-`split` is part of the hash. Do not read held-out seeds from a development
-experiment.
+The dedicated held-out tables reference the development source experiment and
+freeze id. They are never read by development history. Historical general-runner
+held-out rows used separate experiment ids; new held-out adaptation is forbidden.
 
 ## Example configuration
 
 See `configs/lunarlander_development_numerical.yaml`.
-The no-feedback and held-out files differ only in `feedback_condition` or
-`split`, which changes the experiment id.
+The paired development files differ in feedback condition and identity. Legacy
+`split=held_out` files must not be passed to the adaptation runner.

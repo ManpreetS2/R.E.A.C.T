@@ -211,3 +211,87 @@ def test_shared_spending_guard_rejects_a_second_concurrent_reservation():
     assert sorted(results) == ["blocked", "reserved"]
     assert guard.held_usd == pytest.approx(0.06)
     assert guard.spent_usd == 0
+
+
+@pytest.mark.parametrize("failure", ["http", "quote", "budget"])
+def test_billed_failures_carry_accounting_response(failure):
+    if failure == "http":
+        payload = {"error": {"message": "billed failure"},
+                   "usage": {"prompt_tokens": 20, "completion_tokens": 11, "total_tokens": 31}}
+        transport = FakeTransport([http_json(payload, status=400, latency=.7)])
+        settings = {"max_output_tokens": 100}
+    else:
+        transport = FakeTransport([http_json(_chat(json.dumps(CONTROLLER), prompt=20,
+                                                   completion=100000), latency=.7)])
+        settings = {"max_output_tokens": 10}
+    client = _client("openai", "gpt-5.4-mini", transport, max_retries=0,
+                     max_spend_usd=.01 if failure == "budget" else 50)
+    expected = BudgetExceeded if failure == "budget" else ModelClientError
+    with pytest.raises(expected) as caught:
+        client.propose(make_request(settings=settings))
+    response = caught.value.response
+    assert response is not None
+    assert response.prompt_tokens == 20
+    assert response.completion_tokens == (11 if failure == "http" else 100000)
+    assert response.charged_tokens == response.prompt_tokens + response.completion_tokens
+    assert response.latency_seconds == .7
+    assert response.estimated_cost_usd > 0
+    assert response.estimated_cost_usd == pytest.approx(client._spending.spent_usd)
+    assert client._spending.held_usd == 0
+    assert response.usage["prompt_template"]
+    assert response.usage["pricing_version"]
+    assert response.usage["requested_settings"] == settings
+    assert response.usage["retry_count"] == 0
+    assert response.usage["budget_exceeded"] is (failure == "budget")
+    assert len(transport.requests) == 1
+    if failure != "http":
+        assert response.raw_text == json.dumps(CONTROLLER)
+        assert response.usage["request_id"] == "req-1"
+        assert response.usage["response_model_id"] == "response-model"
+        assert response.usage["applied_settings"]
+
+
+def test_exhausted_http_retries_carry_aggregate_billed_usage():
+    payload = {"error": {"message": "try again"},
+               "usage": {"prompt_tokens": 20, "completion_tokens": 11, "total_tokens": 31}}
+    transport = FakeTransport([http_json(payload, status=500, latency=.3),
+                               http_json(payload, status=500, latency=.7)])
+    client = _client("openai", "gpt-5.4-mini", transport, max_retries=1)
+    with pytest.raises(ModelClientError) as caught:
+        client.propose(make_request())
+    response = caught.value.response
+    assert (response.prompt_tokens, response.completion_tokens, response.total_tokens) == (40, 22, 62)
+    assert response.latency_seconds == 1
+    assert response.estimated_cost_usd == pytest.approx(client._spending.spent_usd)
+    assert response.usage["retry_count"] == 1
+    assert len(response.usage["calls"]) == 2
+    assert len(client.invocations) == 1
+    assert "HTTP 500" in client.invocations[0]["error"]
+
+
+@pytest.mark.parametrize('cache_field', ['cache_read_input_tokens', 'cache_creation_input_tokens', 'cache_write_input_tokens'])
+def test_billed_http_cache_usage_is_preserved_and_blocks_retries(cache_field):
+    usage = {'input_tokens': 20, 'output_tokens': 11, cache_field: 400}
+    payload = {'error': {'message': 'billed failure'}, 'usage': usage}
+    transport = FakeTransport([
+        http_json(payload, status=500, latency=.7),
+        http_json(payload, status=500, latency=.7),
+    ])
+    client = _client('anthropic', 'claude-haiku-5-5', transport, max_retries=1)
+    with pytest.raises(ModelClientError) as caught:
+        client.propose(make_request(settings={'max_output_tokens': 800}))
+    response = caught.value.response
+    assert response is not None
+    assert response.usage['cost_status'] != 'priced'
+    assert response.usage['calls'][0]['extra_usage'][cache_field] == 400
+    assert response.usage['extra_usage']['cache_read_input_tokens' if cache_field == 'cache_read_input_tokens' else 'cache_write_input_tokens'] == 400
+    assert response.prompt_tokens == 20 and response.completion_tokens == 11
+    assert response.latency_seconds == .7
+    assert 'cache' in response.usage['pricing_note'].lower()
+    assert response.estimated_cost_usd > 0
+    assert client._spending.spent_usd == pytest.approx(response.estimated_cost_usd)
+    assert client._spending.held_usd == 0
+    assert len(transport.requests) == 1  # The internal retry was forbidden.
+    with pytest.raises(BudgetExceeded, match='spending is blocked'):
+        client.propose(make_request(settings={'max_output_tokens': 800}))
+    assert len(transport.requests) == 1  # A subsequent propose is forbidden too.

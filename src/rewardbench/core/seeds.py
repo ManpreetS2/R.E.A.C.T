@@ -7,6 +7,8 @@ from typing import Sequence
 
 from rewardbench.contracts import ConfigError
 
+SEED_SCHEDULE_VERSION = "matched-development.v2"
+
 
 def build_seed_schedule(
     master_seed: int,
@@ -18,7 +20,8 @@ def build_seed_schedule(
 
     Ordering uses SHA-256 of ``master_seed:seed`` so the schedule does not
     depend on Python's ``random`` implementation. When more episodes are
-    requested than seeds, the permutation repeats from the start.
+    requested than seeds, the permutation repeats from the start. Every revision
+    uses the same panel, so a reward change cannot be caused by changing starts.
     """
 
     if isinstance(master_seed, bool) or not isinstance(master_seed, int):
@@ -37,7 +40,7 @@ def build_seed_schedule(
     for revision in range(num_revisions):
         row: list[int] = []
         for episode in range(episodes_per_revision):
-            index = revision * episodes_per_revision + episode
+            index = episode
             row.append(order[index % len(order)])
         schedule.append(tuple(row))
     return tuple(schedule)

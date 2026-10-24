@@ -36,8 +36,9 @@ from rewardbench.contracts import (
     ExperimentStatus,
     ResumeError,
     RewardBenchError,
+    Split,
 )
-from rewardbench.core.ids import experiment_id
+from rewardbench.core.ids import experiment_id, reject_legacy_restart
 from rewardbench.core.runner import ExperimentRunner
 from rewardbench.run.factory import build_environment, build_model, prepare_config
 from rewardbench.run.live import ACK_CONTINUATION_FLAG, ACK_PAID_FLAG, is_session_pause
@@ -105,14 +106,22 @@ def main(
     environment = None
     try:
         config = prepare_config(args.config, database_path=args.database)
+        if config.split is not Split.DEVELOPMENT:
+            raise ConfigError("adaptation requires split=development; use rewardbench.heldout")
         database = Path(config.database_path)
         database.parent.mkdir(parents=True, exist_ok=True)
         exp_id = experiment_id(config)
-        overrides = _flight_adapter_overrides(config, experiment_id=exp_id, database=database)
-        environment = build_environment(config, adapter_overrides=overrides)
-
         store = SqliteStore(database)
         store.initialize()
+        reject_legacy_restart(config, store)
+        overrides = _flight_adapter_overrides(config, experiment_id=exp_id, database=database)
+        if config.environment_id.lower() in {"apollolander", "apollo-lander", "apollo"}:
+            overrides.update(
+                split=config.split.value,
+                origin="deterministic_mock" if args.mode == "mock" else "model_generated",
+            )
+        environment = build_environment(config, adapter_overrides=overrides)
+
         existing = store.get_experiment(exp_id)
         resume_selected = 0
         if existing is not None:

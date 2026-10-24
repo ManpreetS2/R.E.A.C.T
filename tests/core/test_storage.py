@@ -65,6 +65,10 @@ def test_store_round_trip_and_scores_view(tmp_path: Path) -> None:
             selected=True,
             parameters={"gain": 1},
             raw_response='{"gain": 1}',
+            usage={"prompt_template": "v1", "pricing_version": "catalog",
+                   "request_id": "request-1", "response_model_id": "resolved",
+                   "applied_settings": {"seed": 7}, "retry_count": 1,
+                   "calls": [{"ok": False}, {"ok": True}]},
             valid=True,
             validation_error=None,
             prompt_tokens=3,
@@ -120,6 +124,11 @@ def test_store_round_trip_and_scores_view(tmp_path: Path) -> None:
     attempt = store.fetch_attempts("exp_test")[0]
     episode = store.fetch_episodes("exp_test")[0]
     assert attempt.attempt_id == attempt_id
+    from dataclasses import asdict
+
+    assert asdict(attempt)["usage"]["request_id"] == "request-1"
+    assert attempt.usage["request_id"] == "request-1"
+    assert attempt.usage["calls"] == [{"ok": False}, {"ok": True}]
     assert attempt.reasoning_tokens == 1
     assert attempt.estimated_cost_usd == pytest.approx(0.02)
     assert episode.total_reward == pytest.approx(-12.5)
@@ -171,3 +180,22 @@ def test_duplicate_episode_is_rejected(tmp_path: Path) -> None:
     with pytest.raises(ResumeError):
         store.insert_episode(episode)
     store.close()
+
+
+def test_existing_v1_attempts_migrate_additively(tmp_path):
+    from dataclasses import replace
+
+    test_store_round_trip_and_scores_view(tmp_path)
+    path = tmp_path / "rewardbench.sqlite"
+    with SqliteStore(path) as legacy:
+        before = legacy.fetch_attempts("exp_test")[0]
+        legacy._conn.execute("ALTER TABLE attempts DROP COLUMN usage_json")
+        legacy._conn.commit()
+    with SqliteStore(path) as migrated:
+        migrated.initialize()
+        migrated.initialize()
+        old = migrated.fetch_attempts("exp_test")[0]
+        assert old == replace(before, usage={})
+        assert migrated.load_checkpoint("exp_test").budget.cost_usd == .02
+        migrated.insert_attempt(replace(before, call_index=1, attempt_id=None))
+        assert migrated.fetch_attempts("exp_test")[1].usage == before.usage

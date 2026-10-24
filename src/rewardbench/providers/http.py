@@ -200,6 +200,9 @@ def usage_from_body(body: bytes) -> dict[str, int]:
         "completion_tokens": completion,
         "reasoning_tokens": reasoning,
         "total_tokens": total,
+        "cache_read_input_tokens": _usage_int(usage.get("cache_read_input_tokens")),
+        "cache_creation_input_tokens": _usage_int(usage.get("cache_creation_input_tokens")),
+        "cache_write_input_tokens": _usage_int(usage.get("cache_write_input_tokens")),
     }
 
 

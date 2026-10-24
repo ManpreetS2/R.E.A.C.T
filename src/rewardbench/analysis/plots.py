@@ -6,6 +6,8 @@ an explicit empty figure. Synthetic sessions are labeled on the figure.
 
 from __future__ import annotations
 
+import textwrap
+
 from collections import defaultdict
 from pathlib import Path
 
@@ -16,7 +18,7 @@ import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
-from rewardbench.analysis.environments import environment_family, family_display
+from rewardbench.analysis.environments import config_label, environment_family, family_display, provider_label
 from rewardbench.analysis.schema import EMPTY_LOG_MESSAGE, SYNTHETIC_BANNER
 from rewardbench.analysis.sessions import SessionSummary, TargetTime
 from rewardbench.analysis.stats import mean_interval
@@ -149,7 +151,7 @@ def draw_landing_success_vs_attempt(
     fig, ax = _figure(
         "Landing success versus episode attempt",
         summaries,
-        "Attempt is the episode index within a revision, not the controller revision. "
+        "Attempt is the zero-based episode ordinal ordered by (revision, episode). "
         f"Bars are {_percent(confidence)} confidence intervals across sessions.",
     )
     if not summaries:
@@ -431,7 +433,10 @@ def _save(fig: Figure, path: str | Path) -> Path:
 def _legend(ax: Axes) -> None:
     handles, labels = ax.get_legend_handles_labels()
     if labels:
-        ax.legend(handles, labels, frameon=False, fontsize=8)
+        ax.legend(
+            handles, [textwrap.fill(label, width=48, break_long_words=False) for label in labels],
+            frameon=False, fontsize=8, loc="upper left", bbox_to_anchor=(1.02, 1.0),
+        )
 
 
 def _colors(summaries: list[SessionSummary]) -> dict[str, str]:
@@ -440,19 +445,17 @@ def _colors(summaries: list[SessionSummary]) -> dict[str, str]:
 
 
 def _series_label(summary: SessionSummary, summaries: list[SessionSummary]) -> str:
-    providers = {
-        item.provider
-        for item in summaries
-        if item.model_id == summary.model_id
-    }
-    name = summary.model_id if len(providers) == 1 else f"{summary.provider}/{summary.model_id}"
     return (
-        f"{name} | {summary.environment_id} | {summary.feedback_condition} | {summary.split}"
+        f"{provider_label(summary.provider)}/{summary.model_id} | {summary.environment_id} | "
+        f"config {config_label(summary.environment_config)} | {summary.feedback_condition} | {summary.split}"
     )
 
 
 def _target_label(row: TargetTime) -> str:
-    return f"{row.model_id} ({row.feedback_condition}, {row.split})"
+    return textwrap.fill((
+        f"{provider_label(row.provider)}/{row.model_id} | {row.environment_id} | "
+        f"config {config_label(row.environment_config)} ({row.feedback_condition}, {row.split})"
+    ), width=55, break_long_words=False)
 
 
 def _percent(confidence: float) -> str:

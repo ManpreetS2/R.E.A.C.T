@@ -253,11 +253,11 @@ def test_no_feedback_hides_rewards_and_held_out_results(tmp_path: Path) -> None:
     database = tmp_path / "rewardbench.sqlite"
     held_out = make_config(
         experiment_name="held-out-marker",
-        split=Split.HELD_OUT,
+        split=Split.DEVELOPMENT,
         num_revisions=1,
         episodes_per_revision=1,
-        development_seeds=(1, 2, 3, 4),
-        held_out_seeds=(909090,),
+        development_seeds=(909090,),
+        held_out_seeds=(101, 102, 103, 104),
         seed=4,
     )
     held_summary, store, _runner = _execute(
@@ -267,6 +267,9 @@ def test_no_feedback_hides_rewards_and_held_out_results(tmp_path: Path) -> None:
         FakeEnv(),
     )
     held_reward = store.fetch_episodes(held_summary.experiment_id)[0].total_reward
+    # Synthetic legacy held-out row: adaptation on this split is now forbidden.
+    store._conn.execute("UPDATE experiments SET split='held_out' WHERE experiment_id=?", (held_summary.experiment_id,))
+    store._conn.commit()
     assert held_reward is not None
     assert held_reward > 400000
 

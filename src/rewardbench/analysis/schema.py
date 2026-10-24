@@ -71,6 +71,7 @@ class EpisodeObservation:
     synthetic: bool
     development_seeds: tuple[int, ...] = ()
     held_out_seeds: tuple[int, ...] = ()
+    environment_config: str = "{}"
 
 
 @dataclass(frozen=True)
@@ -97,6 +98,8 @@ class AttemptObservation:
     error: str | None
     validation_status: str
     synthetic: bool
+    environment_config: str = "{}"
+    usage: dict[str, object] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)

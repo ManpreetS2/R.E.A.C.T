@@ -26,6 +26,23 @@ Token counts and dollar cost can still differ because providers tokenize and pri
 
 Model identity should be the configured model id, not a marketing name. A later change of model id is a different experiment.
 
+## Feedback intervention
+
+The current numerical arm includes simulator reward **and** success, crash, step,
+fuel, and start-state metrics. No-feedback withholds all those outcomes while
+retaining controller/validation history. This measures richer simulator feedback
+versus none; it cannot isolate the causal contribution of the reward number from
+the accompanying information. A scalar-reward control must hold all non-reward
+information constant between arms and vary only whether the true scalar is
+displayed. See the unexecuted matched-transcript recommendation in
+`FIRST_EXPERIMENT_PROTOCOL.md`; a separately reviewed prompt/control change and
+explicit paid-call approval are required before a real-model study.
+
+Current development uses the same seed panel at every revision. Older rotating
+seed curves remain historical engineering evidence; their initial-to-final
+difference is confounded by starting conditions. A two-revision, one-start mock
+demo is neither statistical evidence nor an estimate of real model adaptation.
+
 ## Judge bias
 
 LunarLander success and crash flags come from the simulator. They are not scores from another language model. Reward is the environment's own return, including penalties as negative reward.

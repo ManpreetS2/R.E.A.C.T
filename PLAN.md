@@ -1,7 +1,10 @@
 # R.E.A.C.T. development plan
 
-Last updated: 2026-10-15 (flagship v1 release candidate)  
-Current milestone: **M1 complete** · **held-out freeze path merged** · **release candidate ready** · paid LLM runs **empty / owner-gated**  
+Last updated: 2026-10-24 (independent offline v1 audit)
+Current milestone: offline integration is on `main` via PR #2 at `5e624c7`.
+Independent completion work is on `t3/verify-offline-v1`; see
+[OFFLINE_V1_VERIFICATION.md](docs/OFFLINE_V1_VERIFICATION.md) for current checks,
+repairs and release scope. Paid LLM results remain **empty / owner-gated**.
 Maintainer: Agent 4 (Testing & Analytics). Other agents may suggest edits. **Only Agent 4 edits this file.**
 
 Official project name: **R.E.A.C.T. — Reward-Enhanced Adaptive Controller Testing**  
@@ -21,10 +24,10 @@ Out of v1 scope: credit economy, competition mode, Minecraft, new dashboards.
 
 | Item | Value |
 | --- | --- |
-| Tip | `14061991e839409d8f0b4718eef91ed45a1116c7` |
+| Tip | `5e624c7` (PR #2 integrated; fetched and checked 2026-10-24) |
 | Remote | `origin` → `https://github.com/ManpreetS2/R.E.A.C.T.git` |
 
-### Integration branch (flagship RC)
+### Historical integration branch (superseded by PR #2 merge)
 
 | Item | Value |
 | --- | --- |
@@ -36,7 +39,7 @@ Out of v1 scope: credit economy, competition mode, Minecraft, new dashboards.
 | Flagship docs tip | **`4c88f2fa234ea2a4ecbacd9fd5998947fad87740`** |
 | Release-audit tip | **`89f006de563396c0e9f9f7010dbc388b24d596ed`** |
 | Tests | **258** Python passed + Node physics exit 0 |
-| Publish status | Local only — **not pushed / not merged** without owner approval |
+| Publish status | Historical branch merged in PR #2. Current audit branch pushed as draft PR #12 with owner authorization; no release published. |
 
 ## 3. Milestones
 
@@ -80,25 +83,20 @@ Deferred (validation, economy, competition/Minecraft).
 
 ## 5. Minimal remaining launch gates (owner)
 
-1. Approve push of `work/integration-offline-v1` and PR merge into `main`.  
+1. Review the focused `t3/verify-offline-v1` completion changes; the earlier integration already merged in PR #2.
 2. Optional: set project-wide LICENSE (do not invent one).  
 3. Optional: follow `docs/PILOT_CHECKLIST.md` for one paid connectivity call.  
 4. For a real paired study: `docs/FIRST_EXPERIMENT_PROTOCOL.md` + `docs/FINAL_EVALUATION_PROTOCOL.md` (cohort `2000000–2000015`; burned `1000000–1000007`).  
 5. Do **not** invent LLM rankings from scripted evidence.
 
-## 6. Safe publish commands (DO NOT RUN without approval)
+## 6. Integration status
 
-```bash
-cd ~/Projects/R.E.A.C.T-worktrees/integration
-git push -u origin work/integration-offline-v1
-
-# Fast-forward main (owner-approved):
-cd ~/Projects/R.E.A.C.T
-git checkout main
-git pull --ff-only origin main
-git merge --ff-only work/integration-offline-v1
-git push origin main
-```
+The former integration push/fast-forward instructions are obsolete: PR #2 is
+already merged. PRs #3–#11 are separate RL investigations and are not required
+for the offline v1 release. The owner subsequently authorized pushing only
+`t3/verify-offline-v1` and opening draft PR #12. Merge, force-push, tags and release
+publication remain unauthorized. See the final integration section of the audit
+for independent-review and exact-head remote CI status.
 
 ## 7. Methodology constraints
 
