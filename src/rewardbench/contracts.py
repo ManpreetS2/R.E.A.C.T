@@ -73,8 +73,12 @@ class SplitViolation(RewardBenchError):
 class BudgetExceeded(RewardBenchError):
     """A budget limit was reached. The runner stops without further calls."""
 
-    def __init__(self, message: str, *, resource: str, spent: float, limit: float) -> None:
+    def __init__(
+        self, message: str, *, resource: str, spent: float, limit: float,
+        response: ModelResponse | None = None,
+    ) -> None:
         super().__init__(message)
+        self.response = response
         self.resource = resource
         self.spent = spent
         self.limit = limit
@@ -83,9 +87,12 @@ class BudgetExceeded(RewardBenchError):
 class ModelClientError(RewardBenchError):
     """A model provider failed before returning a usable proposal."""
 
-    def __init__(self, message: str, *, retryable: bool = True) -> None:
+    def __init__(
+        self, message: str, *, retryable: bool = True, response: ModelResponse | None = None,
+    ) -> None:
         super().__init__(message)
         self.retryable = retryable
+        self.response = response
 
 
 class EnvironmentAdapterError(RewardBenchError):
@@ -556,6 +563,12 @@ class StoredAttempt:
     error: str | None
     created_at: str
     attempt_id: int | None = None
+    usage: Mapping[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        # Stored records are exported with dataclasses.asdict, which cannot
+        # deepcopy MappingProxyType. Keep a detached, JSON-compatible mapping.
+        object.__setattr__(self, "usage", dict(self.usage))
 
     def as_policy(self) -> CandidatePolicy:
         return CandidatePolicy(

@@ -271,7 +271,25 @@ class ExperimentRunner:
             try:
                 try:
                     response = self.model.propose(request)
+                except BudgetExceeded as exc:
+                    # A pre-call refusal (including SessionPaidCallGate) has no
+                    # response and must not create an attempt or spend a call.
+                    if exc.response is not None:
+                        response = exc.response
+                        self._insert_attempt(
+                            revision=revision, call_index=call_index, selected=False,
+                            parameters={}, raw_response=response.raw_text, valid=False,
+                            validation_error=str(exc), response=response, error=str(exc),
+                        )
+                        self._settle_global(
+                            hold, cost_usd=response.estimated_cost_usd,
+                            tokens=response.charged_tokens, model_calls=1,
+                            revisions=1 if new_revision else 0,
+                        )
+                        settled = True
+                    raise
                 except ModelClientError as exc:
+                    response = exc.response
                     last_message = str(exc)
                     give_up = (not exc.retryable) or (call_index + 1 >= max_calls)
                     self._insert_attempt(
@@ -279,18 +297,21 @@ class ExperimentRunner:
                         call_index=call_index,
                         selected=give_up,
                         parameters={},
-                        raw_response="",
+                        raw_response="" if response is None else response.raw_text,
                         valid=False,
                         validation_error=str(exc),
-                        response=None,
+                        response=response,
                         error=str(exc),
                     )
                     self._settle_global(
                         hold,
+                        cost_usd=0.0 if response is None else response.estimated_cost_usd,
+                        tokens=0 if response is None else response.charged_tokens,
                         model_calls=1,
                         revisions=1 if new_revision else 0,
                     )
                     settled = True
+                    self._stop_if_over_budget()
                     if give_up:
                         return self._give_up_model(revision, str(exc))
                     self._record_error(ErrorPhase.MODEL, str(exc), revision=revision, exc=exc)
@@ -525,6 +546,7 @@ class ExperimentRunner:
                 provider=self.model.provider if response is None else (response.provider or self.model.provider),
                 error=error,
                 created_at=_utc_now(),
+                usage={} if response is None else dict(response.usage),
             )
         )
 

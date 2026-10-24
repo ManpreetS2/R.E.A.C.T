@@ -256,6 +256,7 @@ def _experiment_context(row: sqlite3.Row) -> dict[str, object]:
     if status not in {PRELIMINARY, "independently_validated"}:
         status = PRELIMINARY
     return {
+        "environment_config": _environment_config(config),
         "environment_id": str(row["environment_id"]),
         "provider": str(row["provider"]),
         "model_id": str(row["model_id"]),
@@ -268,6 +269,28 @@ def _experiment_context(row: sqlite3.Row) -> dict[str, object]:
         "development_seeds": _seed_list(config.get("development_seeds")),
         "held_out_seeds": _seed_list(config.get("held_out_seeds")),
     }
+
+
+def _environment_config(config: dict[str, object]) -> str:
+    """Recorded simulator settings only; replica seeds and experiment ids are excluded.
+
+    Missing settings remain unrecorded rather than guessing the installed adapter's
+    defaults/version. Retain additional adapter physics options conservatively.
+    """
+    metadata = config.get("metadata", {})
+    metadata = metadata if isinstance(metadata, dict) else {}
+    adapter = metadata.get("adapter_kwargs", {})
+    adapter = adapter if isinstance(adapter, dict) else {}
+    runtime_keys = {"record_dir", "record_video", "locked_camera", "experiment_id", "split", "origin"}
+    settings = {key: value for key, value in adapter.items() if key not in runtime_keys}
+    for key in ("research_mode", "start_schedule_version", "vary_fuel", "environment_version"):
+        if key in metadata:
+            settings[key] = metadata[key]
+        if key in config:
+            settings[key] = config[key]
+    if "max_episode_steps" in config:
+        settings["max_episode_steps"] = config["max_episode_steps"]
+    return json.dumps(settings, sort_keys=True, separators=(",", ":"))
 
 
 def _parse_config(raw: object) -> dict[str, object]:
@@ -322,6 +345,7 @@ def _episode_from_row(row: sqlite3.Row, context: dict[str, object]) -> EpisodeOb
         error=_optional_str(row["error"]),
         validation_status=str(context["validation_status"]),
         synthetic=bool(context["synthetic"]),
+        environment_config=str(context["environment_config"]),
         development_seeds=tuple(context["development_seeds"]),  # type: ignore[arg-type]
         held_out_seeds=tuple(context["held_out_seeds"]),  # type: ignore[arg-type]
     )
@@ -351,6 +375,8 @@ def _attempt_from_row(row: sqlite3.Row, context: dict[str, object]) -> AttemptOb
         error=_optional_str(row["error"]),
         validation_status=str(context["validation_status"]),
         synthetic=bool(context["synthetic"]),
+        environment_config=str(context["environment_config"]),
+        usage=_parse_config(row["usage_json"]) if "usage_json" in row.keys() else {},
     )
 
 
@@ -376,6 +402,7 @@ def _episode_from_mapping(payload: dict[str, object]) -> EpisodeObservation:
         error=_optional_str(payload.get("error")),
         validation_status=str(payload.get("validation_status", PRELIMINARY)),
         synthetic=bool(payload.get("synthetic", False)),
+        environment_config=str(payload.get("environment_config", "{}")),
         development_seeds=_seed_list(payload.get("development_seeds")),
         held_out_seeds=_seed_list(payload.get("held_out_seeds")),
     )
@@ -405,6 +432,8 @@ def _attempt_from_mapping(payload: dict[str, object]) -> AttemptObservation:
         error=_optional_str(payload.get("error")),
         validation_status=str(payload.get("validation_status", PRELIMINARY)),
         synthetic=bool(payload.get("synthetic", False)),
+        environment_config=str(payload.get("environment_config", "{}")),
+        usage=dict(payload.get("usage") or {}),
     )
 
 

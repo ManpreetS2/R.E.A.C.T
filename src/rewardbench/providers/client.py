@@ -121,12 +121,32 @@ class RewardModelClient:
                 attempts,
                 quote,
             )
-        except BudgetExceeded:
+        except Exception as exc:
+            if not attempts:
+                if reserved:
+                    self._spending.release(reserved)
+                raise
+            # Even a failed HTTP response may report billed usage. Preserve it
+            # independently of whether settling the charge itself raises.
+            response = self._response_from_completion(
+                Completion("", None, None, 0, 0, 0, 0, 0.0, None, {}, {}, {}),
+                attempts, quote, failure=_redact(str(exc), self._secrets),
+            )
+            response = self._prepare_accounting(response, settings, reserved)
+            try:
+                self._settle_or_release(reserved, response, quote, attempts)
+            except (ModelClientError, BudgetExceeded) as settlement_error:
+                settlement_error.response = self._annotate(response, quote)
+                raise settlement_error from exc
+            if isinstance(exc, (ModelClientError, BudgetExceeded)):
+                exc.response = self._annotate(response, quote)
             raise
-        except Exception:
-            self._record_failed_usage(attempts, reserved)
+        response = self._prepare_accounting(response, settings, reserved)
+        try:
+            self._settle_or_release(reserved, response, quote, attempts)
+        except (ModelClientError, BudgetExceeded) as exc:
+            exc.response = self._annotate(response, quote)
             raise
-        self._settle_or_release(reserved, response, quote, attempts)
         return self._annotate(response, quote)
 
     def _complete_with_retries(
@@ -153,7 +173,6 @@ class RewardModelClient:
                 self._log_attempt(attempts[-1])
                 retryable = bool(getattr(exc, "retryable", False))
                 if not retryable or attempt >= self._retry.max_retries:
-                    self._remember(attempts, error=_redact(str(exc), self._secrets))
                     raise ModelClientError(
                         _redact(str(exc), self._secrets),
                         retryable=retryable,
@@ -178,6 +197,8 @@ class RewardModelClient:
         completion: Completion,
         attempts: list[dict[str, Any]],
         quote: PriceQuote,
+        *,
+        failure: str | None = None,
     ) -> ModelResponse:
         prompt_tokens, completion_tokens, reasoning_tokens, total_tokens, latency = _sum_attempts(
             attempts
@@ -192,7 +213,7 @@ class RewardModelClient:
             cache_read_tokens=cache_read,
             cache_write_tokens=cache_write,
         )
-        parameters, parse_error = parse_controller(completion.text)
+        parameters, parse_error = (None, failure) if failure else parse_controller(completion.text)
         truncated = _is_truncated(completion.finish_reason)
         if truncated and parse_error:
             parse_error = (
@@ -246,33 +267,16 @@ class RewardModelClient:
             attempts=self._retry.max_retries + 1,
         )
 
-    def _record_failed_usage(self, attempts: list[dict[str, Any]], reserved: float) -> None:
-        """Keep token charges from a failed call instead of releasing them."""
-
-        if self.provider == "mock":
-            if reserved:
-                self._spending.release(reserved)
-            return
-        if not attempts:
-            if reserved:
-                self._spending.release(reserved)
-            return
-        prompt, completion, reasoning, _total, _latency = _sum_attempts(attempts)
-        if prompt == 0 and completion == 0 and reasoning == 0:
-            if reserved:
-                self._spending.release(reserved)
-            return
-        cost = self._catalog.estimate(
-            self.provider,
-            self.model_id,
-            prompt_tokens=prompt,
-            completion_tokens=completion,
-            reasoning_tokens=reasoning,
-        )
-        charge = cost.usd if cost.usd > 0 else reserved
-        self._charge(reserved, charge, cost.status, cost.note)
-        if cost.status != "priced":
-            self._spending.stop(cost.note or "provider usage is not covered by the catalog")
+    def _prepare_accounting(
+        self, response: ModelResponse, settings: Mapping[str, Any], reserved: float,
+    ) -> ModelResponse:
+        usage = dict(response.usage)
+        usage["requested_settings"] = dict(settings)
+        charge = response.estimated_cost_usd
+        if self.provider != "mock" and usage.get("cost_status") != "priced" and charge <= 0:
+            charge = reserved
+            usage["charge_basis"] = "reservation_fallback"
+        return replace(response, usage=usage, estimated_cost_usd=charge)
 
     def _settle_or_release(
         self,
@@ -322,7 +326,10 @@ class RewardModelClient:
         actual = response.estimated_cost_usd
         usage["spent_usd"] = self._spending.spent_usd
         usage["held_usd"] = self._spending.held_usd
-        usage["budget_exceeded"] = False
+        usage["budget_exceeded"] = bool(
+            self._spending.max_spend_usd is not None
+            and self._spending.spent_usd > self._spending.max_spend_usd + 1e-9
+        )
         usage["reservation_exceeded"] = bool(quote.available and actual > quote.usd + 1e-12)
         usage["spending_scope"] = "in_process_only"
         return replace(response, usage=usage)
@@ -492,7 +499,7 @@ def _failed_attempt(index: int, exc: Exception) -> dict[str, Any]:
         "completion_tokens": int(usage.get("completion_tokens", 0) or 0),
         "reasoning_tokens": int(usage.get("reasoning_tokens", 0) or 0),
         "total_tokens": int(usage.get("total_tokens", 0) or 0),
-        "request_id": None,
+        "request_id": getattr(exc, "request_id", None),
     }
 
 
@@ -590,6 +597,11 @@ def _public_call(item: Mapping[str, Any]) -> dict[str, Any]:
         "completion_tokens": item["completion_tokens"],
         "reasoning_tokens": item["reasoning_tokens"],
         "error": item["error"],
+        "total_tokens": item["total_tokens"],
+        "request_id": item.get("request_id"),
+        "response_model_id": item.get("response_model_id"),
+        "applied_settings": dict(item.get("applied_settings", {})),
+        "ignored_settings": dict(item.get("ignored_settings", {})),
     }
 
 

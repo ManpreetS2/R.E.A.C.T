@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS attempts (
     selected INTEGER NOT NULL,
     parameters_json TEXT NOT NULL,
     raw_response TEXT NOT NULL,
+    usage_json TEXT NOT NULL DEFAULT '{}',
     valid INTEGER NOT NULL,
     validation_error TEXT,
     prompt_tokens INTEGER NOT NULL,
