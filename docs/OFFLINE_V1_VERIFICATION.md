@@ -250,6 +250,38 @@ requested changes despite the passing fresh workflow:
 
 Repair commit: `ae6914b`. This adds one focused file (`providers/http.py`) to the
 original review scope, bringing the overall changed-file count to 52. The fresh
-paired workflow and all 41 replays still reproduce after these changes. A second
-independent read-only review is checking the repairs and remaining objections;
-final approval and exact-head remote CI are not inferred from these local checks.
+paired workflow and all 41 replays still reproduce after these changes.
+
+### Independent review round 2 and final local verification
+
+The second read-only review covered `5a3660a697e49a5e7e858cd9cae5279855ad3721`
+(repair `ae6914b` plus documentation) against `main` at `5e624c7`. Verdict:
+**APPROVE for offline v1; no remaining actionable findings or merge blockers.**
+All three prior objections were verified resolved. The reviewer also confirmed
+that the scientific interpretation and future scalar-control recommendation
+match the implemented intervention.
+
+Independent checks: 49 focused tests and 161 broader tests (overlapping, not 210
+independent tests), Node physics, a priced cached-failure→success aggregation
+probe, and twelve simultaneous SQLite initializers each for fresh and legacy
+schemas. This round did not independently repeat the clean install or full
+41-replay verifier; those have the separately recorded parent/round-1 evidence.
+
+The final parent local suite after the fixes passed **296 tests**, no skips,
+in 78.76 seconds. The existing paired verifier again reproduced both fresh arms
+and all **41 replays**, and Node physics passed. These are local results.
+
+Process deviation: an existing replay test in the re-review derived engineering
+catalog seeds `1000000–1000047`, beyond the parent's narrower reviewer assignment
+of `1000000–1000007`. Those extra engineering states are not untouched research
+data. The reserved final cohort `2000000–2000015` remained unexecuted and its
+states/outcomes uninspected. No provider requests or real credentials were used.
+
+Remote runs for reviewed head `5a3660a697e49a5e7e858cd9cae5279855ad3721`:
+[push](https://github.com/ManpreetS2/R.E.A.C.T/actions/runs/40140798198) and
+[PR](https://github.com/ManpreetS2/R.E.A.C.T/actions/runs/40140801712).
+They were still in progress when this approval record was prepared. This final
+record changes documentation only. Its own exact PR-head CI must also pass
+before the integration handoff; earlier green heads are not substituted for it.
+The owner-facing completion report supplies that final SHA and exact check
+results. No further source changes or experiments are planned.
