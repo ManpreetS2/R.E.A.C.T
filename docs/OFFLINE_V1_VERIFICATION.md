@@ -200,9 +200,14 @@ installation and 41 replay checks are local results, not GitHub CI results.
 `push` and `pull_request` at source head `71f712da923ef7e0e6a3448149be2d84ed6b3378`:
 [push run](https://github.com/ManpreetS2/R.E.A.C.T/actions/runs/40140295063),
 [PR run](https://github.com/ManpreetS2/R.E.A.C.T/actions/runs/40140314044).
-Their three-platform jobs were initially in progress; no remote pass is inferred
-from the local suite. Exact-head final results are pending integration completion
-and are visible on the [PR checks](https://github.com/ManpreetS2/R.E.A.C.T/pull/12/checks).
+Both runs completed successfully. The PR run's `integrated (ubuntu-latest)`,
+`integrated (windows-latest)` and `integrated (macos-latest)` jobs all succeeded.
+The documentation-only head `f8bff611d93e3aa61d91643fdd2989313f8ffa2d` also passed
+both its [push run](https://github.com/ManpreetS2/R.E.A.C.T/actions/runs/40140386623)
+and [PR run](https://github.com/ManpreetS2/R.E.A.C.T/actions/runs/40140390303)
+on all three platforms. These passes apply to those exact heads, not later
+review repairs. Final-head results remain separately required on the
+[PR checks](https://github.com/ManpreetS2/R.E.A.C.T/pull/12/checks).
 
 An independent read-only reviewer was assigned the entire 51-file source diff,
 including experimental correctness, resume/legacy behavior, SQLite migrations
@@ -219,3 +224,32 @@ proposal each, freeze immediately, and score on a common engineering panel.
 Independent pairs and a pre-declared analysis/budget are required for inference.
 That control is documentation only; no model calls or reserved-cohort execution
 were performed.
+
+### Independent review round 1 and focused response
+
+The reviewer covered all 51 files at `71f712d`, including both PNGs and recorded
+evidence. They independently passed 290 tests, Node physics, the full two-repeat
+verifier with 41 replays and a 12-connection SQLite initialization probe. They
+requested changes despite the passing fresh workflow:
+
+1. **P1, legacy restart:** adding the schedule version changed identities, allowing
+   an unchanged historical config to create a new run and proposal. The repair
+   checks its original canonical identity before CLI model construction and
+   under the runner lock; completed/interrupted legacy runs refuse explicitly.
+   No history, checkpoint, status or old experiment is rewritten. An intentionally
+   renamed new study still runs.
+2. **P2, report stratification:** legacy rotating and matched schedules could pool
+   into a confounded estimate. Reports and JSONL now retain schedule provenance
+   and separate matched-v2 from unknown historical schedules. A regression keeps
+   the reproduced 0.02 versus 0.00 changes as separate one-replicate estimates.
+3. **P2, billed HTTP cache usage:** a pre-existing live-use gap discarded cache
+   counts on failed calls, unlike the successful-response guard. Error accounting
+   now retains reported read/creation/write counts across attempts and blocks
+   both internal retries and later calls when cache usage is unpriced. Mocked
+   regressions cover all three fields; no real provider was contacted.
+
+Repair commit: `ae6914b`. This adds one focused file (`providers/http.py`) to the
+original review scope, bringing the overall changed-file count to 52. The fresh
+paired workflow and all 41 replays still reproduce after these changes. A second
+independent read-only review is checking the repairs and remaining objections;
+final approval and exact-head remote CI are not inferred from these local checks.

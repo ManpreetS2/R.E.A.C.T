@@ -174,6 +174,16 @@ model id, seeds, or budget changes the id. The schedule implementation version
 `matched-development.v2` is also hashed; older rotating-panel evidence keeps its
 original identity and is never silently resumed with the new schedule.
 
+Before constructing a CLI model or creating a runner experiment/session, the
+database is checked for the unchanged config's pre-versioned identity. A matching
+legacy run (completed or interrupted) raises `ResumeError` rather than silently
+starting again with a fresh history/budget. Preserve its original database and
+code for historical analysis/resume. A new matched study needs an explicit new
+experiment name or separate database; legacy rows/checkpoints are not migrated
+to a different seed schedule. Report/export grouping retains the recorded
+`seed_schedule_version`; missing historical provenance stays `unrecorded` and
+does not pool with `matched-development.v2`.
+
 `new_session_id` is `ses_` plus a UUID. A resumed experiment keeps its
 experiment id and opens a new session.
 
