@@ -8,6 +8,7 @@ import uuid
 from typing import Any
 
 from rewardbench.contracts import CONTRACT_VERSION, ConfigError, ExperimentConfig
+from rewardbench.core.seeds import SEED_SCHEDULE_VERSION
 
 _HASH_EXCLUDED = ("database_path", "notes")
 
@@ -17,6 +18,7 @@ def canonical_config(config: ExperimentConfig) -> dict[str, Any]:
 
     payload: dict[str, Any] = {
         "contract_version": CONTRACT_VERSION,
+        "seed_schedule_version": SEED_SCHEDULE_VERSION,
         "experiment_name": config.experiment_name,
         "environment_id": config.environment_id,
         "provider": config.provider,

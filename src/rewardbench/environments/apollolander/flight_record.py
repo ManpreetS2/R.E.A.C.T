@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
@@ -160,6 +161,13 @@ def load_flight_record(path: Path | str) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+def flight_record_stem(model: str, revision: int | None, episode_index: int | None, seed: int) -> str:
+    """Shared filename identity for the adapter and SQLite replay pointers."""
+    slug = "".join(character if character.isalnum() or character in "-_" else "-" for character in model)
+    episode_tag = f"ep-{episode_index}" if episode_index is not None else "ep"
+    return f"apollo-{slug or 'flight'}-revision-{revision}-{episode_tag}-seed-{seed}"
+
+
 def compare_terminal(
     expected: Mapping[str, Any],
     observed: Mapping[str, Any],
@@ -175,7 +183,8 @@ def compare_terminal(
     if abs(int(expected.get("steps", -1)) - int(observed.get("steps", -2))) > step_tol:
         mismatches.append(f"steps: expected {expected.get('steps')}, got {observed.get('steps')}")
     try:
-        if abs(float(expected["reward"]) - float(observed["reward"])) > reward_tol:
+        left, right = float(expected["reward"]), float(observed["reward"])
+        if not math.isfinite(left) or not math.isfinite(right) or abs(left - right) > reward_tol:
             mismatches.append(
                 f"reward: expected {expected['reward']}, got {observed['reward']} (tol {reward_tol})"
             )
@@ -199,6 +208,6 @@ def compare_observations(
         except (KeyError, TypeError, ValueError) as exc:
             mismatches.append(f"observation.{key}: {exc}")
             continue
-        if abs(left - right) > abs_tol:
+        if not math.isfinite(left) or not math.isfinite(right) or abs(left - right) > abs_tol:
             mismatches.append(f"observation.{key}: expected {left}, got {right} (tol {abs_tol})")
     return mismatches

@@ -23,6 +23,8 @@ AGENT2_APOLLO_KWARGS = (
     "start_schedule_version",
     "vary_fuel",
     "experiment_id",
+    "split",
+    "origin",
 )
 
 
@@ -77,7 +79,12 @@ def build_environment(
             f"Known ApolloLander forward-compatible keys include {list(AGENT2_APOLLO_KWARGS)}."
         )
     try:
-        return make_environment(config.environment_id, **accepted)
+        environment = make_environment(config.environment_id, **accepted)
+        declared_version = config.metadata.get("environment_version")
+        if declared_version is not None and declared_version != getattr(environment, "environment_version", None):
+            environment.close()
+            raise ConfigError("declared environment_version does not match the executing adapter")
+        return environment
     except TypeError as exc:
         raise ConfigError(f"failed to construct environment {config.environment_id!r}: {exc}") from exc
     except KeyError as exc:
@@ -106,6 +113,11 @@ def build_model(
 
     normalized = mode.strip().lower()
     if normalized == "mock":
+        if config.provider != SCRIPTED_PROVIDER:
+            raise ConfigError(
+                "mock mode requires provider=mock; use an offline config so scripted "
+                "controllers cannot occupy a live study's identity or provider label"
+            )
         return ScriptedFeedbackModel(
             provider=config.provider if config.provider == SCRIPTED_PROVIDER else SCRIPTED_PROVIDER,
             model_id=config.model_id or SCRIPTED_MODEL_ID,

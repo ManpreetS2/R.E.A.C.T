@@ -140,6 +140,17 @@ def test_origins_never_claim_autonomous_learning_for_demos_or_mocks() -> None:
     assert future["origin"] == ORIGIN_MODEL_GENERATED
 
 
+def test_replay_rejects_tampered_hashes_and_nonfinite_rewards() -> None:
+    adapter = make_environment("ApolloLander", research_mode=True, max_steps=5)
+    record = adapter.evaluate(constant_controller(0, -90), [4], max_steps=5)["episodes"][0]["flight_record"]
+    tampered = {**record, "trace_hash": "forged"}
+    assert adapter.verify_flight_record(tampered)["matched"] is False
+    tampered = {**record, "terminal": {**record["terminal"], "reward": float("nan")}}
+    assert adapter.verify_flight_record(tampered)["matched"] is False
+    with pytest.raises(ValueError, match="vary_fuel"):
+        make_environment("ApolloLander", research_mode=True, vary_fuel=True).verify_flight_record(record)
+
+
 def test_hand_specified_crash_and_landing_recordings(tmp_path: Path) -> None:
     adapter = make_environment("ApolloLander")
     crash = adapter.evaluate(

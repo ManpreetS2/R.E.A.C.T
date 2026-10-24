@@ -36,6 +36,7 @@ from rewardbench.contracts import (
     ExperimentStatus,
     ResumeError,
     RewardBenchError,
+    Split,
 )
 from rewardbench.core.ids import experiment_id
 from rewardbench.core.runner import ExperimentRunner
@@ -105,10 +106,17 @@ def main(
     environment = None
     try:
         config = prepare_config(args.config, database_path=args.database)
+        if config.split is not Split.DEVELOPMENT:
+            raise ConfigError("adaptation requires split=development; use rewardbench.heldout")
         database = Path(config.database_path)
         database.parent.mkdir(parents=True, exist_ok=True)
         exp_id = experiment_id(config)
         overrides = _flight_adapter_overrides(config, experiment_id=exp_id, database=database)
+        if config.environment_id.lower() in {"apollolander", "apollo-lander", "apollo"}:
+            overrides.update(
+                split=config.split.value,
+                origin="deterministic_mock" if args.mode == "mock" else "model_generated",
+            )
         environment = build_environment(config, adapter_overrides=overrides)
 
         store = SqliteStore(database)

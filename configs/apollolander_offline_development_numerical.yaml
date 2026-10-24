@@ -27,6 +27,7 @@ held_out_seeds: [1000000, 1000001, 1000002, 1000003, 1000004, 1000005, 1000006, 
 model_settings:
   temperature: 0
 metadata:
+  environment_version: apollolander.env.v1
   task: apollolander
   purpose: offline_infrastructure_test
   not_llm_learning: true

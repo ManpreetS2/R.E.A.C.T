@@ -43,6 +43,7 @@ from rewardbench.contracts import (
     ModelResponse,
     ResumeError,
     SessionRecord,
+    Split,
     StoredAttempt,
     StoredEpisode,
     StoredError,
@@ -81,6 +82,16 @@ class ExperimentRunner:
         global_budget: BudgetLimiter | None = None,
         clock: Callable[[], float] | None = None,
     ) -> None:
+        if config.split is not Split.DEVELOPMENT:
+            raise ConfigError(
+                "controller adaptation requires split=development; use rewardbench.heldout "
+                "to score a frozen controller without model calls"
+            )
+        if (config.provider in {"mock", "openai", "google", "anthropic", "xai"}
+                or model.provider == "mock") and (
+            config.provider != model.provider or config.model_id != model.model_id
+        ):
+            raise ConfigError("configured provider/model must match the executing model client")
         self.config = config
         self.model = model
         self.environment = environment

@@ -329,3 +329,100 @@ def test_source_config_flag_resolves_experiment_id(tmp_path: Path) -> None:
         ]
     )
     assert code == 0
+
+
+def test_recorded_heldout_replays_link_to_real_files_without_model_calls(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from rewardbench.analysis.heldout import load_heldout_summaries
+    from rewardbench.environments import make_environment
+    from rewardbench.environments.apollolander import load_flight_record
+    import rewardbench.run.cli as run_cli
+
+    source_id, database = _complete_development(tmp_path, NUMERICAL, "replays")
+    with SqliteStore(database) as store:
+        attempts_before = store.fetch_attempts(source_id)
+    def forbidden(*args: object, **kwargs: object) -> None:
+        pytest.fail("held-out evaluation attempted to construct a model")
+    monkeypatch.setattr(run_cli, "build_model", forbidden)
+    output = tmp_path / "heldout-flights"
+    assert heldout_main([
+        "--database", str(database), "--source-experiment-id", source_id,
+        "--max-episode-steps", "40", "--record-dir", str(output),
+    ]) == 0
+    adapter = make_environment("ApolloLander", research_mode=True)
+    with SqliteStore(database) as store:
+        assert store.fetch_attempts(source_id) == attempts_before
+        evaluation = store._conn.execute("SELECT * FROM heldout_evaluations").fetchone()
+        episodes = store.fetch_heldout_episodes(evaluation["evaluation_id"])
+        for episode in episodes:
+            path = Path(episode["replay_path"])
+            assert path.is_file()
+            record = load_flight_record(path)
+            assert record["split"] == "held_out"
+            assert record["origin"] == "deterministic_mock"
+            assert record["experiment_id"] == source_id
+            assert record["episode_seed"] == episode["seed"]
+            assert record["terminal"]["reward"] == episode["total_reward"]
+            assert record["initial_state"] == episode["initial_state"]
+            assert adapter.verify_flight_record(path)["matched"]
+    summaries = load_heldout_summaries(database)
+    assert len(summaries[0].replay_paths) == 8
+
+
+def test_forged_freeze_and_execution_settings_are_rejected_before_flights(tmp_path: Path) -> None:
+    from dataclasses import replace
+    from rewardbench.environments import make_environment
+    source_id, database = _complete_development(tmp_path, NUMERICAL, "binding")
+    config = prepare_config(NUMERICAL)
+    with SqliteStore(database) as store:
+        frozen = freeze_controller_from_experiment(store, source_id)
+        settings = dict(
+            held_out_seeds=config.held_out_seeds, development_seeds=config.development_seeds,
+            max_episode_steps=40, environment_version=ENVIRONMENT_VERSION,
+        )
+        adapter = make_environment("ApolloLander", research_mode=True)
+        parameters = {**dict(frozen.parameters), "thrust": 0.9}
+        forged = replace(frozen, parameters=parameters, controller_hash=controller_hash(parameters))
+        with pytest.raises(ConfigError, match="persisted freeze"):
+            evaluate_frozen_controller(store, forged, adapter, **settings)
+        wrong_fuel = make_environment("ApolloLander", research_mode=True, vary_fuel=True)
+        with pytest.raises(ConfigError, match="vary_fuel"):
+            evaluate_frozen_controller(store, frozen, wrong_fuel, **settings)
+        with pytest.raises(ConfigError, match="environment_version"):
+            evaluate_frozen_controller(store, frozen, adapter, **{**settings, "environment_version": "invented"})
+        assert store._conn.execute("SELECT count(*) FROM heldout_evaluations").fetchone()[0] == 0
+
+
+@pytest.mark.parametrize("failure", ["error", "nan", "indexes"])
+def test_heldout_invalid_results_fail_closed(tmp_path: Path, failure: str) -> None:
+    from dataclasses import replace
+    from rewardbench.contracts import EpisodeResult
+    from rewardbench.environments import make_environment
+    source_id, database = _complete_development(tmp_path, NUMERICAL, failure)
+    config = prepare_config(NUMERICAL)
+    adapter = make_environment("ApolloLander", research_mode=True)
+    def invalid(policy: object, *, seed: int, episode_index: int, revision_index: int, **kwargs: object) -> EpisodeResult:
+        result = EpisodeResult(
+            revision_index=revision_index, episode_index=episode_index, seed=seed,
+            total_reward=1.0, success=False, crashed=False, steps=1,
+            terminated=False, truncated=True, elapsed_seconds=0.0,
+        )
+        if failure == "error":
+            return replace(result, error="simulator failed")
+        if failure == "nan":
+            return replace(result, total_reward=float("nan"))
+        return replace(result, revision_index=999)
+    adapter.run_episode = invalid
+    with SqliteStore(database) as store:
+        frozen = freeze_controller_from_experiment(store, source_id)
+        with pytest.raises(ConfigError):
+            evaluate_frozen_controller(
+                store, frozen, adapter, held_out_seeds=config.held_out_seeds,
+                development_seeds=config.development_seeds, max_episode_steps=40,
+                environment_version=ENVIRONMENT_VERSION,
+            )
+        row = store._conn.execute("SELECT * FROM heldout_evaluations").fetchone()
+        assert row["status"] == "failed"
+        assert row["completed_episodes"] == 0
+        assert row["error"]

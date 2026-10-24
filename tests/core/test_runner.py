@@ -139,7 +139,7 @@ def test_global_budget_counts_new_spend_only(tmp_path: Path) -> None:
     store.close()
 
 
-def test_held_out_run_uses_only_held_out_seeds(tmp_path: Path) -> None:
+def test_held_out_adaptation_is_rejected_without_model_calls(tmp_path: Path) -> None:
     config = make_config(
         split=Split.HELD_OUT,
         num_revisions=1,
@@ -147,15 +147,14 @@ def test_held_out_run_uses_only_held_out_seeds(tmp_path: Path) -> None:
         development_seeds=(1, 2, 3, 4),
         held_out_seeds=(101, 102, 103, 104),
     )
+    from rewardbench.contracts import ConfigError
+    model = FakeModel([proposal({"gain": 1})])
     env = FakeEnv()
-    summary, store, _runner = _run(tmp_path, config, FakeModel([proposal({"gain": 1})]), env)
-    seeds = [seed for _revision, _episode, seed in env.episodes]
-    assert seeds
-    assert set(seeds).isdisjoint(config.development_seeds)
-    assert set(seeds) <= set(config.held_out_seeds)
-    episodes = store.fetch_episodes(summary.experiment_id)
-    assert [episode.seed for episode in episodes] == seeds
-    store.close()
+    with SqliteStore(tmp_path / "rewardbench.sqlite") as store:
+        with pytest.raises(ConfigError, match="frozen controller"):
+            ExperimentRunner(config, model, env, store)
+    assert model.requests == []
+    assert env.episodes == []
 
 
 def test_environment_id_mismatch_raises(tmp_path: Path) -> None:

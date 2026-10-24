@@ -132,6 +132,8 @@ def preflight_live(
     Does not open a provider socket and does not call ``propose``.
     """
 
+    if config.split is not Split.DEVELOPMENT:
+        raise ConfigError("live adaptation requires split=development; use rewardbench.heldout")
     if config.provider == "mock":
         raise ConfigError("live mode requires a real provider; use --mode mock for the scripted model")
     if config.provider not in LIVE_PROVIDERS:
