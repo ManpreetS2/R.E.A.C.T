@@ -7,6 +7,8 @@ family so it is not folded into either benchmark.
 
 from __future__ import annotations
 
+import hashlib
+
 GYMNASIUM = "gymnasium"
 APOLLO_LANDER = "apollo-lander"
 
@@ -35,3 +37,14 @@ def family_display(family: str) -> str:
     """Human-readable family name. Unknown families keep their environment id."""
 
     return _DISPLAY.get(family, family)
+
+
+def config_label(environment_config: str) -> str:
+    """Compact legend key; reports include the full recorded settings."""
+    if environment_config == "{}":
+        return "unrecorded"
+    return hashlib.sha256(environment_config.encode("utf-8")).hexdigest()[:12]
+
+
+def provider_label(provider: str) -> str:
+    return "mock (scripted infrastructure; not LLM)" if provider.lower() == "mock" else provider

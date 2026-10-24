@@ -6,12 +6,12 @@ session summaries. Episode-level pooling is not used for confidence intervals.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 
 from rewardbench.analysis.schema import AttemptObservation, EpisodeObservation, Interval, LogBundle
 from rewardbench.analysis.stats import mean_interval, median, wilson_interval
 
-GroupKey = tuple[str, str, str, str, str, str]
+GroupKey = tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -49,6 +49,9 @@ class SessionSummary:
     reward_by_revision: tuple[tuple[int, float], ...]
     success_by_attempt: tuple[tuple[int, float], ...]
     cumulative_seconds_by_revision: tuple[tuple[int, float], ...]
+    environment_config: str = "{}"
+    episodes: tuple[EpisodeObservation, ...] = field(default=(), repr=False)
+    attempts: tuple[AttemptObservation, ...] = field(default=(), repr=False)
 
 
 @dataclass(frozen=True)
@@ -74,6 +77,7 @@ class GroupEstimate:
     crash_rate: Interval
     success_rate: Interval
     n_experiments: int
+    environment_config: str = "{}"
 
 
 @dataclass(frozen=True)
@@ -90,6 +94,7 @@ class TargetTime:
     reached: bool
     seconds: float | None
     observed_seconds: float
+    environment_config: str = "{}"
 
 
 def session_summaries(bundle: LogBundle) -> list[SessionSummary]:
@@ -136,35 +141,19 @@ def summarize_groups(
 def experiment_rollups(summaries: list[SessionSummary]) -> list[SessionSummary]:
     """Collapse sessions that share an experiment id into one replicate.
 
-    A resumed run opens another session for the same experiment. That second
-    session is not a new experiment. The reward trajectory is taken from the
-    session that reached the highest revision index. Cost and tokens are the
-    sum across every session of that experiment.
+    A resumed run opens another session for the same experiment. Rebuild all
+    metrics from its observations, including revisions split across sessions.
     """
 
-    grouped: dict[str, list[SessionSummary]] = {}
+    grouped: dict[tuple[str, GroupKey], list[SessionSummary]] = {}
     for summary in summaries:
-        grouped.setdefault(summary.experiment_id, []).append(summary)
+        grouped.setdefault((summary.experiment_id, _group_key(summary)), []).append(summary)
     rolled: list[SessionSummary] = []
     for rows in grouped.values():
-        chosen = max(
-            rows,
-            key=lambda row: (
-                row.final_revision if row.final_revision is not None else -1,
-                row.session_id,
-            ),
-        )
-        cost = sum(row.total_cost_usd for row in rows)
-        tokens = sum(row.total_tokens for row in rows)
-        per_dollar = None if chosen.improvement is None or cost <= 0.0 else chosen.improvement / cost
-        rolled.append(
-            replace(
-                chosen,
-                total_cost_usd=cost,
-                total_tokens=tokens,
-                improvement_per_dollar=per_dollar,
-            )
-        )
+        episodes = [episode for row in rows for episode in row.episodes]
+        attempts = [attempt for row in rows for attempt in row.attempts]
+        combined = _summarize_session(episodes, attempts)
+        rolled.append(replace(combined, session_id=rows[-1].session_id))
     return sorted(rolled, key=_session_sort)
 
 
@@ -194,6 +183,7 @@ def time_to_targets(
             results.append(
                 TargetTime(
                     target_reward=target,
+                    environment_config=summary.environment_config,
                     session_id=summary.session_id,
                     model_id=summary.model_id,
                     provider=summary.provider,
@@ -237,7 +227,8 @@ def _summarize_session(
     crashed = 0
     success_known = 0
     successes = 0
-    for episode in episodes:
+    ordered_episodes = sorted(episodes, key=lambda row: (row.revision_index, row.episode_index))
+    for ordinal, episode in enumerate(ordered_episodes):
         elapsed_by_revision[episode.revision_index] = (
             elapsed_by_revision.get(episode.revision_index, 0.0) + episode.elapsed_seconds
         )
@@ -247,7 +238,7 @@ def _summarize_session(
             success_known += 1
             if episode.success:
                 successes += 1
-            success_by_attempt.setdefault(episode.episode_index, []).append(
+            success_by_attempt.setdefault(ordinal, []).append(
                 1.0 if episode.success else 0.0
             )
         if episode.crashed is not None and episode.error is None:
@@ -262,11 +253,11 @@ def _summarize_session(
     for attempt in attempts:
         cost += attempt.estimated_cost_usd
         tokens += attempt.total_tokens
+        latency_by_revision[attempt.revision_index] = (
+            latency_by_revision.get(attempt.revision_index, 0.0) + attempt.latency_seconds
+        )
         if attempt.selected:
             selected += 1
-            latency_by_revision[attempt.revision_index] = (
-                latency_by_revision.get(attempt.revision_index, 0.0) + attempt.latency_seconds
-            )
             if not attempt.valid:
                 invalid_selected += 1
     reward_by_revision = tuple(
@@ -286,6 +277,9 @@ def _summarize_session(
     per_dollar = None if improvement is None or cost <= 0.0 else improvement / cost
     return SessionSummary(
         experiment_id=source.experiment_id,
+        environment_config=source.environment_config,
+        episodes=tuple(episodes),
+        attempts=tuple(attempts),
         session_id=source.session_id,
         environment_id=source.environment_id,
         provider=source.provider,
@@ -328,6 +322,7 @@ def _estimate_group(rows: list[SessionSummary], confidence: float) -> GroupEstim
     sample = rows[0]
     return GroupEstimate(
         model_id=sample.model_id,
+        environment_config=sample.environment_config,
         provider=sample.provider,
         feedback_condition=sample.feedback_condition,
         split=sample.split,
@@ -351,6 +346,7 @@ def _estimate_group(rows: list[SessionSummary], confidence: float) -> GroupEstim
 def _group_key(summary: SessionSummary) -> GroupKey:
     return (
         summary.environment_id,
+        summary.environment_config,
         summary.validation_status,
         summary.split,
         summary.feedback_condition,

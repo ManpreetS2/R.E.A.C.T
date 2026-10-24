@@ -10,7 +10,7 @@ import sqlite3
 from dataclasses import dataclass
 from pathlib import Path
 
-from rewardbench.analysis.environments import environment_family, family_display
+from rewardbench.analysis.environments import environment_family, family_display, provider_label
 
 
 @dataclass(frozen=True)
@@ -33,6 +33,10 @@ class HeldOutEvaluationSummary:
     replay_paths: tuple[str, ...]
     start_schedule_version: str
     environment_version: str
+    provider: str = "unrecorded"
+    model_id: str = "unrecorded"
+    vary_fuel: bool | None = None
+    max_episode_steps: int | None = None
 
 
 def load_heldout_summaries(path: str | Path) -> tuple[HeldOutEvaluationSummary, ...]:
@@ -65,6 +69,10 @@ def load_heldout_summaries(path: str | Path) -> tuple[HeldOutEvaluationSummary, 
                 e.environment_id,
                 e.environment_version,
                 e.start_schedule_version,
+                e.vary_fuel,
+                e.max_episode_steps,
+                f.provider,
+                f.model_id,
                 e.status,
                 f.feedback_condition
             FROM heldout_evaluations AS e
@@ -113,16 +121,18 @@ def heldout_markdown(summaries: tuple[HeldOutEvaluationSummary, ...]) -> list[st
         )
         return lines
 
+    if any(item.provider.lower() == "mock" for item in summaries):
+        lines.extend(["> Provider `mock` rows are scripted infrastructure checks, not LLM results.", ""])
     families = sorted({item.environment_family for item in summaries})
     for family in families:
         family_rows = [item for item in summaries if item.environment_family == family]
         lines.append(f"### {family_display(family)}")
         lines.append("")
         lines.append(
-            "| Evaluation | Source experiment | Feedback | Controller hash | Episodes | "
+            "| Evaluation | Source experiment | Provider | Model | Feedback | Controller hash | Episodes | "
             "Land rate | Mean reward | Crash rate | Timeout rate | Status |"
         )
-        lines.append("| --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | --- |")
+        lines.append("| --- | --- | --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | --- |")
         for item in family_rows:
             lines.append(
                 "| "
@@ -130,6 +140,8 @@ def heldout_markdown(summaries: tuple[HeldOutEvaluationSummary, ...]) -> list[st
                     [
                         f"`{item.evaluation_id}`",
                         f"`{item.source_experiment_id}`",
+                        provider_label(item.provider),
+                        item.model_id,
                         item.feedback_condition,
                         f"`{item.controller_hash[:12]}…`",
                         str(item.episode_count),
@@ -152,6 +164,8 @@ def heldout_markdown(summaries: tuple[HeldOutEvaluationSummary, ...]) -> list[st
                     f"- `{item.evaluation_id}` freeze `{item.freeze_id}` · "
                     f"schedule `{item.start_schedule_version}` · "
                     f"env `{item.environment_version}` · "
+                    f"vary_fuel `{item.vary_fuel}` · "
+                    f"max_episode_steps `{item.max_episode_steps}` · "
                     f"replay: {replays}",
                 ]
             )
@@ -192,6 +206,10 @@ def _summarize(row: sqlite3.Row, episodes: list[sqlite3.Row]) -> HeldOutEvaluati
         replay_paths=replays,
         start_schedule_version=str(row["start_schedule_version"]),
         environment_version=str(row["environment_version"]),
+        provider=str(row["provider"]),
+        model_id=str(row["model_id"]),
+        vary_fuel=bool(row["vary_fuel"]),
+        max_episode_steps=row["max_episode_steps"],
     )
 
 

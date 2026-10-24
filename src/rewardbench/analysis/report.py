@@ -8,7 +8,7 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
 from rewardbench.analysis.diagnostics import fairness_notes, resume_notes, seed_leakage
-from rewardbench.analysis.environments import environment_family, family_display
+from rewardbench.analysis.environments import config_label, environment_family, family_display, provider_label
 from rewardbench.analysis.heldout import heldout_markdown, load_heldout_summaries
 from rewardbench.analysis.plots import (
     plot_improvement_per_dollar,
@@ -93,6 +93,11 @@ def write_report(
             "This report does not rank models."
         )
         lines.append("")
+    if any(row.provider.lower() == "mock" for row in summaries):
+        lines.extend([
+            "> Provider `mock` rows are scripted infrastructure checks, not LLM results.",
+            "",
+        ])
     lines.extend(_validation_section(bundle))
     lines.extend(_diagnostic_section(bundle, summaries))
     plot_paths: list[Path] = []
@@ -245,6 +250,10 @@ def _family_section(
         "interval for means. Bounds are omitted when fewer than two sessions contribute.",
         "",
     ]
+    lines.extend(["Recorded simulator configurations (unrecorded settings are unknown):", ""])
+    for context in sorted({row.environment_config for row in summaries}):
+        lines.append(f"- `{config_label(context)}`: `{context}`")
+    lines.append("")
     lines.extend(_session_table(summaries))
     lines.extend(
         _group_table(
@@ -257,8 +266,8 @@ def _family_section(
             "#### Repeated experiments",
             "",
             "One experiment id is one replicate. Additional sessions of that id are resumes, "
-            "not additional experiments. The reward change is taken from the session that "
-            "reached the highest revision index. Cost and tokens are summed across the "
+            "not additional experiments. The reward trajectory is rebuilt across all sessions, "
+            "including episodes of a revision split by a resume. Cost and tokens are summed across the "
             "experiment's sessions. The interval is across experiments, so one experiment "
             "has no interval.",
             "",
@@ -282,8 +291,8 @@ def _family_section(
 
 def _session_table(summaries: list[SessionSummary]) -> list[str]:
     lines = [
-        "| Model | Environment | Condition | Split | Session | Status | Initial | Final | Improvement | Cost USD | Per dollar | Invalid rate | Crash rate |",
-        "| --- | --- | --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+        "| Model | Provider | Environment | Config | Condition | Split | Session | Status | Initial | Final | Improvement | Cost USD | Per dollar | Invalid rate | Crash rate |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for summary in summaries:
         lines.append(
@@ -291,7 +300,9 @@ def _session_table(summaries: list[SessionSummary]) -> list[str]:
             + " | ".join(
                 [
                     summary.model_id,
+                    provider_label(summary.provider),
                     summary.environment_id,
+                    config_label(summary.environment_config),
                     summary.feedback_condition,
                     summary.split,
                     summary.session_id,
@@ -315,13 +326,15 @@ def _session_table(summaries: list[SessionSummary]) -> list[str]:
 
 def _group_table(estimates: list[GroupEstimate], *, count_label: str) -> list[str]:
     lines = [
-        f"| Model | Environment | Condition | Split | {count_label} | Experiments | Mean improvement | Interval | Mean per dollar | Interval |",
-        "| --- | --- | --- | --- | ---: | ---: | ---: | --- | ---: | --- |",
+        f"| Model | Provider | Environment | Config | Condition | Split | {count_label} | Experiments | Mean improvement | Interval | Mean per dollar | Interval |",
+        "| --- | --- | --- | --- | --- | --- | ---: | ---: | ---: | --- | ---: | --- |",
     ]
     for estimate in estimates:
         lines.append(
-            "| {model} | {environment} | {condition} | {split} | {n} | {experiments} | {improvement} | {improvement_ci} | {per_dollar} | {per_dollar_ci} |".format(
+            "| {model} | {provider} | {environment} | {config} | {condition} | {split} | {n} | {experiments} | {improvement} | {improvement_ci} | {per_dollar} | {per_dollar_ci} |".format(
                 model=estimate.model_id,
+                provider=provider_label(estimate.provider),
+                config=config_label(estimate.environment_config),
                 environment=estimate.environment_id,
                 condition=estimate.feedback_condition,
                 split=estimate.split,
@@ -349,28 +362,25 @@ def _target_table(
         "",
     ]
     rows = time_to_targets(summaries, targets, validation_status=status)
-    lines.append("| Target | Model | Condition | Split | Reached | Sessions | Wilson interval | Median seconds if reached |")
-    lines.append("| ---: | --- | --- | --- | ---: | ---: | --- | ---: |")
-    grouped: dict[tuple[float, str, str, str], list] = {}
+    lines.append("| Target | Model | Provider | Environment | Config | Condition | Split | Reached | Sessions | Wilson interval | Median seconds if reached |")
+    lines.append("| ---: | --- | --- | --- | --- | --- | --- | ---: | ---: | --- | ---: |")
+    grouped: dict[tuple, list] = {}
     for row in rows:
         grouped.setdefault(
-            (row.target_reward, row.model_id, row.feedback_condition, row.split),
+            (row.target_reward, row.model_id, row.provider, row.environment_id,
+             row.environment_config, row.feedback_condition, row.split),
             [],
         ).append(row)
     for key in sorted(grouped):
         sample = grouped[key]
+        row = sample[0]
         proportion = reached_proportion(sample, confidence)
         lines.append(
-            "| {target:g} | {model} | {condition} | {split} | {reached} | {n} | {interval} | {median} |".format(
-                target=key[0],
-                model=key[1],
-                condition=key[2],
-                split=key[3],
-                reached=sum(1 for row in sample if row.reached),
-                n=len(sample),
-                interval=_interval(proportion),
-                median=_fmt(conditional_median_seconds(sample)),
-            )
+            f"| {row.target_reward:g} | {row.model_id} | {provider_label(row.provider)} | "
+            f"{row.environment_id} | {config_label(row.environment_config)} | "
+            f"{row.feedback_condition} | {row.split} | "
+            f"{sum(1 for item in sample if item.reached)} | {len(sample)} | "
+            f"{_interval(proportion)} | {_fmt(conditional_median_seconds(sample))} |"
         )
     lines.append("")
     return lines
@@ -435,7 +445,8 @@ def _reading_notes(targets: tuple[float, ...]) -> list[str]:
         "- Reward versus revision uses the environment reward. Negative values are penalties.",
         "- A rising curve is a within-session change. It is not, by itself, evidence that one model is better than another.",
         "- Compare the numerical-reward condition with the no-feedback condition before comparing models.",
-        "- Landing success uses the episode index. Controller revision is a different axis.",
+        "- Landing success uses the zero-based episode ordinal ordered by (revision, episode).",
+        "- Cumulative timing includes all recorded model-call latencies (including unselected retries) and episode durations; process downtime is not recorded.",
         "- Improvement per dollar is undefined when the recorded cost is zero.",
         f"- Time-to-target uses caller-supplied reward thresholds ({rendered}), not a threshold discovered from the data.",
         "- Development logs and held-out logs stay in separate rows because they are different experiments.",
