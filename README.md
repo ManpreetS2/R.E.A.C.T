@@ -70,6 +70,9 @@ Controller revisions and simulated episodes are different records. Gymnasium and
 
 Paired configs share simulator settings and seed lists; only feedback condition (and names/paths) differ.
 
+See [the independent offline v1 audit](docs/OFFLINE_V1_VERIFICATION.md) for the
+verified release scope, repairs, exact evidence, and remaining research limits.
+
 ## Quick start
 
 Python **3.11+** (3.12 recommended) and Node.js (ApolloLander physics).
@@ -90,6 +93,15 @@ node frontend/apollolander/experiment/physics.test.js
 
 No API key required.
 
+Repeat the entire offline demonstration twice in fresh databases, verify SQLite,
+41 flight replays, and report/figure determinism:
+
+```bash
+python examples/verify_offline_v1.py --out runs/offline-v1-verification
+```
+
+Use a new output directory on each invocation; existing evidence is preserved.
+
 ### Offline demonstration (scripted mock — infrastructure)
 
 ```bash
@@ -100,14 +112,16 @@ python -m rewardbench.run \
 python -m rewardbench.run \
   --config configs/apollolander_offline_development_nofeedback.yaml --mode mock
 
-# Sealed held-out evaluation (no model calls)
+# Engineering/demo held-out evaluation (no model calls)
 python -m rewardbench.heldout \
   --database runs/apollolander_offline_numerical.sqlite \
-  --source-config configs/apollolander_offline_development_numerical.yaml
+  --source-config configs/apollolander_offline_development_numerical.yaml \
+  --record-dir runs/heldout-flights/numerical
 
 python -m rewardbench.heldout \
   --database runs/apollolander_offline_nofeedback.sqlite \
-  --source-config configs/apollolander_offline_development_nofeedback.yaml
+  --source-config configs/apollolander_offline_development_nofeedback.yaml \
+  --record-dir runs/heldout-flights/nofeedback
 
 # Reports
 python -m rewardbench.analysis report \
@@ -146,9 +160,9 @@ assert verified["matched"] is True
 
 ### Evidence figures (scripted offline mock)
 
-![Numerical reward vs revision](docs/assets/v1-evidence/figures/offline_mock_numerical_reward_vs_revision.png)
+![Numerical reward vs revision](docs/assets/v1-evidence/figures/offline_v1_matched_numerical_reward_vs_revision.png)
 
-![No-feedback reward vs revision](docs/assets/v1-evidence/figures/offline_mock_nofeedback_reward_vs_revision.png)
+![No-feedback reward vs revision](docs/assets/v1-evidence/figures/offline_v1_matched_nofeedback_reward_vs_revision.png)
 
 These plots come from real SQLite logs of the **scripted** mock model. They are pipeline evidence, not LLM success.
 
@@ -201,6 +215,7 @@ Pin tip SHA when publishing results. Development and held-out seeds must stay di
 
 ## Honest limitations
 
+- Numerical feedback currently also includes outcome/state metrics; this does not isolate scalar reward alone.
 - Average reward change across different research starts alone does **not** prove improvement.  
 - Compare revisions on matched development conditions, then score **frozen** final policies on sealed held-out starts.  
 - Seeds `1000000–1000007` were used in engineering demos — they are **not** untouched final-evaluation evidence. See `docs/FINAL_EVALUATION_PROTOCOL.md`.  

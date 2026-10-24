@@ -6,6 +6,10 @@ experiment, then score it on sealed ApolloLander research-mode held-out starts.
 This path never calls `ModelClient.propose`. It is sealed evaluation evidence,
 not an LLM learning result.
 
+The example seeds `1000000–1000007` are previously exposed engineering/demo data.
+They are not the reserved final research cohort. The general adaptation runner
+rejects `split=held_out`; only this frozen-controller path performs evaluation.
+
 ## Commands
 
 ```bash
@@ -46,5 +50,9 @@ SQLite tables (same database file as development):
 - `frozen_controllers` — parameters, SHA-256 hash, source attempt identity
 - `heldout_evaluations` — sealed schedule metadata and status
 - `heldout_episodes` — rewards, outcomes, initial states, optional replay path
+
+Pass `--record-dir runs/heldout-flights` to record replay manifests. Each evaluation
+uses its own evaluation-id subdirectory; SQLite stores actual absolute file paths.
+Different freezes or step caps cannot overwrite each other's flight files.
 
 Repeating the same evaluation fails closed; prior evidence is not replaced.

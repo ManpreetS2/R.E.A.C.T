@@ -6,6 +6,16 @@ Audience: a technical reviewer with ~15 minutes. Goal: show the **real** simulat
 
 R.E.A.C.T. measures whether numerical rewards change in-context controller revisions versus a matched no-feedback arm. Physics scores the flight. Held-out evaluation freezes the final controller and never calls a model.
 
+Run the complete reproducibility check first (fresh output directory):
+
+```bash
+python examples/verify_offline_v1.py --out runs/offline-v1-demo
+```
+
+It repeats both arms, checks SQLite and evaluation isolation, generates reports,
+and verifies 41 replays. All held-out runs here use previously exposed engineering
+seeds `1000000–1000007`. The reserved research cohort is never used.
+
 ## Demo script
 
 ### 1. Show the problem and architecture
@@ -37,10 +47,10 @@ Show CLI summary: revisions, episodes, mean reward, SQLite path. State clearly: 
 
 ```bash
 sqlite3 runs/apollolander_offline_numerical.sqlite \
-  "SELECT revision_index, selected, valid, substr(parameters,1,80) FROM attempts ORDER BY revision_index, call_index;"
+  "SELECT revision_index, selected, valid, substr(parameters_json,1,80) FROM attempts ORDER BY revision_index, call_index;"
 
 sqlite3 runs/apollolander_offline_numerical.sqlite \
-  "SELECT revision_index, episode_seed, total_reward, success FROM episodes ORDER BY revision_index;"
+  "SELECT revision_index, seed, total_reward, success FROM episodes ORDER BY revision_index, episode_index;"
 ```
 
 Contrast with the no-feedback database: rewards stored for analysis, withheld from model history.
@@ -50,7 +60,8 @@ Contrast with the no-feedback database: rewards stored for analysis, withheld fr
 ```bash
 python -m rewardbench.heldout \
   --database runs/apollolander_offline_numerical.sqlite \
-  --source-config configs/apollolander_offline_development_numerical.yaml
+  --source-config configs/apollolander_offline_development_numerical.yaml \
+  --record-dir runs/demo-heldout/numerical
 ```
 
 Show: `freeze_id`, `controller_hash`, held-out seed list, `success_count`, note that **no model calls** occurred. Repeat for the no-feedback database to show matched sealed starts.
@@ -82,6 +93,10 @@ Point at `examples/apollolander/research_development_baseline/DEVELOPMENT_BASELI
 - Random / coast / hover: **0/16** landings  
 - Hand-specified guidance: **16/16** landings  
 - Held-out unused during baseline tuning  
+
+Generated reports include true recorded flight paths. Separate evaluations write
+into separate evaluation-id subdirectories. Repeating a sealed evaluation returns
+exit 2; start a fresh database to repeat this engineering demonstration.
 
 ### 9. Close with honesty
 

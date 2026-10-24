@@ -1,0 +1,89 @@
+{
+  "arms": {
+    "nofeedback": {
+      "controller_hash": "4ea63d1eb21dadb42ef38885ce82e6d3f761a100a5325d6144e4643ca37c2ecc",
+      "deterministic_observations_sha256": "f594f66793356b7819424ede61d72bb08c0d009f9131ef1f01e218d186ed957e",
+      "development": [
+        {
+          "revision_index": 0,
+          "seed": 5,
+          "total_reward": -24.917620057158363
+        },
+        {
+          "revision_index": 1,
+          "seed": 5,
+          "total_reward": -24.917620057158363
+        }
+      ],
+      "figure_sha256": "4c210c039302cf2b1db88e1a735780aaaa25f94737ded5510f2fa6d5a805cab2",
+      "heldout_landings": 0,
+      "heldout_mean_reward": -25.075693787711636,
+      "heldout_seeds": [
+        1000000,
+        1000001,
+        1000002,
+        1000003,
+        1000004,
+        1000005,
+        1000006,
+        1000007
+      ],
+      "provider_cost_usd": 0.0
+    },
+    "numerical": {
+      "controller_hash": "ddbeca7c89d40d840c5ee733a9f70ef3d6ea7c44c9fdf12d767a2024c0462ff1",
+      "deterministic_observations_sha256": "ac8ea5c46fffe7222eaf9734449445c52aea213cc559d315e29187aea042d12b",
+      "development": [
+        {
+          "revision_index": 0,
+          "seed": 5,
+          "total_reward": -24.917620057158363
+        },
+        {
+          "revision_index": 1,
+          "seed": 5,
+          "total_reward": -25.628215803648324
+        }
+      ],
+      "figure_sha256": "f1067c5f9a16da74180f9d70ef7d8a2f492bff6701326ac6363b5bc38f8e9927",
+      "heldout_landings": 0,
+      "heldout_mean_reward": -25.78529069401137,
+      "heldout_seeds": [
+        1000000,
+        1000001,
+        1000002,
+        1000003,
+        1000004,
+        1000005,
+        1000006,
+        1000007
+      ],
+      "provider_cost_usd": 0.0
+    }
+  },
+  "flight_replays_verified": 41,
+  "git_dirty": true,
+  "git_head": "f065aed68ed7169031c9a34d4a2820d405b6f34c",
+  "node": "v22.12.0",
+  "packages": {
+    "PyYAML": "6.0.3",
+    "gymnasium": "1.4.0",
+    "imageio": "2.38.1",
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.4",
+    "pytest": "9.1.1",
+    "scipy": "1.18.1"
+  },
+  "python": "3.12.13",
+  "repetitions": 2,
+  "report_determinism": "identical text excluding generation timestamp; byte-identical PNGs on repeated input",
+  "scope": "scripted offline infrastructure; engineering/demo seeds only; no LLM learning claim",
+  "status": "verified",
+  "test_suite": {
+    "node_physics_exit": 0,
+    "pip_check": "passed",
+    "python_passed": 290
+  },
+  "verifier_sha256": "f645acf23151613456578033420a172b5b0f53c873b5a42541eca48b1a0111fe",
+  "working_tree_diff_sha256": "056be48e128f6c1588e89b2ec6768498218d5eaf8a601699811340eac863ae3a"
+}
