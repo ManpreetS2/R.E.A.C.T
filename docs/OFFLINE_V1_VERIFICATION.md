@@ -1,5 +1,9 @@
 # Offline v1 completion audit — 2026-10-24
 
+The completion audit below records the original local verification. The final
+integration verification section records the subsequently authorized push,
+draft PR, independent review and remote CI separately.
+
 **Verdict: ready as a local offline research-infrastructure release candidate.**
 No critical known defect remains in the documented ApolloLander offline workflow.
 This does not validate the feedback hypothesis or establish real LLM adaptation.
@@ -173,3 +177,45 @@ connectivity/demo evaluation from consuming the reserved final cohort.
 
 **Single next action:** owner review of `t3/verify-offline-v1` for integration as the
 offline v1 release candidate. Paid model studies remain a separate approval gate.
+
+## Final integration verification (2026-10-24)
+
+Draft PR: [#12](https://github.com/ManpreetS2/R.E.A.C.T/pull/12),
+`t3/verify-offline-v1` → `main`. The owner authorized pushing this branch and
+opening a draft only. No merge, force-push, tag or release publication is authorized.
+
+Before the first push, the worktree was clean at
+`71f712da923ef7e0e6a3448149be2d84ed6b3378`; fetched `main` remained
+`5e624c7f1032a1e33f9657ef6183efbaefaa2756`. The full 51-file diff was inspected.
+Credential-signature checks found no provider/GitHub token, private-key, AWS-key
+or credentialed-URL matches in changed files. No runtime databases, logs, model
+checkpoints, credentials files or unrelated RL branch content were included.
+The tracked package/verification snapshots and two PNG figures are intentional,
+explicitly labeled offline engineering evidence; they are not model-learning data.
+
+**Local evidence:** the preceding 290-test run, Node checks, clean editable
+installation and 41 replay checks are local results, not GitHub CI results.
+
+**Remote CI:** opening/pushing the draft triggered `analysis-checks` for both
+`push` and `pull_request` at source head `71f712da923ef7e0e6a3448149be2d84ed6b3378`:
+[push run](https://github.com/ManpreetS2/R.E.A.C.T/actions/runs/40140295063),
+[PR run](https://github.com/ManpreetS2/R.E.A.C.T/actions/runs/40140314044).
+Their three-platform jobs were initially in progress; no remote pass is inferred
+from the local suite. Exact-head final results are pending integration completion
+and are visible on the [PR checks](https://github.com/ManpreetS2/R.E.A.C.T/pull/12/checks).
+
+An independent read-only reviewer was assigned the entire 51-file source diff,
+including experimental correctness, resume/legacy behavior, SQLite migrations
+and races, freeze/isolation, replay integrity, billed failures and scientific
+claims. Findings and any focused repairs will be recorded here before final
+handoff; a passing test suite alone is not independent review approval.
+
+The existing experiment is preserved. Its comparison tests **richer simulator
+feedback versus no feedback**, not the isolated causal effect of scalar reward.
+`FIRST_EXPERIMENT_PROTOCOL.md` now recommends a separate minimal matched-transcript
+control: identical baseline controller, history and non-reward metrics in both
+requests; vary only whether the true scalar reward is displayed, allow one
+proposal each, freeze immediately, and score on a common engineering panel.
+Independent pairs and a pre-declared analysis/budget are required for inference.
+That control is documentation only; no model calls or reserved-cohort execution
+were performed.

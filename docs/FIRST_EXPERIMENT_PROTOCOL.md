@@ -25,8 +25,8 @@ subscription does not supply provider API billing credits.
 - Two conditions: `numerical_reward` and `no_feedback`. The current numerical
   prompt includes reward **plus** success/crash, steps, fuel and start-state
   metrics. Pre-register this as richer simulator feedback versus none. If the
-  intended hypothesis is scalar reward alone, review and freeze a scalar-only
-  prompt revision first; the present intervention cannot isolate that effect.
+  intended hypothesis is scalar reward's incremental effect, use the matched
+  information control below; the present intervention cannot isolate that effect.
 - Match all model settings, schema, history window, simulator parameters,
   retry policy, revision and episode budgets across arms. Change only condition,
   experiment name, database path and explanatory notes/paired-config pointers.
@@ -75,5 +75,37 @@ subscription does not supply provider API billing credits.
    policies on paired seeds; uncertainty must respect paired seeds and
    independent experiment replicates. Session resumes are not extra replicates.
    Do not pool Gymnasium, ApolloLander, scripted controllers, or PPO training.
+
+## Smallest future control for scalar reward (recommendation only)
+
+Keep the existing offline conditions and their evidence unchanged. A separate
+experiment should compare **identical non-reward information, with versus without
+the true scalar reward**. Removing metrics only from the numerical arm would not
+hold the information supplied by the current arms constant.
+
+For the smallest controlled revision probe, start each pair from the same frozen
+baseline controller and a single previously recorded development transcript.
+Both model requests receive identical controller history, validity information,
+success/crash outcomes, steps, fuel/start metrics, schema, system instructions,
+revision index and model settings. The only intervention is the scalar reward
+field: its true value versus a fixed withheld marker. Diff the rendered requests
+before any approved call to verify that treatment is their sole difference.
+Use separate conversations, randomize/counterbalance request order, and permit
+one proposal per condition (two calls per pair). Do not retry/select for success.
+
+Immediately freeze both proposals and score them with no further model calls on
+the same pre-declared engineering evaluation panel. Compare their paired reward
+changes from the common baseline; keep invalid proposals and billed failures in
+the pre-declared accounting. Repeat independently paired draws to estimate
+uncertainty; one two-call pair checks feasibility and cannot establish an effect.
+Pre-register replicate count, sampling policy, budget and failure handling before
+approval. This identifies the effect of explicitly displaying scalar reward
+conditional on those fixed metrics, even if the reward is inferable from them.
+It does not yet establish long-horizon closed-loop adaptation.
+
+This design requires a separately reviewed prompt/control implementation; it is
+not implemented or executed by this integration PR. It needs paid-call approval
+before using a real model. Use previously exposed demo evaluation cases for a
+feasibility check; do not consume `apollolander.final_eval.v1` for this probe.
 
 No command in this document authorizes spending or final-cohort execution.

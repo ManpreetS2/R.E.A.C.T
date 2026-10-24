@@ -215,7 +215,7 @@ Pin tip SHA when publishing results. Development and held-out seeds must stay di
 
 ## Honest limitations
 
-- Numerical feedback currently also includes outcome/state metrics; this does not isolate scalar reward alone.
+- The current comparison tests richer simulator feedback versus no feedback: the numerical arm also includes outcome/state metrics. It does not identify the isolated causal effect of scalar reward.
 - Average reward change across different research starts alone does **not** prove improvement.  
 - Compare revisions on matched development conditions, then score **frozen** final policies on sealed held-out starts.  
 - Seeds `1000000–1000007` were used in engineering demos — they are **not** untouched final-evaluation evidence. See `docs/FINAL_EVALUATION_PROTOCOL.md`.  

@@ -32,8 +32,11 @@ The current numerical arm includes simulator reward **and** success, crash, step
 fuel, and start-state metrics. No-feedback withholds all those outcomes while
 retaining controller/validation history. This measures richer simulator feedback
 versus none; it cannot isolate the causal contribution of the reward number from
-the accompanying information. A scalar-only study needs a separately reviewed,
-pre-registered prompt change before any paid development.
+the accompanying information. A scalar-reward control must hold all non-reward
+information constant between arms and vary only whether the true scalar is
+displayed. See the unexecuted matched-transcript recommendation in
+`FIRST_EXPERIMENT_PROTOCOL.md`; a separately reviewed prompt/control change and
+explicit paid-call approval are required before a real-model study.
 
 Current development uses the same seed panel at every revision. Older rotating
 seed curves remain historical engineering evidence; their initial-to-final

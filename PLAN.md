@@ -39,7 +39,7 @@ Out of v1 scope: credit economy, competition mode, Minecraft, new dashboards.
 | Flagship docs tip | **`4c88f2fa234ea2a4ecbacd9fd5998947fad87740`** |
 | Release-audit tip | **`89f006de563396c0e9f9f7010dbc388b24d596ed`** |
 | Tests | **258** Python passed + Node physics exit 0 |
-| Publish status | Historical branch merged in PR #2. Current audit changes remain local; no release published. |
+| Publish status | Historical branch merged in PR #2. Current audit branch pushed as draft PR #12 with owner authorization; no release published. |
 
 ## 3. Milestones
 
@@ -93,8 +93,10 @@ Deferred (validation, economy, competition/Minecraft).
 
 The former integration push/fast-forward instructions are obsolete: PR #2 is
 already merged. PRs #3–#11 are separate RL investigations and are not required
-for the offline v1 release. No additional branch merge, push or release publication
-is authorized by this completion audit.
+for the offline v1 release. The owner subsequently authorized pushing only
+`t3/verify-offline-v1` and opening draft PR #12. Merge, force-push, tags and release
+publication remain unauthorized. See the final integration section of the audit
+for independent-review and exact-head remote CI status.
 
 ## 7. Methodology constraints
 
