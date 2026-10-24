@@ -197,3 +197,34 @@ def test_sealed_report_retains_provider_and_simulator_context(tmp_path: Path) ->
     assert "vary_fuel `True`" in text
     assert "max_episode_steps `500`" in text
     assert "env `sim.v1`" in text
+
+
+def test_legacy_rotating_and_matched_schedules_do_not_pool(tmp_path: Path) -> None:
+    connection = connect_memory()
+    for index, schedule in enumerate((None, 'matched-development.v2')):
+        name = f'schedule-{index}'
+        insert_experiment(connection, experiment_id=name, model_id='constant')
+        insert_session(connection, experiment_id=name, session_id=name)
+        payload = {'metadata': {'synthetic': True}, 'max_episode_steps': 100}
+        if schedule is not None:
+            payload['seed_schedule_version'] = schedule
+        connection.execute('UPDATE experiments SET config_json=? WHERE experiment_id=?', (json.dumps(payload), name))
+        for revision, reward in enumerate((0.0, 0.02 if index == 0 else 0.0)):
+            insert_episode(connection, experiment_id=name, session_id=name, revision_index=revision,
+                           episode_index=0, seed=1 if revision == 0 or index == 1 else 2,
+                           reward=reward, success=False, crashed=False)
+    path = tmp_path / 'schedules.sqlite'
+    write_database(path, connection)
+    connection.close()
+    bundle = load_logs(path)
+    restored = load_logs(export_jsonl(bundle, tmp_path / 'schedules.jsonl'))
+    assert restored.episodes == bundle.episodes
+    summaries = session_summaries(restored)
+    groups = summarize_groups(summaries)
+    assert len(groups) == 2
+    assert {row.n_experiments for row in groups} == {1}
+    assert {row.improvement.point for row in groups} == {0.0, 0.02}
+    assert {json.loads(row.environment_config)['seed_schedule_version'] for row in groups} == {'unrecorded', 'matched-development.v2'}
+    figure = draw_reward_vs_revision(summaries)
+    assert len(figure.axes[0].get_legend().get_texts()) == 2
+    plt.close(figure)

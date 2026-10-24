@@ -267,3 +267,31 @@ def test_exhausted_http_retries_carry_aggregate_billed_usage():
     assert len(response.usage["calls"]) == 2
     assert len(client.invocations) == 1
     assert "HTTP 500" in client.invocations[0]["error"]
+
+
+@pytest.mark.parametrize('cache_field', ['cache_read_input_tokens', 'cache_creation_input_tokens', 'cache_write_input_tokens'])
+def test_billed_http_cache_usage_is_preserved_and_blocks_retries(cache_field):
+    usage = {'input_tokens': 20, 'output_tokens': 11, cache_field: 400}
+    payload = {'error': {'message': 'billed failure'}, 'usage': usage}
+    transport = FakeTransport([
+        http_json(payload, status=500, latency=.7),
+        http_json(payload, status=500, latency=.7),
+    ])
+    client = _client('anthropic', 'claude-haiku-5-5', transport, max_retries=1)
+    with pytest.raises(ModelClientError) as caught:
+        client.propose(make_request(settings={'max_output_tokens': 800}))
+    response = caught.value.response
+    assert response is not None
+    assert response.usage['cost_status'] != 'priced'
+    assert response.usage['calls'][0]['extra_usage'][cache_field] == 400
+    assert response.usage['extra_usage']['cache_read_input_tokens' if cache_field == 'cache_read_input_tokens' else 'cache_write_input_tokens'] == 400
+    assert response.prompt_tokens == 20 and response.completion_tokens == 11
+    assert response.latency_seconds == .7
+    assert 'cache' in response.usage['pricing_note'].lower()
+    assert response.estimated_cost_usd > 0
+    assert client._spending.spent_usd == pytest.approx(response.estimated_cost_usd)
+    assert client._spending.held_usd == 0
+    assert len(transport.requests) == 1  # The internal retry was forbidden.
+    with pytest.raises(BudgetExceeded, match='spending is blocked'):
+        client.propose(make_request(settings={'max_output_tokens': 800}))
+    assert len(transport.requests) == 1  # A subsequent propose is forbidden too.

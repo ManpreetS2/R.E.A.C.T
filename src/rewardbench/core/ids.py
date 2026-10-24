@@ -7,7 +7,7 @@ import json
 import uuid
 from typing import Any
 
-from rewardbench.contracts import CONTRACT_VERSION, ConfigError, ExperimentConfig
+from rewardbench.contracts import CONTRACT_VERSION, ConfigError, ExperimentConfig, ExperimentStore, ResumeError
 from rewardbench.core.seeds import SEED_SCHEDULE_VERSION
 
 _HASH_EXCLUDED = ("database_path", "notes")
@@ -72,6 +72,24 @@ def experiment_id(config: ExperimentConfig) -> str:
     """Stable id, ``exp_`` plus the first 20 hex characters of the config hash."""
 
     return f"exp_{config_hash(config)[:20]}"
+
+
+def reject_legacy_restart(config: ExperimentConfig, store: ExperimentStore) -> None:
+    """Do not turn an unchanged pre-versioned config into a fresh paid run."""
+    payload = canonical_config(config)
+    payload.pop("seed_schedule_version")
+    digest = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    legacy_id = f"exp_{digest[:20]}"
+    if store.get_experiment(legacy_id) is not None:
+        raise ResumeError(
+            f"legacy experiment {legacy_id} exists for this unchanged config; "
+            f"its rotating seed schedule cannot resume as {SEED_SCHEDULE_VERSION}. "
+            "No new model call is authorized by this restart. Preserve the legacy "
+            "database and code for its analysis/resume; choose an explicit new "
+            "experiment_name or a separate database for a new matched study."
+        )
 
 
 def new_session_id() -> str:

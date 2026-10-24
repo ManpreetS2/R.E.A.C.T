@@ -51,7 +51,7 @@ from rewardbench.contracts import (
 from rewardbench.core.budget import BudgetLimiter, _SpendHold
 from rewardbench.core.evaluation import SplitGuard
 from rewardbench.core.history import HistoryBuilder, RevisionHistoryEntry
-from rewardbench.core.ids import canonical_config, config_hash, experiment_id, new_session_id
+from rewardbench.core.ids import canonical_config, config_hash, experiment_id, new_session_id, reject_legacy_restart
 from rewardbench.core.isolation import model_history
 from rewardbench.core.locking import ExperimentRunLock
 from rewardbench.core.seeds import build_seed_schedule
@@ -131,6 +131,7 @@ class ExperimentRunner:
 
     def _run_locked(self) -> ExperimentSummary:
         self.store.initialize()
+        reject_legacy_restart(self.config, self.store)
         self._spec = self.environment.describe()
         self._check_environment()
         existing = self.store.get_experiment(self.experiment_id)

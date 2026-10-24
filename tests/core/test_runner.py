@@ -274,3 +274,56 @@ def test_revisions_and_episodes_stay_in_separate_tables(tmp_path: Path) -> None:
     assert episode.seed not in attempt.parameters.values()
     assert store.fetch_scores(summary.experiment_id)[0]["score"] == pytest.approx(episode.total_reward)
     store.close()
+
+
+@pytest.mark.parametrize('status', [ExperimentStatus.COMPLETED, ExperimentStatus.INTERRUPTED])
+def test_legacy_schedule_refuses_restart_before_model_construction(tmp_path, monkeypatch, status):
+    import hashlib
+    import json
+    from dataclasses import replace
+    import rewardbench.run.cli as cli
+    from rewardbench.contracts import CONTRACT_VERSION, ExperimentRecord
+    from rewardbench.core.ids import canonical_config
+
+    database = tmp_path / 'legacy.sqlite'
+    config = make_config(num_revisions=1, episodes_per_revision=1, database_path=str(database))
+    payload = canonical_config(config)
+    payload.pop('seed_schedule_version')
+    encoded = json.dumps(payload, sort_keys=True, separators=(',', ':'))
+    digest = hashlib.sha256(encoded.encode()).hexdigest()
+    legacy_id = 'exp_' + digest[:20]
+    record = ExperimentRecord(
+        experiment_id=legacy_id, experiment_name=config.experiment_name,
+        environment_id=config.environment_id, provider=config.provider, model_id=config.model_id,
+        feedback_condition=config.feedback_condition, split=config.split, seed=config.seed,
+        contract_version=CONTRACT_VERSION, config_json=encoded, config_hash=digest,
+        status=status, created_at='2026-10-15T00:00:00+00:00', updated_at='2026-10-15T00:00:00+00:00',
+    )
+    with SqliteStore(database) as store:
+        store.initialize()
+        store.create_experiment(record)
+        model = FakeModel([proposal({'gain': 1})])
+        with pytest.raises(ResumeError, match='legacy experiment'):
+            ExperimentRunner(config, model, FakeEnv(), store).run()
+        assert model.requests == []
+        assert store.get_experiment(legacy_id) == record
+        assert store._conn.execute('SELECT count(*) FROM experiments').fetchone()[0] == 1
+        assert store._conn.execute('SELECT count(*) FROM sessions').fetchone()[0] == 0
+
+    cli_payload = {key: value for key, value in payload.items() if key != 'contract_version'}
+    cli_payload['database_path'] = str(database)
+    path = tmp_path / 'unchanged.json'
+    path.write_text(json.dumps(cli_payload))
+    def forbidden(*args, **kwargs):
+        pytest.fail('legacy CLI restart constructed a model')
+    monkeypatch.setattr(cli, 'build_model', forbidden)
+    assert cli.main(['--config', str(path), '--mode', 'live', '--i-authorize-paid-api-calls']) == 2
+    with SqliteStore(database) as store:
+        assert store.get_experiment(legacy_id) == record
+        assert store._conn.execute('SELECT count(*) FROM experiments').fetchone()[0] == 1
+        # An explicitly named new study remains possible without altering legacy evidence.
+        fresh = replace(config, experiment_name='explicit-new-matched-study')
+        model = FakeModel([proposal({'gain': 1})])
+        assert ExperimentRunner(fresh, model, FakeEnv(), store).run().status is ExperimentStatus.COMPLETED
+        assert len(model.requests) == 1
+        assert store.get_experiment(legacy_id) == record

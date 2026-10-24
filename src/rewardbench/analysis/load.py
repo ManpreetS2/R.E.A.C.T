@@ -290,6 +290,8 @@ def _environment_config(config: dict[str, object]) -> str:
             settings[key] = config[key]
     if "max_episode_steps" in config:
         settings["max_episode_steps"] = config["max_episode_steps"]
+    # Missing legacy provenance stays unknown; it must not pool with matched v2.
+    settings["seed_schedule_version"] = config.get("seed_schedule_version", "unrecorded")
     return json.dumps(settings, sort_keys=True, separators=(",", ":"))
 
 

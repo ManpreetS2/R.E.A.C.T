@@ -38,7 +38,7 @@ from rewardbench.contracts import (
     RewardBenchError,
     Split,
 )
-from rewardbench.core.ids import experiment_id
+from rewardbench.core.ids import experiment_id, reject_legacy_restart
 from rewardbench.core.runner import ExperimentRunner
 from rewardbench.run.factory import build_environment, build_model, prepare_config
 from rewardbench.run.live import ACK_CONTINUATION_FLAG, ACK_PAID_FLAG, is_session_pause
@@ -111,6 +111,9 @@ def main(
         database = Path(config.database_path)
         database.parent.mkdir(parents=True, exist_ok=True)
         exp_id = experiment_id(config)
+        store = SqliteStore(database)
+        store.initialize()
+        reject_legacy_restart(config, store)
         overrides = _flight_adapter_overrides(config, experiment_id=exp_id, database=database)
         if config.environment_id.lower() in {"apollolander", "apollo-lander", "apollo"}:
             overrides.update(
@@ -119,8 +122,6 @@ def main(
             )
         environment = build_environment(config, adapter_overrides=overrides)
 
-        store = SqliteStore(database)
-        store.initialize()
         existing = store.get_experiment(exp_id)
         resume_selected = 0
         if existing is not None:
