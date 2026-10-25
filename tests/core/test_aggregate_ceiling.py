@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 from rewardbench import operate, study
-from rewardbench.contracts import BudgetExceeded, ExperimentStatus
+from rewardbench.contracts import BudgetExceeded, ExperimentStatus, ConfigError
 from rewardbench.run.ceiling import AGGREGATE_RESOURCE, AggregateCeilingGate, ledger_spent_usd
 
 from tests.core.test_live_cli import TEST_KEY
@@ -29,9 +29,29 @@ def test_ledger_sums_live_spend_across_databases_and_ignores_mock(tmp_path: Path
     (tmp_path / "a").mkdir()
     _db(tmp_path / "a" / "one.sqlite", [("openai", 0.01), ("mock", 5.0)])
     _db(tmp_path / "two.sqlite", [("openai", 0.0025)])
+    # Invalid .sqlite files are a safety problem: never silently omit spend.
     (tmp_path / "notes.sqlite").write_text("not a database")
+    with pytest.raises(ConfigError, match="cannot read spending ledger"):
+        ledger_spent_usd(tmp_path)
+    (tmp_path / "notes.sqlite").unlink()
     spent, count = ledger_spent_usd(tmp_path)
     assert spent == pytest.approx(0.0125) and count == 2
+
+
+def test_ledger_rejects_incomplete_and_invalid_cost_records(tmp_path: Path) -> None:
+    unfinished = tmp_path / "partial.sqlite"
+    with sqlite3.connect(unfinished) as db:
+        db.execute("CREATE TABLE experiments (id TEXT)")
+    with pytest.raises(ConfigError, match="incomplete experiment"):
+        ledger_spent_usd(tmp_path)
+    unfinished.unlink()
+    _db(tmp_path / "negative.sqlite", [("openai", -0.50)])
+    with pytest.raises(ConfigError, match="invalid cost record"):
+        ledger_spent_usd(tmp_path)
+    (tmp_path / "negative.sqlite").unlink()
+    _db(tmp_path / "null.sqlite", [("openai", None)])
+    with pytest.raises(ConfigError, match="invalid cost record"):
+        ledger_spent_usd(tmp_path)
 
 
 class _Inner:
@@ -57,7 +77,7 @@ def test_gate_refuses_before_the_inner_client_is_called(tmp_path: Path) -> None:
 
 
 def test_gate_rejects_nonpositive_ceilings(tmp_path: Path) -> None:
-    for bad in (0, -1, True):
+    for bad in (0, -1, True, float('nan'), float('inf'), -float('inf')):
         with pytest.raises(Exception):
             AggregateCeilingGate(_Inner(), ceiling_usd=bad, ledger_root=tmp_path)
 
