@@ -5,11 +5,13 @@
   <title>Apollo Lander — flight replay</title>
   <style>
     html, body { margin: 0; background: #000006; color: #F0F6FF; font: 14px monospace; }
-    canvas { width: 100vw; height: calc(100vh - 64px); display: block; }
+    canvas { width: 100vw; height: calc(100vh - 92px); display: block; }
+    #verdict { height: 28px; line-height: 28px; padding: 0 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #verdict.ok { color: #d6de7a; } #verdict.bad { color: #ff8a80; }
     #bar { height: 64px; display: flex; gap: 12px; align-items: center; padding: 0 12px; box-sizing: border-box; }
     #scrub { flex: 1; }
     button, select, input[type=file] { font: inherit; }
-    #drop { position: fixed; inset: 0 0 64px 0; display: none; align-items: center; justify-content: center;
+    #drop { position: fixed; inset: 0 0 92px 0; display: none; align-items: center; justify-content: center;
             background: rgba(0,0,6,.85); font-size: 18px; text-align: center; white-space: pre-line; }
   </style>
 </head>
@@ -17,6 +19,7 @@
   <canvas id="screen" width="1920" height="1080"></canvas>
   <div id="drop">Open a .flight.json recorded by R.E.A.C.T.
 (file picker below, drag and drop, or ?file=/path/on/this/server)</div>
+  <div id="verdict"></div>
   <div id="bar">
     <input id="file" type="file" accept=".json,application/json">
     <button id="play">Play</button>
@@ -49,6 +52,11 @@
         return;
       }
       el("drop").style.display = "none";
+      const c = loaded.comparison;
+      el("verdict").className = c.matched ? "ok" : "bad";
+      el("verdict").textContent = c.matched
+        ? "REPLAY MATCHES RECORD (trace length + trace hash verified; outcome reproduced; controller_hash is checked by the Python verifier)"
+        : `REPLAY MISMATCH: ${c.mismatches.join(" | ")}`;
       el("scrub").max = loaded.frames.length - 1;
       seek(0);
       playing = true;
@@ -81,7 +89,7 @@
       el("drop").style.display = "flex";
     }
     window.apolloReplayState = () => loaded && ({
-      index, steps: loaded.frames.length - 1, matched: loaded.comparison.matched,
+      index, steps: loaded.frames.length - 1, matched: loaded.comparison.matched, mismatches: loaded.comparison.mismatches,
       status: loaded.frames[index].result.status, reward: loaded.frames[index].result.reward,
     });
 
@@ -123,7 +131,7 @@
         context.font = "34px HersheySimplex, monospace";
         context.fillStyle = comparison.matched ? "#d6de7a" : "#ff8a80";
         context.fillText(`OUTCOME ${t.status.toUpperCase()}  REWARD ${t.reward.toFixed(2)}  STEPS ${t.steps}`, 48, 1000);
-        context.fillText(comparison.matched ? "REPLAY MATCHES RECORD" : `MISMATCH: ${comparison.mismatches.join("; ")}`, 48, 1044);
+        context.fillText(comparison.matched ? "REPLAY MATCHES RECORD" : `REPLAY MISMATCH: ${comparison.mismatches[0]}${comparison.mismatches.length > 1 ? ` (+${comparison.mismatches.length - 1} more)` : ""}`, 48, 1044);
       }
       el("where").textContent = `${index}/${frames.length - 1}`;
     }

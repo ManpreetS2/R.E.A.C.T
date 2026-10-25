@@ -7,7 +7,8 @@ const fs = require("fs");
 const path = require("path");
 const assert = require("assert");
 const { createSimulation } = require("./physics");
-const { replayRecord, checkRecord } = require("./replay");
+const crypto = require("crypto");
+const { replayRecord, checkRecord, sha256Hex, traceHash } = require("./replay");
 
 const args = process.argv.slice(2);
 const asJson = args.includes("--json");
@@ -42,6 +43,56 @@ if (asJson) {
   assert.throws(() => checkRecord({ schema: "other" }), /unsupported schema/);
   console.log("ok tamper and schema checks");
 
+  // ---- record integrity regressions: any one of these must produce a mismatch ----
+  const replayOf = (mutate) => {
+    const copy = JSON.parse(JSON.stringify(record));
+    mutate(copy);
+    return replayRecord(createSimulation, copy).comparison;
+  };
+  const reseal = (r) => { r.trace_length = r.trace.length; r.trace_hash = traceHash(r.trace); };
+  const expectMismatch = (name, comparison, pattern) => {
+    assert.ok(!comparison.matched, `${name}: must not match`);
+    assert.ok(comparison.mismatches.some((m) => pattern.test(m)), `${name}: got ${comparison.mismatches}`);
+    console.log(`ok mismatch: ${name}`);
+  };
+  assert.ok(replayOf(() => {}).matched, "unmodified record matches");
+  // Old bug: terminal outcome agrees but trace_length lies.
+  expectMismatch("altered trace_length", replayOf((r) => { r.trace_length += 1; }), /trace_length/);
+  expectMismatch("trace_length zero", replayOf((r) => { r.trace_length = 0; }), /trace_length/);
+  expectMismatch("trailing actions, metadata stale",
+    replayOf((r) => { r.trace.push({ rotation: 0, thrust: 1.0 }, { rotation: 0, thrust: 1.0 }); }),
+    /trace_length/);
+  expectMismatch("trailing actions, metadata resealed",
+    replayOf((r) => { r.trace.push({ rotation: 0, thrust: 1.0 }, { rotation: 0, thrust: 1.0 }); reseal(r); }),
+    /trailing action/);
+  expectMismatch("trailing actions, terminal.steps also resealed",
+    replayOf((r) => { r.trace.push({ rotation: 0, thrust: 1.0 }); reseal(r); r.terminal.steps = r.trace.length; }),
+    /trailing action|steps/);
+  expectMismatch("truncated trace, metadata stale", replayOf((r) => { r.trace.length -= 10; }), /trace_length/);
+  expectMismatch("truncated trace, metadata resealed",
+    replayOf((r) => { r.trace.length -= 10; reseal(r); }), /truncated trace/);
+  expectMismatch("terminal reward changed", replayOf((r) => { r.terminal.reward += 1; }), /reward/);
+  expectMismatch("terminal status changed", replayOf((r) => { r.terminal.status = "landed"; }), /status/);
+  expectMismatch("terminal steps changed", replayOf((r) => { r.terminal.steps -= 1; }), /steps/);
+  expectMismatch("terminal crashed flag changed", replayOf((r) => { r.terminal.crashed = true; }), /crashed/);
+  expectMismatch("wrong trace_hash", replayOf((r) => { r.trace_hash = "sha256:" + "0".repeat(64); }), /trace_hash/);
+  expectMismatch("changed action, hash stale", replayOf((r) => { r.trace[5].thrust = 0.5; }), /trace_hash/);
+  expectMismatch("action rejected by physics",
+    replayOf((r) => { r.trace[3] = { rotation: 7, thrust: 0.0 }; reseal(r); }), /rejected by physics/);
+  const noHash = replayOf((r) => { delete r.trace_hash; });
+  expectMismatch("missing trace_hash", noHash, /trace_hash/);
+
+  // hashing primitives against independent references
+  for (const text of ["", "abc", "a".repeat(55), "a".repeat(56), "a".repeat(64), "x".repeat(1000)]) {
+    assert.strictEqual(sha256Hex(text), crypto.createHash("sha256").update(text).digest("hex"));
+  }
+  const { canonicalTrace } = require("./replay");
+  assert.strictEqual(canonicalTrace([{ thrust: 0, rotation: -90 }, { thrust: 1, rotation: 0 }, { thrust: 1e-5, rotation: 10 },
+    { thrust: 0.15, rotation: 10 }, { thrust: 1.5e-7, rotation: 10 }]),
+    '[{"rotation":-90,"thrust":0.0},{"rotation":0,"thrust":1.0},{"rotation":10,"thrust":1e-05},' +
+    '{"rotation":10,"thrust":0.15},{"rotation":10,"thrust":1.5e-07}]');
+  console.log("ok hash primitives");
+
   // Browsers share one global scope across <script> tags; Node modules hide clashes
   // such as two top-level `const api` declarations. Load the page scripts the same way.
   const vm = require("vm");
@@ -59,5 +110,9 @@ if (asJson) {
   const viaPage = win.ApolloReplay.replayRecord(
     () => win.ApolloPhysics.createSimulation({ lockedCamera: true }), record);
   assert.ok(viaPage.comparison.matched, "page-scope replay matches record");
+  const tampered2 = JSON.parse(JSON.stringify(record));
+  tampered2.trace_length += 1;
+  assert.ok(!win.ApolloReplay.replayRecord(() => win.ApolloPhysics.createSimulation({ lockedCamera: true }), tampered2)
+    .comparison.matched, "page-scope trace_length mismatch detected");
   console.log("ok shared-global page scope");
 }
