@@ -15,6 +15,7 @@ provider-side hard limit is the control that survives a bug here.
 
 from __future__ import annotations
 
+import math
 import sqlite3
 from contextlib import closing
 from pathlib import Path
@@ -27,31 +28,51 @@ AGGREGATE_RESOURCE = "aggregate_usd_ceiling"
 
 
 def ledger_spent_usd(root: str | Path) -> tuple[float, int]:
-    """(recorded estimated USD across all non-mock attempts, databases read) under ``root``."""
-
+    """Sum live cost estimates. Fail closed on unreadable or inconsistent experiment DBs."""
+    root = Path(root).resolve()
+    if not root.is_dir():
+        raise ConfigError(f"aggregate spend ledger root does not exist: {root}")
     total, databases = 0.0, 0
-    for path in sorted(Path(root).rglob("*.sqlite")):
+    for path in sorted(root.rglob("*.sqlite")):
         try:
             with closing(sqlite3.connect(f"file:{path}?mode=ro", uri=True)) as db:
+                tables = {r[0] for r in db.execute(
+                    "SELECT name FROM sqlite_master WHERE type='table' AND name IN ('attempts', 'experiments')"
+                )}
+                if "attempts" not in tables:
+                    if "experiments" in tables:
+                        raise ConfigError(f"incomplete experiment spending ledger: {path}")
+                    continue  # a valid, unrelated SQLite database
+                invalid = db.execute(
+                    "SELECT COUNT(*) FROM attempts WHERE provider != 'mock' "
+                    "AND (estimated_cost_usd IS NULL OR estimated_cost_usd < 0)"
+                ).fetchone()[0]
+                if invalid:
+                    raise ConfigError(f"invalid cost record in spending ledger: {path}")
                 row = db.execute(
-                    "SELECT COALESCE(SUM(estimated_cost_usd), 0.0) FROM attempts WHERE provider != 'mock'"
+                    "SELECT COALESCE(SUM(estimated_cost_usd), 0.0) "
+                    "FROM attempts WHERE provider != 'mock'"
                 ).fetchone()
-        except sqlite3.Error:
-            continue  # not an experiment database
-        total += float(row[0])
+        except sqlite3.Error as exc:
+            raise ConfigError(f"cannot read spending ledger {path}; refusing paid call: {exc}") from exc
+        amount = float(row[0])
+        if not math.isfinite(amount) or amount < 0:
+            raise ConfigError(f"invalid spend total in ledger {path}")
+        total += amount
         databases += 1
+    if not math.isfinite(total):
+        raise ConfigError("invalid aggregate spend total")
     return total, databases
-
 
 class AggregateCeilingGate:
     """``ModelClient`` wrapper that refuses a call that could push total spend over the ceiling."""
 
     def __init__(self, inner, *, ceiling_usd: float, ledger_root: str | Path, catalog=None) -> None:
-        if isinstance(ceiling_usd, bool) or not isinstance(ceiling_usd, (int, float)) or not ceiling_usd > 0:
+        if isinstance(ceiling_usd, bool) or not isinstance(ceiling_usd, (int, float)) or not math.isfinite(ceiling_usd) or ceiling_usd <= 0:
             raise ConfigError("total USD ceiling must be a positive number")
         self._inner = inner
         self.ceiling_usd = float(ceiling_usd)
-        self.ledger_root = Path(ledger_root)
+        self.ledger_root = Path(ledger_root).resolve()
         self._catalog = catalog or load_catalog()
 
     @property
