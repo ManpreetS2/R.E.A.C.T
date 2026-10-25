@@ -28,7 +28,7 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from rewardbench.contracts import (
     ConfigError,
@@ -59,6 +59,7 @@ def main(
     _transport: object | None = None,
     _api_key: str | None = None,
     _sleeper: object | None = None,
+    _progress: Callable[[str], None] | None = None,
 ) -> int:
     """CLI entry. ``_transport`` / ``_api_key`` / ``_sleeper`` are test-only hooks."""
 
@@ -146,8 +147,8 @@ def main(
             transport=_transport,
             sleeper=_sleeper,
         )
-        if args.prompt_log is not None:
-            model = PromptRecorder(model, args.prompt_log)
+        if args.prompt_log is not None or _progress is not None:
+            model = PromptRecorder(model, args.prompt_log, _progress)
     except ConfigError as exc:
         print(f"error: {exc}", file=sys.stderr)
         _safe_close(environment, store)
