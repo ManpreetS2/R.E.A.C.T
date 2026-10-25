@@ -112,6 +112,13 @@ python -m rewardbench.operate run \
 
 Runs development → freeze → sealed held-out → report into one directory, shows revisions, controller changes and rewards, and resumes on re-run. See `docs/OPERATING.md` (mock vs live, credentials, outputs) and `docs/REWARD_ONLY_CONTROL.md`.
 
+### First real-model study (prepared, not executed)
+
+`docs/FIRST_LLM_STUDY_PROTOCOL.md`, `docs/FIRST_LLM_STUDY_BUDGET.md` and `docs/FIRST_LLM_STUDY_LAUNCH.md` define the
+three-arm (no feedback / reward only / full numerical) study, its worst-case spend and the exact first paid command.
+Nothing has been run against a provider; live execution needs the owner's approval of provider, model and a USD ceiling.
+`python -m rewardbench.study rehearse --out runs/rehearsal` runs the whole design free with the scripted mock.
+
 ### Offline demonstration (scripted mock — infrastructure)
 
 ```bash

@@ -1,0 +1,36 @@
+# provider=mock model=scripted-feedback-responsive feedback_condition=reward_only
+
+## SYSTEM
+You are proposing a controller for a closed reward-adaptation experiment.
+Revise only the controller. Do not update, train, or fine-tune neural network weights.
+When a numeric reward is shown, it is the environment's own score. A negative number is a penalty from that environment.
+Do not invent a score and do not treat your own judgment as the reward.
+Do not write Python, shell commands, imports, or tool calls.
+Do not call tools, browsers, or code interpreters.
+Reply with one compact JSON object and no surrounding prose, markdown fences, or commentary.
+The object must match the controller schema in the user message.
+
+## USER
+Task: ApolloLander. Land the Apollo lander upright on the single designated pad of one fixed lunar map. Research mode varies starting position, altitude, velocities, rotation, and optionally fuel from schedule apollolander.starts.v1. Terrain and pad stay fixed. The same episode seed always yields the same start so models can be compared fairly. Submit a controller object, not JavaScript.
+
+Actions: thrust from 0 to 1 and rotation in 10 degree steps from -90 to 90
+
+Observations: x, y, vx, vy, rotation, fuel, altitude, and horizontal offset from the pad center
+
+Controller schema:
+{"commands":{"rotation":{"maximum":90,"minimum":-90,"step":10},"thrust":{"maximum":1,"minimum":0}},"note":"The reference Gymnasium heuristic is not used here. demonstration_guidance_controller is hand-specified. random is a scripted baseline, not learning.","policies":{"constant":{"rotation":[-90,90],"thrust":[0,1]},"guidance":{"parameters":{"aligned_dx":{"maximum":200.0,"minimum":0.0},"aligned_rotation_gain":{"maximum":800.0,"minimum":0.0},"aligned_rotation_limit":{"maximum":90.0,"minimum":0.0},"aligned_vx":{"maximum":0.5,"minimum":0.0},"altitude_low":{"maximum":200.0,"minimum":1.0},"altitude_mid":{"maximum":400.0,"minimum":10.0},"altitude_upright":{"maximum":200.0,"minimum":1.0},"brake_thrust":{"maximum":10.0,"minimum":0.0},"cruise_rotation_limit":{"maximum":90.0,"minimum":0.0},"descent_aligned":{"maximum":0.3,"minimum":0.0},"descent_cruise":{"maximum":0.3,"minimum":0.0},"descent_low":{"maximum":0.2,"minimum":0.0},"descent_mid":{"maximum":0.3,"minimum":0.0},"hover_thrust":{"maximum":1.0,"minimum":0.0},"rotation_gain":{"maximum":800.0,"minimum":0.0},"vx_gain":{"maximum":0.02,"minimum":0.0},"vx_limit":{"maximum":0.5,"minimum":0.01},"vy_gain":{"maximum":40.0,"minimum":0.0}}},"random":{"note":"Deterministic open-loop baseline; mixes controller seed with episode seed and step.","seed":[0,4294967295]}},"rejected":["JavaScript","unknown fields","non-finite numbers","values outside bounds"],"schema":"rewardbench.apollolander.controller.v1"}
+
+Revision: 1
+
+Earlier revisions include only the simulator's numeric reward for each scored episode. Use those rewards. Do not replace them with your own assessment.
+- revision 0: valid controller {"policy":"constant","rotation":-90,"schema":"rewardbench.apollolander.controller.v1","thrust":0.0}
+  episode 0 reward=-98.3611617652663
+  episode 1 reward=-98.59673581200865
+  episode 2 reward=-99.61657313074923
+  episode 3 reward=-99.62776242841286
+  episode 4 reward=-97.68340756751678
+  episode 5 reward=-99.22256020222947
+  episode 6 reward=-99.69811407783041
+  episode 7 reward=-98.95340911497044
+
+Reply with one compact JSON object that matches the controller schema. Include only schema fields. Do not include a score of your own. Prefer the smallest valid controller that satisfies the schema.

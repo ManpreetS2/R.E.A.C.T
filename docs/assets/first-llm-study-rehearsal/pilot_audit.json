@@ -1,0 +1,48 @@
+{
+  "tier": "pilot",
+  "arms": {
+    "no_feedback": {
+      "model_calls": 4,
+      "dev_episodes": 32,
+      "heldout_episodes": 8,
+      "replays_verified": 40,
+      "dev_reward_by_revision": [
+        -98.97,
+        -98.97,
+        -98.97,
+        -98.97
+      ],
+      "heldout_mean_reward": -98.585,
+      "frozen_revision": 3
+    },
+    "reward_only": {
+      "model_calls": 4,
+      "dev_episodes": 32,
+      "heldout_episodes": 8,
+      "replays_verified": 40,
+      "dev_reward_by_revision": [
+        -98.97,
+        -200.626,
+        -200.626,
+        -200.626
+      ],
+      "heldout_mean_reward": -199.965,
+      "frozen_revision": 3
+    },
+    "numerical_reward": {
+      "model_calls": 4,
+      "dev_episodes": 32,
+      "heldout_episodes": 8,
+      "replays_verified": 40,
+      "dev_reward_by_revision": [
+        -98.97,
+        -200.626,
+        -200.626,
+        -200.626
+      ],
+      "heldout_mean_reward": -199.965,
+      "frozen_revision": 3
+    }
+  },
+  "isolation": "verified"
+}
