@@ -1,9 +1,8 @@
 # OpenAI API billing: what can and cannot cap the pilot's cost
 
 Checked 2026-10-25 against OpenAI's developer documentation. **Nothing was purchased, no key was created
-or read, and no provider call was made.** The OpenAI help-center articles (prepaid billing, projects) return
-HTTP 403 to automated fetches, so facts that come only from them are marked *unverified* below; read them
-on your own screen before paying.
+or read, and no provider call was made.** Some account-specific Platform settings cannot be inspected remotely. The official prepaid-billing
+help article and spend-limit developer guide were checked; verify the actual toggles in your own dashboard.
 
 ## What the current docs say (verified)
 
@@ -23,12 +22,17 @@ The earlier advice that a project-level hard spending limit exists was therefore
 it is in a different section from the rate limits, and its availability on your account's UI is the thing to
 confirm (step 3 below). I could not see your dashboard, so I cannot confirm the toggle appears for you.
 
-## Unverified (help center blocked automated fetch; from search snippets only)
+## Prepaid billing (verified in OpenAI Help Center)
 
-* Minimum first prepaid purchase **$5** (default shown $10); minimum auto-recharge amount $5.
-* Auto-recharge may be **on by default** during setup. Turn it off.
-* Prepaid credit **expires after one year and is non-refundable**.
-* Auto-recharge has an optional monthly limit; manual purchases do not count toward it.
+[Setting up and managing prepaid API billing](https://help.openai.com/en/articles/8264644-setting-up-and-managing-prepaid-api-billing)
+confirms:
+
+* The minimum first prepaid purchase is **$5** (default shown $10).
+* **Auto-reload starts ON** during setup. Explicitly turn it OFF before paying.
+* Credits expire after one year and are generally non-refundable, subject to documented exceptions.
+* Auto-reload has an optional monthly purchase limit; manual purchases do not count toward it.
+* **Prepaid credit is NOT an instantaneous hard cutoff.** The API can process additional usage during
+  exhaustion and show a negative balance, which can be deducted from the next purchase.
 
 Whether a hard spend limit interacts with prepaid credit in any special way is not documented in what I could read:
 treat the two as independent limits, both of which can stop traffic.
@@ -37,14 +41,16 @@ treat the two as independent limits, both of which can stop traffic.
 
 | Control | What it bounds | Depends on |
 | --- | --- | --- |
-| Prepaid balance, auto-recharge **off** | Total money OpenAI can ever take = what you bought. If the minimum is $5, that is your true maximum loss, even though the pilot needs cents. | You disabling auto-recharge |
+| Prepaid balance, auto-recharge **off** | Avoids automatic repeat purchases, but does **not** guarantee an exact spend cutoff; processing delays can create a negative balance. | You disabling auto-recharge and checking billing |
 | Project hard spend limit (e.g. $0.50) | API spend from that project (a leaked key included), with slight overshoot | The toggle being available and enabled |
-| `--total-usd-ceiling` (this repo) | R.E.A.C.T.'s own calls: refuses any call whose worst case would push recorded spend over the ceiling | The code, and databases staying under the ledger root |
+| `--total-usd-ceiling` (this repo) | R.E.A.C.T.'s own calls: refuses a call whose worst case would push recorded spend over the ceiling; serializes live runs under one ledger and refuses unreadable ledger files | The code, keeping all databases under the same root, and estimated costs being accurate |
 | Per-experiment `budget.max_cost_usd` | One session | The code |
 | `max_model_retries: 0`, one paid call per config per invocation | No hidden spend; no auto-continuation | The code |
 
 If OpenAI will not let you set a hard project limit, say so and rely on a small prepaid balance with
 auto-recharge off plus the software ceiling; do not describe the software ceiling as a vendor guarantee.
+
+Concurrent runs under different ledger roots, or bypassing `rewardbench.operate` with a direct live command lacking the aggregate ceiling, are **not** covered by the aggregate guard. The repo's recorded costs are estimates and can omit a billed request whose usage was never returned. Run paid experiments only sequentially, use the SAME ledger root, and prefer the provider-side enforced project limit too.
 
 ## Pilot cost versus limits
 
