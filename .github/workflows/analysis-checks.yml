@@ -23,6 +23,8 @@ jobs:
           node-version: "22"
       - name: Run ApolloLander physics checks
         run: node frontend/apollolander/experiment/physics.test.js
+      - name: Visual replay engine
+        run: node frontend/apollolander/experiment/replay.test.js
       - name: Install the package and test tools
         run: python -m pip install --upgrade pip && python -m pip install -e ".[dev,analysis]"
       - name: Run core, provider, and analysis tests

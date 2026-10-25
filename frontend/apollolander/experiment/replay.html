@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Apollo Lander — flight replay</title>
+  <style>
+    html, body { margin: 0; background: #000006; color: #F0F6FF; font: 14px monospace; }
+    canvas { width: 100vw; height: calc(100vh - 92px); display: block; }
+    #verdict { height: 28px; line-height: 28px; padding: 0 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #verdict.ok { color: #d6de7a; } #verdict.bad { color: #ff8a80; }
+    #bar { height: 64px; display: flex; gap: 12px; align-items: center; padding: 0 12px; box-sizing: border-box; }
+    #scrub { flex: 1; }
+    button, select, input[type=file] { font: inherit; }
+    #drop { position: fixed; inset: 0 0 92px 0; display: none; align-items: center; justify-content: center;
+            background: rgba(0,0,6,.85); font-size: 18px; text-align: center; white-space: pre-line; }
+  </style>
+</head>
+<body>
+  <canvas id="screen" width="1920" height="1080"></canvas>
+  <div id="drop">Open a .flight.json recorded by R.E.A.C.T.
+(file picker below, drag and drop, or ?file=/path/on/this/server)</div>
+  <div id="verdict"></div>
+  <div id="bar">
+    <input id="file" type="file" accept=".json,application/json">
+    <button id="play">Play</button>
+    <button id="restart">Restart</button>
+    <select id="speed"><option value="0.25">0.25x</option><option value="1" selected>1x</option>
+      <option value="4">4x</option><option value="16">16x</option></select>
+    <input id="scrub" type="range" min="0" max="0" value="0">
+    <span id="where"></span>
+  </div>
+  <script src="../upstream/perlin.js"></script>
+  <script src="physics.js"></script>
+  <script src="render.js"></script>
+  <script src="replay.js"></script>
+  <script>
+    const canvas = document.getElementById("screen");
+    const context = canvas.getContext("2d");
+    const el = (id) => document.getElementById(id);
+    let loaded = null; // { record, frames, map, comparison }
+    let index = 0, playing = false, last = 0, carry = 0;
+
+    function load(record) {
+      try {
+        const replayed = ApolloReplay.replayRecord(
+          () => ApolloPhysics.createSimulation({ lockedCamera: true }), record);
+        loaded = Object.assign({ record }, replayed);
+      } catch (error) {
+        loaded = null;
+        el("drop").style.display = "flex";
+        el("drop").textContent = `Cannot replay this file: ${error.message}`;
+        return;
+      }
+      el("drop").style.display = "none";
+      const c = loaded.comparison;
+      el("verdict").className = c.matched ? "ok" : "bad";
+      el("verdict").textContent = c.matched
+        ? "REPLAY MATCHES RECORD (trace length + trace hash verified; outcome reproduced; controller_hash is checked by the Python verifier)"
+        : `REPLAY MISMATCH: ${c.mismatches.join(" | ")}`;
+      el("scrub").max = loaded.frames.length - 1;
+      seek(0);
+      playing = true;
+      el("play").textContent = "Pause";
+    }
+
+    function seek(next) {
+      index = Math.max(0, Math.min(loaded.frames.length - 1, next));
+      el("scrub").value = index;
+    }
+
+    async function loadFile(file) { load(JSON.parse(await file.text())); }
+    el("file").addEventListener("change", (e) => e.target.files[0] && loadFile(e.target.files[0]));
+    window.addEventListener("dragover", (e) => e.preventDefault());
+    window.addEventListener("drop", (e) => { e.preventDefault(); if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+    el("play").addEventListener("click", () => {
+      if (!loaded) return;
+      if (index >= loaded.frames.length - 1) seek(0);
+      playing = !playing;
+      el("play").textContent = playing ? "Pause" : "Play";
+    });
+    el("restart").addEventListener("click", () => { if (loaded) { seek(0); playing = true; el("play").textContent = "Pause"; } });
+    el("scrub").addEventListener("input", (e) => { playing = false; el("play").textContent = "Play"; seek(Number(e.target.value)); });
+
+    const query = new URLSearchParams(location.search).get("file");
+    if (query) {
+      fetch(query).then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status} for ${query}`); return r.json(); })
+        .then(load).catch((error) => { el("drop").style.display = "flex"; el("drop").textContent = error.message; });
+    } else {
+      el("drop").style.display = "flex";
+    }
+    window.apolloReplayState = () => loaded && ({
+      index, steps: loaded.frames.length - 1, matched: loaded.comparison.matched, mismatches: loaded.comparison.mismatches,
+      status: loaded.frames[index].result.status, reward: loaded.frames[index].result.reward,
+    });
+
+    function tick(now) {
+      const dt = Math.min(100, now - last);
+      last = now;
+      if (loaded && playing) {
+        carry += dt * Number(el("speed").value) / (1000 / 60);
+        const advance = Math.floor(carry);
+        carry -= advance;
+        if (advance) seek(index + advance);
+        if (index >= loaded.frames.length - 1) { playing = false; el("play").textContent = "Play"; }
+      }
+      draw();
+      requestAnimationFrame(tick);
+    }
+
+    function draw() {
+      context.fillStyle = "#000006";
+      context.fillRect(0, 0, 1920, 1080);
+      if (!loaded) return;
+      const { record, frames, map, comparison } = loaded;
+      const frame = frames[index];
+      ApolloRender.drawScene(context, map, frame.geometry);
+      const o = frame.observation, r = frame.result;
+      context.fillStyle = "#F0F6FF";
+      context.font = "22px HersheySimplex, monospace";
+      const scripted = record.origin === "deterministic_mock" || record.origin === "hand_specified_demonstration";
+      const lines = [
+        `FLIGHT REPLAY  ${record.split || ""}  REV ${record.revision_index}  EP ${record.episode_index}  SEED ${record.episode_seed}`,
+        `${scripted ? "SCRIPTED / NON-LLM SOURCE: " : record.origin === "model_generated" ? "MODEL: " : "ORIGIN NOT STATED: "}${record.model}  (${record.origin})`,
+        `CONTROLLER ${JSON.stringify(record.controller).slice(0, 110)}`,
+        `STEP ${index}/${frames.length - 1}   ACTION rot ${frame.action ? frame.action.rotation : "-"}  thrust ${frame.action ? frame.action.thrust : "-"}`,
+        `REWARD ${r.reward.toFixed(2)}   STATUS ${r.status}   FUEL ${o.fuel.toFixed(1)}   ALT ${o.altitude.toFixed(1)}   SPEED ${Math.hypot(o.vx, o.vy).toFixed(3)}`,
+      ];
+      lines.forEach((text, i) => context.fillText(text, 48, 48 + i * 32));
+      if (index === frames.length - 1) {
+        const t = record.terminal;
+        context.font = "34px HersheySimplex, monospace";
+        context.fillStyle = comparison.matched ? "#d6de7a" : "#ff8a80";
+        context.fillText(`OUTCOME ${t.status.toUpperCase()}  REWARD ${t.reward.toFixed(2)}  STEPS ${t.steps}`, 48, 1000);
+        context.fillText(comparison.matched ? "REPLAY MATCHES RECORD" : `REPLAY MISMATCH: ${comparison.mismatches[0]}${comparison.mismatches.length > 1 ? ` (+${comparison.mismatches.length - 1} more)` : ""}`, 48, 1044);
+      }
+      el("where").textContent = `${index}/${frames.length - 1}`;
+    }
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

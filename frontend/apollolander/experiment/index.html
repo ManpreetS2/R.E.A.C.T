@@ -17,6 +17,7 @@
   <canvas id="screen" width="1920" height="1080"></canvas>
   <script src="../upstream/perlin.js"></script>
   <script src="physics.js"></script>
+  <script src="render.js"></script>
   <script>
     const canvas = document.getElementById("screen");
     const context = canvas.getContext("2d");
@@ -69,48 +70,7 @@
       const frame = sim.frameGeometry();
       const observation = sim.observe();
       const result = sim.getResult();
-      const camera = frame.camera;
-      context.fillStyle = "#000006";
-      context.fillRect(0, 0, 1920, 1080);
-      context.save();
-      context.strokeStyle = "#F0F6FF";
-      context.lineWidth = 1.5;
-      context.beginPath();
-      map.points.forEach((point, index) => {
-        const [sx, sy] = project(point.x, point.y, camera);
-        if (index === 0) context.moveTo(sx, sy);
-        else context.lineTo(sx, sy);
-      });
-      context.stroke();
-      context.strokeStyle = "#d6de7a";
-      context.lineWidth = 4;
-      context.beginPath();
-      const [x1, y1] = project(frame.zone.x1, frame.zone.y, camera);
-      const [x2] = project(frame.zone.x2, frame.zone.y, camera);
-      context.moveTo(x1, y1);
-      context.lineTo(x2, y1);
-      context.stroke();
-      context.strokeStyle = "#F0F6FF";
-      context.lineWidth = 1.6;
-      for (const line of frame.lander) {
-        context.beginPath();
-        line.forEach((point, index) => {
-          const [sx, sy] = project(point.x, point.y, camera);
-          if (index === 0) context.moveTo(sx, sy);
-          else context.lineTo(sx, sy);
-        });
-        context.stroke();
-      }
-      if (frame.thrust) {
-        context.beginPath();
-        frame.thrust.forEach((point, index) => {
-          const [sx, sy] = project(point.x, point.y, camera);
-          if (index === 0) context.moveTo(sx, sy);
-          else context.lineTo(sx, sy);
-        });
-        context.stroke();
-      }
-      context.restore();
+      ApolloRender.drawScene(context, map, frame);
       context.fillStyle = "#F0F6FF";
       context.font = "22px HersheySimplex, monospace";
       context.fillText("APOLLO LANDER  FIXED MAP", 48, 48);
@@ -119,13 +79,6 @@
       const speed = Math.hypot(observation.vx, observation.vy);
       context.fillText(`SPEED ${speed.toFixed(3)}   FUEL ${observation.fuel.toFixed(1)}`, 48, 144);
       context.fillText("ARROWS ROTATE   SPACE THRUST   R RESET   L/K CAMERA", 48, 1040);
-    }
-
-    function project(x, y, camera) {
-      return [
-        (x - camera.left) / camera.width * camera.screenWidth,
-        (y - camera.top) / camera.height * camera.screenHeight,
-      ];
     }
 
     requestAnimationFrame(frame);
