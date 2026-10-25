@@ -92,3 +92,77 @@ def test_progress_display_failure_cannot_fail_a_run() -> None:
             raise BrokenPipeError(32, "Broken pipe")
 
     _announcer(Closed())("revision 0: anything")  # must not raise
+
+
+def test_reward_only_history_carries_no_outcome_fields_even_in_process() -> None:
+    from rewardbench.contracts import EpisodeResult, FeedbackCondition
+    from rewardbench.core.feedback import feedback_for_revision
+    import dataclasses
+
+    fields = {f.name: f for f in dataclasses.fields(EpisodeResult)}
+    episode = EpisodeResult(**{
+        name: {"total_reward": -3.5, "success": True, "crashed": True, "steps": 99,
+               "metrics": {"secret_metric": 1.0}, "error": None, "revision_index": 0,
+               "episode_index": 0, "seed": 1}.get(name)
+        for name, f in fields.items() if f.default is dataclasses.MISSING and f.default_factory is dataclasses.MISSING
+    })
+    (item,) = feedback_for_revision([episode], FeedbackCondition.REWARD_ONLY)
+    assert item.total_reward == -3.5
+    assert (item.success, item.crashed, item.steps, dict(item.metrics)) == (False, None, 0, {})
+
+
+@needs_node
+def test_paused_live_run_skips_heldout_and_prompt_log_has_no_credentials(tmp_path: Path, capsys, monkeypatch) -> None:
+    import yaml
+
+    from rewardbench import operate
+    from tests.core.test_live_cli import TEST_KEY, _pilot_config, _transport
+    from tests.providers.e2e_helpers import stronger_controller, weak_controller
+
+    config = _pilot_config(tmp_path)
+    transport = _transport([weak_controller(), stronger_controller()])
+    real = operate.run_main
+    monkeypatch.setattr(operate, "run_main", lambda argv, **kw: real(
+        argv, _api_key=TEST_KEY, _transport=transport, _sleeper=lambda _s: None, **kw))
+    code = main(["run", "--config", str(config), "--mode", "live", "--i-authorize-paid-api-calls",
+                 "--heldout", "--out", str(tmp_path / "o")])
+    text = capsys.readouterr().out
+    assert code == 0
+    assert "LIVE MODE" in text and "held-out skipped" in text
+    assert len(transport.requests) == 1
+    logged = list((tmp_path / "o").rglob("*"))
+    for path in logged:
+        if path.is_file() and path.suffix in {".txt", ".log"}:
+            assert TEST_KEY not in path.read_text(errors="ignore")
+    assert list((tmp_path / "o" / "prompts").rglob("revision_00_*.txt"))
+
+
+def test_unsafe_experiment_name_is_refused(tmp_path: Path, capsys) -> None:
+    import yaml
+
+    payload = yaml.safe_load(NOFEEDBACK.read_text())
+    payload["experiment_name"] = "../escape"
+    path = tmp_path / "bad.yaml"
+    path.write_text(yaml.safe_dump(payload))
+    assert main(["run", "--config", str(path), "--out", str(tmp_path / "o")]) == 2
+    assert not (tmp_path / "escape.sqlite").exists()
+
+
+@needs_node
+def test_real_closed_stdout_pipe_does_not_fail_experiments(tmp_path: Path) -> None:
+    import subprocess
+    import sys
+
+    out = tmp_path / "o"
+    proc = subprocess.Popen(
+        [sys.executable, "-m", "rewardbench.operate", "run", "--config", str(NOFEEDBACK),
+         "--config", str(REWARD_ONLY), "--out", str(out)],
+        cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    )
+    proc.stdout.readline()
+    proc.stdout.close()  # reader disappears while the run is in progress
+    proc.communicate(timeout=300)
+    for name in ("nofeedback", "rewardonly"):
+        database = out / f"apollolander-offline-development-{name}.sqlite"
+        with sqlite3.connect(database) as db:
+            assert db.execute("SELECT status FROM experiments").fetchone()[0] == "completed"

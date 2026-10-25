@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+from dataclasses import replace
 from typing import Sequence
 
 from rewardbench.contracts import EpisodeResult, FeedbackCondition, RewardFeedback
@@ -19,7 +20,6 @@ def feedback_for_revision(
     condition is on and this revision has no scores.
     """
 
-    # reward_only keeps the same episodes; the prompt renderer prints only the reward.
     if condition is FeedbackCondition.NO_FEEDBACK:
         return None
     feedback: list[RewardFeedback] = []
@@ -30,5 +30,10 @@ def feedback_for_revision(
             continue
         if not math.isfinite(float(episode.total_reward)):
             continue
-        feedback.append(RewardFeedback.from_episode(episode))
+        item = RewardFeedback.from_episode(episode)
+        if condition is FeedbackCondition.REWARD_ONLY:
+            # Defense in depth: outcome fields never leave this function, so no
+            # ModelClient can read them even if it bypasses the prompt renderer.
+            item = replace(item, success=False, crashed=None, steps=0, metrics={})
+        feedback.append(item)
     return tuple(feedback)

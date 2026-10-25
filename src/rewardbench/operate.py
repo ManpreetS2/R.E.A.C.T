@@ -19,10 +19,13 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import builtins
 import io
 import json
+import re
 import sqlite3
 import sys
+from contextlib import closing
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -38,6 +41,16 @@ from rewardbench.run.live import ACK_CONTINUATION_FLAG, ACK_PAID_FLAG
 RESERVED_FINAL_SEEDS = range(2_000_000, 2_000_016)  # docs/FINAL_EVALUATION_PROTOCOL.md
 MOCK_BANNER = "MOCK MODE: scripted model + real physics. Infrastructure demonstration, NOT an LLM result."
 LIVE_BANNER = "LIVE MODE: real provider; propose() may spend real money. Existing safeguards apply."
+
+
+_SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
+
+
+def print(*args: Any, **kwargs: Any) -> None:  # noqa: A001 - a closed pipe must not abort a run
+    try:
+        builtins.print(*args, **kwargs)
+    except (OSError, ValueError):
+        pass
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -61,9 +74,13 @@ def main(argv: list[str] | None = None) -> int:
     status.add_argument("--out", required=True, type=Path)
 
     args = parser.parse_args(argv)
-    if args.command == "status":
-        return 0 if _print_status(args.out) else 1
-    return _run(args)
+    try:
+        if args.command == "status":
+            return 0 if _print_status(args.out) else 1
+        return _run(args)
+    except KeyboardInterrupt:
+        print("error: interrupted; re-run with the same --out to resume", file=sys.stderr)
+        return 130
 
 
 def _run(args: argparse.Namespace) -> int:
@@ -85,6 +102,9 @@ def _run(args: argparse.Namespace) -> int:
             print(f"error: {path}: {exc}", file=sys.stderr)
             return 2
         name = config.experiment_name
+        if not _SAFE_NAME.match(name):
+            print(f"error: experiment_name {name!r} is not usable as a file name", file=sys.stderr)
+            return 2
         if name in names:
             print(f"error: duplicate experiment_name {name!r}", file=sys.stderr)
             return 2
@@ -118,9 +138,14 @@ def _run(args: argparse.Namespace) -> int:
                   "Interrupted/paused runs resume when you re-run with the same --out.")
             exit_code = max(exit_code, code)
             print()
+            if code == 130:
+                break
             continue
 
-        if args.heldout:
+        if args.heldout and _experiment_status(database) != "completed":
+            print(f"   held-out skipped: development is '{_experiment_status(database)}', not completed "
+                  "(paused or partial runs must finish first)")
+        elif args.heldout:
             held = {int(s) for s in config.held_out_seeds}
             if held & set(RESERVED_FINAL_SEEDS):
                 print("   refusing held-out: config lists reserved final-evaluation seeds", file=sys.stderr)
@@ -177,9 +202,19 @@ def _stage(out: Path, name: str, stage: str, call) -> int:
 
 
 def _rows(database: Path, query: str) -> list[sqlite3.Row]:
-    with sqlite3.connect(f"file:{database}?mode=ro", uri=True) as connection:
-        connection.row_factory = sqlite3.Row
-        return connection.execute(query).fetchall()
+    """Read-only query; a missing table (database not fully initialised) reads as no rows."""
+
+    try:
+        with closing(sqlite3.connect(f"file:{database}?mode=ro", uri=True)) as connection:
+            connection.row_factory = sqlite3.Row
+            return connection.execute(query).fetchall()
+    except sqlite3.OperationalError:
+        return []
+
+
+def _experiment_status(database: Path) -> str:
+    rows = _rows(database, "SELECT status FROM experiments") if database.exists() else []
+    return rows[0]["status"] if rows else "missing"
 
 
 def _print_experiment(database: Path, num_revisions: int) -> None:
