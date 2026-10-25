@@ -75,6 +75,8 @@ if (asJson) {
   expectMismatch("terminal status changed", replayOf((r) => { r.terminal.status = "landed"; }), /status/);
   expectMismatch("terminal steps changed", replayOf((r) => { r.terminal.steps -= 1; }), /steps/);
   expectMismatch("terminal crashed flag changed", replayOf((r) => { r.terminal.crashed = true; }), /crashed/);
+  expectMismatch("terminal fuel_remaining changed", replayOf((r) => { r.terminal.fuel_remaining = 1.0; }), /fuel_remaining/);
+  expectMismatch("terminal fuel_used changed", replayOf((r) => { r.terminal.fuel_used += 5; }), /fuel_used/);
   expectMismatch("wrong trace_hash", replayOf((r) => { r.trace_hash = "sha256:" + "0".repeat(64); }), /trace_hash/);
   expectMismatch("changed action, hash stale", replayOf((r) => { r.trace[5].thrust = 0.5; }), /trace_hash/);
   expectMismatch("action rejected by physics",

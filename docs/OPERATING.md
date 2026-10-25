@@ -54,8 +54,12 @@ The verdict has two parts, both required for `REPLAY MATCHES RECORD`: **integrit
 **parity** (replaying the actions reproduces the recorded outcome, ends on the step physics terminates, with
 no trailing actions and no truncation). Anything else shows `REPLAY MISMATCH` with every reason.
 `controller_hash` and re-deriving the start from the episode seed are left to the Python verifier below.
-Known gap: the Python verifier does not flag extra actions appended after termination when the length and
-hash are re-sealed; the browser viewer does.
+Both verifiers reject extra actions after termination (even when `trace_length` and `trace_hash` are
+re-sealed), truncated traces, a `terminal.steps`/`trace_length` that disagrees with the real action count,
+wrong hashes, and changed terminal outcome or fuel totals; `tests/environments/test_flight_verifier_integrity.py`
+runs both on the same tampered records. Limits that remain: `controller`, `model` and `origin` are *claims* —
+verification proves the recorded actions reproduce the recorded outcome, not that the named controller or model
+produced them — and `fuel_penalty`/`terminal_reward` are not recomputed.
 
 Browser evidence (26 checks incl. controls, mismatches, file picker, drag/drop, `index.html`) is produced by
 `python examples/browser_replay_check.py --out docs/assets/replay-evidence` (needs `pip install playwright`

@@ -47,6 +47,12 @@ function compareTerminal(recorded, result) {
       mismatches.push(`${key} ${observed[key]} != recorded ${recorded[key]}`);
     }
   }
+  for (const [recordedKey, resultKey] of [["fuel_used", "fuelUsed"], ["fuel_remaining", "fuelRemaining"]]) {
+    if (recorded[recordedKey] === undefined || recorded[recordedKey] === null) continue;
+    if (!(Math.abs(result[resultKey] - recorded[recordedKey]) <= REWARD_TOLERANCE)) {
+      mismatches.push(`terminal.${recordedKey} ${result[resultKey]} != recorded ${recorded[recordedKey]}`);
+    }
+  }
   return { matched: mismatches.length === 0, mismatches, observed };
 }
 

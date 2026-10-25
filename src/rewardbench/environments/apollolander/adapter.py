@@ -364,16 +364,22 @@ class ApolloLanderAdapter:
                 raise ValueError(
                     f"start schedule {version!r} does not match adapter {self.start_schedule_version!r}"
                 )
+        structural = _structural_problems(payload)
+        if structural:
+            return _rejected(payload, structural, reward_tol, state_tol)
         seed = int(payload["episode_seed"])
         trace = list(payload["trace"])
         # maxSteps must match the original episode so timeouts fire on the same step.
         original_max = int(payload.get("max_steps") or payload["terminal"]["steps"])
-        replayed = self.replay(
-            trace,
-            seed=seed if payload.get("research_mode") else None,
-            start=None if payload.get("research_mode") else payload["initial_state"],
-            max_steps=original_max,
-        )
+        try:
+            replayed = self.replay(
+                trace,
+                seed=seed if payload.get("research_mode") else None,
+                start=None if payload.get("research_mode") else payload["initial_state"],
+                max_steps=original_max,
+            )
+        except RuntimeError as exc:  # the physics refused an action in the recorded trace
+            return _rejected(payload, [f"physics rejected the recorded trace: {exc}"], reward_tol, state_tol)
         expected_terminal = {
             "status": payload["terminal"]["status"],
             "reward": payload["terminal"]["reward"],
@@ -394,12 +400,37 @@ class ApolloLanderAdapter:
             "steps": observed_result["steps"],
         }
         mismatches = compare_terminal(expected_terminal, observed_terminal, reward_tol=reward_tol)
+        for recorded_key, replayed_key in (("fuel_used", "fuelUsed"), ("fuel_remaining", "fuelRemaining")):
+            recorded_value = payload["terminal"].get(recorded_key)
+            if recorded_value is not None and not (
+                abs(float(recorded_value) - float(observed_result[replayed_key])) <= state_tol
+            ):
+                mismatches.append(
+                    f"terminal.{recorded_key}: recorded {recorded_value}, replay {observed_result[replayed_key]}"
+                )
         if payload.get("trace_hash") != trace_hash(trace):
             mismatches.append("trace_hash does not match the recorded actions")
         if payload.get("controller_hash") != controller_hash(payload["controller"]):
             mismatches.append("controller_hash does not match the recorded controller")
         if payload.get("trace_length") != len(trace):
             mismatches.append("trace_length does not match the recorded actions")
+        # The declared length and hash only describe the array itself, so a re-sealed
+        # edit passes them. Compare with what the physics actually consumed.
+        consumed = len(replayed["frames"])
+        if len(trace) > consumed and observed_result.get("status") != "flying":
+            mismatches.append(
+                f"{len(trace) - consumed} trailing action(s) after the simulation terminated at step {consumed}"
+            )
+        elif consumed == len(trace) and observed_result.get("status") == "flying":
+            mismatches.append(
+                f"truncated trace: {len(trace)} actions end before the simulation terminates "
+                f"(recorded terminal status {payload['terminal']['status']!r})"
+            )
+        if payload["terminal"].get("steps") != len(trace):
+            mismatches.append(
+                f"terminal.steps {payload['terminal'].get('steps')} is inconsistent with "
+                f"{len(trace)} recorded actions"
+            )
         if replayed["frames"]:
             mismatches.extend(
                 compare_observations(
@@ -662,3 +693,33 @@ class _Session:
                 self.process.wait(timeout=2)
             except subprocess.TimeoutExpired:
                 self.process.kill()
+
+
+_REQUIRED_RECORD_FIELDS = ("trace", "terminal", "initial_state", "episode_seed", "controller")
+_REQUIRED_TERMINAL_FIELDS = ("status", "reward", "landed", "crashed", "in_landing_zone", "timed_out", "steps")
+
+
+def _structural_problems(payload: Mapping[str, Any]) -> list[str]:
+    """Reasons a record cannot be replayed at all; reported instead of raised."""
+    problems = [f"record is missing {key!r}" for key in _REQUIRED_RECORD_FIELDS if key not in payload]
+    if problems:
+        return problems
+    if not isinstance(payload["trace"], list) or not all(isinstance(a, Mapping) for a in payload["trace"]):
+        problems.append("trace must be a list of action objects")
+    terminal = payload["terminal"]
+    if not isinstance(terminal, Mapping):
+        return problems + ["terminal must be an object"]
+    problems += [f"terminal is missing {key!r}" for key in _REQUIRED_TERMINAL_FIELDS if key not in terminal]
+    return problems
+
+
+def _rejected(payload: Mapping[str, Any], reasons: list[str], reward_tol: float, state_tol: float) -> dict[str, Any]:
+    return {
+        "matched": False,
+        "mismatches": list(reasons),
+        "trace_hash": payload.get("trace_hash"),
+        "replay_result": None,
+        "expected_result": None,
+        "reward_tol": reward_tol,
+        "state_tol": state_tol,
+    }
