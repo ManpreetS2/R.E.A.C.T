@@ -35,15 +35,21 @@ Approved by / date:       ____________
 ```
 
 ```bash
-export OPENAI_API_KEY=...   # your shell only. Never commit it or paste it into chat or a log.
+read -s OPENAI_API_KEY && export OPENAI_API_KEY   # hidden prompt; your shell only. Never commit it or paste it into chat or a log.
+export APPROVED_CEILING_USD=...                    # the total you wrote above; every live command requires it
 ```
+
+Billing and provider-side limits (what OpenAI can and cannot enforce) are in `OPENAI_BILLING_SETUP.md`: read it
+before buying credits. `--total-usd-ceiling` is a software guard over the summed recorded spend of every live
+database under the parent of `--out`; the provider-side hard limit and a small prepaid balance are the controls
+that do not depend on this code.
 
 ## 2. FIRST PAID MODEL CALL: NOT EXECUTED
 
 One call (revision 0 of arm A, `no_feedback`), then the session pauses. Worst-case cost of this call: see the budget doc.
 
 ```bash
-python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --config configs/study/pilot_no_feedback.yaml --out runs/first-llm-study/pilot
+python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --total-usd-ceiling "$APPROVED_CEILING_USD" --config configs/study/pilot_no_feedback.yaml --out runs/first-llm-study/pilot
 ```
 
 Review before anything else:
@@ -61,8 +67,8 @@ approved model, tokens/cost exceed the worst-case bound, or `logs/*.run.log` sho
 ## 3. First call of the other two arms (still revision 0)
 
 ```bash
-python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --config configs/study/pilot_reward_only.yaml --out runs/first-llm-study/pilot
-python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --config configs/study/pilot_numerical_reward.yaml --out runs/first-llm-study/pilot
+python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --total-usd-ceiling "$APPROVED_CEILING_USD" --config configs/study/pilot_reward_only.yaml --out runs/first-llm-study/pilot
+python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --total-usd-ceiling "$APPROVED_CEILING_USD" --config configs/study/pilot_numerical_reward.yaml --out runs/first-llm-study/pilot
 ```
 
 ## 4. Pilot continuation (revisions 1-3), each step a separate explicit command
@@ -71,6 +77,7 @@ After reviewing the stored results of the previous step, advance **every arm by 
 
 ```bash
 python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --authorize-continuation \
+  --total-usd-ceiling "$APPROVED_CEILING_USD" \
   --config configs/study/pilot_no_feedback.yaml --config configs/study/pilot_reward_only.yaml \
   --config configs/study/pilot_numerical_reward.yaml --out runs/first-llm-study/pilot
 ```
@@ -130,4 +137,6 @@ python -m rewardbench.heldout --database runs/first-llm-study/study-r1/<name>.sq
 | Invalid or unparsable controller | recorded, not flown, shown to the model as invalid | continue only if within the pilot go/no-go rule |
 | Provider error on a billed call | session ends `failed`; no retry | report; replacement needs new approval as a new replicate |
 | Process killed | re-run the same command; stored attempts are not re-billed | review `status` first |
-| Budget reached | `budget_exhausted` (terminal) | stop; raise the ceiling only by new written approval |
+| Aggregate ceiling would be exceeded | call refused before any request; session paused (resumable) | raise `APPROVED_CEILING_USD` only by new written approval, then re-run with `--authorize-continuation` |
+| Per-experiment budget reached | `budget_exhausted` (terminal) | stop; start a new replicate only with new written approval |
+| OpenAI returns 429 `project_spend_limit_exceeded` / `credit_balance_exhausted` / rate limit | no retry (`max_model_retries: 0`); the session ends `failed` (terminal) although nothing was billed | fix the limit or credits, then start the pilot again in a **new** `--out` under the same ledger root so earlier spend still counts |

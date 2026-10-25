@@ -69,6 +69,10 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument(ACK_PAID_FLAG, action="store_true", dest="authorize_paid")
     run.add_argument(ACK_CONTINUATION_FLAG, action="store_true", dest="authorize_continuation")
     run.add_argument("--max-new-paid-calls", type=int, default=1)
+    run.add_argument("--total-usd-ceiling", type=float, default=None,
+                     help="REQUIRED with --mode live: owner-approved ceiling on summed recorded spend")
+    run.add_argument("--ledger-root", type=Path, default=None,
+                     help="tree scanned for spend (default: the parent of --out)")
 
     status = sub.add_parser("status", help="print revisions, rewards and artifacts found in --out")
     status.add_argument("--out", required=True, type=Path)
@@ -87,6 +91,12 @@ def _run(args: argparse.Namespace) -> int:
     live = args.mode == "live"
     if not live and (args.authorize_paid or args.authorize_continuation):
         print("error: paid-call flags are only meaningful with --mode live", file=sys.stderr)
+        return 2
+    if live and not (args.total_usd_ceiling and args.total_usd_ceiling > 0):
+        print("error: --mode live requires --total-usd-ceiling <USD> (the owner-approved total)", file=sys.stderr)
+        return 2
+    if not live and args.total_usd_ceiling is not None:
+        print("error: --total-usd-ceiling is only meaningful with --mode live", file=sys.stderr)
         return 2
     out = (args.out or Path("runs") / f"operate-{datetime.now():%Y%m%d-%H%M%S}").resolve()
     out.mkdir(parents=True, exist_ok=True)
@@ -125,7 +135,9 @@ def _run(args: argparse.Namespace) -> int:
         argv = ["--config", str(path), "--mode", args.mode, "--database", str(database),
                 "--prompt-log", str(out / "prompts" / name)]
         if live:
-            argv += ["--max-new-paid-calls", str(args.max_new_paid_calls)]
+            argv += ["--max-new-paid-calls", str(args.max_new_paid_calls),
+                     "--total-usd-ceiling", str(args.total_usd_ceiling),
+                     "--ledger-root", str(args.ledger_root or out.parent)]
             if args.authorize_paid:
                 argv.append(ACK_PAID_FLAG)
             if args.authorize_continuation:

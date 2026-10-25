@@ -281,4 +281,8 @@ def is_session_pause(summary_error: str | None, *, status_value: str) -> bool:
     if status_value not in {"interrupted", "budget_exhausted"}:
         return False
     text = summary_error or ""
-    return SESSION_CALL_RESOURCE in text or "live session paid-call limit" in text
+    return (
+        SESSION_CALL_RESOURCE in text
+        or "live session paid-call limit" in text
+        or "aggregate USD ceiling" in text
+    )

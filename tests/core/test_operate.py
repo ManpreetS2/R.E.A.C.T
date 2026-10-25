@@ -56,7 +56,7 @@ def test_real_provider_config_is_refused_in_mock_mode(tmp_path: Path, capsys) ->
 def test_live_mode_without_authorization_makes_no_call(tmp_path: Path, capsys, monkeypatch) -> None:
     for key in ("OPENAI_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_API_KEY", "XAI_API_KEY"):
         monkeypatch.delenv(key, raising=False)
-    assert main(["run", "--config", str(PILOT), "--mode", "live", "--out", str(tmp_path)]) != 0
+    assert main(["run", "--config", str(PILOT), "--mode", "live", "--total-usd-ceiling", "1", "--out", str(tmp_path)]) != 0
     out = capsys.readouterr().out
     assert "LIVE MODE" in out
     with sqlite3.connect(next(tmp_path.glob("*.sqlite"))) as db:
@@ -125,7 +125,7 @@ def test_paused_live_run_skips_heldout_and_prompt_log_has_no_credentials(tmp_pat
     monkeypatch.setattr(operate, "run_main", lambda argv, **kw: real(
         argv, _api_key=TEST_KEY, _transport=transport, _sleeper=lambda _s: None, **kw))
     code = main(["run", "--config", str(config), "--mode", "live", "--i-authorize-paid-api-calls",
-                 "--heldout", "--out", str(tmp_path / "o")])
+                 "--total-usd-ceiling", "1", "--heldout", "--out", str(tmp_path / "o")])
     text = capsys.readouterr().out
     assert code == 0
     assert "LIVE MODE" in text and "held-out skipped" in text

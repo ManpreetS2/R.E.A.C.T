@@ -111,14 +111,15 @@ def test_launch_guide_contains_the_exact_first_paid_command() -> None:
 
 FIRST_PAID_COMMAND = (
     "python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls "
+    '--total-usd-ceiling "$APPROVED_CEILING_USD" '
     "--config configs/study/pilot_no_feedback.yaml --out runs/first-llm-study/pilot"
 )
 
 
 def test_live_study_is_refused_without_authorization_and_makes_no_attempt(tmp_path: Path, capsys, monkeypatch) -> None:
     monkeypatch.setenv("OPENAI_API_KEY", "sk-test-not-real")
-    code = operate.main(["run", "--mode", "live", "--config", str(study.config_path("pilot", "no_feedback")),
-                         "--out", str(tmp_path)])
+    code = operate.main(["run", "--mode", "live", "--total-usd-ceiling", "1",
+                         "--config", str(study.config_path("pilot", "no_feedback")), "--out", str(tmp_path)])
     assert code != 0
     import sqlite3
     with sqlite3.connect(next(tmp_path.glob("*.sqlite"))) as db:
@@ -133,8 +134,8 @@ def test_study_config_in_mock_mode_is_refused_so_it_cannot_masquerade(tmp_path: 
 def test_operator_refuses_final_evaluation_of_the_reserved_cohort(tmp_path: Path, capsys, monkeypatch) -> None:
     """Even a completed live study cannot be final-evaluated through the convenience flag."""
     monkeypatch.setenv("OPENAI_API_KEY", "sk-test-not-real")
-    code = operate.main(["run", "--mode", "live", "--heldout", "--config", str(study.config_path("pilot", "no_feedback")),
-                         "--out", str(tmp_path)])
+    code = operate.main(["run", "--mode", "live", "--heldout", "--total-usd-ceiling", "1",
+                         "--config", str(study.config_path("pilot", "no_feedback")), "--out", str(tmp_path)])
     assert code != 0  # no authorization flag -> nothing runs; the reserved guard is covered in test_operate
 
 
@@ -149,10 +150,11 @@ def test_first_paid_call_path_with_mocked_transport_pauses_after_one_call_and_is
         argv, _api_key=TEST_KEY, _transport=transport, _sleeper=lambda _s: None, **kw))
     config = str(study.config_path("pilot", "reward_only"))
     out = str(tmp_path / "o")
-    assert operate.main(["run", "--mode", "live", "--i-authorize-paid-api-calls", "--config", config, "--out", out]) == 0
+    assert operate.main(["run", "--mode", "live", "--i-authorize-paid-api-calls", "--total-usd-ceiling", "1",
+                         "--config", config, "--out", out]) == 0
     assert len(transport.requests) == 1  # one paid call, then the session gate pauses
     assert operate.main(["run", "--mode", "live", "--i-authorize-paid-api-calls", "--authorize-continuation",
-                         "--config", config, "--out", out]) == 0
+                         "--total-usd-ceiling", "1", "--config", config, "--out", out]) == 0
     assert len(transport.requests) == 2
     second = json.loads(transport.requests[1].body)["messages"][1]["content"]
     assert "reward=" in second and not any(t in second for t in ("success=", "steps=", "metrics="))

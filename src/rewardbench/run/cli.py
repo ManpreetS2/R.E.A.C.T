@@ -41,6 +41,7 @@ from rewardbench.contracts import (
 from rewardbench.core.ids import experiment_id, reject_legacy_restart
 from rewardbench.core.runner import ExperimentRunner
 from rewardbench.run.factory import build_environment, build_model, prepare_config
+from rewardbench.run.ceiling import AggregateCeilingGate, ledger_spent_usd
 from rewardbench.run.prompt_log import PromptRecorder
 from rewardbench.run.live import ACK_CONTINUATION_FLAG, ACK_PAID_FLAG, is_session_pause
 from rewardbench.storage import SqliteStore
@@ -103,6 +104,19 @@ def main(
         help="new paid propose() calls allowed in this CLI process (live pilot default: 1)",
     )
     parser.add_argument(
+        "--total-usd-ceiling",
+        type=float,
+        default=None,
+        help="live only: owner-approved ceiling on recorded spend summed over every live database "
+        "under --ledger-root; a call whose worst case would exceed it is refused before any request",
+    )
+    parser.add_argument(
+        "--ledger-root",
+        type=Path,
+        default=None,
+        help="directory tree scanned for spend (default: the database's directory)",
+    )
+    parser.add_argument(
         "--prompt-log",
         type=Path,
         default=None,
@@ -147,6 +161,17 @@ def main(
             transport=_transport,
             sleeper=_sleeper,
         )
+        if args.total_usd_ceiling is not None:
+            if args.mode != "live":
+                raise ConfigError("--total-usd-ceiling is only meaningful with --mode live")
+            ledger_root = args.ledger_root or database.parent
+            model = AggregateCeilingGate(model, ceiling_usd=args.total_usd_ceiling, ledger_root=ledger_root)
+            spent_so_far, ledger_files = ledger_spent_usd(ledger_root)
+            print(
+                f"rewardbench.run: aggregate ceiling ${args.total_usd_ceiling:.6f}; recorded spend "
+                f"${spent_so_far:.6f} across {ledger_files} database(s) under {Path(ledger_root).resolve()} "
+                "(estimates, not an invoice)"
+            )
         if args.prompt_log is not None or _progress is not None:
             model = PromptRecorder(model, args.prompt_log, _progress)
     except ConfigError as exc:
