@@ -40,6 +40,7 @@ from rewardbench.contracts import (
 )
 from rewardbench.core.ids import experiment_id, reject_legacy_restart
 from rewardbench.core.runner import ExperimentRunner
+from rewardbench.core.locking import ExperimentRunLock
 from rewardbench.run.factory import build_environment, build_model, prepare_config
 from rewardbench.run.ceiling import AggregateCeilingGate, ledger_spent_usd
 from rewardbench.run.prompt_log import PromptRecorder
@@ -218,7 +219,15 @@ def main(
 
     try:
         runner = ExperimentRunner(config, model, environment, store)
-        summary = runner.run()
+        if args.mode == "live" and args.total_usd_ceiling is not None:
+            # Serialize ALL study arms sharing this ledger, including across processes.
+            # Hold the lock through SQLite commit, not merely the pre-call quote:
+            # otherwise simultaneous arms could both pass the same pre-call check.
+            ledger_directory = Path(args.ledger_root or database.parent).resolve()
+            with ExperimentRunLock("aggregate-usd-ceiling", ledger_directory):
+                summary = runner.run()
+        else:
+            summary = runner.run()
     except ConfigError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
