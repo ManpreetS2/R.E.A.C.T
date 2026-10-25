@@ -36,14 +36,29 @@ revisions, controller changes, rewards, and artifact paths without running anyth
 
 ## Replay and charts
 
+Visual replay of any recorded flight (development or held-out), served from the repo root:
+
 ```bash
-python - <<'PY'
+python3 -m http.server 8767
+# http://localhost:8767/frontend/apollolander/experiment/replay.html?file=/runs/my-demo/flights/<experiment_id>/<name>.flight.json
+```
+
+Or open `replay.html` and pick/drag a `.flight.json` from anywhere. The page re-runs the
+recorded `initial_state` and per-step `{rotation, thrust}` trace through the same `physics.js`
+the Python adapter uses, draws each step with play/pause/scrub/speed controls, and ends with the
+recorded outcome and `REPLAY MATCHES RECORD` (or the exact mismatch). Records hold actions, not
+per-step states, so nothing is invented: positions are regenerated deterministically.
+
+Python-side verification (independent of the browser):
+
+```python
 from rewardbench.environments import make_environment
 a = make_environment("ApolloLander", research_mode=True)
-print(a.verify_flight_record("runs/my-demo/flights/<experiment_id>/<file>.flight.json"))
-PY
-cd frontend/apollolander && python3 -m http.server 8766   # http://localhost:8766/experiment/index.html
+print(a.verify_flight_record("runs/my-demo/flights/<experiment_id>/<name>.flight.json"))
 ```
+
+Live (keyboard) ApolloLander: `cd frontend/apollolander && python3 -m http.server 8766`, then
+`http://localhost:8766/experiment/index.html`. Reward charts are the PNGs under `reports/<name>/`.
 
 ## Live (real model) mode
 
