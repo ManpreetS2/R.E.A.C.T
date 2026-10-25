@@ -48,7 +48,7 @@ def make_request(
 
 def prior(condition: FeedbackCondition) -> PriorAttempt:
     feedback = None
-    if condition is FeedbackCondition.NUMERICAL_REWARD:
+    if condition in (FeedbackCondition.NUMERICAL_REWARD, FeedbackCondition.REWARD_ONLY):
         feedback = (
             RewardFeedback(
                 revision_index=0,

@@ -417,3 +417,25 @@ def test_urllib_transport_reads_http_errors_without_a_socket(monkeypatch):
     )
     assert response.status == 200
     assert response.body == b'{"ok": true}'
+
+
+@pytest.mark.parametrize("provider,model_id,payload", [
+    ("openai", "gpt-5.4-mini", None),
+    ("google", "gemini-3.1-flash-lite", None),
+    ("anthropic", "claude-haiku-5-5", None),
+    ("xai", "grok-4.3", None),
+])
+def test_reward_only_prompt_reaches_every_provider_without_outcome_fields(provider, model_id, payload):
+    text = json.dumps(CONTROLLER)
+    body_payload = {"openai": _chat(text), "xai": _chat(text), "google": _gemini(text), "anthropic": _anthropic(text)}[provider]
+    transport = FakeTransport([http_json(body_payload)])
+    client = _client(provider, model_id, transport)
+    condition = FeedbackCondition.REWARD_ONLY
+    response = client.propose(
+        make_request(condition, history=(prior(condition),), settings={"max_output_tokens": 800, "max_reasoning_tokens": 32})
+    )
+    assert response.parse_error is None
+    _system, user = _task_instruction(provider, json.loads(transport.requests[0].body))
+    assert "reward=-87.5" in user and "reward=10.0" in user
+    for hidden in ("success=", "steps=", "crashed=", "metrics=", "fuel_used"):
+        assert hidden not in user

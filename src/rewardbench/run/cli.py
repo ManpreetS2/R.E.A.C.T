@@ -28,7 +28,7 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from rewardbench.contracts import (
     ConfigError,
@@ -41,6 +41,7 @@ from rewardbench.contracts import (
 from rewardbench.core.ids import experiment_id, reject_legacy_restart
 from rewardbench.core.runner import ExperimentRunner
 from rewardbench.run.factory import build_environment, build_model, prepare_config
+from rewardbench.run.prompt_log import PromptRecorder
 from rewardbench.run.live import ACK_CONTINUATION_FLAG, ACK_PAID_FLAG, is_session_pause
 from rewardbench.storage import SqliteStore
 
@@ -58,6 +59,7 @@ def main(
     _transport: object | None = None,
     _api_key: str | None = None,
     _sleeper: object | None = None,
+    _progress: Callable[[str], None] | None = None,
 ) -> int:
     """CLI entry. ``_transport`` / ``_api_key`` / ``_sleeper`` are test-only hooks."""
 
@@ -100,6 +102,12 @@ def main(
         default=1,
         help="new paid propose() calls allowed in this CLI process (live pilot default: 1)",
     )
+    parser.add_argument(
+        "--prompt-log",
+        type=Path,
+        default=None,
+        help="directory that receives the exact system/user prompt sent for every model call",
+    )
     args = parser.parse_args(argv)
 
     store: SqliteStore | None = None
@@ -139,6 +147,8 @@ def main(
             transport=_transport,
             sleeper=_sleeper,
         )
+        if args.prompt_log is not None or _progress is not None:
+            model = PromptRecorder(model, args.prompt_log, _progress)
     except ConfigError as exc:
         print(f"error: {exc}", file=sys.stderr)
         _safe_close(environment, store)

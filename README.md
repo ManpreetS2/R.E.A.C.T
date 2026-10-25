@@ -102,6 +102,16 @@ python examples/verify_offline_v1.py --out runs/offline-v1-verification
 
 Use a new output directory on each invocation; existing evidence is preserved.
 
+### One-command operator
+
+```bash
+python -m rewardbench.operate run \
+  --config configs/apollolander_offline_development_nofeedback.yaml \
+  --config configs/apollolander_offline_development_numerical.yaml --heldout
+```
+
+Runs development → freeze → sealed held-out → report into one directory, shows revisions, controller changes and rewards, and resumes on re-run. See `docs/OPERATING.md` (mock vs live, credentials, outputs) and `docs/REWARD_ONLY_CONTROL.md`.
+
 ### Offline demonstration (scripted mock — infrastructure)
 
 ```bash
