@@ -79,3 +79,16 @@ def test_reserved_final_seeds_are_never_evaluated(tmp_path: Path, capsys) -> Non
         pytest.skip("needs node")
     assert main(["run", "--config", str(path), "--heldout", "--no-report", "--out", str(tmp_path / "o")]) == 2
     assert "reserved" in capsys.readouterr().err
+
+
+def test_progress_display_failure_cannot_fail_a_run() -> None:
+    from rewardbench.operate import _announcer
+
+    class Closed:
+        def write(self, _text: str) -> int:
+            raise BrokenPipeError(32, "Broken pipe")
+
+        def flush(self) -> None:
+            raise BrokenPipeError(32, "Broken pipe")
+
+    _announcer(Closed())("revision 0: anything")  # must not raise

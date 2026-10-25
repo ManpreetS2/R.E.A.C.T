@@ -110,12 +110,12 @@ def _run(args: argparse.Namespace) -> int:
                 argv.append(ACK_PAID_FLAG)
             if args.authorize_continuation:
                 argv.append(ACK_CONTINUATION_FLAG)
-        live_out = sys.stdout  # progress must bypass the captured stage output
-        code = _stage(out, name, "run", lambda: run_main(
-            argv, _progress=lambda m: print(f"   {m}", file=live_out, flush=True)))
+        code = _stage(out, name, "run", lambda: run_main(argv, _progress=_announcer(sys.stdout)))
         _print_experiment(database, config.num_revisions)
         if code != 0:
             print(f"   run did not complete (exit {code}); see {out / 'logs' / (name + '.run.log')}")
+            print("   note: 'failed' and 'budget_exhausted' are terminal; start over with a new --out. "
+                  "Interrupted/paused runs resume when you re-run with the same --out.")
             exit_code = max(exit_code, code)
             print()
             continue
@@ -144,6 +144,18 @@ def _run(args: argparse.Namespace) -> int:
 
     _print_status(out, header=False)
     return exit_code
+
+
+def _announcer(stream):
+    """Progress printer that bypasses stage capture and never lets display errors fail a run."""
+
+    def say(message: str) -> None:
+        try:
+            print(f"   {message}", file=stream, flush=True)
+        except (OSError, ValueError):  # closed pipe or terminal; the run must continue
+            pass
+
+    return say
 
 
 def _stage(out: Path, name: str, stage: str, call) -> int:
