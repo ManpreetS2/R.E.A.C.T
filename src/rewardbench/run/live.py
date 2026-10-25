@@ -211,6 +211,7 @@ def preflight_live(
     if probe.feedback_condition not in (
         FeedbackCondition.NO_FEEDBACK,
         FeedbackCondition.NUMERICAL_REWARD,
+        FeedbackCondition.REWARD_ONLY,
     ):
         raise ConfigError(f"unsupported feedback_condition {probe.feedback_condition!r}")
     if probe.split not in (Split.DEVELOPMENT, Split.HELD_OUT):

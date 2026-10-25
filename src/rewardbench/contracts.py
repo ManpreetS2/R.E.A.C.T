@@ -20,10 +20,16 @@ SCHEMA_VERSION = 1
 
 
 class FeedbackCondition(str, Enum):
-    """Whether prior numerical rewards are shown to the model."""
+    """What prior simulator feedback is shown to the model.
+
+    ``numerical_reward`` shows reward plus outcome and simulator metrics.
+    ``reward_only`` shows the scalar reward and nothing else, so comparing it
+    with ``no_feedback`` isolates the reward value itself.
+    """
 
     NO_FEEDBACK = "no_feedback"
     NUMERICAL_REWARD = "numerical_reward"
+    REWARD_ONLY = "reward_only"
 
 
 class Split(str, Enum):

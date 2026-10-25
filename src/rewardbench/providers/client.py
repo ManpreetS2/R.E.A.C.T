@@ -94,6 +94,7 @@ class RewardModelClient:
         if request.feedback_condition not in (
             FeedbackCondition.NO_FEEDBACK,
             FeedbackCondition.NUMERICAL_REWARD,
+            FeedbackCondition.REWARD_ONLY,
         ):
             raise ModelClientError(
                 f"unsupported feedback condition {request.feedback_condition!r}",

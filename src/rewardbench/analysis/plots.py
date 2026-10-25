@@ -37,6 +37,7 @@ OKABE_ITO = (
 CONDITION_LINESTYLE = {
     "numerical_reward": "solid",
     "no_feedback": "dashed",
+    "reward_only": "dashdot",
 }
 
 

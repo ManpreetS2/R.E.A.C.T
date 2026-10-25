@@ -19,6 +19,7 @@ def feedback_for_revision(
     condition is on and this revision has no scores.
     """
 
+    # reward_only keeps the same episodes; the prompt renderer prints only the reward.
     if condition is FeedbackCondition.NO_FEEDBACK:
         return None
     feedback: list[RewardFeedback] = []

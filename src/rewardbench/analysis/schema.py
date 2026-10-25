@@ -16,7 +16,7 @@ VALIDATION_STATUSES = frozenset({PRELIMINARY, INDEPENDENTLY_VALIDATED})
 SYNTHETIC_BANNER = "SYNTHETIC FIXTURE — NOT EXPERIMENTAL RESULTS"
 EMPTY_LOG_MESSAGE = "No experiment logs loaded"
 
-FEEDBACK_CONDITIONS = frozenset({"no_feedback", "numerical_reward"})
+FEEDBACK_CONDITIONS = frozenset({"no_feedback", "numerical_reward", "reward_only"})
 SPLITS = frozenset({"development", "held_out"})
 
 
