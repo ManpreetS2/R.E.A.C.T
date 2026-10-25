@@ -1,0 +1,204 @@
+[
+  {
+    "check": "landed record loads and matches",
+    "passed": true,
+    "detail": {
+      "index": 4,
+      "steps": 5914,
+      "matched": true,
+      "mismatches": [],
+      "status": "flying",
+      "reward": -0.08736756256578529
+    }
+  },
+  {
+    "check": "verdict banner says MATCHES",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "terrain+ship visible at step 0",
+    "passed": true,
+    "detail": {
+      "lit": 32577,
+      "hash": 1444023562
+    }
+  },
+  {
+    "check": "scrub sets step and pauses",
+    "passed": true,
+    "detail": {
+      "index": 2957,
+      "steps": 5914,
+      "matched": true,
+      "mismatches": [],
+      "status": "flying",
+      "reward": -8.40957230527813
+    }
+  },
+  {
+    "check": "canvas changes when scrubbed",
+    "passed": true,
+    "detail": {
+      "lit": 32713,
+      "hash": 2074179561
+    }
+  },
+  {
+    "check": "final frame reports landed",
+    "passed": true,
+    "detail": {
+      "index": 5914,
+      "steps": 5914,
+      "matched": true,
+      "mismatches": [],
+      "status": "landed",
+      "reward": 82.50830262234281
+    }
+  },
+  {
+    "check": "mid-flight reward equals Python replay",
+    "passed": true,
+    "detail": {
+      "browser": -8.40957230527813,
+      "python": -8.40957230527813
+    }
+  },
+  {
+    "check": "playback advances at each speed",
+    "passed": true,
+    "detail": {
+      "0.25": 23,
+      "1": 90,
+      "4": 360,
+      "16": 1440
+    }
+  },
+  {
+    "check": "speeds are ordered 0.25x<1x<4x<16x",
+    "passed": true,
+    "detail": {
+      "0.25": 23,
+      "1": 90,
+      "4": 360,
+      "16": 1440
+    }
+  },
+  {
+    "check": "16x is about 16x of 1x",
+    "passed": true,
+    "detail": 16.0
+  },
+  {
+    "check": "pause freezes playback",
+    "passed": true,
+    "detail": [
+      32,
+      32
+    ]
+  },
+  {
+    "check": "resume continues playback",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "crashed record matches and ends crashed",
+    "passed": true,
+    "detail": {
+      "index": 1123,
+      "steps": 1123,
+      "matched": true,
+      "mismatches": [],
+      "status": "crashed",
+      "reward": -99.12776242841286
+    }
+  },
+  {
+    "check": "timeout record matches and ends timeout",
+    "passed": true,
+    "detail": {
+      "index": 120,
+      "steps": 120,
+      "matched": true,
+      "mismatches": [],
+      "status": "timeout",
+      "reward": -25.901618789944106
+    }
+  },
+  {
+    "check": "bad_trace_length: REPLAY MISMATCH shown",
+    "passed": true,
+    "detail": "REPLAY MISMATCH: trace_length 1124 != actual 1123 recorded actions"
+  },
+  {
+    "check": "bad_trace_hash: REPLAY MISMATCH shown",
+    "passed": true,
+    "detail": "REPLAY MISMATCH: trace_hash does not match the recorded actions"
+  },
+  {
+    "check": "trailing_actions: REPLAY MISMATCH shown",
+    "passed": true,
+    "detail": "REPLAY MISMATCH: terminal.steps 1123 != actual 1126 recorded actions | 3 trailing action(s) after the simulation ended at step 1123"
+  },
+  {
+    "check": "truncated_trace: REPLAY MISMATCH shown",
+    "passed": true,
+    "detail": "REPLAY MISMATCH: terminal.steps 1123 != actual 1103 recorded actions | trace ended at step 1103 but the simulation had not terminated (truncated trace) | status"
+  },
+  {
+    "check": "bad_terminal_reward: REPLAY MISMATCH shown",
+    "passed": true,
+    "detail": "REPLAY MISMATCH: reward -99.12776242841286 != recorded -98.62776242841286"
+  },
+  {
+    "check": "file picker loads a record",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "drag and drop loads a record",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "unsupported file is refused visibly",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "index.html draws terrain+ship",
+    "passed": true,
+    "detail": {
+      "lit": 16368,
+      "hash": 3831210387
+    }
+  },
+  {
+    "check": "index.html responds to thrust input",
+    "passed": true,
+    "detail": {
+      "y_before": 150.54049999999995,
+      "y_after": 152.27999999999997
+    }
+  },
+  {
+    "check": "first frame pixel-identical before/after render.js refactor",
+    "passed": true,
+    "detail": {
+      "original": {
+        "lit": 19179,
+        "hash": 3756344446
+      },
+      "refactored": {
+        "lit": 19179,
+        "hash": 3756344446
+      }
+    }
+  },
+  {
+    "check": "no console or page errors",
+    "passed": true,
+    "detail": []
+  }
+]

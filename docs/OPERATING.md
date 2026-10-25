@@ -49,6 +49,18 @@ the Python adapter uses, draws each step with play/pause/scrub/speed controls, a
 recorded outcome and `REPLAY MATCHES RECORD` (or the exact mismatch). Records hold actions, not
 per-step states, so nothing is invented: positions are regenerated deterministically.
 
+The verdict has two parts, both required for `REPLAY MATCHES RECORD`: **integrity** (`trace_length` and
+`terminal.steps` equal the real action count; `trace_hash` recomputed in the browser equals the record) and
+**parity** (replaying the actions reproduces the recorded outcome, ends on the step physics terminates, with
+no trailing actions and no truncation). Anything else shows `REPLAY MISMATCH` with every reason.
+`controller_hash` and re-deriving the start from the episode seed are left to the Python verifier below.
+Known gap: the Python verifier does not flag extra actions appended after termination when the length and
+hash are re-sealed; the browser viewer does.
+
+Browser evidence (26 checks incl. controls, mismatches, file picker, drag/drop, `index.html`) is produced by
+`python examples/browser_replay_check.py --out docs/assets/replay-evidence` (needs `pip install playwright`
+and `playwright install chromium`); screenshots and `browser_check_results.json` are in that directory.
+
 Python-side verification (independent of the browser):
 
 ```python

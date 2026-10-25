@@ -117,10 +117,10 @@
       const o = frame.observation, r = frame.result;
       context.fillStyle = "#F0F6FF";
       context.font = "22px HersheySimplex, monospace";
-      const mock = record.origin !== "model_generated";
+      const scripted = record.origin === "deterministic_mock" || record.origin === "hand_specified_demonstration";
       const lines = [
         `FLIGHT REPLAY  ${record.split || ""}  REV ${record.revision_index}  EP ${record.episode_index}  SEED ${record.episode_seed}`,
-        `${mock ? "SCRIPTED / NON-LLM SOURCE: " : "MODEL: "}${record.model}  (${record.origin})`,
+        `${scripted ? "SCRIPTED / NON-LLM SOURCE: " : record.origin === "model_generated" ? "MODEL: " : "ORIGIN NOT STATED: "}${record.model}  (${record.origin})`,
         `CONTROLLER ${JSON.stringify(record.controller).slice(0, 110)}`,
         `STEP ${index}/${frames.length - 1}   ACTION rot ${frame.action ? frame.action.rotation : "-"}  thrust ${frame.action ? frame.action.thrust : "-"}`,
         `REWARD ${r.reward.toFixed(2)}   STATUS ${r.status}   FUEL ${o.fuel.toFixed(1)}   ALT ${o.altitude.toFixed(1)}   SPEED ${Math.hypot(o.vx, o.vy).toFixed(3)}`,
