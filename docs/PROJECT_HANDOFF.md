@@ -23,7 +23,7 @@ itself has **not** been run. A revised protocol (v2, prompt v4, guidance-only) a
 | [#15](https://github.com/ManpreetS2/R.E.A.C.T/pull/15) | `feature/first-llm-study` | First real-LLM study launch package |
 | [#16](https://github.com/ManpreetS2/R.E.A.C.T/pull/16) | `feature/spend-ceiling-and-billing-guide` | Aggregate USD ceiling, fail-closed ledger, billing guide (CI green on 3 OSes at `0ed02c9`) |
 | [#17](https://github.com/ManpreetS2/R.E.A.C.T/pull/17) | `feature/controller-instance-prompt-v3` | Prompt v3 + prompt version in experiment identity (head `82ae009`) |
-| see "Latest checkpoint" below | `feature/prompt-v4-guidance-autopilot` | Missions 008-009 work in progress: prompt v4, v2 protocol, autopilot, baselines, results manifest |
+| [#18](https://github.com/ManpreetS2/R.E.A.C.T/pull/18) | `feature/prompt-v4-guidance-autopilot` | Missions 008-009 work in progress: prompt v4, v2 protocol, autopilot, baselines, results manifest |
 
 PRs #3-#11 are unrelated RL research branches off `main`.
 
