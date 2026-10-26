@@ -1,3 +1,5 @@
+> **Historical (2026-10-15).** The current project state is in `docs/PROJECT_HANDOFF.md`.
+
 # Handoff — Agent 4, analysis
 
 Date: 2026-10-15

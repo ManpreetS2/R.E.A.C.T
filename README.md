@@ -112,12 +112,17 @@ python -m rewardbench.operate run \
 
 Runs development → freeze → sealed held-out → report into one directory, shows revisions, controller changes and rewards, and resumes on re-run. See `docs/OPERATING.md` (mock vs live, credentials, outputs) and `docs/REWARD_ONLY_CONTROL.md`.
 
-### First real-model study (prepared, not executed)
+### Real-model study (revised exploratory protocol v2, not executed)
 
-`docs/FIRST_LLM_STUDY_PROTOCOL.md`, `docs/FIRST_LLM_STUDY_BUDGET.md` and `docs/FIRST_LLM_STUDY_LAUNCH.md` define the
-three-arm (no feedback / reward only / full numerical) study, its worst-case spend and the exact first paid command.
-Nothing has been run against a provider; live execution needs the owner's approval of provider, model and a USD ceiling.
-`python -m rewardbench.study rehearse --out runs/rehearsal` runs the whole design free with the scripted mock.
+`docs/STUDY_V2_PROTOCOL.md`, `docs/FIRST_LLM_STUDY_BUDGET.md` and `docs/FIRST_LLM_STUDY_LAUNCH.md` define the
+three-arm (no feedback / reward only / full numerical) study, its worst-case spend and the exact paid commands.
+Two exploratory single calls were made under the original protocol (`docs/FIRST_LLM_STUDY_PROTOCOL.md`, see its
+Deviations): the schema was echoed back, then a prompt example was copied. v2 (prompt v4) restricts the model to the
+guidance law, teaches the flight mechanics and shows no copyable controller. Live execution needs the owner's
+approval of provider, model and a USD ceiling. Free tools: `python -m rewardbench.study rehearse --out runs/rehearsal`
+(whole design with the scripted mock), `python -m rewardbench.study baselines --out <file>` (scripted and
+hand-specified controllers on the development seeds) and `python -m rewardbench.autopilot plan ...` (would the next
+matched round fit the ceiling?).
 
 ### Offline demonstration (scripted mock — infrastructure)
 

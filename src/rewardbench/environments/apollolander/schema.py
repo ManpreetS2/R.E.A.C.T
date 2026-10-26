@@ -10,7 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any
 
@@ -62,14 +62,96 @@ DEMONSTRATION_GUIDANCE: dict[str, float] = {
 }
 
 
-# Prompt format illustration (see "instance" in the schema document). Deliberately a neutral open-loop
-# constant, not the tuned guidance demonstration, so the prompt does not seed the experiment.
-EXAMPLE_CONTROLLER: dict[str, Any] = {
-    "schema": SCHEMA_ID,
-    "policy": "constant",
-    "thrust": 0.5,
-    "rotation": 0,
+# What each guidance parameter does, for the model prompt. Qualitative only: no tuned values (Mission 008
+# showed a supplied numeric example is copied verbatim, so the prompt carries no complete controller).
+GUIDANCE_PARAMETER_GUIDE: dict[str, str] = {
+    "vx_gain": "desired horizontal speed per unit of dx; higher approaches the pad faster from far away",
+    "vx_limit": "largest desired horizontal speed toward the pad",
+    "rotation_gain": "tilt per unit of horizontal-speed error when not aligned; higher corrects faster but can overshoot",
+    "aligned_rotation_gain": "tilt per unit of horizontal-speed error when aligned",
+    "aligned_rotation_limit": "largest tilt (degrees) allowed when aligned",
+    "cruise_rotation_limit": "largest tilt (degrees) allowed when not aligned; big tilts brake harder but lift less",
+    "aligned_dx": "aligned requires |dx| below this distance",
+    "aligned_vx": "aligned requires |vx| below this speed",
+    "descent_aligned": "target downward speed while aligned (above altitude_mid)",
+    "descent_cruise": "target downward speed while not aligned (above altitude_mid)",
+    "descent_mid": "target downward speed below altitude_mid",
+    "descent_low": "target downward speed below altitude_low, i.e. the speed the ship is steered to at touchdown",
+    "altitude_mid": "altitude where descent_mid takes over",
+    "altitude_low": "altitude where descent_low takes over (it overrides descent_mid)",
+    "altitude_upright": "below this altitude, while aligned, rotation is forced to 0 (upright)",
+    "hover_thrust": "baseline thrust before corrections; about 1/3 cancels gravity when upright",
+    "vy_gain": "thrust added per unit that vy exceeds the target descent speed; higher holds the target more tightly",
+    "brake_thrust": "extra thrust per unit of |vx error| when not aligned",
 }
+
+GUIDANCE_LAW = (
+    "How the guidance policy acts. Every step it reads the latest observation and computes, in order:",
+    "1. desired_vx = clamp(dx * vx_gain, -vx_limit, vx_limit); vx_error = vx - desired_vx.",
+    "2. aligned = |dx| < aligned_dx and |vx| < aligned_vx.",
+    "3. rotation = clamp(-vx_error * aligned_rotation_gain, +-aligned_rotation_limit) when aligned, otherwise "
+    "clamp(-vx_error * rotation_gain, +-cruise_rotation_limit); forced to 0 when aligned and altitude < "
+    "altitude_upright; then rounded to the nearest 10 degrees.",
+    "4. target_vy = descent_aligned when aligned, otherwise descent_cruise; replaced by descent_mid when altitude "
+    "< altitude_mid, then by descent_low when altitude < altitude_low.",
+    "5. thrust = hover_thrust + (vy - target_vy) * vy_gain, plus |vx_error| * brake_thrust when not aligned; "
+    "clamped to 0..1.",
+)
+
+# Constants mirrored from frontend/apollolander/experiment/physics.js (checked by a test).
+MECHANICS_CONSTANTS = {
+    "gravity": 0.0005,
+    "thrustAcceleration": 0.0015,
+    "drag": 0.9997,
+    "rotationLerp": 0.3,
+    "thrustLerp": 0.2,
+    "fuelPerStep": 0.2,
+    "safeVerticalSpeed": 0.15,
+    "perfectVerticalSpeed": 0.075,
+}
+
+
+def flight_mechanics(*, max_steps: int, start_summary: str) -> tuple[str, ...]:
+    """Accurate physics for the prompt. Identical for every feedback condition; no tuned numbers."""
+
+    c = MECHANICS_CONSTANTS
+    return (
+        f"Time: one step is 1/60 s. An episode ends at touchdown, at a crash, or after {max_steps} steps (timeout).",
+        "Coordinates: x grows to the right and y grows DOWNWARD. vx > 0 is moving right. vy > 0 is moving down "
+        "(descending); vy < 0 is climbing.",
+        "Observations the controller uses: dx = pad center x minus ship x (dx > 0: the pad is to the right), "
+        "vx, vy, and altitude = height of the ship's base above the terrain directly below it.",
+        f"Gravity adds {c['gravity']} to vy every step.",
+        f"Thrust: the engine accelerates the ship by {c['thrustAcceleration']} x engine level per step along the "
+        f"ship's axis. The engine level moves {round(c['thrustLerp'] * 100)}% of the way to the commanded thrust "
+        "each step, so thrust changes lag. Upright, thrust of about 1/3 cancels gravity; more slows a descent "
+        "or climbs, less falls faster.",
+        f"Rotation: the ship turns {round(c['rotationLerp'] * 100)}% of the remaining way to the commanded angle "
+        "each step. 0 is upright and thrusts straight up. Positive rotation tilts the thrust to push the ship "
+        "right (+x); negative pushes it left. Tilting also reduces the upward part of the thrust.",
+        f"Braking: horizontal drag is tiny (vx is multiplied by {c['drag']} each step), so horizontal speed is "
+        "removed only by tilted thrust.",
+        f"Fuel: the engine burns {c['fuelPerStep']} x engine level fuel per step; with no fuel it stops.",
+        start_summary,
+        "Success: the ship must touch the designated pad with its whole base on the pad, rotation exactly 0, and "
+        f"downward speed vy below {c['safeVerticalSpeed']} at contact; below {c['perfectVerticalSpeed']} is a "
+        "gentle landing. Touching the pad tilted or faster, or touching any slope, is a crash. Settling on flat "
+        "ground that is not the pad is not a success. No touchdown before the step limit is a timeout.",
+        "Score (the environment's own): rewards getting closer to the pad and staying upright, charges for fuel "
+        "burned, and ranks outcomes: gentle pad landing best, then hard pad landing, then settling off the pad, "
+        "then timeout; a crash is worst.",
+    )
+
+
+def resolve_policies(policies: Sequence[str] | None) -> tuple[str, ...]:
+    """Canonical, ordered policy subset; ``None`` means every policy."""
+
+    if policies is None:
+        return POLICIES
+    chosen = tuple(policies)
+    if not chosen or any(p not in POLICIES for p in chosen) or len(set(chosen)) != len(chosen):
+        raise ValueError(f"allowed_policies must be distinct values from {POLICIES}")
+    return tuple(p for p in POLICIES if p in chosen)
 
 
 class ControllerRejected(ValueError):
@@ -85,47 +167,64 @@ class ControllerStatus:
     policy: str | None
 
 
-def controller_schema_document() -> dict[str, Any]:
+_POLICY_SCHEMAS: dict[str, dict[str, Any]] = {
+    "guidance": {
+        "parameters": {name: {"minimum": low, "maximum": high} for name, (low, high) in GUIDANCE_BOUNDS.items()}
+    },
+    "constant": {"thrust": [0, 1], "rotation": [-90, 90]},
+    "random": {
+        "seed": [0, MAX_CONTROLLER_SEED],
+        "note": "Deterministic open-loop baseline; mixes controller seed with episode seed and step.",
+    },
+}
+_POLICY_FIELDS = {
+    "guidance": (
+        'requires "parameters": an object holding every guidance parameter named in the schema, '
+        "each a concrete number within its bounds"
+    ),
+    "constant": 'requires "thrust" (number from 0 to 1) and "rotation" (integer multiple of 10 from -90 to 90)',
+    "random": 'requires "seed" (integer from 0 to 4294967295)',
+}
+_OBJECTIVE = (
+    "Design ONE controller that lands the ship gently and upright on the designated pad from every start in "
+    "this experiment, without crashing or timing out, using little fuel. The same controller flies every start "
+    "unchanged and keeps adjusting thrust and rotation from each new observation."
+)
+_DEFAULT_START_SUMMARY = "Starts: every episode uses the same fixed start."
+
+
+def controller_schema_document(
+    allowed_policies: Sequence[str] | None = None,
+    *,
+    max_steps: int = 8000,
+    start_summary: str = _DEFAULT_START_SUMMARY,
+) -> dict[str, Any]:
+    policies = resolve_policies(allowed_policies)
+    instance: dict[str, Any] = {
+        "objective": _OBJECTIVE,
+        "mechanics": list(flight_mechanics(max_steps=max_steps, start_summary=start_summary)),
+        "required_fields": ["schema", "policy"],
+        "policy_fields": {name: _POLICY_FIELDS[name] for name in policies},
+    }
+    if "guidance" in policies:
+        instance["guidance_law"] = list(GUIDANCE_LAW)
+        instance["parameter_guide"] = dict(GUIDANCE_PARAMETER_GUIDE)
+        # A shape with placeholders, deliberately not valid JSON, so nothing in the prompt is a copyable controller.
+        instance["shape"] = (
+            '{"schema":"' + SCHEMA_ID + '","policy":"guidance","parameters":{'
+            + ",".join(f'"{name}":<number>' for name in GUIDANCE_BOUNDS) + "}}"
+        )
     return {
         "schema": SCHEMA_ID,
         "commands": {
             "thrust": {"minimum": 0, "maximum": 1},
             "rotation": {"minimum": -90, "maximum": 90, "step": 10},
         },
-        "policies": {
-            "guidance": {
-                "parameters": {
-                    name: {"minimum": low, "maximum": high}
-                    for name, (low, high) in GUIDANCE_BOUNDS.items()
-                }
-            },
-            "constant": {"thrust": [0, 1], "rotation": [-90, 90]},
-            "random": {
-                "seed": [0, MAX_CONTROLLER_SEED],
-                "note": "Deterministic open-loop baseline; mixes controller seed with episode seed and step.",
-            },
-        },
-        "rejected": ["JavaScript", "unknown fields", "non-finite numbers", "values outside bounds"],
-        "note": "The reference Gymnasium heuristic is not used here. demonstration_guidance_controller is hand-specified. random is a scripted baseline, not learning.",
-        "instance": {
-            "required_fields": ["schema", "policy"],
-            "policy_fields": {
-                "guidance": (
-                    'requires "parameters": an object holding every guidance parameter named in the schema, '
-                    "each a number within its bounds"
-                ),
-                "constant": (
-                    'requires "thrust" (number from 0 to 1) and "rotation" '
-                    "(integer multiple of 10 from -90 to 90)"
-                ),
-                "random": 'requires "seed" (integer from 0 to 4294967295)',
-            },
-            "example": dict(EXAMPLE_CONTROLLER),
-            "example_note": (
-                "Format illustration only. It is not a recommended, tuned, or good controller; "
-                "choose your own values."
-            ),
-        },
+        "policies": {name: _POLICY_SCHEMAS[name] for name in policies},
+        "rejected": ["JavaScript", "unknown fields", "missing fields", "non-finite numbers", "values outside bounds"]
+        + ([] if policies == POLICIES else ["policies not listed here"]),
+        "note": "The reference Gymnasium heuristic is not used here. Missing or out-of-range values are rejected, never filled in.",
+        "instance": instance,
     }
 
 
@@ -159,15 +258,24 @@ def random_controller(seed: int = 0) -> dict[str, Any]:
     return {"schema": SCHEMA_ID, "policy": "random", "seed": seed}
 
 
-def validate_controller(payload: Mapping[str, Any] | str) -> ControllerStatus:
+def validate_controller(
+    payload: Mapping[str, Any] | str,
+    allowed_policies: Sequence[str] | None = None,
+) -> ControllerStatus:
     try:
-        normalized = normalize_controller(payload)
+        normalized = normalize_controller(payload, allowed_policies)
     except ControllerRejected as exc:
         return ControllerStatus(False, exc.reason, None)
     return ControllerStatus(True, None, normalized["policy"])
 
 
-def normalize_controller(payload: Mapping[str, Any] | str) -> dict[str, Any]:
+def normalize_controller(
+    payload: Mapping[str, Any] | str,
+    allowed_policies: Sequence[str] | None = None,
+) -> dict[str, Any]:
+    """Validate and normalize; never fills in, repairs or substitutes a value."""
+
+    permitted = resolve_policies(allowed_policies)
     if isinstance(payload, str):
         try:
             parsed = json.loads(payload)
@@ -179,18 +287,25 @@ def normalize_controller(payload: Mapping[str, Any] | str) -> dict[str, Any]:
         raise ControllerRejected("controller must be a JSON object")
     if not isinstance(parsed, dict):
         raise ControllerRejected("controller JSON must be an object")
+    policy = parsed.get("policy")
+    allowed = ", ".join(permitted)
+    if policy is None and "policies" in parsed:
+        # Checked first so an echoed schema (whose long notes fail the checks below) gets the useful message.
+        raise ControllerRejected(
+            "controller is missing the required 'policy' field (this looks like the schema document, not a "
+            f"controller instance); allowed policies: {allowed}"
+        )
     _reject_forbidden(parsed)
     if parsed.get("schema") != SCHEMA_ID:
         raise ControllerRejected(f"unsupported controller schema {parsed.get('schema')!r}")
-    policy = parsed.get("policy")
-    allowed = ", ".join(POLICIES)
     if policy is None:
-        hint = " (this looks like the schema document, not a controller instance)" if "policies" in parsed else ""
-        raise ControllerRejected(
-            f"controller is missing the required 'policy' field{hint}; allowed policies: {allowed}"
-        )
+        raise ControllerRejected(f"controller is missing the required 'policy' field; allowed policies: {allowed}")
     if policy not in POLICIES:
         raise ControllerRejected(f"unknown controller policy {policy!r}; allowed policies: {allowed}")
+    if policy not in permitted:
+        raise ControllerRejected(
+            f"controller policy {policy!r} is not allowed in this experiment; allowed policies: {allowed}"
+        )
     if policy == "guidance":
         return {"policy": "guidance", "parameters": _guidance_parameters(parsed.get("parameters"))}
     if policy == "random":

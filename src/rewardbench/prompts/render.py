@@ -16,7 +16,7 @@ from rewardbench.contracts import (
     RewardFeedback,
 )
 
-PROMPT_TEMPLATE_ID = "rewardbench.prompts.v3"
+PROMPT_TEMPLATE_ID = "rewardbench.prompts.v4"
 
 SYSTEM_PROMPT = """You are proposing a controller for a closed reward-adaptation experiment.
 Revise only the controller. Do not update, train, or fine-tune neural network weights.
@@ -41,8 +41,8 @@ _REWARD_ONLY_HEADER = (
 _INSTANCE_KEY = "instance"
 _OUTPUT_RULE = (
     "Reply with one compact JSON object that is a controller instance of the schema, not the schema itself. "
-    "Include only schema fields. Do not include a score of your own. "
-    "Prefer the smallest valid controller that satisfies the schema."
+    "Include only schema fields and give every required field a concrete value you chose. "
+    "Missing or out-of-range values are rejected, not filled in. Do not include a score of your own."
 )
 
 
@@ -54,17 +54,34 @@ def render_messages(request: ModelRequest) -> tuple[str, str]:
         f"Task: {environment.display_name}. {environment.task_description}",
         f"Actions: {environment.action_space_summary}",
         f"Observations: {environment.observation_space_summary}",
+        _briefing_section(environment.controller_schema),
         "Controller schema:\n" + _json(_schema_only(environment.controller_schema)),
         _instance_section(environment.controller_schema),
         f"Revision: {request.revision_index}",
         _history_section(request),
         _OUTPUT_RULE,
     ]
-    return SYSTEM_PROMPT, "\n\n".join(sections)
+    return SYSTEM_PROMPT, "\n\n".join(section for section in sections if section)
 
 
 def _schema_only(schema: Mapping[str, Any]) -> Mapping[str, Any]:
     return {key: value for key, value in schema.items() if key != _INSTANCE_KEY}
+
+
+def _briefing_section(schema: Mapping[str, Any]) -> str:
+    """Objective and flight mechanics. Identical in every feedback condition; carries no scores."""
+
+    guide = schema.get(_INSTANCE_KEY)
+    if not isinstance(guide, Mapping):
+        return ""
+    lines = []
+    if isinstance(guide.get("objective"), str):
+        lines.append("Objective: " + guide["objective"])
+    mechanics = guide.get("mechanics") or ()
+    if mechanics:
+        lines.append("Flight mechanics:")
+        lines += [f"- {line}" for line in mechanics]
+    return "\n".join(lines)
 
 
 def _instance_section(schema: Mapping[str, Any]) -> str:
@@ -90,10 +107,17 @@ def _instance_section(schema: Mapping[str, Any]) -> str:
         if isinstance(policies, Mapping) and policies:
             lines.append('"policy" must be one of: ' + ", ".join(f'"{name}"' for name in policies) + ".")
             lines += [f'- "{name}": {description}' for name, description in policies.items()]
-        if "example" in guide:
-            note = guide.get("example_note")
-            lines.append("Example of a complete valid controller" + (f" ({note})" if note else "") + ":")
-            lines.append(_json(guide["example"]))
+        lines += list(guide.get("guidance_law") or ())
+        parameters = guide.get("parameter_guide")
+        if isinstance(parameters, Mapping) and parameters:
+            lines.append("What each guidance parameter changes (bounds are in the schema):")
+            lines += [f"- {name}: {effect}" for name, effect in parameters.items()]
+        if isinstance(guide.get("shape"), str):
+            lines.append(
+                "Shape of the reply. Replace every <number> with a concrete value you choose within its bounds; "
+                "the shape itself is not a valid controller:"
+            )
+            lines.append(guide["shape"])
     return "\n".join(lines)
 
 

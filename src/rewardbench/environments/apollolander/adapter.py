@@ -42,13 +42,16 @@ from rewardbench.environments.apollolander.schema import (
     guidance_action,
     normalize_controller,
     random_action,
+    resolve_policies,
     validate_controller,
 )
 from rewardbench.environments.apollolander.starts import (
+    PAD_MID_X,
     START_SCHEDULE_VERSION,
     checked_start,
     derive_start,
     schedule_document,
+    schedule_spec,
     standard_start,
 )
 from rewardbench.environments.lunarlander.seeds import validate_seed_split
@@ -78,6 +81,7 @@ class ApolloLanderAdapter:
         experiment_id: str | None = None,
         split: str | None = None,
         origin: str = "unspecified",
+        allowed_policies: Sequence[str] | None = None,
     ) -> None:
         self.max_steps = max_steps
         self.locked_camera = locked_camera
@@ -91,9 +95,11 @@ class ApolloLanderAdapter:
         self.origin = origin
         # Validate the schedule version at construction time.
         schedule_document(self.start_schedule_version)
+        # The controller search space offered to (and accepted from) a model. Default: every policy.
+        self.allowed_policies = resolve_policies(allowed_policies)
 
     def validate_controller(self, controller: Mapping[str, Any] | str):
-        return validate_controller(controller)
+        return validate_controller(controller, self.allowed_policies)
 
     def close(self) -> None:
         return None
@@ -122,7 +128,8 @@ class ApolloLanderAdapter:
             environment_id=CONTRACT_ENVIRONMENT_ID,
             display_name="ApolloLander",
             task_description=task,
-            controller_schema=controller_schema_document(),
+            controller_schema=controller_schema_document(
+                self.allowed_policies, max_steps=self.max_steps, start_summary=self._start_summary()),
             action_space_summary="thrust from 0 to 1 and rotation in 10 degree steps from -90 to 90",
             observation_space_summary=(
                 "x, y, vx, vy, rotation, fuel, altitude, and horizontal offset from the pad center"
@@ -134,7 +141,7 @@ class ApolloLanderAdapter:
         contracts = _contracts()
         if isinstance(parameters, (str, bytes)) or not isinstance(parameters, Mapping):
             return contracts.ValidationResult(False, "controller parameters must be a mapping")
-        status = validate_controller(dict(parameters))
+        status = validate_controller(dict(parameters), self.allowed_policies)
         if not status.valid:
             return contracts.ValidationResult(False, status.reason or "invalid controller")
         return contracts.ValidationResult(True, None)
@@ -167,7 +174,7 @@ class ApolloLanderAdapter:
             raise adapter_error(validation.error or "invalid controller")
         started = time.perf_counter()
         episode = self._run_episode(
-            normalize_controller(dict(policy.parameters)),
+            normalize_controller(dict(policy.parameters), self.allowed_policies),
             seed=seed,
             revision=revision_index,
             max_steps=max_steps or self.max_steps,
@@ -240,7 +247,7 @@ class ApolloLanderAdapter:
             )
         checked = checked_start(start)
         learning = autonomous_learning_claimed(origin)
-        status = validate_controller(controller)
+        status = validate_controller(controller, self.allowed_policies)
         if not status.valid:
             return {
                 "environment_id": self.environment_id,
@@ -257,7 +264,7 @@ class ApolloLanderAdapter:
                     for seed in seeds
                 ],
             }
-        normalized = normalize_controller(controller)
+        normalized = normalize_controller(controller, self.allowed_policies)
         output = Path(record_dir) if record_dir is not None else None
         selected = list(seeds if video_seeds is None else video_seeds) if record_video else []
         unknown = sorted(set(selected) - set(seeds))
@@ -450,6 +457,21 @@ class ApolloLanderAdapter:
             "reward_tol": reward_tol,
             "state_tol": state_tol,
         }
+
+    def _start_summary(self) -> str:
+        if not self.research_mode:
+            start = standard_start()
+            return (f"Starts: every episode uses the same start: pad {PAD_MID_X - start.x:g} units to the right, "
+                    f"vx {start.vx:g}, vy {start.vy:g}, rotation {start.rotation:g}, fuel {start.fuel:g}.")
+        spec = schedule_spec(self.start_schedule_version)
+        fuel = (f"fuel {spec.fuel[0]:g} to {spec.fuel[1]:g} units" if self.vary_fuel
+                else f"fuel {standard_start().fuel:g} units")
+        return (
+            "Starts vary by episode: the pad center is "
+            f"{-spec.dx_from_pad[1]:g} to {-spec.dx_from_pad[0]:g} units to the right (dx > 0), "
+            f"vx {spec.vx[0]:g} to {spec.vx[1]:g} (moving toward the pad), vy {spec.vy[0]:g} to {spec.vy[1]:g}, "
+            f"rotation {min(spec.rotations):g} to {max(spec.rotations):g} degrees, {fuel}."
+        )
 
     def start_for_seed(self, seed: int) -> dict[str, float]:
         """Public helper for Agent 1 and tests: the start this adapter would use."""

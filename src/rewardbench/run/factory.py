@@ -25,6 +25,7 @@ AGENT2_APOLLO_KWARGS = (
     "experiment_id",
     "split",
     "origin",
+    "allowed_policies",
 )
 
 

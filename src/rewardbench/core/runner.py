@@ -484,6 +484,13 @@ class ExperimentRunner:
             error=result.error,
         )
 
+    def request_for(self, revision: int) -> ModelRequest:
+        """The request a model call for ``revision`` would receive, built from stored results only.
+
+        Read-only. ``rewardbench.autopilot`` uses it to quote a call before deciding to make it.
+        """
+        return self._request(revision)
+
     def _request(self, revision: int) -> ModelRequest:
         attempts = self.store.fetch_attempts(self.experiment_id)
         episodes = self.store.fetch_episodes(self.experiment_id)
