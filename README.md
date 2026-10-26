@@ -2,9 +2,11 @@
 
 **Reward-Enhanced Adaptive Controller Testing**
 
-R.E.A.C.T. asks a precise question: *when a language model may revise a constrained controller inside a simulator, does seeing numerical rewards change those revisions more than an otherwise identical no-feedback condition?*
+**Canonical research and development plan: [PROJECT.md](PROJECT.md).** Read it before planning missions; [AGENTS.md](AGENTS.md) and [CLAUDE.md](CLAUDE.md) direct coding agents to it. The full Google Docs master plan (all 421 paragraphs, including the owner's October 17 decision) has been migrated there.
 
-Adaptation is **in-context**. Model weights stay fixed. A physics simulator—not another model—assigns the score. Development revisions and sealed held-out evaluation are separate steps.
+**Primary research vision:** Can an AI learn to play the original ApolloLander using only genuine screenshots and bounded keyboard actions after being told "Land the rocket"? That blind gameplay track is **not yet demonstrated**.
+
+**Existing controller-tuning research track:** R.E.A.C.T. also asks whether an LLM revising a constrained guidance controller changes its behavior usefully in response to reward feedback. This is **in-context** adaptation, not weight training. The 12-call Mission 010 pilot produced valid controllers but **did not demonstrate feedback-driven improvement**. See [the committed results](docs/assets/study-v2-pilot/RESULTS.md). Do not conflate controller-parameter tuning with autonomous blind visual gameplay.
 
 | | |
 | --- | --- |
@@ -43,7 +45,7 @@ flowchart LR
 | Flight manifests + deterministic replay | **Proven** |
 | Freeze → sealed held-out eval (no model call) | **Proven** (offline) |
 | Authorized live CLI + spend gates | **Proven** with mocked HTTP |
-| Real OpenAI / Gemini / Claude / Grok adaptation results | **Empty** — reserved for future owner-approved runs |
+| Real OpenAI controller-tuning pilot | **Exploratory:** 12 valid GPT-5.4-mini controllers (Mission 010); no measured feedback-driven gain; no cross-provider model rankings |
 | Independently validated model ranking | **Empty** — not claimed |
 
 Scripted and hand-specified controllers demonstrate the pipeline. They are **not** evidence that a language model learned.
