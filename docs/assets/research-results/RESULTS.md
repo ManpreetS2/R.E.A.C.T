@@ -1,15 +1,16 @@
 # Paid experiment evidence: manifest (as of 2026-10-26)
 
-Two single-call exploratory attempts with `openai:gpt-5.4-mini`, `no_feedback` arm, development seeds 0-7.
-**Total paid spend: $0.003516** (OpenAI project limit $0.25, prepaid credit $5, auto-reload off).
+Two single-call exploratory attempts (`no_feedback` arm) and the 12-call v2 pilot, all `openai:gpt-5.4-mini`, development
+seeds 0-7. **Total paid spend: $0.042646** (OpenAI project limit $0.25, prepaid credit $5, auto-reload off).
 Machine-readable version with per-file SHA-256: `MANIFEST.json` (same directory).
 
 | Mission | Prompt | Experiment id | Calls | Tokens | Cost (USD) | Outcome |
 | --- | --- | --- | ---: | ---: | ---: | --- |
 | 006 | `rewardbench.prompts.v2` | `exp_26eb2593d31e4a72c041` | 1 | 1,220 | 0.00258375 | Schema document echoed back; invalid (`unknown controller policy None`); nothing flown |
 | 008 | `rewardbench.prompts.v3` | `exp_bcc1e26372179700a53d` | 1 | 1,073 | 0.00093225 | Valid, but a verbatim copy of the prompt's format example (`constant`, thrust 0.5, rotation 0); 8/8 timeouts at 8000 steps, mean reward -104.56 (range -106.01 to -102.67), 0 landings, 0 crashes |
+| 010 | `rewardbench.prompts.v4` | `exp_ffa3fae153ea49e5284e` `exp_42eb966934fd53052f36` `exp_424436e7f1700e3e7cfa` | 12 | 41,778 | 0.03912900 | v2 pilot, 3 arms x 4 revisions, 12/12 valid; no feedback-driven improvement (see `../study-v2-pilot/RESULTS.md`) |
 
-Both are exploratory engineering attempts, not study data. Neither is a learning result (one revision each; the
+Missions 006 and 008 are exploratory engineering attempts, not study data. Neither is a learning result (one revision each; the
 session paused by design after one paid call). They are excluded from every later analysis and their spend counts
 toward every later ceiling. Configs that produced them are archived byte-for-byte in
 `configs/study/archive/prompt_v2/` and `prompt_v3/`.
@@ -22,6 +23,7 @@ configs and the protocol text are.
 | Local directory | Contents | Size |
 | --- | --- | ---: |
 | `runs/first-llm-study/pilot/` (Mission 006) | SQLite database, run and report logs, 2 prompt logs, report.md and 6 PNG charts | ~0.4 MB |
+| `runs/first-llm-study/pilot-p4/` (Mission 010) | 3 SQLite databases, autopilot journal and logs, 6 prompt logs, **96 flight recordings** | ~45 MB |
 | `runs/first-llm-study/pilot-p3/` (Mission 008) | SQLite database, run and report logs, 2 prompt logs, report.md and 6 PNG charts, **8 flight recordings** (`flights/exp_bcc1e26372179700a53d/*.flight.json`, ~465 KB each) | ~4.3 MB |
 
 Verify a restored copy with `sha256sum` against `MANIFEST.json`. The databases contain the raw model replies,

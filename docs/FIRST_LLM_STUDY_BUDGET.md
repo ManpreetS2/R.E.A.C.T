@@ -1,8 +1,9 @@
 # First real-LLM study: budget
 
-**Spent so far (recorded estimates, not an invoice): $0.003516**, all exploratory and all under the ledger root
-`runs/first-llm-study/`: Mission 006 (prompt v2, one call, $0.00258375) and Mission 008 (prompt v3, one call,
-$0.00093225). Both are counted by every later `--total-usd-ceiling` check. **Nothing in this document authorizes
+**Spent so far (recorded estimates, not an invoice): $0.042646**, all under the ledger root
+`runs/first-llm-study/`: Mission 006 (prompt v2, one call, $0.00258375), Mission 008 (prompt v3, one call,
+$0.00093225) and Mission 010 (the v2 pilot, 12 calls, $0.039129; `docs/assets/study-v2-pilot/RESULTS.md`). All are
+counted by every later `--total-usd-ceiling` check. **Nothing in this document authorizes
 spending.** Execution needs the owner to approve the provider, the model and a **total USD ceiling**. The figures
 below are computed worst cases for the current design (`first_llm_study.v2`, prompt `rewardbench.prompts.v4`,
 `docs/STUDY_V2_PROTOCOL.md`), not requests.

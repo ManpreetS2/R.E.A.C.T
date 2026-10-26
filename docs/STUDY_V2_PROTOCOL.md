@@ -1,6 +1,6 @@
 # Study v2: revised exploratory protocol (`first_llm_study.v2`)
 
-**Status: written 2026-10-26, NOT EXECUTED.** No paid call has been made under this protocol. It was written
+**Status: written 2026-10-26; pilot executed 2026-10-26 (Mission 010, see Deviations); study tier not run.** It was written
 **after** two paid exploratory calls under the original protocol (`FIRST_LLM_STUDY_PROTOCOL.md`, v1), so it is
 not a pre-registration of the original study and must not be presented as one. It fixes the revised design,
 outcomes and stopping rules before any v2 call. After the first v2 paid call, edit it only in the dated
@@ -141,4 +141,18 @@ where the feedback arms might still improve. Reserved seeds are never flown by i
 
 ## Deviations
 
-None yet.
+**2026-10-26, Mission 010, revision-0 go/no-go (recorded before any revision-1 call).** Round 0 ran under the
+unchanged design (3 calls, $0.0073, 3/3 valid, no billed failures, cost within the worst-case bound, prompts
+isolated). Revision-0 means: `no_feedback` -39.47, `reward_only` -51.75, `numerical_reward` +80.72; pooled
+-3.50. The headroom rule names one mean over the arms, and at revision 0 no arm has seen feedback, so it was
+applied to the pooled mean (-3.50 < +70): the pilot continues unchanged. Caveat stated now, not after the data:
+`numerical_reward` alone is above +70 (about 2 points below the demonstration), so its pilot trajectory can show
+fuel efficiency at most and is not evidence about improvement. The three revision-0 controllers are three draws
+from essentially the same prompt; their spread (-52 to +81) is sampling variance, not a feedback effect.
+
+**2026-10-26, Mission 010, pilot outcome.** The pilot finished as specified (12 calls, 4 revisions per arm,
+$0.039129; cumulative $0.042646; results in `docs/assets/study-v2-pilot/RESULTS.md`). No feedback-driven
+improvement was observed: `numerical_reward` declined (+80.72 -> +76.16), `reward_only` stayed at 8/8 timeouts,
+and `no_feedback` improved most (-39.47 -> +79.39) through an edit pattern the model applied in every arm. Per the
+go/no-go section the study tier is not run under v2; a redesign is a v3 protocol. Nothing in this protocol or
+its evaluation was changed after seeing the results.

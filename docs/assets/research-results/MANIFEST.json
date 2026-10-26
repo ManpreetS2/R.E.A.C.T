@@ -215,7 +215,711 @@
           "sha256": "613bdaf0eb1424684f805728f219af5d8cedbc364b14319343949deee96cb1af"
         }
       ]
+    },
+    {
+      "mission": "010",
+      "prompt": "rewardbench.prompts.v4",
+      "protocol": "docs/STUDY_V2_PROTOCOL.md (first_llm_study.v2, pilot tier)",
+      "experiment_id": "exp_ffa3fae153ea49e5284e",
+      "name": "llmstudy-pilot-openai-gpt54mini-nofeedback-p4-r1",
+      "outcome": "r0 mean -39.47 (3 gentle, 5 crash, 0 timeout); r1 mean +57.09 (7 gentle, 1 crash, 0 timeout); r2 mean +79.93 (8 gentle, 0 crash, 0 timeout); r3 mean +79.39 (8 gentle, 0 crash, 0 timeout)",
+      "config": "configs/study/pilot_no_feedback.yaml",
+      "database": "runs/first-llm-study/pilot-p4/llmstudy-pilot-openai-gpt54mini-nofeedback-p4-r1.sqlite",
+      "provider_model": "openai:gpt-5.4-mini",
+      "feedback_condition": "no_feedback",
+      "session_status": "completed",
+      "paid_calls": 4,
+      "total_tokens": 10493,
+      "cost_usd": 0.0104685,
+      "episodes": {
+        "count": 32,
+        "mean_reward": 44.234,
+        "min": -116.67576925888446,
+        "max": 86.52293336370647,
+        "successes": 26,
+        "crashes": 6,
+        "truncated_timeouts": 0
+      },
+      "backed_up_on_github": false,
+      "artifacts": [
+        {
+          "path": "runs/first-llm-study/pilot-p4/llmstudy-pilot-openai-gpt54mini-nofeedback-p4-r1.sqlite",
+          "bytes": 192512,
+          "sha256": "a3fd551a1f4b69e788bde3a6beae5110d1a44e2f42eedabf49757dd555456801"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/logs/llmstudy-pilot-openai-gpt54mini-nofeedback-p4-r1.autopilot.log",
+          "bytes": 8164,
+          "sha256": "722900a0b67ddac5341781ec5161f397d447e62299c50470a094bbf5258fd2bb"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-p4-r1/revision_00_call_00.txt",
+          "bytes": 9081,
+          "sha256": "a672175579e3a07efdc3ecb2c87f6f9742a80a18c077044feaf015add8707a93"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-p4-r1/revision_01_call_00.txt",
+          "bytes": 9517,
+          "sha256": "d550659f16713928ffcf153b43bd6ca660105270b68b88fc8082dffb8a5454b6"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-p4-r1/revision_01_call_01.txt",
+          "bytes": 9517,
+          "sha256": "d550659f16713928ffcf153b43bd6ca660105270b68b88fc8082dffb8a5454b6"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-p4-r1/revision_02_call_00.txt",
+          "bytes": 10016,
+          "sha256": "5cf6c92c9ad298894aa22b9643e31ad1128639c6c9d9afedebdc709a593781c6"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-p4-r1/revision_02_call_01.txt",
+          "bytes": 10016,
+          "sha256": "5cf6c92c9ad298894aa22b9643e31ad1128639c6c9d9afedebdc709a593781c6"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-p4-r1/revision_03_call_00.txt",
+          "bytes": 10518,
+          "sha256": "3a3e6b8e973f5a9900c481fc3c0a68b20d1e715aa20347b0724e440f686b3e2d"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-p4-r1/revision_03_call_01.txt",
+          "bytes": 10518,
+          "sha256": "3a3e6b8e973f5a9900c481fc3c0a68b20d1e715aa20347b0724e440f686b3e2d"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-0-ep-0-seed-6.flight.json",
+          "bytes": 300571,
+          "sha256": "0aefa414b968d11a7043a2e940395352d8577567b0521978ec0683a7adb83beb"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-0-ep-1-seed-3.flight.json",
+          "bytes": 284781,
+          "sha256": "b2321141f081cd0bef6e7a82a679e4e214a18619dca4a981d4bd4e37a7758980"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-0-ep-2-seed-4.flight.json",
+          "bytes": 227369,
+          "sha256": "93aa22a202671d02965320faa516bf75b5356cb337cb3cf8699fa0f51123748f"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-0-ep-3-seed-2.flight.json",
+          "bytes": 259572,
+          "sha256": "0583ab70b588cd644d6bcefae1af03b1052c77571dc4fbdff0ec50367d81513a"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-0-ep-4-seed-7.flight.json",
+          "bytes": 319391,
+          "sha256": "a549d296759e122d8201658abf987d07b47f67b99db2f869214fd90f4b4dd92c"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-0-ep-5-seed-5.flight.json",
+          "bytes": 246278,
+          "sha256": "8173c25afbd35e1bfea39726b69ef8f62e8723ab6463906ebd9c3bfb94d00935"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-0-ep-6-seed-1.flight.json",
+          "bytes": 259362,
+          "sha256": "720d5e352ed8748150c71ff402e2aa47a279f1efc0051834a96804dc113d1f6e"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-0-ep-7-seed-0.flight.json",
+          "bytes": 292942,
+          "sha256": "22a94475243cde771878227bb196f11240891cf9fc12f690c99e3f9341d4836e"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-1-ep-0-seed-6.flight.json",
+          "bytes": 477376,
+          "sha256": "1c1646a1bf2527e6915670aea46ebbb2b159c618a8eab235c2f0936c7d8eb093"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-1-ep-1-seed-3.flight.json",
+          "bytes": 340500,
+          "sha256": "635fdb64d854bc68e601f4b8a33106a6dbfb73b6b37bc68cbf681e3182b27db8"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-1-ep-2-seed-4.flight.json",
+          "bytes": 294811,
+          "sha256": "cadf33e0c44888afd9c7b6607061ae2081372542b840872600d0f64db5734c12"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-1-ep-3-seed-2.flight.json",
+          "bytes": 337614,
+          "sha256": "58127dca25f74dc898f120f1ae82b1d9ad0a030544894519bc22b456bec800ca"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-1-ep-4-seed-7.flight.json",
+          "bytes": 439193,
+          "sha256": "1c5272a41d88eed8bbd5afc88b1d23ada85ba5d17167615c746536edbbcb3182"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-1-ep-5-seed-5.flight.json",
+          "bytes": 327373,
+          "sha256": "32c79d27ccacc44786cba2847a980d2bfc3baac77c8c24b2aaa1857660fda2cd"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-1-ep-6-seed-1.flight.json",
+          "bytes": 336867,
+          "sha256": "07144d32871c07eb598f1cadfc8b918f8964e7f013bcc0665a668b1583225710"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-1-ep-7-seed-0.flight.json",
+          "bytes": 369194,
+          "sha256": "15c71daf9962b26527afa7d96ca144060cf38d5e8b6fe79e172cf8f9e20124ee"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-2-ep-0-seed-6.flight.json",
+          "bytes": 532146,
+          "sha256": "2b694aebd02ffa11d5c6f1c0e4970ff04e1aa30129f482d3d91e99377a3eb717"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-2-ep-1-seed-3.flight.json",
+          "bytes": 423565,
+          "sha256": "d8e3e798432500e90eec3265724eb19e6c5d40b1bbdb75779b93c22b0858effc"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-2-ep-2-seed-4.flight.json",
+          "bytes": 347412,
+          "sha256": "2dba6ae6fa33068287590b54a0fc7dc1436f965c74be10acac3b6e69980148b1"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-2-ep-3-seed-2.flight.json",
+          "bytes": 395612,
+          "sha256": "69aae906f8f605d82f200676f33d1a7adaa45d7ca02468d2ed80bd8454446523"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-2-ep-4-seed-7.flight.json",
+          "bytes": 491540,
+          "sha256": "692d6ae6993bab6c03595cd2950aa2f84d82d783aeeb1cf2cff42f3b2d121d9e"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-2-ep-5-seed-5.flight.json",
+          "bytes": 380428,
+          "sha256": "c728c3d60d49b211c45b1aac69a5eabfe0b1448fc03b2bbc38c3c1c045796385"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-2-ep-6-seed-1.flight.json",
+          "bytes": 391729,
+          "sha256": "b096e6d9965284f288566d50d81a4ef977c8db1098b99da4b14204632f3cd657"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-2-ep-7-seed-0.flight.json",
+          "bytes": 430710,
+          "sha256": "cd49d0639308d4c08e58536334f923dac6609c9099f9859eb15242d1c1317783"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-3-ep-0-seed-6.flight.json",
+          "bytes": 465552,
+          "sha256": "02eeb3792891b4f8078de3ae38b474099302867baf4c83b81235b4dee45bff2c"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-3-ep-1-seed-3.flight.json",
+          "bytes": 381866,
+          "sha256": "fa32dbe171078accd23438eb8a48fe4550eef1a3db181711a2286d91ed378af2"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-3-ep-2-seed-4.flight.json",
+          "bytes": 359856,
+          "sha256": "f3b46ec7485c6146d8351a6ad0ffa619bde49fa4d10b566915e470c27941cd4f"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-3-ep-3-seed-2.flight.json",
+          "bytes": 388113,
+          "sha256": "486c64371e4077df7a91c5896f7fba01c346862e6d7d72602ab6c8ec55fd0d4f"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-3-ep-4-seed-7.flight.json",
+          "bytes": 434549,
+          "sha256": "6b0dc13ba74d8471b9f135c1606a18dedfa5a84249c0513f662700d9e176a9d0"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-3-ep-5-seed-5.flight.json",
+          "bytes": 375969,
+          "sha256": "5e3b317f1ee4de8f011299f5e74c88117e1d7470d11f58b8c07456cece2c430e"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-3-ep-6-seed-1.flight.json",
+          "bytes": 392897,
+          "sha256": "311883e6a35116baf9012d9de79bebf7bf3e4d723b5509ed61788d78f9c5c874"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_ffa3fae153ea49e5284e/apollo-gpt-5-4-mini-revision-3-ep-7-seed-0.flight.json",
+          "bytes": 391092,
+          "sha256": "9953ce16b3d287075c06de846bab75fa194516c440aad2bb7141d08bfb4ab69b"
+        }
+      ]
+    },
+    {
+      "mission": "010",
+      "prompt": "rewardbench.prompts.v4",
+      "protocol": "docs/STUDY_V2_PROTOCOL.md (first_llm_study.v2, pilot tier)",
+      "experiment_id": "exp_42eb966934fd53052f36",
+      "name": "llmstudy-pilot-openai-gpt54mini-rewardonly-p4-r1",
+      "outcome": "r0 mean -51.75 (0 gentle, 0 crash, 8 timeout); r1 mean -51.28 (0 gentle, 0 crash, 8 timeout); r2 mean -51.15 (0 gentle, 0 crash, 8 timeout); r3 mean -50.92 (0 gentle, 0 crash, 8 timeout)",
+      "config": "configs/study/pilot_reward_only.yaml",
+      "database": "runs/first-llm-study/pilot-p4/llmstudy-pilot-openai-gpt54mini-rewardonly-p4-r1.sqlite",
+      "provider_model": "openai:gpt-5.4-mini",
+      "feedback_condition": "reward_only",
+      "session_status": "completed",
+      "paid_calls": 4,
+      "total_tokens": 11220,
+      "cost_usd": 0.0110175,
+      "episodes": {
+        "count": 32,
+        "mean_reward": -51.275,
+        "min": -53.11563419208566,
+        "max": -49.88735879078113,
+        "successes": 0,
+        "crashes": 0,
+        "truncated_timeouts": 32
+      },
+      "backed_up_on_github": false,
+      "artifacts": [
+        {
+          "path": "runs/first-llm-study/pilot-p4/llmstudy-pilot-openai-gpt54mini-rewardonly-p4-r1.sqlite",
+          "bytes": 188416,
+          "sha256": "49ab3850d168a3cf53f8670eb72fd7b5be6a53c43da9202c848fec167380dcf8"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/logs/llmstudy-pilot-openai-gpt54mini-rewardonly-p4-r1.autopilot.log",
+          "bytes": 8174,
+          "sha256": "152d6b397949842531dabaa6723bb6707dab9cfc174bc9f0ccf568fafd0d2d19"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-rewardonly-p4-r1/revision_00_call_00.txt",
+          "bytes": 9145,
+          "sha256": "034f74fafce523bf602921e1f43925f36fddb5b17b79b1ac833c8a4ce9b3348b"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-rewardonly-p4-r1/revision_01_call_00.txt",
+          "bytes": 9899,
+          "sha256": "6015354058ab46301995bb0885d6d94822ef404900bbe1c2a842876b83784271"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-rewardonly-p4-r1/revision_01_call_01.txt",
+          "bytes": 9899,
+          "sha256": "6015354058ab46301995bb0885d6d94822ef404900bbe1c2a842876b83784271"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-rewardonly-p4-r1/revision_02_call_00.txt",
+          "bytes": 10721,
+          "sha256": "af2fe6a8f247faf8c8fc61d6d8a05965dc4e50362343f0fbb88093b484bf6c74"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-rewardonly-p4-r1/revision_02_call_01.txt",
+          "bytes": 10721,
+          "sha256": "af2fe6a8f247faf8c8fc61d6d8a05965dc4e50362343f0fbb88093b484bf6c74"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-rewardonly-p4-r1/revision_03_call_00.txt",
+          "bytes": 11537,
+          "sha256": "e39cca682893669cb33cd2a01a5eccf004706bb4eb442828a9ffb66f15e22bce"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-rewardonly-p4-r1/revision_03_call_01.txt",
+          "bytes": 11537,
+          "sha256": "e39cca682893669cb33cd2a01a5eccf004706bb4eb442828a9ffb66f15e22bce"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-0-ep-0-seed-6.flight.json",
+          "bytes": 592987,
+          "sha256": "de0967dc7cb63b0ad144fee10ba34ebeae96c63ea0608e58c5c7d6f0634c7c13"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-0-ep-1-seed-3.flight.json",
+          "bytes": 591296,
+          "sha256": "56307e77df5998f4eff495df9c2c8a23adbd887a6b2db30adc7eb091247c7268"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-0-ep-2-seed-4.flight.json",
+          "bytes": 592531,
+          "sha256": "7bf014aaa40c6248619180dec85e1031e69d011b96b7350b001db6c81c635179"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-0-ep-3-seed-2.flight.json",
+          "bytes": 593117,
+          "sha256": "23ca62a8d5943481866c9ff84c65faf489919b8a0b0110ac6e7f90c7e64e5f63"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-0-ep-4-seed-7.flight.json",
+          "bytes": 591420,
+          "sha256": "5344a4354b478c683ca70321f26b6f113a503403b28c47ea7abfd3314ee45bd6"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-0-ep-5-seed-5.flight.json",
+          "bytes": 593322,
+          "sha256": "2b7318debbca2230eee1b22b89a875e57fbdfbf3438ca8e35cb5085073d612cc"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-0-ep-6-seed-1.flight.json",
+          "bytes": 592384,
+          "sha256": "dbe231e113fae1c40f8c2bd6bd96b4cebbc7fd873e3f1c9ac0fcab5b90573867"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-0-ep-7-seed-0.flight.json",
+          "bytes": 592866,
+          "sha256": "c6efe31343b1157716e3bbd2ff4723a9e87a5e20dbc83f601fe3f31d9bd092e7"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-1-ep-0-seed-6.flight.json",
+          "bytes": 592856,
+          "sha256": "5e61689b887a1331961e6dc3be330c883848a753719e85c0063de958ee7986a6"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-1-ep-1-seed-3.flight.json",
+          "bytes": 591306,
+          "sha256": "d8c3a8cf12997809b103bc5ecd64e89a88ba4f368a721677cf185881770deecb"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-1-ep-2-seed-4.flight.json",
+          "bytes": 593812,
+          "sha256": "8083da6079f9a320e96ccda47b8b4c49addf26abbd8fe062357151aefe4b9c16"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-1-ep-3-seed-2.flight.json",
+          "bytes": 594184,
+          "sha256": "824ac810b90344fd6a3bcc24faf592b912a5662841604f96cc6c96ea62dc6e47"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-1-ep-4-seed-7.flight.json",
+          "bytes": 591503,
+          "sha256": "b7df56eb8bba1d6ebbfa47d02ff46cabc86139cab9ec4d74b545cf21bf0b0d9c"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-1-ep-5-seed-5.flight.json",
+          "bytes": 594498,
+          "sha256": "c1b71d3d4a7e00f97bead5483add6437d209599360923d52c37b4724983d9aeb"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-1-ep-6-seed-1.flight.json",
+          "bytes": 593518,
+          "sha256": "93a9a418e6f986bae8776f5fbbff66564eec3522fe1152a558e08b38e99ae935"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-1-ep-7-seed-0.flight.json",
+          "bytes": 594145,
+          "sha256": "d7c228c3f5bf2a700225c629eae747e8364a58e6f2b30bb8408011bc73c44dde"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-2-ep-0-seed-6.flight.json",
+          "bytes": 585276,
+          "sha256": "35ca2efb9034e0978b033584a4880ca953b2bb8a9d283131830d27430cd4cf83"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-2-ep-1-seed-3.flight.json",
+          "bytes": 585947,
+          "sha256": "847db643451eeedb89ea11afd4b9381d5e28ced576c71be96a1749ab7a074f2b"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-2-ep-2-seed-4.flight.json",
+          "bytes": 589658,
+          "sha256": "c8616ff745c2367e38b80a4abf5f4eb1e4e3661b8b0105ebe9d4552143fe4c7d"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-2-ep-3-seed-2.flight.json",
+          "bytes": 589439,
+          "sha256": "f8e016333a8b68812d1db37610ec1deef9ff6a00c90e6d507650af540906a9ff"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-2-ep-4-seed-7.flight.json",
+          "bytes": 584699,
+          "sha256": "6d79ffaf87981e6e31caa5af36bfeaf22f793776c658b9514a4bd620b59a6074"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-2-ep-5-seed-5.flight.json",
+          "bytes": 588657,
+          "sha256": "5aaddac8d6755ea433d0eef509f4656ccbfa72fd37aa7e1d5835ecc87eef4433"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-2-ep-6-seed-1.flight.json",
+          "bytes": 588380,
+          "sha256": "9818007e7980d431145826c2f36ab205c66f3c43e5910ef28528c7b1f70516c6"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-2-ep-7-seed-0.flight.json",
+          "bytes": 588308,
+          "sha256": "5ce491d4eae5ed4a84f24feec793312d9bc05b2fd4b19a89b3aba65d0abb5425"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-3-ep-0-seed-6.flight.json",
+          "bytes": 586532,
+          "sha256": "11622971762bacb9d26e288cd7519093ade089a4f221752e97bc53d338e4c82c"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-3-ep-1-seed-3.flight.json",
+          "bytes": 585300,
+          "sha256": "7179b1f8907a9fbb34181eb274844a4b64ef01875d7cecb4d7a8b9f3447b0edf"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-3-ep-2-seed-4.flight.json",
+          "bytes": 592648,
+          "sha256": "f94ccdf312f1b34c529f1f96fb74fb7a50e00a34fbe935d13cbab0adbd63d484"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-3-ep-3-seed-2.flight.json",
+          "bytes": 593363,
+          "sha256": "870fe48ecab6a4656aaef09ebe1e4dbfc2b527e3c90788cf590217d0efd792ed"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-3-ep-4-seed-7.flight.json",
+          "bytes": 585574,
+          "sha256": "0ac0fccf8d3ee8b9abf0209657444c0738c3a5f3716840e77dfd60e65af87472"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-3-ep-5-seed-5.flight.json",
+          "bytes": 590601,
+          "sha256": "9d1e3e8914e2b895755d3cd2cea4b4ef887b35a76c0d223f3a99cb1832a100ac"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-3-ep-6-seed-1.flight.json",
+          "bytes": 591967,
+          "sha256": "63f960ae7538db788ffb745646aa2d499101f0de6444203e3cc72259853c24c8"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_42eb966934fd53052f36/apollo-gpt-5-4-mini-revision-3-ep-7-seed-0.flight.json",
+          "bytes": 588289,
+          "sha256": "a5973aa3a5f9847ebcfe6b56e0d9da2d534cf71a34404a912724c42f2621154f"
+        }
+      ]
+    },
+    {
+      "mission": "010",
+      "prompt": "rewardbench.prompts.v4",
+      "protocol": "docs/STUDY_V2_PROTOCOL.md (first_llm_study.v2, pilot tier)",
+      "experiment_id": "exp_424436e7f1700e3e7cfa",
+      "name": "llmstudy-pilot-openai-gpt54mini-numericalreward-p4-r1",
+      "outcome": "r0 mean +80.72 (8 gentle, 0 crash, 0 timeout); r1 mean +79.39 (8 gentle, 0 crash, 0 timeout); r2 mean +77.86 (8 gentle, 0 crash, 0 timeout); r3 mean +76.16 (8 gentle, 0 crash, 0 timeout)",
+      "config": "configs/study/pilot_numerical_reward.yaml",
+      "database": "runs/first-llm-study/pilot-p4/llmstudy-pilot-openai-gpt54mini-numericalreward-p4-r1.sqlite",
+      "provider_model": "openai:gpt-5.4-mini",
+      "feedback_condition": "numerical_reward",
+      "session_status": "completed",
+      "paid_calls": 4,
+      "total_tokens": 20065,
+      "cost_usd": 0.01764375,
+      "episodes": {
+        "count": 32,
+        "mean_reward": 78.53,
+        "min": 74.6905667547734,
+        "max": 82.22055918097794,
+        "successes": 32,
+        "crashes": 0,
+        "truncated_timeouts": 0
+      },
+      "backed_up_on_github": false,
+      "artifacts": [
+        {
+          "path": "runs/first-llm-study/pilot-p4/llmstudy-pilot-openai-gpt54mini-numericalreward-p4-r1.sqlite",
+          "bytes": 192512,
+          "sha256": "286ab90af38b7679c81cc1e2fa740d17939f74faf65a405b254da1153032a60c"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/logs/llmstudy-pilot-openai-gpt54mini-numericalreward-p4-r1.autopilot.log",
+          "bytes": 8264,
+          "sha256": "0f8b868bfed32e7fd25813599a3e63c4520709bf2517b01a3c8dde827946a594"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-numericalreward-p4-r1/revision_00_call_00.txt",
+          "bytes": 9145,
+          "sha256": "d73f83e3e152407285fee6f85176d3d960dabca77b4183c53e46aa723545d32a"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-numericalreward-p4-r1/revision_01_call_00.txt",
+          "bytes": 13955,
+          "sha256": "afb467eaf69608bfc9df0027c9b232fa63d2c0bb1ef8e5d3b910d5656ccc6721"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-numericalreward-p4-r1/revision_01_call_01.txt",
+          "bytes": 13955,
+          "sha256": "afb467eaf69608bfc9df0027c9b232fa63d2c0bb1ef8e5d3b910d5656ccc6721"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-numericalreward-p4-r1/revision_02_call_00.txt",
+          "bytes": 18796,
+          "sha256": "0f62d0735a55fd01e77058dab29066c1242693ee638aa601a1a04c15abee9e9d"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-numericalreward-p4-r1/revision_02_call_01.txt",
+          "bytes": 18796,
+          "sha256": "0f62d0735a55fd01e77058dab29066c1242693ee638aa601a1a04c15abee9e9d"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-numericalreward-p4-r1/revision_03_call_00.txt",
+          "bytes": 23674,
+          "sha256": "a143daf14aa1cd588e4977823dc5dca91eeb4ac6f592e80c4c1502a89f0a7c5c"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/prompts/llmstudy-pilot-openai-gpt54mini-numericalreward-p4-r1/revision_03_call_01.txt",
+          "bytes": 23674,
+          "sha256": "a143daf14aa1cd588e4977823dc5dca91eeb4ac6f592e80c4c1502a89f0a7c5c"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-0-ep-0-seed-6.flight.json",
+          "bytes": 449300,
+          "sha256": "5bc17ac67fecc63a9fa36b167ce4dbce0c3059f02bd95a1a35e57db506d223d3"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-0-ep-1-seed-3.flight.json",
+          "bytes": 399644,
+          "sha256": "ba5ba6f05a9c075daa11d4585326fa2d53b28c48b6bbcfcd2283ae3dfe0c1530"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-0-ep-2-seed-4.flight.json",
+          "bytes": 361344,
+          "sha256": "62e646573b48d748f51c40e5b4835e7f555d74c84d5923653ab6873b6af0e1a5"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-0-ep-3-seed-2.flight.json",
+          "bytes": 402460,
+          "sha256": "001d6cc07a98c4213094e3a3202a8979b6de26237579369c5a4480871ac93133"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-0-ep-4-seed-7.flight.json",
+          "bytes": 434716,
+          "sha256": "733a7e9e9df5c56a54fcfe47a182547fee12a4cc8e03790c795957f344b69e6c"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-0-ep-5-seed-5.flight.json",
+          "bytes": 382450,
+          "sha256": "fb9e56752aea3822a9327c29903d3e51f8e9f84618a4e5fe40f11d883c45e326"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-0-ep-6-seed-1.flight.json",
+          "bytes": 391303,
+          "sha256": "d8918d06d945a6a418db1c58999aa48bec0fbd3fe5ef681591aa0c0e1548c153"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-0-ep-7-seed-0.flight.json",
+          "bytes": 428149,
+          "sha256": "ce8e352d08af987051050c34d93415dcdda9d279c55b031f939f0482ece87e70"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-1-ep-0-seed-6.flight.json",
+          "bytes": 489131,
+          "sha256": "e40cb4fb624926b5d2f4dd2f0b3b4c65d0aa15067f4ae136a4ba01f02c99cf00"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-1-ep-1-seed-3.flight.json",
+          "bytes": 420895,
+          "sha256": "dc08e8c5fa66fb3804982950b692c074a95d7431b540dff29df1dec287e0f44c"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-1-ep-2-seed-4.flight.json",
+          "bytes": 399804,
+          "sha256": "1f190c83367b6ebac20b86c04b2eef2f50addf989ade92e1215c2732bcbe6844"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-1-ep-3-seed-2.flight.json",
+          "bytes": 450154,
+          "sha256": "0f79a30c9321e620dbc6741e606fe7c9cf32d0c8f3bc8f1ed2ee24d202fb9269"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-1-ep-4-seed-7.flight.json",
+          "bytes": 463840,
+          "sha256": "fb0c3b93c612a230fd3ba3187b397fbae786ad93f55fd17d6035166a12f47c3c"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-1-ep-5-seed-5.flight.json",
+          "bytes": 417560,
+          "sha256": "6390cc13adad13ad58491084f98ea2cd0eecad791dcd6f5c2b40625c0ed9ca7d"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-1-ep-6-seed-1.flight.json",
+          "bytes": 423151,
+          "sha256": "557daece74e1936b57575ec847895fcb6157b9a1d6a9d449fbc6b83b5c1052fe"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-1-ep-7-seed-0.flight.json",
+          "bytes": 453451,
+          "sha256": "8e6344c628c432ca65fe247a20a167f00814ece278a274453e85e01442fe7a12"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-2-ep-0-seed-6.flight.json",
+          "bytes": 525818,
+          "sha256": "205c121f9d89aefcb6172d392dde78d6b8d3eb301617febd3279684eb45aed46"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-2-ep-1-seed-3.flight.json",
+          "bytes": 453246,
+          "sha256": "a5cb71fc35b675513a390a83a7cb6c4b7736fd6a9e937aac4a1358b83b980021"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-2-ep-2-seed-4.flight.json",
+          "bytes": 438876,
+          "sha256": "fd62871460ff832143f5ecceb02fd1d6e32a1be351ebc2654483c13a1cac5b28"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-2-ep-3-seed-2.flight.json",
+          "bytes": 484778,
+          "sha256": "4fa634bd6547f2c7e22d97f229a7eeb51c2ea99fbaafd50d2a88d6b9ac03999a"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-2-ep-4-seed-7.flight.json",
+          "bytes": 510145,
+          "sha256": "c9e1d41caa3fe137b3680bcd9fb373294ddebfa643f129ea2f689085ff01b20d"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-2-ep-5-seed-5.flight.json",
+          "bytes": 445316,
+          "sha256": "a27a04bea9bc78ae8ec1fece6e321538f17630395d1b69f41433f6c4a6dcab9a"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-2-ep-6-seed-1.flight.json",
+          "bytes": 465998,
+          "sha256": "8a9b426b11f5f9e82c0131186fc8607aeba54dd5da96f279da165f95135ea4e5"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-2-ep-7-seed-0.flight.json",
+          "bytes": 488526,
+          "sha256": "ba41b06bd5f72f7e77b4383623ddc8fa4595919e7871a122b1fece6cc99d969d"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-3-ep-0-seed-6.flight.json",
+          "bytes": 573316,
+          "sha256": "52be15a696ce3afbaed4d94a0af665b654617a3d852e3f8382a28854b3aedc94"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-3-ep-1-seed-3.flight.json",
+          "bytes": 488658,
+          "sha256": "0a28983d6042f0a77191b16a439a3b9cf7ee2ab3d8b45349275dc498c3c9f8eb"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-3-ep-2-seed-4.flight.json",
+          "bytes": 460157,
+          "sha256": "025ea7d698bc1dca999a584c04731c7f452317e853a551a5c299a9d8b34001d8"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-3-ep-3-seed-2.flight.json",
+          "bytes": 510615,
+          "sha256": "be05e4539c8dfee86d49a716ed6821a399ad211ed42d3b484fe7ec8783f88f21"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-3-ep-4-seed-7.flight.json",
+          "bytes": 558746,
+          "sha256": "882c0b738f39139f83e122e72cc0e272bb3108af55a177fc71795564c855e451"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-3-ep-5-seed-5.flight.json",
+          "bytes": 472813,
+          "sha256": "aa33a4cc61566b1d63ef1e5245d60fd226fb3b8a4686118050fbe1aab92713d6"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-3-ep-6-seed-1.flight.json",
+          "bytes": 509711,
+          "sha256": "3142ba1d152376b9f8104ccbf67a2bc1d011d1ad97b00c0f9b16a3a67a5b9d2c"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/flights/exp_424436e7f1700e3e7cfa/apollo-gpt-5-4-mini-revision-3-ep-7-seed-0.flight.json",
+          "bytes": 526906,
+          "sha256": "fc38b8f2785a3939e1f1ee129bee363ed74baa4d7a54ae9d0f2980c989bf2563"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p4/autopilot.jsonl",
+          "bytes": 5736,
+          "sha256": "1a1a4060685373b2d5992f993323a1c003bd19e5c44cd42277ebee509df5deb6"
+        }
+      ]
     }
   ],
-  "total_paid_spend_usd": 0.003516
+  "total_paid_spend_usd": 0.04264575
 }
