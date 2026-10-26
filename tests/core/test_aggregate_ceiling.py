@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import shutil
 import sqlite3
+from contextlib import closing
 from pathlib import Path
 
 import pytest
@@ -20,7 +21,7 @@ needs_node = pytest.mark.skipif(shutil.which("node") is None, reason="ApolloLand
 
 
 def _db(path: Path, rows: list[tuple[str, float]]) -> None:
-    with sqlite3.connect(path) as db:
+    with closing(sqlite3.connect(path)) as db, db:
         db.execute("CREATE TABLE attempts (provider TEXT, estimated_cost_usd REAL)")
         db.executemany("INSERT INTO attempts VALUES (?, ?)", rows)
 
@@ -40,7 +41,7 @@ def test_ledger_sums_live_spend_across_databases_and_ignores_mock(tmp_path: Path
 
 def test_ledger_rejects_incomplete_and_invalid_cost_records(tmp_path: Path) -> None:
     unfinished = tmp_path / "partial.sqlite"
-    with sqlite3.connect(unfinished) as db:
+    with closing(sqlite3.connect(unfinished)) as db, db:
         db.execute("CREATE TABLE experiments (id TEXT)")
     with pytest.raises(ConfigError, match="incomplete experiment"):
         ledger_spent_usd(tmp_path)
@@ -112,7 +113,7 @@ def test_ceiling_spans_arms_pauses_resumably_and_never_sends_a_refused_request(t
     operate.main(base + ["--config", arms[1]])
     assert len(transport.requests) == 1, "a refused call must not reach the provider"
     second = next(out.glob("*rewardonly*.sqlite"))
-    with sqlite3.connect(second) as db:
+    with closing(sqlite3.connect(second)) as db, db:
         assert db.execute("SELECT status FROM experiments").fetchone()[0] == ExperimentStatus.INTERRUPTED.value
         assert db.execute("SELECT COUNT(*) FROM attempts").fetchone()[0] == 0
     # Raising the ceiling (owner action) lets the paused experiment resume.
@@ -134,6 +135,6 @@ def test_provider_billing_429_makes_no_retry_costs_nothing_and_ends_the_session_
     operate.main(["run", "--mode", "live", "--i-authorize-paid-api-calls", "--total-usd-ceiling", "1",
                   "--config", str(study.config_path("pilot", "no_feedback")), "--out", str(out)])
     assert len(transport.requests) == 1  # no hidden retry
-    with sqlite3.connect(next(out.glob("*.sqlite"))) as db:
+    with closing(sqlite3.connect(next(out.glob("*.sqlite")))) as db, db:
         assert db.execute("SELECT status FROM experiments").fetchone()[0] == ExperimentStatus.FAILED.value
     assert ledger_spent_usd(tmp_path / "ledger")[0] == 0.0
