@@ -71,6 +71,7 @@ class Arm:
     experiment_id: str
     num_revisions: int
     episodes_per_revision: int
+    fixed_start: bool = False  # revision 0 is a configured controller, flown offline before any paid call
 
 
 @dataclass(frozen=True)
@@ -121,6 +122,7 @@ class Settings:
     early_stop_scope: str = "all"
     max_rounds: int | None = None
     margin_usd: float = 0.0
+    require_whole_run_fit: bool = False  # refuse to start unless every remaining call's worst case fits
 
 
 @dataclass
@@ -163,7 +165,10 @@ def load_arms(paths: list[Path], out: Path) -> list[Arm]:
             raise ConfigError(f"duplicate experiment_name {name!r}")
         raw[name] = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
         arms.append(Arm(Path(path), name, config.feedback_condition.value, out / f"{name}.sqlite",
-                        experiment_id(config), config.num_revisions, config.episodes_per_revision))
+                        experiment_id(config), config.num_revisions, config.episodes_per_revision,
+                        config.metadata.get("initial_controller") is not None))
+    if len({arm.fixed_start for arm in arms}) != 1:
+        raise ConfigError("either every arm starts from a fixed controller or none does")
     if len({arm.condition for arm in arms}) != len(arms):
         raise ConfigError("each arm must have a different feedback_condition")
     check_matched(raw)  # arms may differ only in condition and names
@@ -248,6 +253,27 @@ def quote_next(arm: Arm, revision: int, catalog) -> float:
     return float(quote.usd)
 
 
+def remaining_worst_case(arms: list[Arm], states: dict[str, ArmState], catalog) -> float:
+    """Worst case of every call still to be made by these arms (the study's per-revision bound)."""
+
+    from rewardbench.study import _spec, worst_case_calls
+
+    total = 0.0
+    for arm in arms:
+        raw = yaml.safe_load(arm.path.read_text(encoding="utf-8"))
+        calls = worst_case_calls(raw, _spec(raw), catalog)
+        total += sum(c["usd"] for c in calls[states[arm.name].next_revision:])
+    return total
+
+
+def _check_whole_run(arms: list[Arm], states: dict[str, ArmState], settings: Settings, spent: float, catalog) -> None:
+    needed = remaining_worst_case(arms, states, catalog)
+    if spent + needed + settings.margin_usd > settings.ceiling_usd + 1e-12:
+        raise Stop(f"--require-whole-run-fit: the remaining calls need worst-case ${needed:.6f}; recorded spend "
+                   f"${spent:.6f} + margin ${settings.margin_usd:.6f} does not leave that under the "
+                   f"${settings.ceiling_usd:.6f} ceiling. No request was sent.", PLANNED)
+
+
 # ---------------------------------------------------------------- the round loop
 
 
@@ -265,6 +291,9 @@ def plan_round(arms: list[Arm], states: dict[str, ArmState], settings: Settings,
             raise Stop(f"{arm.name} was interrupted ({state.error}); review it before continuing", SAFETY)
         if state.unfinished:
             raise Stop(f"{arm.name} has unflown episodes in revision(s) {list(state.unfinished)}", SAFETY)
+        if arm.fixed_start and state.next_revision == 0:
+            raise Stop(f"{arm.name} starts from a fixed controller that has not been flown; record revision 0 "
+                       f"offline first (free): python -m rewardbench.study_v3 seed --config {arm.path}", SAFETY)
     levels = {states[a.name].next_revision for a in arms}
     if max(levels) - min(levels) > 1:
         raise Stop(f"arms are more than one revision apart: {sorted(levels)}", SAFETY)
@@ -329,6 +358,8 @@ def run_autopilot(arms: list[Arm], settings: Settings, *, execute: Callable[[Arm
             raise ConfigError(f"another autopilot holds {settings.ledger_root}: {exc}") from exc
     try:
         outcome.spent_before = _spent(settings.ledger_root)
+        if settings.require_whole_run_fit:
+            _check_whole_run(arms, {a.name: read_state(a) for a in arms}, settings, outcome.spent_before, catalog)
         rounds_started = 0
         while True:
             spent = _spent(settings.ledger_root)
@@ -454,6 +485,8 @@ def main(argv: list[str] | None = None) -> int:
                        help="stop when every arm is stuck (default) or when any arm is")
         p.add_argument("--max-rounds", type=int, default=None)
         p.add_argument("--margin-usd", type=float, default=0.0, help="keep this much of the ceiling unspent")
+        p.add_argument("--require-whole-run-fit", action="store_true",
+                       help="start only if the worst case of every remaining call of these arms fits")
         if name == "run":
             p.add_argument("--mode", choices=("live",), required=True)
             p.add_argument(ACK_PAID_FLAG, action="store_true", dest="authorize_paid")
@@ -497,7 +530,7 @@ def _settings(args: argparse.Namespace) -> Settings:
     if out != root and root not in out.parents:
         raise ConfigError("--out must be inside --ledger-root so its spend is counted")
     return Settings(ceiling, args.max_total_calls, root, out, args.stop_after_invalid, args.stop_after_unchanged,
-                    args.early_stop_scope, args.max_rounds, args.margin_usd)
+                    args.early_stop_scope, args.max_rounds, args.margin_usd, args.require_whole_run_fit)
 
 
 if __name__ == "__main__":

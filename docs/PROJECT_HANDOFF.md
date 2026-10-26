@@ -82,9 +82,11 @@ Never modify, delete or resume them.
 
 1. Owner review of the Mission 010 pilot (`docs/assets/study-v2-pilot/RESULTS.md`) and decision on a private
    backup of `runs/` (see `RESULTS.md` in `research-results/`).
-2. Write a v3 protocol (no paid calls) that addresses the pilot's findings: arms branch from a shared, fixed
-   starting controller; several replicates; no-feedback drift as the control; see the Mission 010 PR.
-3. Only with written owner approval of a new ceiling and call count, run the v3 pilot.
+2. Review the v3 design (Mission 011, `docs/STUDY_V3_PROTOCOL.md`, offline only): shared fixed failing starts,
+   matched random-search references, edit-direction analysis, `study_v3 seed/analyze`, autopilot
+   `--require-whole-run-fit`.
+3. Only with written owner approval of a ceiling (proposed $0.21 cumulative) and 18 calls, run the v3 pilot
+   with the exact commands in the protocol; apply its go/no-go before any study-tier spend.
 
 ## Exact steps to resume
 

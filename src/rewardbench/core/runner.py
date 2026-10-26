@@ -58,6 +58,10 @@ from rewardbench.core.seeds import build_seed_schedule
 
 logger = logging.getLogger("rewardbench.runner")
 
+# A fixed starting controller (``metadata.initial_controller``) is recorded under these names, at zero cost.
+FIXED_START_PROVIDER = "scripted"
+FIXED_START_MODEL = "fixed-start"
+
 _TERMINAL = (
     ExperimentStatus.COMPLETED,
     ExperimentStatus.FAILED,
@@ -134,6 +138,7 @@ class ExperimentRunner:
         reject_legacy_restart(self.config, self.store)
         self._spec = self.environment.describe()
         self._check_environment()
+        self._check_fixed_start()
         existing = self.store.get_experiment(self.experiment_id)
         if existing is not None:
             if existing.config_hash != config_hash(self.config):
@@ -182,6 +187,39 @@ class ExperimentRunner:
                 f"environment id {spec.environment_id!r} does not match "
                 f"config environment_id {self.config.environment_id!r}"
             )
+
+    def fixed_start(self) -> dict[str, Any] | None:
+        """``metadata.initial_controller.controller``: revision 0 flown without a model call, or None."""
+        spec = self.config.metadata.get("initial_controller")
+        if spec is None:
+            return None
+        if not isinstance(spec, Mapping) or not isinstance(spec.get("controller"), Mapping):
+            raise ConfigError("metadata.initial_controller must be a mapping with a 'controller' mapping")
+        return dict(spec["controller"])
+
+    def _check_fixed_start(self) -> None:
+        controller = self.fixed_start()
+        if controller is None:
+            return
+        try:
+            validation = self.environment.validate_policy(controller)
+        except EnvironmentAdapterError as exc:
+            raise ConfigError(f"metadata.initial_controller is not a valid controller: {exc}") from exc
+        if not validation.valid:
+            raise ConfigError(f"metadata.initial_controller is not a valid controller: {validation.error}")
+
+    def _record_fixed_start(self) -> StoredAttempt:
+        """Store the configured revision-0 controller as a scripted, unbilled attempt."""
+        controller = self.fixed_start()
+        assert controller is not None
+        self._block_if_needed(revision=True)
+        self._insert_attempt(
+            revision=0, call_index=0, selected=True, parameters=controller,
+            raw_response=json.dumps(controller, sort_keys=True, separators=(",", ":")),
+            valid=True, validation_error=None, response=None, error=None,
+            provider=FIXED_START_PROVIDER, model_id=FIXED_START_MODEL,
+        )
+        return [item for item in self._attempts_for(0) if item.selected][-1]
 
     def _create_experiment(self) -> None:
         now = _utc_now()
@@ -254,6 +292,8 @@ class ExperimentRunner:
         selected = [item for item in self._attempts_for(revision) if item.selected]
         if selected:
             return selected[-1]
+        if revision == 0 and self.fixed_start() is not None:
+            return self._record_fixed_start()
         max_calls = self.config.max_model_retries + 1
         last_message = "model did not return a controller"
         while True:
@@ -543,7 +583,15 @@ class ExperimentRunner:
         validation_error: str | None,
         response: ModelResponse | None,
         error: str | None,
+        provider: str | None = None,
+        model_id: str | None = None,
     ) -> None:
+        if response is None:
+            provider = provider or self.model.provider
+            model_id = model_id or self.model.model_id
+        else:
+            provider = response.provider or self.model.provider
+            model_id = response.model_id or self.model.model_id
         self.store.insert_attempt(
             StoredAttempt(
                 experiment_id=self.experiment_id,
@@ -561,8 +609,8 @@ class ExperimentRunner:
                 total_tokens=0 if response is None else response.charged_tokens,
                 latency_seconds=0.0 if response is None else response.latency_seconds,
                 estimated_cost_usd=0.0 if response is None else response.estimated_cost_usd,
-                model_id=self.model.model_id if response is None else (response.model_id or self.model.model_id),
-                provider=self.model.provider if response is None else (response.provider or self.model.provider),
+                model_id=model_id,
+                provider=provider,
                 error=error,
                 created_at=_utc_now(),
                 usage={} if response is None else dict(response.usage),

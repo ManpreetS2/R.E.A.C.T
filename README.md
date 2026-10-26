@@ -118,6 +118,11 @@ The v2 pilot (12 `gpt-5.4-mini` calls, $0.039) produced 12/12 valid guidance con
 but no feedback-driven improvement: the no-feedback arm improved most and the numerical-reward arm got worse. See
 `docs/assets/study-v2-pilot/RESULTS.md`.
 
+The controlled redesign (`docs/STUDY_V3_PROTOCOL.md`, not executed) starts every arm from the same fixed failing
+controller (crash-type and timeout-type), measures improvement from that shared start against matched random
+search, and checks whether edits move in the direction the failure calls for. Free tools:
+`python -m rewardbench.study_v3 budget | seed | analyze | rehearse`.
+
 
 `docs/STUDY_V2_PROTOCOL.md`, `docs/FIRST_LLM_STUDY_BUDGET.md` and `docs/FIRST_LLM_STUDY_LAUNCH.md` define the
 three-arm (no feedback / reward only / full numerical) study, its worst-case spend and the exact paid commands.
