@@ -1,0 +1,221 @@
+{
+  "generated": "2026-10-26",
+  "note": "Checksums are SHA-256 of local files under runs/ (gitignored, NOT on GitHub). Lock files and empty SQLite -wal/-shm files are omitted.",
+  "experiments": [
+    {
+      "mission": "006",
+      "prompt": "rewardbench.prompts.v2",
+      "experiment_id": "exp_26eb2593d31e4a72c041",
+      "name": "llmstudy-pilot-openai-gpt54mini-nofeedback-r1",
+      "outcome": "Model returned the schema document instead of a controller; rejected as 'unknown controller policy None'; no episodes flown.",
+      "archived_config": "configs/study/archive/prompt_v2/pilot_no_feedback.yaml",
+      "database": "runs/first-llm-study/pilot/llmstudy-pilot-openai-gpt54mini-nofeedback-r1.sqlite",
+      "provider_model": "openai:gpt-5.4-mini",
+      "feedback_condition": "no_feedback",
+      "session_status": "interrupted",
+      "paid_calls": 1,
+      "total_tokens": 1220,
+      "cost_usd": 0.00258375,
+      "episodes": {
+        "count": 0,
+        "mean_reward": null,
+        "min": null,
+        "max": null,
+        "successes": null,
+        "crashes": null,
+        "truncated_timeouts": null
+      },
+      "backed_up_on_github": false,
+      "artifacts": [
+        {
+          "path": "runs/first-llm-study/pilot/llmstudy-pilot-openai-gpt54mini-nofeedback-r1.sqlite",
+          "bytes": 139264,
+          "sha256": "17d7a1b80d3710067b35a12e26df348c9c711f0f7cb863cb374c94e219d9726a"
+        },
+        {
+          "path": "runs/first-llm-study/pilot/logs/llmstudy-pilot-openai-gpt54mini-nofeedback-r1.report.log",
+          "bytes": 117,
+          "sha256": "7f45d6301aa4cd7e4cfe2d9c8f6fe8a9f5a5e6376411b029efc6549f04ad77db"
+        },
+        {
+          "path": "runs/first-llm-study/pilot/logs/llmstudy-pilot-openai-gpt54mini-nofeedback-r1.run.log",
+          "bytes": 3637,
+          "sha256": "3dc40a404c8c0370dd3e515f7cfc05b05de9bbbf416e0a58d3eca240fe071d7a"
+        },
+        {
+          "path": "runs/first-llm-study/pilot/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-r1/revision_00_call_00.txt",
+          "bytes": 3149,
+          "sha256": "75d9df692dcc278d26eac6c35ea61cfef2848b206145022a28054a0064ae971b"
+        },
+        {
+          "path": "runs/first-llm-study/pilot/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-r1/revision_01_call_01.txt",
+          "bytes": 4627,
+          "sha256": "2502ffe50503992aea93b2ebd3162049c33cc339d6b79d63c4cc6e68d82f5876"
+        },
+        {
+          "path": "runs/first-llm-study/pilot/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-r1/preliminary/apollo-lander/improvement_per_dollar.png",
+          "bytes": 34724,
+          "sha256": "88afe27a1cc90caefaa32dd4fd6030ebb9bead63b1919f944f64620c23da3640"
+        },
+        {
+          "path": "runs/first-llm-study/pilot/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-r1/preliminary/apollo-lander/initial_vs_final.png",
+          "bytes": 27251,
+          "sha256": "74518c13a620385e6dfdeef2e5054d3a1bbabe640ec115886549aad0dcebf9fb"
+        },
+        {
+          "path": "runs/first-llm-study/pilot/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-r1/preliminary/apollo-lander/invalid_and_crash_rates.png",
+          "bytes": 73923,
+          "sha256": "fdc6495d49f1acffd263c44873755b118e3d508309a1c926c5b77fbce86f75ed"
+        },
+        {
+          "path": "runs/first-llm-study/pilot/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-r1/preliminary/apollo-lander/landing_success_vs_attempt.png",
+          "bytes": 41212,
+          "sha256": "f7b2872d4a5cd02651a670d04887d202654a0381ba4fa318d8b0b63482706f66"
+        },
+        {
+          "path": "runs/first-llm-study/pilot/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-r1/preliminary/apollo-lander/reward_vs_revision.png",
+          "bytes": 42031,
+          "sha256": "6d684ae3a4092a56bda95aca327860873f99f2a2ec7e4e4eeddb42a61cf0f30a"
+        },
+        {
+          "path": "runs/first-llm-study/pilot/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-r1/preliminary/apollo-lander/time_to_target.png",
+          "bytes": 51350,
+          "sha256": "e000d56fa6c139d47eb9580c65978004edeaa738f93032539e8cbb60fcb04811"
+        },
+        {
+          "path": "runs/first-llm-study/pilot/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-r1/report.md",
+          "bytes": 5992,
+          "sha256": "d808bc5553cff4b2c38272691998c50bcfb9a0419c56b35067e903893ff9a35d"
+        }
+      ]
+    },
+    {
+      "mission": "008",
+      "prompt": "rewardbench.prompts.v3",
+      "experiment_id": "exp_bcc1e26372179700a53d",
+      "name": "llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1",
+      "outcome": "Valid controller, but a verbatim copy of the prompt's format example (constant thrust 0.5, rotation 0). 8/8 development episodes timed out at 8000 steps; no landings, no crashes.",
+      "archived_config": "configs/study/archive/prompt_v3/pilot_no_feedback.yaml",
+      "database": "runs/first-llm-study/pilot-p3/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1.sqlite",
+      "provider_model": "openai:gpt-5.4-mini",
+      "feedback_condition": "no_feedback",
+      "session_status": "interrupted",
+      "paid_calls": 1,
+      "total_tokens": 1073,
+      "cost_usd": 0.00093225,
+      "episodes": {
+        "count": 8,
+        "mean_reward": -104.56,
+        "min": -106.01078873978851,
+        "max": -102.6715078504129,
+        "successes": 0,
+        "crashes": 0,
+        "truncated_timeouts": 8
+      },
+      "backed_up_on_github": false,
+      "artifacts": [
+        {
+          "path": "runs/first-llm-study/pilot-p3/flights/exp_bcc1e26372179700a53d/apollo-gpt-5-4-mini-revision-0-ep-0-seed-6.flight.json",
+          "bytes": 465720,
+          "sha256": "2af4f22c3b28008190b5e461a000642dae01eed13bbc1c7110b467e468a761c2"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/flights/exp_bcc1e26372179700a53d/apollo-gpt-5-4-mini-revision-0-ep-1-seed-3.flight.json",
+          "bytes": 465720,
+          "sha256": "637f56e523763fcce37511da31fce6417dfe7553146e6fc01644cc92341719ff"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/flights/exp_bcc1e26372179700a53d/apollo-gpt-5-4-mini-revision-0-ep-2-seed-4.flight.json",
+          "bytes": 465719,
+          "sha256": "ab0b259de44b1090ba2068b34e254c30e0703a7353cff64020850ac04bca1fa6"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/flights/exp_bcc1e26372179700a53d/apollo-gpt-5-4-mini-revision-0-ep-3-seed-2.flight.json",
+          "bytes": 465719,
+          "sha256": "b76d1097f7b5b991c64d19d7c6368f4ba10d904db570522dab19ad8327282ecd"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/flights/exp_bcc1e26372179700a53d/apollo-gpt-5-4-mini-revision-0-ep-4-seed-7.flight.json",
+          "bytes": 465722,
+          "sha256": "b56530451d33059188027593201b769b3e228b1331677cf7ef70544ddd1b91f0"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/flights/exp_bcc1e26372179700a53d/apollo-gpt-5-4-mini-revision-0-ep-5-seed-5.flight.json",
+          "bytes": 465719,
+          "sha256": "5baf86d443d2d098d94b6b4179063ca6d21f50b2e389ddb7174fe661b958554b"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/flights/exp_bcc1e26372179700a53d/apollo-gpt-5-4-mini-revision-0-ep-6-seed-1.flight.json",
+          "bytes": 465722,
+          "sha256": "336d5e282388aa10246996835078228235568b67245e5e4824d1c459c4246d3b"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/flights/exp_bcc1e26372179700a53d/apollo-gpt-5-4-mini-revision-0-ep-7-seed-0.flight.json",
+          "bytes": 465721,
+          "sha256": "dd4637408b719108f386addb579513fb131c5622c22ae715abd1f9b0c8042091"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1.sqlite",
+          "bytes": 147456,
+          "sha256": "6ae29ba10d375b89eee49824bded8242bd7cdf4d6d1c1768e865bcca929180c8"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/logs/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1.report.log",
+          "bytes": 123,
+          "sha256": "6c1a3be5e244c2e0a5d358d9c125127b946f0c758edd55506d6b0a768d6b16c4"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/logs/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1.run.log",
+          "bytes": 2326,
+          "sha256": "333e355d7700334048422435c72509cc35ba76be84beb9f5c739732090dd7fc2"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1/revision_00_call_00.txt",
+          "bytes": 4245,
+          "sha256": "53bb79ec08a712ba38a5f61088482335ce9d463bd49227458acca5e4e663972d"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1/revision_01_call_01.txt",
+          "bytes": 4310,
+          "sha256": "3cc7955f58c0a2cee66dab770ca6e811323a2aeec75b043337eeb9e0ba041b8a"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1/preliminary/apollo-lander/improvement_per_dollar.png",
+          "bytes": 74047,
+          "sha256": "00566b3084735530cd8c0241278fdb05b939044dd24a876403080c3c030349f8"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1/preliminary/apollo-lander/initial_vs_final.png",
+          "bytes": 42747,
+          "sha256": "2f25a54a718cf0f3ff6595d53a602aa1ae93c02b7e500e80c71b2b12494d5137"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1/preliminary/apollo-lander/invalid_and_crash_rates.png",
+          "bytes": 73652,
+          "sha256": "e0647ace66e74f9754fc83e5215811367833d8769ed2bb3551c48a932a3eff18"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1/preliminary/apollo-lander/landing_success_vs_attempt.png",
+          "bytes": 54196,
+          "sha256": "c458c66d6a0185bc5f374ed0ad4435542307b4d2b43ad5175a603d194799a408"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1/preliminary/apollo-lander/reward_vs_revision.png",
+          "bytes": 54836,
+          "sha256": "a02bb308014cc1ffa9a5e7ce73fc43417104f39520ad5c183005c911b4d33031"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1/preliminary/apollo-lander/time_to_target.png",
+          "bytes": 48078,
+          "sha256": "59bd75eaa3a7f59690ea9f5fc694e7ad05a36562c7ab0f644f72eb92e21a5351"
+        },
+        {
+          "path": "runs/first-llm-study/pilot-p3/reports/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1/report.md",
+          "bytes": 6018,
+          "sha256": "613bdaf0eb1424684f805728f219af5d8cedbc364b14319343949deee96cb1af"
+        }
+      ]
+    }
+  ],
+  "total_paid_spend_usd": 0.003516
+}

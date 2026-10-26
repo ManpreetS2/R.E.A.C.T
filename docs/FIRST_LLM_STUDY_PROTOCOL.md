@@ -121,3 +121,23 @@ happens to score worse. Study tier rehearsal: `docs/assets/first-llm-study-rehea
 * Reward is partly inferable from the metrics in arm C; B was added to separate the two.
 * Software spend caps are not vendor billing guarantees; set a hard limit in the provider dashboard.
 * In-context revision is not weight training; do not compare with PPO results.
+
+## Deviations
+
+**2026-10-26 (recorded during Mission 009).** The status line at the top ("NOT EXECUTED. No paid call has been
+made") is out of date; it is left as written because this document may only change here.
+
+1. **Mission 006 (2026-10-26), prompt `rewardbench.prompts.v2`, `exp_26eb2593d31e4a72c041`:** the first paid
+   call (pilot, `no_feedback`, revision 0) returned the schema document instead of a controller. Invalid, not
+   flown, $0.00258375. Kept unmodified in `runs/first-llm-study/pilot/`.
+2. **Prompt changed after the first paid call (PR #17).** The prompt was revised to v3 and the row
+   "Controller schema, prompt version" in the matched-design table above was edited from v2 to v3 in that PR.
+   That edit should have been recorded here instead; it is recorded now.
+3. **Mission 008 (2026-10-26), prompt v3, `exp_bcc1e26372179700a53d`:** one paid call returned a valid controller
+   that was a verbatim copy of the prompt's format example (`constant`, thrust 0.5, rotation 0): 8/8 timeouts,
+   mean reward -104.56, $0.00093225. Kept unmodified in `runs/first-llm-study/pilot-p3/`.
+4. **Protocol superseded for all further work.** Because the controller search space and the prompt change
+   materially, the study continues under a separately versioned, explicitly exploratory protocol,
+   `docs/STUDY_V2_PROTOCOL.md` (`first_llm_study.v2`, prompt v4, guidance-only). Missions 006 and 008 are
+   exploratory engineering attempts and are excluded from v2's analyses. No v1 result will be reported as a
+   test of this protocol's hypothesis.

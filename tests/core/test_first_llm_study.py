@@ -112,7 +112,7 @@ def test_launch_guide_contains_the_exact_first_paid_command() -> None:
 FIRST_PAID_COMMAND = (
     "python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls "
     '--total-usd-ceiling "$APPROVED_CEILING_USD" '
-    "--config configs/study/pilot_no_feedback.yaml --out runs/first-llm-study/pilot-p3"
+    "--config configs/study/pilot_no_feedback.yaml --out runs/first-llm-study/pilot-p4"
 )
 
 
@@ -142,9 +142,9 @@ def test_operator_refuses_final_evaluation_of_the_reserved_cohort(tmp_path: Path
 @needs_node
 def test_first_paid_call_path_with_mocked_transport_pauses_after_one_call_and_isolates_feedback(tmp_path: Path, monkeypatch) -> None:
     from tests.core.test_live_cli import TEST_KEY, _transport
-    from tests.providers.e2e_helpers import stronger_controller, weak_controller
+    from rewardbench.run.mock_model import apollo_guidance_pair
 
-    transport = _transport([weak_controller(), stronger_controller()])
+    transport = _transport(list(apollo_guidance_pair()))  # the study arms accept only guidance controllers
     real = operate.run_main
     monkeypatch.setattr(operate, "run_main", lambda argv, **kw: real(
         argv, _api_key=TEST_KEY, _transport=transport, _sleeper=lambda _s: None, **kw))
@@ -188,3 +188,28 @@ def test_end_to_end_rehearsal_audit_passes(tmp_path: Path, monkeypatch) -> None:
     assert keys and keys <= set(study.METRIC_KEYS), keys - set(study.METRIC_KEYS)
     for arm in summary["arms"].values():
         assert arm["model_calls"] == 2 and arm["replays_verified"] >= 2 * 8 + 8
+
+
+def test_scripted_baselines_are_labelled_and_never_model_output() -> None:
+    from rewardbench.environments.apollolander.flight_record import ORIGIN_HAND_SPECIFIED, ORIGIN_MODEL_GENERATED
+    from rewardbench.environments.apollolander.schema import demonstration_guidance_controller, validate_controller
+
+    controllers = study.baseline_controllers(search_samples=3)
+    assert controllers["guidance_demonstration"] == (ORIGIN_HAND_SPECIFIED, demonstration_guidance_controller())
+    assert all(origin != ORIGIN_MODEL_GENERATED for origin, _ in controllers.values())
+    assert all(validate_controller(controller).valid for _, controller in controllers.values())
+    assert study.baseline_controllers(search_samples=3) == controllers  # seeded, reproducible
+
+
+@needs_node
+def test_committed_baseline_evidence_reproduces_from_the_physics() -> None:
+    from rewardbench.environments.apollolander import ApolloLanderAdapter
+
+    evidence = json.loads((ROOT / "docs" / "assets" / "study-v2-baselines" / "baselines.json").read_text(encoding="utf-8"))
+    assert "NOT model results" in evidence["purpose"] and evidence["seeds"] == list(study.DEVELOPMENT_SEEDS)
+    demo = evidence["controllers"]["guidance_demonstration"]
+    assert demo["landed_on_pad"] == 8 and demo["crashed"] == 0
+    flown = ApolloLanderAdapter(research_mode=True).evaluate(demo["controller"], [0])["episodes"][0]
+    recorded = demo["episodes"][0]
+    assert (flown["status"], flown["trace_hash"]) == (recorded["status"], recorded["trace_hash"])
+    assert flown["reward"] == pytest.approx(recorded["reward"])

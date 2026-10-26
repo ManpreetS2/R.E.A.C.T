@@ -9,6 +9,7 @@ isolation, and SQLite path. It is not an LLM and does not demonstrate learning.
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping
 from typing import Any
 
 from rewardbench.contracts import ConfigError, FeedbackCondition, ModelRequest, ModelResponse
@@ -28,6 +29,20 @@ def apollo_revised_controller() -> dict[str, object]:
     from rewardbench.environments.apollolander.schema import constant_controller
 
     return constant_controller(1.0, 0)
+
+
+def apollo_guidance_pair() -> tuple[dict[str, object], dict[str, object]]:
+    """For guidance-only experiments: every parameter at its lower bound, then at its bound midpoint.
+
+    Mechanical choices, not tuned values and not the hand-specified demonstration controller.
+    """
+    from rewardbench.environments.apollolander.schema import GUIDANCE_BOUNDS, SCHEMA_ID
+
+    def guidance(pick) -> dict[str, object]:
+        return {"schema": SCHEMA_ID, "policy": "guidance",
+                "parameters": {name: pick(low, high) for name, (low, high) in GUIDANCE_BOUNDS.items()}}
+
+    return guidance(lambda low, _high: low), guidance(lambda low, high: (low + high) / 2)
 
 
 # Stable aliases for Apollo offline configs and tests.
@@ -82,7 +97,8 @@ class ScriptedFeedbackModel:
         )
 
     def _select(self, request: ModelRequest) -> dict[str, Any]:
-        initial, revised = _controllers_for(request.environment.environment_id)
+        initial, revised = _controllers_for(
+            request.environment.environment_id, request.environment.controller_schema)
         if not request.history:
             return dict(initial)
         prior = request.history[-1]
@@ -97,9 +113,12 @@ class ScriptedFeedbackModel:
         return dict(revised)
 
 
-def _controllers_for(environment_id: str) -> tuple[dict[str, Any], dict[str, Any]]:
+def _controllers_for(environment_id: str, schema: Any = None) -> tuple[dict[str, Any], dict[str, Any]]:
     normalized = environment_id.strip().lower().replace("_", "-")
     if normalized in {"apollolander", "apollo-lander", "apollo"}:
+        offered = set(schema.get("policies") or ()) if isinstance(schema, Mapping) else set()
+        if offered == {"guidance"}:
+            return apollo_guidance_pair()
         return apollo_initial_controller(), apollo_revised_controller()
     if normalized in {"lunarlander-v3", "lunarlander", "lunar-lander", "lunar-lander-v3"}:
         from rewardbench.environments.lunarlander.schema import (

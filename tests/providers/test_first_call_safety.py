@@ -28,15 +28,15 @@ from tests.providers.test_adapters import _chat
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_prompt_v2_asks_for_compact_json_without_tools_or_fences():
-    assert PROMPT_TEMPLATE_ID == "rewardbench.prompts.v3"
+def test_prompt_asks_for_compact_json_without_tools_or_fences():
+    assert PROMPT_TEMPLATE_ID == "rewardbench.prompts.v4"
     assert "compact JSON" in SYSTEM_PROMPT
     assert "markdown fences" in SYSTEM_PROMPT
     assert "Do not call tools" in SYSTEM_PROMPT
     _system, user = render_messages(
         make_request(settings={"max_output_tokens": 800, "reasoning_effort": "none"})
     )
-    assert "Prefer the smallest valid controller" in user
+    assert "smallest valid controller" not in user  # removed in v4: it invited a minimal copy
     assert "compact JSON" in user
 
 

@@ -1,0 +1,750 @@
+{
+ "controllers": {
+  "constant_thrust0.333_rot0": {
+   "controller": {
+    "policy": "constant",
+    "rotation": 0,
+    "schema": "rewardbench.apollolander.controller.v1",
+    "thrust": 0.333
+   },
+   "crashed": 1,
+   "episodes": [
+    {
+     "fuel_remaining": 467.46640000004663,
+     "reward": -54.70426120313911,
+     "seed": 0,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1"
+    },
+    {
+     "fuel_remaining": 467.46640000004663,
+     "reward": -56.274646018090934,
+     "seed": 1,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1"
+    },
+    {
+     "fuel_remaining": 467.46640000004663,
+     "reward": -57.18753322065436,
+     "seed": 2,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1"
+    },
+    {
+     "fuel_remaining": 467.46640000004663,
+     "reward": -54.52345738171864,
+     "seed": 3,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1"
+    },
+    {
+     "fuel_remaining": 467.46640000004663,
+     "reward": -56.99621140489917,
+     "seed": 4,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1"
+    },
+    {
+     "fuel_remaining": 712.4878000000245,
+     "reward": -116.35131001594794,
+     "seed": 5,
+     "status": "crashed",
+     "steps": 4321,
+     "trace_hash": "sha256:ac6a8513c310672adefeec731af9816973256a9d2e4e658a9d4922fbab0efd47"
+    },
+    {
+     "fuel_remaining": 467.46640000004663,
+     "reward": -52.44776798771527,
+     "seed": 6,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1"
+    },
+    {
+     "fuel_remaining": 467.46640000004663,
+     "reward": -53.206297206766294,
+     "seed": 7,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:792e3bc08fb1ef270a349a14394f9373d713eef368bffa79684f9fabae3d24e1"
+    }
+   ],
+   "gentle": 0,
+   "hard": 0,
+   "landed_on_pad": 0,
+   "mean_fuel_remaining": 498.09407500004386,
+   "mean_reward": -62.71143555486647,
+   "origin": "deterministic_mock",
+   "outside_pad": 0,
+   "timeout": 7
+  },
+  "constant_thrust0.5_rot0": {
+   "controller": {
+    "policy": "constant",
+    "rotation": 0,
+    "schema": "rewardbench.apollolander.controller.v1",
+    "thrust": 0.5
+   },
+   "crashed": 0,
+   "episodes": [
+    {
+     "fuel_remaining": 200.3999999998372,
+     "reward": -103.85794110325688,
+     "seed": 0,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:c5a5c5bb4e1d4f9791563d3223bd4e3db6fd5797fd31b32fc68f95a99faa94dc"
+    },
+    {
+     "fuel_remaining": 200.3999999998372,
+     "reward": -105.33223295269116,
+     "seed": 1,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:c5a5c5bb4e1d4f9791563d3223bd4e3db6fd5797fd31b32fc68f95a99faa94dc"
+    },
+    {
+     "fuel_remaining": 200.3999999998372,
+     "reward": -104.3536500221704,
+     "seed": 2,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:c5a5c5bb4e1d4f9791563d3223bd4e3db6fd5797fd31b32fc68f95a99faa94dc"
+    },
+    {
+     "fuel_remaining": 200.3999999998372,
+     "reward": -105.82119356534201,
+     "seed": 3,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:c5a5c5bb4e1d4f9791563d3223bd4e3db6fd5797fd31b32fc68f95a99faa94dc"
+    },
+    {
+     "fuel_remaining": 200.3999999998372,
+     "reward": -104.61891944948717,
+     "seed": 4,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:c5a5c5bb4e1d4f9791563d3223bd4e3db6fd5797fd31b32fc68f95a99faa94dc"
+    },
+    {
+     "fuel_remaining": 200.3999999998372,
+     "reward": -102.6715078504129,
+     "seed": 5,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:c5a5c5bb4e1d4f9791563d3223bd4e3db6fd5797fd31b32fc68f95a99faa94dc"
+    },
+    {
+     "fuel_remaining": 200.3999999998372,
+     "reward": -103.8456676089858,
+     "seed": 6,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:c5a5c5bb4e1d4f9791563d3223bd4e3db6fd5797fd31b32fc68f95a99faa94dc"
+    },
+    {
+     "fuel_remaining": 200.3999999998372,
+     "reward": -106.01078873978851,
+     "seed": 7,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:c5a5c5bb4e1d4f9791563d3223bd4e3db6fd5797fd31b32fc68f95a99faa94dc"
+    }
+   ],
+   "gentle": 0,
+   "hard": 0,
+   "landed_on_pad": 0,
+   "mean_fuel_remaining": 200.3999999998372,
+   "mean_reward": -104.56398766151685,
+   "origin": "deterministic_mock",
+   "outside_pad": 0,
+   "timeout": 8
+  },
+  "constant_thrust0_rot0": {
+   "controller": {
+    "policy": "constant",
+    "rotation": 0,
+    "schema": "rewardbench.apollolander.controller.v1",
+    "thrust": 0.0
+   },
+   "crashed": 8,
+   "episodes": [
+    {
+     "fuel_remaining": 1000,
+     "reward": -98.45340911497044,
+     "seed": 0,
+     "status": "crashed",
+     "steps": 1115,
+     "trace_hash": "sha256:3fd438bb3877364d3f9d26ddb45504343fd94b4d25fd34a380408772d5bd8e3d"
+    },
+    {
+     "fuel_remaining": 1000,
+     "reward": -99.19811407783041,
+     "seed": 1,
+     "status": "crashed",
+     "steps": 1152,
+     "trace_hash": "sha256:b1ae7e0bc41b40b139d1b0ebe3909828e7e10d0d86863682a6822228483d69b3"
+    },
+    {
+     "fuel_remaining": 1000,
+     "reward": -99.12776242841286,
+     "seed": 2,
+     "status": "crashed",
+     "steps": 1123,
+     "trace_hash": "sha256:3e548eef3a5bf81e7336ef9acd5ba59b87a22a781e6171727086306f0735a9ae"
+    },
+    {
+     "fuel_remaining": 1000,
+     "reward": -98.09673581200865,
+     "seed": 3,
+     "status": "crashed",
+     "steps": 1255,
+     "trace_hash": "sha256:83c18e463439dc2b4f113afbb5e4701ebdfbad053ebb48e4fcbf52186e317969"
+    },
+    {
+     "fuel_remaining": 1000,
+     "reward": -99.11657313074923,
+     "seed": 4,
+     "status": "crashed",
+     "steps": 1075,
+     "trace_hash": "sha256:5363bf0c9496528a1c93024616434724ce55cb2706517405071a300a8a8f2796"
+    },
+    {
+     "fuel_remaining": 1000,
+     "reward": -98.72256020222947,
+     "seed": 5,
+     "status": "crashed",
+     "steps": 943,
+     "trace_hash": "sha256:208bb4904268861c9137160948905f8b3d3293039da647c45e3c9312afa81b48"
+    },
+    {
+     "fuel_remaining": 1000,
+     "reward": -97.8611617652663,
+     "seed": 6,
+     "status": "crashed",
+     "steps": 1285,
+     "trace_hash": "sha256:439751261eb033641f27fdc106ebc1caaa2d42195035de8abb726d767b6069f1"
+    },
+    {
+     "fuel_remaining": 1000,
+     "reward": -97.18340756751678,
+     "seed": 7,
+     "status": "crashed",
+     "steps": 1552,
+     "trace_hash": "sha256:7ce35e3aaa878e88610a17ea69ffac6a48a7847d044354b223bda2ac51761f63"
+    }
+   ],
+   "gentle": 0,
+   "hard": 0,
+   "landed_on_pad": 0,
+   "mean_fuel_remaining": 1000.0,
+   "mean_reward": -98.46996551237302,
+   "origin": "deterministic_mock",
+   "outside_pad": 0,
+   "timeout": 0
+  },
+  "guidance_bound_midpoints": {
+   "controller": {
+    "parameters": {
+     "aligned_dx": 100.0,
+     "aligned_rotation_gain": 400.0,
+     "aligned_rotation_limit": 45.0,
+     "aligned_vx": 0.25,
+     "altitude_low": 100.5,
+     "altitude_mid": 205.0,
+     "altitude_upright": 100.5,
+     "brake_thrust": 5.0,
+     "cruise_rotation_limit": 45.0,
+     "descent_aligned": 0.15,
+     "descent_cruise": 0.15,
+     "descent_low": 0.1,
+     "descent_mid": 0.15,
+     "hover_thrust": 0.5,
+     "rotation_gain": 400.0,
+     "vx_gain": 0.01,
+     "vx_limit": 0.255,
+     "vy_gain": 20.0
+    },
+    "policy": "guidance",
+    "schema": "rewardbench.apollolander.controller.v1"
+   },
+   "crashed": 0,
+   "episodes": [
+    {
+     "fuel_remaining": 672.5971134615514,
+     "reward": 26.6364965121947,
+     "seed": 0,
+     "status": "hard_landing",
+     "steps": 4318,
+     "trace_hash": "sha256:582d7aa1f57a66bc8662083e13114f8c0a39e654b5cffef58e298cfb93d1cd8a"
+    },
+    {
+     "fuel_remaining": 613.6790499971878,
+     "reward": 23.722525286725975,
+     "seed": 1,
+     "status": "hard_landing",
+     "steps": 5144,
+     "trace_hash": "sha256:4b449565040ab83b9218039ca3cc901e55f2bca1c2acbe9c4fcd1a6384ca80bb"
+    },
+    {
+     "fuel_remaining": 596.8944266872619,
+     "reward": 22.923167223295625,
+     "seed": 2,
+     "status": "hard_landing",
+     "steps": 5267,
+     "trace_hash": "sha256:03b5bf3bbb2e673a4149249fcf6073d52c16e5d4c6488e7645dfc62c99810aeb"
+    },
+    {
+     "fuel_remaining": 704.2926880882148,
+     "reward": 28.252327059109028,
+     "seed": 3,
+     "status": "hard_landing",
+     "steps": 4066,
+     "trace_hash": "sha256:f1b701a5d16bd3527e935ed36f0a5f6c5c5d563665738640a025dc7741a27379"
+    },
+    {
+     "fuel_remaining": 621.7008664647173,
+     "reward": 23.884299190130886,
+     "seed": 4,
+     "status": "hard_landing",
+     "steps": 4952,
+     "trace_hash": "sha256:ff6380acd979571a9c9c15e4fd0558ddff4e9608cb244e25466344ab5b0d5c73"
+    },
+    {
+     "fuel_remaining": 662.8148238827349,
+     "reward": 26.04291260281063,
+     "seed": 5,
+     "status": "hard_landing",
+     "steps": 4370,
+     "trace_hash": "sha256:a9113468770500d59fe3b94fd54f69746a7da4c2c6e80bfdb6bb621a7656a85a"
+    },
+    {
+     "fuel_remaining": 692.2288047464783,
+     "reward": 27.83699227825761,
+     "seed": 6,
+     "status": "hard_landing",
+     "steps": 4308,
+     "trace_hash": "sha256:616db8c4f73fd60fb6048cb8e2e661845a6ffbf2a696d17bec7ec701609cc6a4"
+    },
+    {
+     "fuel_remaining": 695.0080534518573,
+     "reward": 27.867581507403397,
+     "seed": 7,
+     "status": "hard_landing",
+     "steps": 4429,
+     "trace_hash": "sha256:10c9740b6703bb1ebfa3321036d2b6063e8c5c1b787e456d8078a5b741ba6062"
+    }
+   ],
+   "gentle": 0,
+   "hard": 8,
+   "landed_on_pad": 8,
+   "mean_fuel_remaining": 657.4019783475005,
+   "mean_reward": 25.89578770749098,
+   "origin": "deterministic_mock",
+   "outside_pad": 0,
+   "timeout": 0
+  },
+  "guidance_demonstration": {
+   "controller": {
+    "parameters": {
+     "aligned_dx": 50.0,
+     "aligned_rotation_gain": 400.0,
+     "aligned_rotation_limit": 20.0,
+     "aligned_vx": 0.03,
+     "altitude_low": 30.0,
+     "altitude_mid": 80.0,
+     "altitude_upright": 40.0,
+     "brake_thrust": 1.3,
+     "cruise_rotation_limit": 60.0,
+     "descent_aligned": 0.14,
+     "descent_cruise": 0.06,
+     "descent_low": 0.04,
+     "descent_mid": 0.06,
+     "hover_thrust": 0.333,
+     "rotation_gain": 260.0,
+     "vx_gain": 0.0025,
+     "vx_limit": 0.18,
+     "vy_gain": 9.0
+    },
+    "policy": "guidance",
+    "schema": "rewardbench.apollolander.controller.v1"
+   },
+   "crashed": 0,
+   "episodes": [
+    {
+     "fuel_remaining": 588.2531722143839,
+     "reward": 82.50830262234281,
+     "seed": 0,
+     "status": "landed",
+     "steps": 5914,
+     "trace_hash": "sha256:ef977141ff899799029520c5aeec34759433ee14b27a2b93605a3a7cd18ab456"
+    },
+    {
+     "fuel_remaining": 566.0836420454093,
+     "reward": 81.32998935559905,
+     "seed": 1,
+     "status": "landed",
+     "steps": 5999,
+     "trace_hash": "sha256:023c9954967a17aa2b67828e6d81b57087a4121fa17205aabc277469c6fd4b42"
+    },
+    {
+     "fuel_remaining": 573.4134469562857,
+     "reward": 81.74300937103885,
+     "seed": 2,
+     "status": "landed",
+     "steps": 5844,
+     "trace_hash": "sha256:8fc2d9b24f1af95b758574425f14febfc57c17e29863c5ea86c5d8054b339aae"
+    },
+    {
+     "fuel_remaining": 620.9509673438482,
+     "reward": 84.19141507026862,
+     "seed": 3,
+     "status": "landed",
+     "steps": 5628,
+     "trace_hash": "sha256:996d135036f49080e0bb72080f9013e2ba6f69447e9e43cde215f4f921714daa"
+    },
+    {
+     "fuel_remaining": 593.7777716368483,
+     "reward": 82.6715001061716,
+     "seed": 4,
+     "status": "landed",
+     "steps": 5545,
+     "trace_hash": "sha256:9e1c1fc56cdb32a248963c6ee75c126c46099d8cb020fd52ee43924e5ce09956"
+    },
+    {
+     "fuel_remaining": 615.10274612962,
+     "reward": 83.78937479460615,
+     "seed": 5,
+     "status": "landed",
+     "steps": 5353,
+     "trace_hash": "sha256:08e6e4bc9c2f6779d8a6f6f75eaadd1edd51b5a094ed036cd5fb9f05030e3c5f"
+    },
+    {
+     "fuel_remaining": 607.3278932188425,
+     "reward": 83.58160344301378,
+     "seed": 6,
+     "status": "landed",
+     "steps": 5800,
+     "trace_hash": "sha256:72883d9208ca3c60a39328e819ed41e2aa1155400405ff6b30dbc21451065d9c"
+    },
+    {
+     "fuel_remaining": 614.6967915440379,
+     "reward": 83.83922457521219,
+     "seed": 7,
+     "status": "landed",
+     "steps": 5872,
+     "trace_hash": "sha256:5782076bf33e0b9c975ce8b33c3494c69c2696441b518b9f42f1c8d8aad84b7b"
+    }
+   ],
+   "gentle": 8,
+   "hard": 0,
+   "landed_on_pad": 8,
+   "mean_fuel_remaining": 597.4508038861595,
+   "mean_reward": 82.95680241728164,
+   "origin": "hand_specified_demonstration",
+   "outside_pad": 0,
+   "timeout": 0
+  },
+  "guidance_midpoints_descent_low_0.05": {
+   "controller": {
+    "parameters": {
+     "aligned_dx": 100.0,
+     "aligned_rotation_gain": 400.0,
+     "aligned_rotation_limit": 45.0,
+     "aligned_vx": 0.25,
+     "altitude_low": 100.5,
+     "altitude_mid": 205.0,
+     "altitude_upright": 100.5,
+     "brake_thrust": 5.0,
+     "cruise_rotation_limit": 45.0,
+     "descent_aligned": 0.15,
+     "descent_cruise": 0.15,
+     "descent_low": 0.05,
+     "descent_mid": 0.15,
+     "hover_thrust": 0.5,
+     "rotation_gain": 400.0,
+     "vx_gain": 0.01,
+     "vx_limit": 0.255,
+     "vy_gain": 20.0
+    },
+    "policy": "guidance",
+    "schema": "rewardbench.apollolander.controller.v1"
+   },
+   "crashed": 0,
+   "episodes": [
+    {
+     "fuel_remaining": 584.797113461489,
+     "reward": 82.15860833145615,
+     "seed": 0,
+     "status": "landed",
+     "steps": 5535,
+     "trace_hash": "sha256:c9e1f0c7d006613e80a0641ece892b32462aff2063733371a3a3b8b9c7e399c2"
+    },
+    {
+     "fuel_remaining": 525.8123833304574,
+     "reward": 79.31444935888095,
+     "seed": 1,
+     "status": "landed",
+     "steps": 6362,
+     "trace_hash": "sha256:c34817b3ee9f0a2d73d50d6a80f83b860db468890de0effd31653cdbc21c8fca"
+    },
+    {
+     "fuel_remaining": 509.0944266872009,
+     "reward": 78.51702244035076,
+     "seed": 2,
+     "status": "landed",
+     "steps": 6484,
+     "trace_hash": "sha256:a87b0b9e036d988ce633f54217b57f85f7bc1dd132a6f176549bf03a29174d56"
+    },
+    {
+     "fuel_remaining": 616.3593547548202,
+     "reward": 83.7392790587,
+     "seed": 3,
+     "status": "landed",
+     "steps": 5285,
+     "trace_hash": "sha256:02e10a03b1e0d61f26ad96064f9026792d4fbdd4576aaea0b97f3fc7990c4a3f"
+    },
+    {
+     "fuel_remaining": 533.767533131323,
+     "reward": 79.3160214076553,
+     "seed": 4,
+     "status": "landed",
+     "steps": 6171,
+     "trace_hash": "sha256:a59a2ac33b8eb2fd5beb851e30ba2cebfbf468dcd0dc426481399a36ba32b0b1"
+    },
+    {
+     "fuel_remaining": 575.0148238826732,
+     "reward": 81.52851837648264,
+     "seed": 5,
+     "status": "landed",
+     "steps": 5587,
+     "trace_hash": "sha256:7fd70f17a3a42f08192332369c43b3de934a2c4fe17135474528cca98122d1bd"
+    },
+    {
+     "fuel_remaining": 604.2954714130841,
+     "reward": 83.43377251141678,
+     "seed": 6,
+     "status": "landed",
+     "steps": 5527,
+     "trace_hash": "sha256:8d2c5e3d496a57a8410dcd8a09eabf38ab19bc4f8e4568cc7855ce1d713f52bc"
+    },
+    {
+     "fuel_remaining": 607.0747201184622,
+     "reward": 83.47086768597015,
+     "seed": 7,
+     "status": "landed",
+     "steps": 5648,
+     "trace_hash": "sha256:bb294ca77d087ca1ac02c75f0a54f1e2da7e597226dd37da3faa4a29ea46e904"
+    }
+   ],
+   "gentle": 8,
+   "hard": 0,
+   "landed_on_pad": 8,
+   "mean_fuel_remaining": 569.5269783474388,
+   "mean_reward": 81.4348173963641,
+   "origin": "deterministic_mock",
+   "outside_pad": 0,
+   "timeout": 0
+  },
+  "random_seed0": {
+   "controller": {
+    "policy": "random",
+    "schema": "rewardbench.apollolander.controller.v1",
+    "seed": 0
+   },
+   "crashed": 0,
+   "episodes": [
+    {
+     "fuel_remaining": 205.1681157463832,
+     "reward": -94.12580164099582,
+     "seed": 0,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:f9a4c8db8381c27f506c05c3ace28965e64ab65046199943e3d39de77fab7f14"
+    },
+    {
+     "fuel_remaining": 204.3941036601217,
+     "reward": -95.14599214246346,
+     "seed": 1,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:cad0f22f6a2b0077a10a9097667903aeaa420f0ea951f71826ae42336522426b"
+    },
+    {
+     "fuel_remaining": 204.24440394802488,
+     "reward": -94.43966181451623,
+     "seed": 2,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:c3abcaae210d6da84df5002291d9a14084e127c15427bfd290b98a7d3d799022"
+    },
+    {
+     "fuel_remaining": 200.19186831438074,
+     "reward": -96.53502388138922,
+     "seed": 3,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:1445a075f8ba537f349da3926321c6cfd721650906d0a02c8617c0e1546ecfe0"
+    },
+    {
+     "fuel_remaining": 202.1826561375294,
+     "reward": -95.11022291744054,
+     "seed": 4,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:28a6a8e15b6bdefe0f62f83973e5450decfedea57462d24f4ead624701d31e7c"
+    },
+    {
+     "fuel_remaining": 204.4231950019172,
+     "reward": -93.44822389488081,
+     "seed": 5,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:978577127b9dce53a9f5d88a15a732c1e27fd6c16140a90b36acac6080b9a746"
+    },
+    {
+     "fuel_remaining": 202.71129500626415,
+     "reward": -93.66368518558804,
+     "seed": 6,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:63a0c0903397f0f01f5f2926fa76596ec743b651429c6a5e7cb8cc03fbca9601"
+    },
+    {
+     "fuel_remaining": 198.7383780656977,
+     "reward": -96.29287563073854,
+     "seed": 7,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:644e8c6ea2f5abf59a35eb28a92d0ef8ae0796cc223c1eb499ed5f0c1b69bf85"
+    }
+   ],
+   "gentle": 0,
+   "hard": 0,
+   "landed_on_pad": 0,
+   "mean_fuel_remaining": 202.75675198503987,
+   "mean_reward": -94.84518588850158,
+   "origin": "deterministic_mock",
+   "outside_pad": 0,
+   "timeout": 8
+  },
+  "random_seed1": {
+   "controller": {
+    "policy": "random",
+    "schema": "rewardbench.apollolander.controller.v1",
+    "seed": 1
+   },
+   "crashed": 0,
+   "episodes": [
+    {
+     "fuel_remaining": 204.82753797773893,
+     "reward": -94.44235797109586,
+     "seed": 0,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:1babecaadc122f948c0a6316ea938d83f49fbca0b13ad030b5ca3a28e3ffe511"
+    },
+    {
+     "fuel_remaining": 197.5834583544156,
+     "reward": -96.19020951605427,
+     "seed": 1,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:11fb231d7f78959ac90044df8cb235b9cb4eeb4f6bede052dc88e69158959139"
+    },
+    {
+     "fuel_remaining": 206.73635794383773,
+     "reward": -94.30953643268822,
+     "seed": 2,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:3ebe1a181f7136da924939d7df39968c0d2ec8ed3b046773a2e60076172b7b69"
+    },
+    {
+     "fuel_remaining": 189.1180502453175,
+     "reward": -98.36999990002154,
+     "seed": 3,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:3761f53cfdad92317d2739a1adb528b04d42532f35a8fb21e8d062a77a02d7ef"
+    },
+    {
+     "fuel_remaining": 214.2631164034393,
+     "reward": -93.49817695443804,
+     "seed": 4,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:53a96529de9739f886ba2bd2f022a2f25b4bc9d4f3c6942bc96376e315c9207f"
+    },
+    {
+     "fuel_remaining": 203.01111281086753,
+     "reward": -92.7296295251888,
+     "seed": 5,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:6157b770e2113403a0cd8f6586d0bb229b17ca6f954feff7c0a8b6e456ba61fe"
+    },
+    {
+     "fuel_remaining": 198.77156481253414,
+     "reward": -95.29653431979884,
+     "seed": 6,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:0a5e0e9d30278037a32d2fa4c24eae2a4c4545ac2deeb6a1ce2a1e599a2cd805"
+    },
+    {
+     "fuel_remaining": 199.6537145154283,
+     "reward": -96.88042896655378,
+     "seed": 7,
+     "status": "timeout",
+     "steps": 8000,
+     "trace_hash": "sha256:e36f45e5919de500453f017938883f5969f42165dc1c4411352b63d016173f4e"
+    }
+   ],
+   "gentle": 0,
+   "hard": 0,
+   "landed_on_pad": 0,
+   "mean_fuel_remaining": 201.74561413294737,
+   "mean_reward": -95.21460919822992,
+   "origin": "deterministic_mock",
+   "outside_pad": 0,
+   "timeout": 8
+  }
+ },
+ "max_steps": 8000,
+ "purpose": "scripted and hand-specified controllers only; NOT model results",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7
+ ],
+ "start_schedule": "apollolander.starts.v1",
+ "uniform_guidance_search": {
+  "controllers_landing_all_8": 9,
+  "controllers_with_any_pad_landing": 24,
+  "episodes": {
+   "crashed": 111,
+   "gentle": 15,
+   "hard": 108,
+   "landed_on_pad": 123,
+   "outside_pad": 8,
+   "timeout": 142
+  },
+  "mean_reward_max": 81.68439072840273,
+  "mean_reward_median": -51.2985147579024,
+  "mean_reward_min": -122.7311617231447,
+  "samples": 48,
+  "seed": 20261026
+ }
+}
