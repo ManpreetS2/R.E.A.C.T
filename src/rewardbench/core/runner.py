@@ -162,7 +162,7 @@ class ExperimentRunner:
             self._record_error(ErrorPhase.BUDGET, str(exc), exc=exc)
             # A live CLI session call gate pauses the experiment without sealing
             # it as terminal budget_exhausted, so an approved continuation can resume.
-            if getattr(exc, "resource", None) == "live_session_model_calls":
+            if getattr(exc, "resource", None) in ("live_session_model_calls", "aggregate_usd_ceiling"):
                 return self._finish(ExperimentStatus.INTERRUPTED, str(exc))
             return self._finish(ExperimentStatus.BUDGET_EXHAUSTED, str(exc))
         except ExperimentAborted as exc:

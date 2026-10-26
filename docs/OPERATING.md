@@ -93,6 +93,10 @@ python -m rewardbench.operate run \
 * Without `--i-authorize-paid-api-calls`, a key, a priced model, and a consistent budget, `rewardbench.run`
   refuses before any network use. Default is one new paid call per invocation (`--max-new-paid-calls`);
   continuing needs `--authorize-continuation` after you review the SQLite results.
+* `operate --mode live` **requires** `--total-usd-ceiling <USD>`: before every paid call the recorded spend of all live databases under
+  `--ledger-root` (default: the parent of `--out`) plus that call's worst case must fit under it, else the call is refused before any
+  request and the session pauses (resumable). It is a software guard over catalog estimates, not an invoice or a vendor cap; see
+  `OPENAI_BILLING_SETUP.md`.
 * A mock-provider config cannot run in live mode, and a real-provider config cannot run in mock mode.
 * Cost/tokens per call are stored in `attempts` (`total_tokens`, `estimated_cost_usd`) and shown by
   `operate`. The `budget:` block in the YAML sets the software ceiling. It is not a vendor billing cap;
