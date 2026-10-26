@@ -9,9 +9,10 @@ Repository: `ManpreetS2/R.E.A.C.T` (private). Local checkout: `C:\Users\sh1ft\R.
 
 R.E.A.C.T. measures whether an LLM can improve a controller for the ApolloLander task from reward feedback
 (`no_feedback` vs `reward_only` vs `numerical_reward`). The offline v1 infrastructure is merged (PR #2) and verified.
-Two single paid exploratory calls have been made with `openai:gpt-5.4-mini` (total **$0.003516**). The study
-itself has **not** been run. A revised protocol (v2, prompt v4, guidance-only) and an automatic-round tool
-(`autopilot`) are written but **no paid call has been made under them**.
+Two single paid exploratory calls (Missions 006, 008) and the 12-call v2 pilot (Mission 010, prompt v4,
+`autopilot`, `runs/first-llm-study/pilot-p4/`) have been made with `openai:gpt-5.4-mini`; total recorded spend
+**$0.042646**. The pilot found **no feedback-driven improvement** (`docs/assets/study-v2-pilot/RESULTS.md`), so
+the v2 study tier is not run; the next step is a v3 protocol.
 
 ## PR stack (all draft, none merged; each stacked on the previous)
 
@@ -36,7 +37,8 @@ PRs #3-#11 are unrelated RL research branches off `main`.
 | 006b | Spend ceiling + billing guide; Windows CI fix (unclosed SQLite handles in tests) | Done (PR #16) |
 | 007 | Prompt v3: schema vs instance, example, error messages, prompt version in hash, live guard | Done, offline (PR #17); 399 tests passed at `82ae009` |
 | 008 | Paid call with prompt v3: valid but copied the prompt's example; 8/8 timeouts. $0.00093225 | Done; failed as evidence |
-| 009 | v2 protocol, prompt v4 (guidance-only, mechanics taught, no copyable controller), `autopilot`, scripted baselines, v2 configs | **Written, committed as a checkpoint, 425 tests pass locally, not reviewed, CI not yet run** |
+| 009 | v2 protocol, prompt v4 (guidance-only, mechanics taught, no copyable controller), `autopilot`, scripted baselines, v2 configs | Done (PR #18, CI green on 3 OSes) |
+| 010 | v2 pilot: 12 paid calls via `autopilot`, 3 arms x 4 revisions. 12/12 valid; no feedback-driven improvement. $0.039129 | Done (`docs/assets/study-v2-pilot/RESULTS.md`); study tier not run |
 
 ## Test results at this checkpoint
 
@@ -72,17 +74,17 @@ included in it. GitHub Actions had not run on this branch when this was written,
 
 `RESULTS.md` (summary, backup options) and `MANIFEST.json` (experiment ids, costs, outcomes, per-file SHA-256).
 Raw artifacts live only under gitignored `runs/` on this PC: `runs/first-llm-study/pilot/` (Mission 006) and
-`runs/first-llm-study/pilot-p3/` (Mission 008, includes 8 flight recordings). **They are not backed up online.**
+`runs/first-llm-study/pilot-p3/` (Mission 008, includes 8 flight recordings) and `runs/first-llm-study/pilot-p4/`
+(Mission 010, 3 databases, 96 flight recordings). **They are not backed up online.**
 Never modify, delete or resume them.
 
-## Next recommended mission (do not skip the order)
+## Next recommended mission
 
-1. Confirm CI on the Mission 009 PR, then review Mission 009 (autopilot, v4 prompt, v2 protocol).
-2. Owner decision: approve a private backup of `runs/` (see `RESULTS.md`).
-3. Free dry run: `python -m rewardbench.autopilot plan ...` and `python -m rewardbench.study rehearse` for the v4 pilot.
-4. Only with written owner approval of a total USD ceiling and a maximum call count, run the v4 pilot
-   (three arms, matched rounds, `runs/first-llm-study/pilot-p4`). Check the headroom rule on the revision-0 results
-   before any study-tier spend.
+1. Owner review of the Mission 010 pilot (`docs/assets/study-v2-pilot/RESULTS.md`) and decision on a private
+   backup of `runs/` (see `RESULTS.md` in `research-results/`).
+2. Write a v3 protocol (no paid calls) that addresses the pilot's findings: arms branch from a shared, fixed
+   starting controller; several replicates; no-feedback drift as the control; see the Mission 010 PR.
+3. Only with written owner approval of a new ceiling and call count, run the v3 pilot.
 
 ## Exact steps to resume
 

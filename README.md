@@ -112,7 +112,12 @@ python -m rewardbench.operate run \
 
 Runs development → freeze → sealed held-out → report into one directory, shows revisions, controller changes and rewards, and resumes on re-run. See `docs/OPERATING.md` (mock vs live, credentials, outputs) and `docs/REWARD_ONLY_CONTROL.md`.
 
-### Real-model study (revised exploratory protocol v2, not executed)
+### Real-model study (revised exploratory protocol v2; pilot run, no feedback effect found)
+
+The v2 pilot (12 `gpt-5.4-mini` calls, $0.039) produced 12/12 valid guidance controllers and gentle 8/8 landings,
+but no feedback-driven improvement: the no-feedback arm improved most and the numerical-reward arm got worse. See
+`docs/assets/study-v2-pilot/RESULTS.md`.
+
 
 `docs/STUDY_V2_PROTOCOL.md`, `docs/FIRST_LLM_STUDY_BUDGET.md` and `docs/FIRST_LLM_STUDY_LAUNCH.md` define the
 three-arm (no feedback / reward only / full numerical) study, its worst-case spend and the exact paid commands.

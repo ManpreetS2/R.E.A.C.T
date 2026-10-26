@@ -1,0 +1,1231 @@
+{
+ "nofeedback": {
+  "experiment_id": "exp_ffa3fae153ea49e5284e",
+  "status": "completed",
+  "completed_revisions": 4,
+  "revisions": [
+   {
+    "revision": 0,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.002427,
+    "prompt_tokens": 2198,
+    "completion_tokens": 173,
+    "request_id": "chatcmpl-EdN1qBbWIE1iJpiSHt4i0PizCtmzb",
+    "parameters": {
+     "aligned_dx": 35.0,
+     "aligned_rotation_gain": 140.0,
+     "aligned_rotation_limit": 20.0,
+     "aligned_vx": 0.16,
+     "altitude_low": 40.0,
+     "altitude_mid": 120.0,
+     "altitude_upright": 28.0,
+     "brake_thrust": 0.18,
+     "cruise_rotation_limit": 70.0,
+     "descent_aligned": 0.08,
+     "descent_cruise": 0.18,
+     "descent_low": 0.045,
+     "descent_mid": 0.11,
+     "hover_thrust": 0.34,
+     "rotation_gain": 220.0,
+     "vx_gain": 0.012,
+     "vx_limit": 0.38,
+     "vy_gain": 6.5
+    },
+    "changed_from_previous": {},
+    "n_changed": 0,
+    "mean_reward": -39.47329758596535,
+    "landed": 3,
+    "gentle": 3,
+    "crashed": 5,
+    "timeouts": 0,
+    "off_pad": 0,
+    "fuel_left": 655.3776540568656,
+    "per_seed": {
+     "0": 85.22,
+     "1": -114.66,
+     "2": -115.19,
+     "3": -113.9,
+     "4": 86.52,
+     "5": -114.09,
+     "6": 85.21,
+     "7": -114.9
+    }
+   },
+   {
+    "revision": 1,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.0025485,
+    "prompt_tokens": 2360,
+    "completion_tokens": 173,
+    "request_id": "chatcmpl-EdN49Hz847izXbRFayNB1n9ZupLAd",
+    "parameters": {
+     "aligned_dx": 30.0,
+     "aligned_rotation_gain": 160.0,
+     "aligned_rotation_limit": 18.0,
+     "aligned_vx": 0.14,
+     "altitude_low": 42.0,
+     "altitude_mid": 130.0,
+     "altitude_upright": 30.0,
+     "brake_thrust": 0.2,
+     "cruise_rotation_limit": 75.0,
+     "descent_aligned": 0.07,
+     "descent_cruise": 0.16,
+     "descent_low": 0.04,
+     "descent_mid": 0.1,
+     "hover_thrust": 0.335,
+     "rotation_gain": 240.0,
+     "vx_gain": 0.011,
+     "vx_limit": 0.36,
+     "vy_gain": 7.2
+    },
+    "changed_from_previous": {
+     "aligned_dx": [
+      35.0,
+      30.0
+     ],
+     "aligned_rotation_gain": [
+      140.0,
+      160.0
+     ],
+     "aligned_rotation_limit": [
+      20.0,
+      18.0
+     ],
+     "aligned_vx": [
+      0.16,
+      0.14
+     ],
+     "altitude_low": [
+      40.0,
+      42.0
+     ],
+     "altitude_mid": [
+      120.0,
+      130.0
+     ],
+     "altitude_upright": [
+      28.0,
+      30.0
+     ],
+     "brake_thrust": [
+      0.18,
+      0.2
+     ],
+     "cruise_rotation_limit": [
+      70.0,
+      75.0
+     ],
+     "descent_aligned": [
+      0.08,
+      0.07
+     ],
+     "descent_cruise": [
+      0.18,
+      0.16
+     ],
+     "descent_low": [
+      0.045,
+      0.04
+     ],
+     "descent_mid": [
+      0.11,
+      0.1
+     ],
+     "hover_thrust": [
+      0.34,
+      0.335
+     ],
+     "rotation_gain": [
+      220.0,
+      240.0
+     ],
+     "vx_gain": [
+      0.012,
+      0.011
+     ],
+     "vx_limit": [
+      0.38,
+      0.36
+     ],
+     "vy_gain": [
+      6.5,
+      7.2
+     ]
+    },
+    "n_changed": 18,
+    "mean_reward": 57.087913751933584,
+    "landed": 7,
+    "gentle": 7,
+    "crashed": 1,
+    "timeouts": 0,
+    "off_pad": 0,
+    "fuel_left": 582.1224487283828,
+    "per_seed": {
+     "0": 81.87,
+     "1": 82.2,
+     "2": 81.62,
+     "3": -116.68,
+     "4": 83.66,
+     "5": 83.04,
+     "6": 79.69,
+     "7": 81.31
+    }
+   },
+   {
+    "revision": 2,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.002679,
+    "prompt_tokens": 2534,
+    "completion_tokens": 173,
+    "request_id": "chatcmpl-EdN4PKmkxCyyVqsaEq2GuLdNwjASb",
+    "parameters": {
+     "aligned_dx": 26.0,
+     "aligned_rotation_gain": 180.0,
+     "aligned_rotation_limit": 16.0,
+     "aligned_vx": 0.12,
+     "altitude_low": 44.0,
+     "altitude_mid": 140.0,
+     "altitude_upright": 32.0,
+     "brake_thrust": 0.22,
+     "cruise_rotation_limit": 78.0,
+     "descent_aligned": 0.065,
+     "descent_cruise": 0.15,
+     "descent_low": 0.038,
+     "descent_mid": 0.09,
+     "hover_thrust": 0.336,
+     "rotation_gain": 260.0,
+     "vx_gain": 0.01,
+     "vx_limit": 0.34,
+     "vy_gain": 7.8
+    },
+    "changed_from_previous": {
+     "aligned_dx": [
+      30.0,
+      26.0
+     ],
+     "aligned_rotation_gain": [
+      160.0,
+      180.0
+     ],
+     "aligned_rotation_limit": [
+      18.0,
+      16.0
+     ],
+     "aligned_vx": [
+      0.14,
+      0.12
+     ],
+     "altitude_low": [
+      42.0,
+      44.0
+     ],
+     "altitude_mid": [
+      130.0,
+      140.0
+     ],
+     "altitude_upright": [
+      30.0,
+      32.0
+     ],
+     "brake_thrust": [
+      0.2,
+      0.22
+     ],
+     "cruise_rotation_limit": [
+      75.0,
+      78.0
+     ],
+     "descent_aligned": [
+      0.07,
+      0.065
+     ],
+     "descent_cruise": [
+      0.16,
+      0.15
+     ],
+     "descent_low": [
+      0.04,
+      0.038
+     ],
+     "descent_mid": [
+      0.1,
+      0.09
+     ],
+     "hover_thrust": [
+      0.335,
+      0.336
+     ],
+     "rotation_gain": [
+      240.0,
+      260.0
+     ],
+     "vx_gain": [
+      0.011,
+      0.01
+     ],
+     "vx_limit": [
+      0.36,
+      0.34
+     ],
+     "vy_gain": [
+      7.2,
+      7.8
+     ]
+    },
+    "n_changed": 18,
+    "mean_reward": 79.92893799873701,
+    "landed": 8,
+    "gentle": 8,
+    "crashed": 0,
+    "timeouts": 0,
+    "off_pad": 0,
+    "fuel_left": 536.735160525837,
+    "per_seed": {
+     "0": 79.54,
+     "1": 80.1,
+     "2": 79.41,
+     "3": 81.14,
+     "4": 81.6,
+     "5": 81.05,
+     "6": 77.41,
+     "7": 79.18
+    }
+   },
+   {
+    "revision": 3,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.0028139999999999997,
+    "prompt_tokens": 2708,
+    "completion_tokens": 174,
+    "request_id": "chatcmpl-EdN4hjKpN2dmeAUeuTHxjlxmK4mwU",
+    "parameters": {
+     "aligned_dx": 22.0,
+     "aligned_rotation_gain": 200.0,
+     "aligned_rotation_limit": 14.0,
+     "aligned_vx": 0.1,
+     "altitude_low": 48.0,
+     "altitude_mid": 150.0,
+     "altitude_upright": 36.0,
+     "brake_thrust": 0.24,
+     "cruise_rotation_limit": 80.0,
+     "descent_aligned": 0.06,
+     "descent_cruise": 0.14,
+     "descent_low": 0.035,
+     "descent_mid": 0.085,
+     "hover_thrust": 0.337,
+     "rotation_gain": 285.0,
+     "vx_gain": 0.0095,
+     "vx_limit": 0.32,
+     "vy_gain": 8.4
+    },
+    "changed_from_previous": {
+     "aligned_dx": [
+      26.0,
+      22.0
+     ],
+     "aligned_rotation_gain": [
+      180.0,
+      200.0
+     ],
+     "aligned_rotation_limit": [
+      16.0,
+      14.0
+     ],
+     "aligned_vx": [
+      0.12,
+      0.1
+     ],
+     "altitude_low": [
+      44.0,
+      48.0
+     ],
+     "altitude_mid": [
+      140.0,
+      150.0
+     ],
+     "altitude_upright": [
+      32.0,
+      36.0
+     ],
+     "brake_thrust": [
+      0.22,
+      0.24
+     ],
+     "cruise_rotation_limit": [
+      78.0,
+      80.0
+     ],
+     "descent_aligned": [
+      0.065,
+      0.06
+     ],
+     "descent_cruise": [
+      0.15,
+      0.14
+     ],
+     "descent_low": [
+      0.038,
+      0.035
+     ],
+     "descent_mid": [
+      0.09,
+      0.085
+     ],
+     "hover_thrust": [
+      0.336,
+      0.337
+     ],
+     "rotation_gain": [
+      260.0,
+      285.0
+     ],
+     "vx_gain": [
+      0.01,
+      0.0095
+     ],
+     "vx_limit": [
+      0.34,
+      0.32
+     ],
+     "vy_gain": [
+      7.8,
+      8.4
+     ]
+    },
+    "n_changed": 18,
+    "mean_reward": 79.39353401089052,
+    "landed": 8,
+    "gentle": 8,
+    "crashed": 0,
+    "timeouts": 0,
+    "off_pad": 0,
+    "fuel_left": 526.4264454976751,
+    "per_seed": {
+     "0": 79.38,
+     "1": 78.16,
+     "2": 78.05,
+     "3": 81.77,
+     "4": 80.24,
+     "5": 79.83,
+     "6": 78.43,
+     "7": 79.28
+    }
+   }
+  ],
+  "total_cost_usd": 0.010468499999999999
+ },
+ "rewardonly": {
+  "experiment_id": "exp_42eb966934fd53052f36",
+  "status": "completed",
+  "completed_revisions": 4,
+  "revisions": [
+   {
+    "revision": 0,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.00243675,
+    "prompt_tokens": 2211,
+    "completion_tokens": 173,
+    "request_id": "chatcmpl-EdN1xU9ZglgY99Qs4ohaHRz7JbG38",
+    "parameters": {
+     "aligned_dx": 18.0,
+     "aligned_rotation_gain": 180.0,
+     "aligned_rotation_limit": 20.0,
+     "aligned_vx": 0.12,
+     "altitude_low": 35.0,
+     "altitude_mid": 120.0,
+     "altitude_upright": 28.0,
+     "brake_thrust": 0.22,
+     "cruise_rotation_limit": 70.0,
+     "descent_aligned": 0.055,
+     "descent_cruise": 0.085,
+     "descent_low": 0.04,
+     "descent_mid": 0.065,
+     "hover_thrust": 0.34,
+     "rotation_gain": 240.0,
+     "vx_gain": 0.008,
+     "vx_limit": 0.42,
+     "vy_gain": 18.0
+    },
+    "changed_from_previous": {},
+    "n_changed": 0,
+    "mean_reward": -51.74740085886997,
+    "landed": 0,
+    "gentle": 0,
+    "crashed": 0,
+    "timeouts": 8,
+    "off_pad": 0,
+    "fuel_left": 406.6511307940911,
+    "per_seed": {
+     "0": -51.65,
+     "1": -53.01,
+     "2": -53.1,
+     "3": -50.49,
+     "4": -53.12,
+     "5": -52.09,
+     "6": -50.05,
+     "7": -50.48
+    }
+   },
+   {
+    "revision": 1,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.00264675,
+    "prompt_tokens": 2485,
+    "completion_tokens": 174,
+    "request_id": "chatcmpl-EdN3sQvPs9I1eppJALOcxRAH5XVxy",
+    "parameters": {
+     "aligned_dx": 12.0,
+     "aligned_rotation_gain": 220.0,
+     "aligned_rotation_limit": 10.0,
+     "aligned_vx": 0.08,
+     "altitude_low": 45.0,
+     "altitude_mid": 140.0,
+     "altitude_upright": 32.0,
+     "brake_thrust": 0.3,
+     "cruise_rotation_limit": 60.0,
+     "descent_aligned": 0.045,
+     "descent_cruise": 0.075,
+     "descent_low": 0.03,
+     "descent_mid": 0.055,
+     "hover_thrust": 0.345,
+     "rotation_gain": 300.0,
+     "vx_gain": 0.0065,
+     "vx_limit": 0.34,
+     "vy_gain": 22.0
+    },
+    "changed_from_previous": {
+     "aligned_dx": [
+      18.0,
+      12.0
+     ],
+     "aligned_rotation_gain": [
+      180.0,
+      220.0
+     ],
+     "aligned_rotation_limit": [
+      20.0,
+      10.0
+     ],
+     "aligned_vx": [
+      0.12,
+      0.08
+     ],
+     "altitude_low": [
+      35.0,
+      45.0
+     ],
+     "altitude_mid": [
+      120.0,
+      140.0
+     ],
+     "altitude_upright": [
+      28.0,
+      32.0
+     ],
+     "brake_thrust": [
+      0.22,
+      0.3
+     ],
+     "cruise_rotation_limit": [
+      70.0,
+      60.0
+     ],
+     "descent_aligned": [
+      0.055,
+      0.045
+     ],
+     "descent_cruise": [
+      0.085,
+      0.075
+     ],
+     "descent_low": [
+      0.04,
+      0.03
+     ],
+     "descent_mid": [
+      0.065,
+      0.055
+     ],
+     "hover_thrust": [
+      0.34,
+      0.345
+     ],
+     "rotation_gain": [
+      240.0,
+      300.0
+     ],
+     "vx_gain": [
+      0.008,
+      0.0065
+     ],
+     "vx_limit": [
+      0.42,
+      0.34
+     ],
+     "vy_gain": [
+      18.0,
+      22.0
+     ]
+    },
+    "n_changed": 18,
+    "mean_reward": -51.28491634734811,
+    "landed": 0,
+    "gentle": 0,
+    "crashed": 0,
+    "timeouts": 8,
+    "off_pad": 0,
+    "fuel_left": 424.2226647499331,
+    "per_seed": {
+     "0": -51.16,
+     "1": -52.33,
+     "2": -52.46,
+     "3": -50.1,
+     "4": -52.29,
+     "5": -51.56,
+     "6": -50.2,
+     "7": -50.19
+    }
+   },
+   {
+    "revision": 2,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.002862,
+    "prompt_tokens": 2772,
+    "completion_tokens": 174,
+    "request_id": "chatcmpl-EdN4XscyEsFcwoqtDOLiYySK99USx",
+    "parameters": {
+     "aligned_dx": 14.0,
+     "aligned_rotation_gain": 260.0,
+     "aligned_rotation_limit": 10.0,
+     "aligned_vx": 0.07,
+     "altitude_low": 42.0,
+     "altitude_mid": 130.0,
+     "altitude_upright": 30.0,
+     "brake_thrust": 0.34,
+     "cruise_rotation_limit": 50.0,
+     "descent_aligned": 0.04,
+     "descent_cruise": 0.07,
+     "descent_low": 0.028,
+     "descent_mid": 0.05,
+     "hover_thrust": 0.348,
+     "rotation_gain": 340.0,
+     "vx_gain": 0.0055,
+     "vx_limit": 0.3,
+     "vy_gain": 24.0
+    },
+    "changed_from_previous": {
+     "aligned_dx": [
+      12.0,
+      14.0
+     ],
+     "aligned_rotation_gain": [
+      220.0,
+      260.0
+     ],
+     "aligned_vx": [
+      0.08,
+      0.07
+     ],
+     "altitude_low": [
+      45.0,
+      42.0
+     ],
+     "altitude_mid": [
+      140.0,
+      130.0
+     ],
+     "altitude_upright": [
+      32.0,
+      30.0
+     ],
+     "brake_thrust": [
+      0.3,
+      0.34
+     ],
+     "cruise_rotation_limit": [
+      60.0,
+      50.0
+     ],
+     "descent_aligned": [
+      0.045,
+      0.04
+     ],
+     "descent_cruise": [
+      0.075,
+      0.07
+     ],
+     "descent_low": [
+      0.03,
+      0.028
+     ],
+     "descent_mid": [
+      0.055,
+      0.05
+     ],
+     "hover_thrust": [
+      0.345,
+      0.348
+     ],
+     "rotation_gain": [
+      300.0,
+      340.0
+     ],
+     "vx_gain": [
+      0.0065,
+      0.0055
+     ],
+     "vx_limit": [
+      0.34,
+      0.3
+     ],
+     "vy_gain": [
+      22.0,
+      24.0
+     ]
+    },
+    "n_changed": 17,
+    "mean_reward": -51.14671421741453,
+    "landed": 0,
+    "gentle": 0,
+    "crashed": 0,
+    "timeouts": 8,
+    "off_pad": 0,
+    "fuel_left": 431.30830936996654,
+    "per_seed": {
+     "0": -51.03,
+     "1": -51.94,
+     "2": -52.33,
+     "3": -50.07,
+     "4": -52.03,
+     "5": -51.56,
+     "6": -50.22,
+     "7": -49.98
+    }
+   },
+   {
+    "revision": 3,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.003072,
+    "prompt_tokens": 3058,
+    "completion_tokens": 173,
+    "request_id": "chatcmpl-EdN4qQtbzkorFqJwrCrqP6no4WIrF",
+    "parameters": {
+     "aligned_dx": 16.0,
+     "aligned_rotation_gain": 300.0,
+     "aligned_rotation_limit": 10.0,
+     "aligned_vx": 0.06,
+     "altitude_low": 38.0,
+     "altitude_mid": 120.0,
+     "altitude_upright": 26.0,
+     "brake_thrust": 0.38,
+     "cruise_rotation_limit": 45.0,
+     "descent_aligned": 0.038,
+     "descent_cruise": 0.065,
+     "descent_low": 0.024,
+     "descent_mid": 0.046,
+     "hover_thrust": 0.35,
+     "rotation_gain": 380.0,
+     "vx_gain": 0.005,
+     "vx_limit": 0.28,
+     "vy_gain": 26.0
+    },
+    "changed_from_previous": {
+     "aligned_dx": [
+      14.0,
+      16.0
+     ],
+     "aligned_rotation_gain": [
+      260.0,
+      300.0
+     ],
+     "aligned_vx": [
+      0.07,
+      0.06
+     ],
+     "altitude_low": [
+      42.0,
+      38.0
+     ],
+     "altitude_mid": [
+      130.0,
+      120.0
+     ],
+     "altitude_upright": [
+      30.0,
+      26.0
+     ],
+     "brake_thrust": [
+      0.34,
+      0.38
+     ],
+     "cruise_rotation_limit": [
+      50.0,
+      45.0
+     ],
+     "descent_aligned": [
+      0.04,
+      0.038
+     ],
+     "descent_cruise": [
+      0.07,
+      0.065
+     ],
+     "descent_low": [
+      0.028,
+      0.024
+     ],
+     "descent_mid": [
+      0.05,
+      0.046
+     ],
+     "hover_thrust": [
+      0.348,
+      0.35
+     ],
+     "rotation_gain": [
+      340.0,
+      380.0
+     ],
+     "vx_gain": [
+      0.0055,
+      0.005
+     ],
+     "vx_limit": [
+      0.3,
+      0.28
+     ],
+     "vy_gain": [
+      24.0,
+      26.0
+     ]
+    },
+    "n_changed": 17,
+    "mean_reward": -50.922258860599385,
+    "landed": 0,
+    "gentle": 0,
+    "crashed": 0,
+    "timeouts": 8,
+    "off_pad": 0,
+    "fuel_left": 436.85345086266005,
+    "per_seed": {
+     "0": -50.92,
+     "1": -51.46,
+     "2": -51.88,
+     "3": -49.98,
+     "4": -51.62,
+     "5": -51.43,
+     "6": -50.21,
+     "7": -49.89
+    }
+   }
+  ],
+  "total_cost_usd": 0.0110175
+ },
+ "numericalreward": {
+  "experiment_id": "exp_424436e7f1700e3e7cfa",
+  "status": "completed",
+  "completed_revisions": 4,
+  "revisions": [
+   {
+    "revision": 0,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.002436,
+    "prompt_tokens": 2210,
+    "completion_tokens": 173,
+    "request_id": "chatcmpl-EdN28YnXnIAvRQZghQG5AA20amwFL",
+    "parameters": {
+     "aligned_dx": 18.0,
+     "aligned_rotation_gain": 180.0,
+     "aligned_rotation_limit": 20.0,
+     "aligned_vx": 0.08,
+     "altitude_low": 55.0,
+     "altitude_mid": 180.0,
+     "altitude_upright": 35.0,
+     "brake_thrust": 0.22,
+     "cruise_rotation_limit": 60.0,
+     "descent_aligned": 0.08,
+     "descent_cruise": 0.12,
+     "descent_low": 0.06,
+     "descent_mid": 0.1,
+     "hover_thrust": 0.34,
+     "rotation_gain": 320.0,
+     "vx_gain": 0.015,
+     "vx_limit": 0.35,
+     "vy_gain": 28.0
+    },
+    "changed_from_previous": {},
+    "n_changed": 0,
+    "mean_reward": 80.7165386064919,
+    "landed": 8,
+    "gentle": 8,
+    "crashed": 0,
+    "timeouts": 0,
+    "off_pad": 0,
+    "fuel_left": 552.743604071015,
+    "per_seed": {
+     "0": 80.09,
+     "1": 80.16,
+     "2": 79.55,
+     "3": 82.22,
+     "4": 81.27,
+     "5": 81.26,
+     "6": 80.5,
+     "7": 80.69
+    }
+   },
+   {
+    "revision": 1,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.0037515,
+    "prompt_tokens": 3964,
+    "completion_tokens": 173,
+    "request_id": "chatcmpl-EdN41bAM2KvDPbg13J29rcPuXLBSo",
+    "parameters": {
+     "aligned_dx": 22.0,
+     "aligned_rotation_gain": 200.0,
+     "aligned_rotation_limit": 20.0,
+     "aligned_vx": 0.09,
+     "altitude_low": 50.0,
+     "altitude_mid": 170.0,
+     "altitude_upright": 40.0,
+     "brake_thrust": 0.24,
+     "cruise_rotation_limit": 60.0,
+     "descent_aligned": 0.075,
+     "descent_cruise": 0.115,
+     "descent_low": 0.055,
+     "descent_mid": 0.095,
+     "hover_thrust": 0.335,
+     "rotation_gain": 340.0,
+     "vx_gain": 0.016,
+     "vx_limit": 0.33,
+     "vy_gain": 30.0
+    },
+    "changed_from_previous": {
+     "aligned_dx": [
+      18.0,
+      22.0
+     ],
+     "aligned_rotation_gain": [
+      180.0,
+      200.0
+     ],
+     "aligned_vx": [
+      0.08,
+      0.09
+     ],
+     "altitude_low": [
+      55.0,
+      50.0
+     ],
+     "altitude_mid": [
+      180.0,
+      170.0
+     ],
+     "altitude_upright": [
+      35.0,
+      40.0
+     ],
+     "brake_thrust": [
+      0.22,
+      0.24
+     ],
+     "descent_aligned": [
+      0.08,
+      0.075
+     ],
+     "descent_cruise": [
+      0.12,
+      0.115
+     ],
+     "descent_low": [
+      0.06,
+      0.055
+     ],
+     "descent_mid": [
+      0.1,
+      0.095
+     ],
+     "hover_thrust": [
+      0.34,
+      0.335
+     ],
+     "rotation_gain": [
+      320.0,
+      340.0
+     ],
+     "vx_gain": [
+      0.015,
+      0.016
+     ],
+     "vx_limit": [
+      0.35,
+      0.33
+     ],
+     "vy_gain": [
+      28.0,
+      30.0
+     ]
+    },
+    "n_changed": 16,
+    "mean_reward": 79.38673329999416,
+    "landed": 8,
+    "gentle": 8,
+    "crashed": 0,
+    "timeouts": 0,
+    "off_pad": 0,
+    "fuel_left": 525.9536877439281,
+    "per_seed": {
+     "0": 78.82,
+     "1": 78.99,
+     "2": 77.94,
+     "3": 80.97,
+     "4": 79.96,
+     "5": 80.04,
+     "6": 78.81,
+     "7": 79.56
+    }
+   },
+   {
+    "revision": 2,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.0050669999999999995,
+    "prompt_tokens": 5718,
+    "completion_tokens": 173,
+    "request_id": "chatcmpl-EdN4HD9LxJPQwy6DwcvNdc1s7GOg1",
+    "parameters": {
+     "aligned_dx": 24.0,
+     "aligned_rotation_gain": 220.0,
+     "aligned_rotation_limit": 20.0,
+     "aligned_vx": 0.095,
+     "altitude_low": 48.0,
+     "altitude_mid": 165.0,
+     "altitude_upright": 42.0,
+     "brake_thrust": 0.25,
+     "cruise_rotation_limit": 60.0,
+     "descent_aligned": 0.07,
+     "descent_cruise": 0.11,
+     "descent_low": 0.05,
+     "descent_mid": 0.09,
+     "hover_thrust": 0.336,
+     "rotation_gain": 360.0,
+     "vx_gain": 0.017,
+     "vx_limit": 0.31,
+     "vy_gain": 31.0
+    },
+    "changed_from_previous": {
+     "aligned_dx": [
+      22.0,
+      24.0
+     ],
+     "aligned_rotation_gain": [
+      200.0,
+      220.0
+     ],
+     "aligned_vx": [
+      0.09,
+      0.095
+     ],
+     "altitude_low": [
+      50.0,
+      48.0
+     ],
+     "altitude_mid": [
+      170.0,
+      165.0
+     ],
+     "altitude_upright": [
+      40.0,
+      42.0
+     ],
+     "brake_thrust": [
+      0.24,
+      0.25
+     ],
+     "descent_aligned": [
+      0.075,
+      0.07
+     ],
+     "descent_cruise": [
+      0.115,
+      0.11
+     ],
+     "descent_low": [
+      0.055,
+      0.05
+     ],
+     "descent_mid": [
+      0.095,
+      0.09
+     ],
+     "hover_thrust": [
+      0.335,
+      0.336
+     ],
+     "rotation_gain": [
+      340.0,
+      360.0
+     ],
+     "vx_gain": [
+      0.016,
+      0.017
+     ],
+     "vx_limit": [
+      0.33,
+      0.31
+     ],
+     "vy_gain": [
+      30.0,
+      31.0
+     ]
+    },
+    "n_changed": 16,
+    "mean_reward": 77.85666391096957,
+    "landed": 8,
+    "gentle": 8,
+    "crashed": 0,
+    "timeouts": 0,
+    "off_pad": 0,
+    "fuel_left": 495.29359524676244,
+    "per_seed": {
+     "0": 77.26,
+     "1": 77.35,
+     "2": 76.44,
+     "3": 79.66,
+     "4": 78.58,
+     "5": 78.67,
+     "6": 77.08,
+     "7": 77.81
+    }
+   },
+   {
+    "revision": 3,
+    "valid": true,
+    "validation_error": null,
+    "cost_usd": 0.00638925,
+    "prompt_tokens": 7481,
+    "completion_tokens": 173,
+    "request_id": "chatcmpl-EdN51rg4xen9mpV5466rLMB3QkuYq",
+    "parameters": {
+     "aligned_dx": 26.0,
+     "aligned_rotation_gain": 240.0,
+     "aligned_rotation_limit": 20.0,
+     "aligned_vx": 0.1,
+     "altitude_low": 45.0,
+     "altitude_mid": 160.0,
+     "altitude_upright": 45.0,
+     "brake_thrust": 0.26,
+     "cruise_rotation_limit": 60.0,
+     "descent_aligned": 0.065,
+     "descent_cruise": 0.105,
+     "descent_low": 0.045,
+     "descent_mid": 0.085,
+     "hover_thrust": 0.337,
+     "rotation_gain": 380.0,
+     "vx_gain": 0.018,
+     "vx_limit": 0.3,
+     "vy_gain": 32.0
+    },
+    "changed_from_previous": {
+     "aligned_dx": [
+      24.0,
+      26.0
+     ],
+     "aligned_rotation_gain": [
+      220.0,
+      240.0
+     ],
+     "aligned_vx": [
+      0.095,
+      0.1
+     ],
+     "altitude_low": [
+      48.0,
+      45.0
+     ],
+     "altitude_mid": [
+      165.0,
+      160.0
+     ],
+     "altitude_upright": [
+      42.0,
+      45.0
+     ],
+     "brake_thrust": [
+      0.25,
+      0.26
+     ],
+     "descent_aligned": [
+      0.07,
+      0.065
+     ],
+     "descent_cruise": [
+      0.11,
+      0.105
+     ],
+     "descent_low": [
+      0.05,
+      0.045
+     ],
+     "descent_mid": [
+      0.09,
+      0.085
+     ],
+     "hover_thrust": [
+      0.336,
+      0.337
+     ],
+     "rotation_gain": [
+      360.0,
+      380.0
+     ],
+     "vx_gain": [
+      0.017,
+      0.018
+     ],
+     "vx_limit": [
+      0.31,
+      0.3
+     ],
+     "vy_gain": [
+      31.0,
+      32.0
+     ]
+    },
+    "n_changed": 16,
+    "mean_reward": 76.15921757244391,
+    "landed": 8,
+    "gentle": 8,
+    "crashed": 0,
+    "timeouts": 0,
+    "off_pad": 0,
+    "fuel_left": 461.61645022209854,
+    "per_seed": {
+     "0": 75.59,
+     "1": 75.63,
+     "2": 74.69,
+     "3": 78.16,
+     "4": 76.96,
+     "5": 77.07,
+     "6": 75.21,
+     "7": 75.97
+    }
+   }
+  ],
+  "total_cost_usd": 0.01764375
+ },
+ "replay": {
+  "flights": 96,
+  "matched": 96
+ }
+}
