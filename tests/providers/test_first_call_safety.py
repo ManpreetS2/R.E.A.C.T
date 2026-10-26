@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_prompt_v2_asks_for_compact_json_without_tools_or_fences():
-    assert PROMPT_TEMPLATE_ID == "rewardbench.prompts.v2"
+    assert PROMPT_TEMPLATE_ID == "rewardbench.prompts.v3"
     assert "compact JSON" in SYSTEM_PROMPT
     assert "markdown fences" in SYSTEM_PROMPT
     assert "Do not call tools" in SYSTEM_PROMPT

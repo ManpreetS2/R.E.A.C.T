@@ -38,10 +38,13 @@ from rewardbench.contracts import (
     RewardFeedback,
     Split,
 )
-from rewardbench.prompts import render_messages
+from rewardbench.prompts import PROMPT_TEMPLATE_ID, render_messages
 from rewardbench.providers.pricing import load_catalog, quote_call
 
 STUDY_ID = "first_llm_study.v1"
+# The prompt template is part of the experiment's identity: it is recorded in the hashed config metadata and
+# tagged into names and output paths, so a prompt change can never reuse an older experiment's database.
+PROMPT_TAG = "p" + PROMPT_TEMPLATE_ID.rsplit(".v", 1)[-1]
 CONDITIONS = ("no_feedback", "reward_only", "numerical_reward")
 RESERVED_FINAL_SEEDS = tuple(range(2_000_000, 2_000_016))  # apollolander.final_eval.v1
 ENGINEERING_HELDOUT_SEEDS = tuple(range(1_000_000, 1_000_008))  # already exposed; rehearsal only
@@ -77,7 +80,7 @@ CONFIG_DIR = ROOT / "configs" / "study"
 
 def experiment_name(tier: str, condition: str, replicate: int, provider: str, model: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "", model.lower())
-    return f"llmstudy-{tier}-{provider}-{slug}-{condition.replace('_', '')}-r{replicate}"
+    return f"llmstudy-{tier}-{provider}-{slug}-{condition.replace('_', '')}-{PROMPT_TAG}-r{replicate}"
 
 
 def study_config(
@@ -112,7 +115,7 @@ def study_config(
         "on_invalid_policy": "skip",
         "on_model_failure": "abort",
         "on_episode_failure": "skip",
-        "database_path": f"runs/first-llm-study/{tier}/{name}.sqlite",
+        "database_path": f"runs/first-llm-study/{tier}-{PROMPT_TAG}/{name}.sqlite",
         "budget": dict(budget) if budget else {},
         "development_seeds": list(DEVELOPMENT_SEEDS),
         # The pilot may only ever touch the already-exposed engineering seeds; the reserved cohort belongs
@@ -121,6 +124,7 @@ def study_config(
         "model_settings": dict(SETTINGS[provider]),
         "metadata": {
             "study": STUDY_ID,
+            "prompt_template": PROMPT_TEMPLATE_ID,
             "tier": tier,
             "replicate": replicate,
             "approval_required": True,

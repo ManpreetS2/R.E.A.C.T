@@ -35,7 +35,7 @@ feedback lines (proved by `tests/prompts/test_reward_only.py` and by the rehears
 | --- | --- |
 | Provider / model | `openai` / `gpt-5.4-mini` (**proposal; requires owner approval**) |
 | Model settings | `max_output_tokens 800`, `reasoning_effort none`, `json_mode true`; no temperature set |
-| Controller schema, prompt version | `rewardbench.apollolander.controller.v1`, `rewardbench.prompts.v2` |
+| Controller schema, prompt version | `rewardbench.apollolander.controller.v1`, `rewardbench.prompts.v3` |
 | Development seeds | `0-7`, `episodes_per_revision 8`: **the same 8 starts every revision** |
 | History window | 4 revisions |
 | Max episode steps / simulator | 8000 / ApolloLander research mode, `apollolander.starts.v1`, `vary_fuel false` |
