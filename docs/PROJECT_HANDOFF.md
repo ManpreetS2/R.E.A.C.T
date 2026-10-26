@@ -36,7 +36,7 @@ PRs #3-#11 are unrelated RL research branches off `main`.
 | 006b | Spend ceiling + billing guide; Windows CI fix (unclosed SQLite handles in tests) | Done (PR #16) |
 | 007 | Prompt v3: schema vs instance, example, error messages, prompt version in hash, live guard | Done, offline (PR #17); 399 tests passed at `82ae009` |
 | 008 | Paid call with prompt v3: valid but copied the prompt's example; 8/8 timeouts. $0.00093225 | Done; failed as evidence |
-| 009 | v2 protocol, prompt v4 (guidance-only, mechanics taught, no copyable controller), `autopilot`, scripted baselines, v2 configs | **Written, uncommitted until this checkpoint, 2 known failing tests, not reviewed** |
+| 009 | v2 protocol, prompt v4 (guidance-only, mechanics taught, no copyable controller), `autopilot`, scripted baselines, v2 configs | **Written, committed as a checkpoint, 425 tests pass locally, not reviewed, CI not yet run** |
 
 ## Test results at this checkpoint
 
@@ -47,23 +47,15 @@ $env:PYTHONPATH='src'; $env:MPLBACKEND='Agg'
 .\.venv\Scripts\python.exe -m pytest tests/core tests/providers tests/prompts tests/analysis tests/environments -p no:warnings -o addopts="" --import-mode=importlib -q
 ```
 
-Result on the Mission 009 working tree: **423 passed, 2 failed** (4m11s). The two failures were not investigated
-or fixed (this was a checkpoint, not a fix mission). Reasons seen in the output, unverified beyond that:
-
-1. `tests/providers/test_first_call_safety.py::test_prompt_v2_asks_for_compact_json_without_tools_or_fences`
-   asserts `PROMPT_TEMPLATE_ID == "rewardbench.prompts.v3"`, but the code is now `v4`. Almost certainly a stale
-   assertion (update to v4).
-2. `tests/core/test_first_llm_study.py::test_first_paid_call_path_with_mocked_transport_pauses_after_one_call_and_isolates_feedback`
-   fails on `"reward=" in second` (the second mocked request has no reward line). Likely because the test's scripted
-   replies are `constant` controllers, which v4 rejects as not allowed, so no episodes (and no rewards) exist for
-   the second prompt. Likely needs guidance-policy fixtures. Check before assuming.
-
-Node checks (`frontend/apollolander/experiment/physics.test.js`, `replay.test.js`) were not re-run at this
-checkpoint; they passed at `82ae009`. GitHub Actions for the Mission 009 branch had not run when this was written.
+Result on the exact tree committed in this checkpoint: **425 passed, 0 failed** (3m58s). The ApolloLander Node
+checks (`physics.test.js`, `replay.test.js`) pass. An earlier run of the same suite on the uncommitted tree showed
+2 failures (a stale `prompts.v3` assertion in `test_first_call_safety.py` and a mocked-transport fixture in
+`test_first_llm_study.py`); both were fixed in the working tree by a concurrent session before this commit, and are
+included in it. GitHub Actions had not run on this branch when this was written, so do not call it green yet.
 
 ## Known bugs, limits and scientific caveats
 
-* The 2 failing tests above; Mission 009 code has not had a review pass.
+* Mission 009 code has not had a review pass and its CI has not run.
 * **Exploratory, post-hoc:** v2 was designed after two failures. Missions 006/008 are excluded from analysis.
 * **Ceiling effect (largest risk):** scripted guidance at bound midpoints scores +25.90, and one fact (`descent_low`)
   takes it to +81.43 versus the hand-tuned +82.96. If the model saturates at revision 0 there is nothing to
@@ -85,7 +77,7 @@ Never modify, delete or resume them.
 
 ## Next recommended mission (do not skip the order)
 
-1. Fix the two failing tests (small, likely stale fixtures), re-run the full suite, run CI, review Mission 009.
+1. Confirm CI on the Mission 009 PR, then review Mission 009 (autopilot, v4 prompt, v2 protocol).
 2. Owner decision: approve a private backup of `runs/` (see `RESULTS.md`).
 3. Free dry run: `python -m rewardbench.autopilot plan ...` and `python -m rewardbench.study rehearse` for the v4 pilot.
 4. Only with written owner approval of a total USD ceiling and a maximum call count, run the v4 pilot
