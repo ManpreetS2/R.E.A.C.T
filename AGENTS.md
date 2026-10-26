@@ -1,6 +1,6 @@
 # Repository agent instructions
 
-**Read [PROJECT.md](PROJECT.md) first.** It is the canonical R.E.A.C.T. research plan and records the owner's current priorities, hypotheses, exclusions and evidence requirements.
+**Consult [PROJECT.md](PROJECT.md) first.** It is the canonical R.E.A.C.T. research plan. Read its **§0 current-direction/status/decision summary** and only the relevant long-form sections for the task; the full 100 KB historical migration need not be loaded into every coding session.
 
 - **Primary owner-approved goal:** blind visual ApolloLander game learning from screenshots and bounded keyboard actions, without privileged simulator state or a prewritten flight controller. See `PROJECT.md` §0 and its migrated Section 20.
 - **Separate historical research:** structured guidance-controller tuning and reward feedback experiments, including Missions 006–010. Do not claim these prove blind gameplay or reward-driven learning.
