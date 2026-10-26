@@ -62,6 +62,16 @@ DEMONSTRATION_GUIDANCE: dict[str, float] = {
 }
 
 
+# Prompt format illustration (see "instance" in the schema document). Deliberately a neutral open-loop
+# constant, not the tuned guidance demonstration, so the prompt does not seed the experiment.
+EXAMPLE_CONTROLLER: dict[str, Any] = {
+    "schema": SCHEMA_ID,
+    "policy": "constant",
+    "thrust": 0.5,
+    "rotation": 0,
+}
+
+
 class ControllerRejected(ValueError):
     def __init__(self, reason: str) -> None:
         super().__init__(reason)
@@ -97,6 +107,25 @@ def controller_schema_document() -> dict[str, Any]:
         },
         "rejected": ["JavaScript", "unknown fields", "non-finite numbers", "values outside bounds"],
         "note": "The reference Gymnasium heuristic is not used here. demonstration_guidance_controller is hand-specified. random is a scripted baseline, not learning.",
+        "instance": {
+            "required_fields": ["schema", "policy"],
+            "policy_fields": {
+                "guidance": (
+                    'requires "parameters": an object holding every guidance parameter named in the schema, '
+                    "each a number within its bounds"
+                ),
+                "constant": (
+                    'requires "thrust" (number from 0 to 1) and "rotation" '
+                    "(integer multiple of 10 from -90 to 90)"
+                ),
+                "random": 'requires "seed" (integer from 0 to 4294967295)',
+            },
+            "example": dict(EXAMPLE_CONTROLLER),
+            "example_note": (
+                "Format illustration only. It is not a recommended, tuned, or good controller; "
+                "choose your own values."
+            ),
+        },
     }
 
 
@@ -154,8 +183,14 @@ def normalize_controller(payload: Mapping[str, Any] | str) -> dict[str, Any]:
     if parsed.get("schema") != SCHEMA_ID:
         raise ControllerRejected(f"unsupported controller schema {parsed.get('schema')!r}")
     policy = parsed.get("policy")
+    allowed = ", ".join(POLICIES)
+    if policy is None:
+        hint = " (this looks like the schema document, not a controller instance)" if "policies" in parsed else ""
+        raise ControllerRejected(
+            f"controller is missing the required 'policy' field{hint}; allowed policies: {allowed}"
+        )
     if policy not in POLICIES:
-        raise ControllerRejected(f"unknown controller policy {policy!r}")
+        raise ControllerRejected(f"unknown controller policy {policy!r}; allowed policies: {allowed}")
     if policy == "guidance":
         return {"policy": "guidance", "parameters": _guidance_parameters(parsed.get("parameters"))}
     if policy == "random":

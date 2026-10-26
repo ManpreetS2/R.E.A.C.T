@@ -112,7 +112,7 @@ def test_launch_guide_contains_the_exact_first_paid_command() -> None:
 FIRST_PAID_COMMAND = (
     "python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls "
     '--total-usd-ceiling "$APPROVED_CEILING_USD" '
-    "--config configs/study/pilot_no_feedback.yaml --out runs/first-llm-study/pilot"
+    "--config configs/study/pilot_no_feedback.yaml --out runs/first-llm-study/pilot-p3"
 )
 
 

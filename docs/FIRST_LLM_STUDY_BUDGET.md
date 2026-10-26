@@ -22,30 +22,30 @@ Proposed model `openai:gpt-5.4-mini`, catalog `2026-10-14`.
 
 | Tier | Revisions | Replicates | Paid calls | Worst-case tokens | Worst-case USD |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| first call per arm | 1 | 1 | 3 | - | $0.0179 |
-| pilot | 4 | 1 | 12 | 99,324 | $0.1105 |
-| study | 6 | 5 | 90 | 963,900 | $0.9929 |
+| first call per arm | 1 | 1 | 3 | - | $0.0203 |
+| pilot | 4 | 1 | 12 | 112,368 | $0.1203 |
+| study | 6 | 5 | 90 | 1,061,730 | $1.0663 |
 
 Per arm, per replicate (worst case):
 
 | Tier | Arm | Calls | Largest prompt (token ceiling) | Output ceiling/call | USD |
 | --- | --- | ---: | ---: | ---: | ---: |
-| pilot | no_feedback | 4 | 6,481 | 800 | $0.0287 |
-| pilot | reward_only | 4 | 7,457 | 800 | $0.0303 |
-| pilot | numerical_reward | 4 | 21,612 | 800 | $0.0515 |
-| study | no_feedback | 6 | 7,631 | 800 | $0.0474 |
-| study | reward_only | 6 | 8,911 | 800 | $0.0508 |
-| study | numerical_reward | 6 | 27,786 | 800 | $0.1004 |
+| pilot | no_feedback | 4 | 7,568 | 800 | $0.0320 |
+| pilot | reward_only | 4 | 8,544 | 800 | $0.0335 |
+| pilot | numerical_reward | 4 | 22,699 | 800 | $0.0548 |
+| study | no_feedback | 6 | 8,718 | 800 | $0.0523 |
+| study | reward_only | 6 | 9,998 | 800 | $0.0557 |
+| study | numerical_reward | 6 | 28,873 | 800 | $0.1053 |
 
 Same designs priced on the other catalog models (indicative only; settings for these providers are not live-tested):
 
 | Model | first_call | pilot | study |
 | --- | ---: | ---: | ---: |
-| openai:gpt-5.4-mini | $0.0179 | $0.1105 | $0.9929 |
-| google:gemini-3.1-flash-lite | $0.0061 | $0.0374 | $0.3353 |
-| anthropic:claude-haiku-5-5 | $0.0021 | $0.0138 | $0.1252 |
-| xai:grok-4.3 | $0.0178 | $0.1362 | $1.2949 |
-| openai:gpt-5.4 | $0.0595 | $0.3683 | $3.3098 |
+| openai:gpt-5.4-mini | $0.0203 | $0.1203 | $1.0663 |
+| google:gemini-3.1-flash-lite | $0.0069 | $0.0407 | $0.3598 |
+| anthropic:claude-haiku-5-5 | $0.0025 | $0.0151 | $0.1350 |
+| xai:grok-4.3 | $0.0218 | $0.1525 | $1.4172 |
+| openai:gpt-5.4 | $0.0677 | $0.4009 | $3.5543 |
 
 Expected (not guaranteed) spend is far below these bounds because real prompts are a fraction of the byte
 ceiling and real outputs are shorter than 800 tokens; do not budget from the expectation.

@@ -16,7 +16,7 @@ from rewardbench.contracts import (
     RewardFeedback,
 )
 
-PROMPT_TEMPLATE_ID = "rewardbench.prompts.v2"
+PROMPT_TEMPLATE_ID = "rewardbench.prompts.v3"
 
 SYSTEM_PROMPT = """You are proposing a controller for a closed reward-adaptation experiment.
 Revise only the controller. Do not update, train, or fine-tune neural network weights.
@@ -25,7 +25,7 @@ Do not invent a score and do not treat your own judgment as the reward.
 Do not write Python, shell commands, imports, or tool calls.
 Do not call tools, browsers, or code interpreters.
 Reply with one compact JSON object and no surrounding prose, markdown fences, or commentary.
-The object must match the controller schema in the user message."""
+The object must be a controller instance of the schema in the user message: concrete values for its fields, never the schema itself."""
 
 _NO_FEEDBACK_HEADER = (
     "Earlier revisions are listed without simulator scores. Scores were withheld on purpose."
@@ -38,8 +38,9 @@ _REWARD_ONLY_HEADER = (
     "Earlier revisions include only the simulator's numeric reward for each scored episode. "
     "Use those rewards. Do not replace them with your own assessment."
 )
+_INSTANCE_KEY = "instance"
 _OUTPUT_RULE = (
-    "Reply with one compact JSON object that matches the controller schema. "
+    "Reply with one compact JSON object that is a controller instance of the schema, not the schema itself. "
     "Include only schema fields. Do not include a score of your own. "
     "Prefer the smallest valid controller that satisfies the schema."
 )
@@ -53,12 +54,47 @@ def render_messages(request: ModelRequest) -> tuple[str, str]:
         f"Task: {environment.display_name}. {environment.task_description}",
         f"Actions: {environment.action_space_summary}",
         f"Observations: {environment.observation_space_summary}",
-        "Controller schema:\n" + _json(environment.controller_schema),
+        "Controller schema:\n" + _json(_schema_only(environment.controller_schema)),
+        _instance_section(environment.controller_schema),
         f"Revision: {request.revision_index}",
         _history_section(request),
         _OUTPUT_RULE,
     ]
     return SYSTEM_PROMPT, "\n\n".join(sections)
+
+
+def _schema_only(schema: Mapping[str, Any]) -> Mapping[str, Any]:
+    return {key: value for key, value in schema.items() if key != _INSTANCE_KEY}
+
+
+def _instance_section(schema: Mapping[str, Any]) -> str:
+    """Tell the model the schema is not the answer. Environment-specific detail comes from ``instance``."""
+
+    lines = [
+        "Controller format: the JSON above is the SCHEMA. It describes what is allowed and is not a controller. "
+        "Do not reply with the schema, its policies, ranges, or notes."
+    ]
+    guide = schema.get(_INSTANCE_KEY)
+    if isinstance(guide, Mapping):
+        required = guide.get("required_fields") or ()
+        if required:
+            text = (
+                "Reply with a controller INSTANCE: one JSON object of concrete values with the top-level fields "
+                + ", ".join(f'"{name}"' for name in required)
+                + " plus the fields of your chosen policy"
+            )
+            if isinstance(schema.get("schema"), str):
+                text += f'; "schema" must be exactly "{schema["schema"]}"'
+            lines.append(text + ".")
+        policies = guide.get("policy_fields")
+        if isinstance(policies, Mapping) and policies:
+            lines.append('"policy" must be one of: ' + ", ".join(f'"{name}"' for name in policies) + ".")
+            lines += [f'- "{name}": {description}' for name, description in policies.items()]
+        if "example" in guide:
+            note = guide.get("example_note")
+            lines.append("Example of a complete valid controller" + (f" ({note})" if note else "") + ":")
+            lines.append(_json(guide["example"]))
+    return "\n".join(lines)
 
 
 def render_history(request: ModelRequest) -> str:

@@ -26,7 +26,7 @@ from rewardbench.contracts import (
     ModelRequest,
     Split,
 )
-from rewardbench.prompts import render_messages
+from rewardbench.prompts import PROMPT_TEMPLATE_ID, render_messages
 from rewardbench.providers.backends import resolve_api_key
 from rewardbench.providers.client import build_model_client
 from rewardbench.providers.pricing import PriceQuote, load_catalog, quote_call
@@ -186,6 +186,12 @@ def preflight_live(
         raise ConfigError(f"{config.provider} API key is empty")
 
     spec = environment.describe()
+    recorded_template = config.metadata.get("prompt_template")
+    if recorded_template is not None and recorded_template != PROMPT_TEMPLATE_ID:
+        raise ConfigError(
+            f"config was generated for prompt template {recorded_template!r} but this code renders "
+            f"{PROMPT_TEMPLATE_ID!r}; regenerate the config (it is a different experiment); refusing live mode"
+        )
     if spec.environment_id != config.environment_id:
         raise ConfigError(
             f"environment id {spec.environment_id!r} does not match config "

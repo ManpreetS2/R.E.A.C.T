@@ -4,6 +4,14 @@
 live command until the owner has approved the provider, the model and a total USD ceiling in writing
 (template in section 1). Design and outcomes: `FIRST_LLM_STUDY_PROTOCOL.md`. Spend: `FIRST_LLM_STUDY_BUDGET.md`.
 
+**Prompt history.** The first live request (prompt `rewardbench.prompts.v2`, experiment
+`exp_26eb2593d31e4a72c041`, `runs/first-llm-study/pilot/`) returned the schema document instead of a controller
+(`unknown controller policy None`; one call, about $0.0026). That database is kept for audit and is never resumed;
+its configs are archived byte-for-byte in `configs/study/archive/prompt_v2/`. The current configs use
+`rewardbench.prompts.v3`, which is recorded in `metadata.prompt_template` (so it changes the experiment id), tagged
+`p3` in names, and written under `runs/first-llm-study/pilot-p3/`. Live preflight refuses a config whose recorded
+prompt template differs from the code. The ledger scan still counts the v2 attempt toward `--total-usd-ceiling`.
+
 Safeguards that stay in force (existing code, covered by tests): no paid call without
 `--i-authorize-paid-api-calls`; no key, no unpriced model or no bounded budget means refusal before any
 network use; `max_model_retries: 0`; **one new paid call per config per invocation**; another call only with
@@ -49,15 +57,15 @@ that do not depend on this code.
 One call (revision 0 of arm A, `no_feedback`), then the session pauses. Worst-case cost of this call: see the budget doc.
 
 ```bash
-python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --total-usd-ceiling "$APPROVED_CEILING_USD" --config configs/study/pilot_no_feedback.yaml --out runs/first-llm-study/pilot
+python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --total-usd-ceiling "$APPROVED_CEILING_USD" --config configs/study/pilot_no_feedback.yaml --out runs/first-llm-study/pilot-p3
 ```
 
 Review before anything else:
 
 ```bash
-python -m rewardbench.operate status --out runs/first-llm-study/pilot
-cat runs/first-llm-study/pilot/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-r1/revision_00_call_00.txt   # exactly what was sent
-sqlite3 runs/first-llm-study/pilot/llmstudy-pilot-openai-gpt54mini-nofeedback-r1.sqlite \
+python -m rewardbench.operate status --out runs/first-llm-study/pilot-p3
+cat runs/first-llm-study/pilot-p3/prompts/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1/revision_00_call_00.txt   # exactly what was sent
+sqlite3 runs/first-llm-study/pilot-p3/llmstudy-pilot-openai-gpt54mini-nofeedback-p3-r1.sqlite \
   "SELECT revision_index, valid, provider, model_id, total_tokens, estimated_cost_usd, parameters_json FROM attempts"
 ```
 
@@ -67,8 +75,8 @@ approved model, tokens/cost exceed the worst-case bound, or `logs/*.run.log` sho
 ## 3. First call of the other two arms (still revision 0)
 
 ```bash
-python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --total-usd-ceiling "$APPROVED_CEILING_USD" --config configs/study/pilot_reward_only.yaml --out runs/first-llm-study/pilot
-python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --total-usd-ceiling "$APPROVED_CEILING_USD" --config configs/study/pilot_numerical_reward.yaml --out runs/first-llm-study/pilot
+python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --total-usd-ceiling "$APPROVED_CEILING_USD" --config configs/study/pilot_reward_only.yaml --out runs/first-llm-study/pilot-p3
+python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --total-usd-ceiling "$APPROVED_CEILING_USD" --config configs/study/pilot_numerical_reward.yaml --out runs/first-llm-study/pilot-p3
 ```
 
 ## 4. Pilot continuation (revisions 1-3), each step a separate explicit command
@@ -79,7 +87,7 @@ After reviewing the stored results of the previous step, advance **every arm by 
 python -m rewardbench.operate run --mode live --i-authorize-paid-api-calls --authorize-continuation \
   --total-usd-ceiling "$APPROVED_CEILING_USD" \
   --config configs/study/pilot_no_feedback.yaml --config configs/study/pilot_reward_only.yaml \
-  --config configs/study/pilot_numerical_reward.yaml --out runs/first-llm-study/pilot
+  --config configs/study/pilot_numerical_reward.yaml --out runs/first-llm-study/pilot-p3
 ```
 
 Repeat three times (revisions 1, 2, 3). Each repetition shows the new prompt, controller change and the
@@ -89,20 +97,20 @@ simulator rewards of the previous revision. An interrupted run resumes with the 
 
 ```bash
 for arm in nofeedback rewardonly numericalreward; do
-  python -m rewardbench.heldout --database runs/first-llm-study/pilot/llmstudy-pilot-openai-gpt54mini-$arm-r1.sqlite \
+  python -m rewardbench.heldout --database runs/first-llm-study/pilot-p3/llmstudy-pilot-openai-gpt54mini-$arm-p3-r1.sqlite \
     --source-config configs/study/pilot_$(echo $arm | sed 's/nofeedback/no_feedback/;s/rewardonly/reward_only/;s/numericalreward/numerical_reward/').yaml \
-    --record-dir runs/first-llm-study/pilot/heldout-flights/$arm
-  python -m rewardbench.analysis report --logs runs/first-llm-study/pilot/llmstudy-pilot-openai-gpt54mini-$arm-r1.sqlite \
-    --out runs/first-llm-study/pilot/reports/$arm
+    --record-dir runs/first-llm-study/pilot-p3/heldout-flights/$arm
+  python -m rewardbench.analysis report --logs runs/first-llm-study/pilot-p3/llmstudy-pilot-openai-gpt54mini-$arm-p3-r1.sqlite \
+    --out runs/first-llm-study/pilot-p3/reports/$arm
 done
 ```
 
 ## 6. Inspect results and flights
 
 ```bash
-python -m rewardbench.operate status --out runs/first-llm-study/pilot
+python -m rewardbench.operate status --out runs/first-llm-study/pilot-p3
 python3 -m http.server 8767
-# http://localhost:8767/frontend/apollolander/experiment/replay.html?file=/runs/first-llm-study/pilot/flights/<experiment_id>/<flight>.flight.json
+# http://localhost:8767/frontend/apollolander/experiment/replay.html?file=/runs/first-llm-study/pilot-p3/flights/<experiment_id>/<flight>.flight.json
 ```
 
 The page replays the recorded actions through the same physics and shows `REPLAY MATCHES RECORD` or the exact
