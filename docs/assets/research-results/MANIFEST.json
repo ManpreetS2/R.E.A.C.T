@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-26 (Mission 012 entries added 2026-10-27; Mission 013 pointer added 2026-10-27)",
+  "generated": "2026-10-26 (Mission 012 entries added 2026-10-27; Mission 013 and 014 pointers added 2026-10-27)",
   "note": "Checksums are SHA-256 of local files under runs/ (gitignored, NOT on GitHub). Lock files and empty SQLite -wal/-shm files are omitted.",
   "experiments": [
     {
@@ -2249,6 +2249,24 @@
         "recorded": "2026-10-27, fixed tree 2f4f25a",
         "files": 352,
         "evidence": "docs/assets/blind-visual-foundation/evidence-verified-2026-10-27.json"
+      }
+    ]
+  },
+  "mission014_isolated_runtime_local_records": {
+    "paid_spend_usd": 0,
+    "model_calls": 0,
+    "note": "Scripted NON-AI isolation probes and stand-ins; no model played. Raw records local only (gitignored); per-file SHA-256 in the evidence file.",
+    "records": [
+      {
+        "directory": "runs/blind-visual/mission014-isolation-20261027",
+        "recorded": "2026-10-27, pre-commit dry run",
+        "files": 386
+      },
+      {
+        "directory": "runs/blind-visual/mission014-isolation-34cee63",
+        "recorded": "2026-10-27, commit 34cee63",
+        "files": 386,
+        "evidence": "docs/assets/isolated-player-runtime/evidence-2026-10-27.json"
       }
     ]
   }
