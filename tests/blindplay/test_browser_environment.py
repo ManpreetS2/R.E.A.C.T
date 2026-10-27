@@ -331,6 +331,8 @@ def test_page_environment_is_pinned_and_sealed(ref):
     assert facts == {"invalid": True, "ctor": True, "tz": 0, "sameClock": True, "fetched": "blocked", "lang": "en-US"}
     assert {r["result"] for r in ref.requests} <= {"blocked", "blocked_websocket"}
     assert any("example.com/x" in r["url"] for r in ref.requests)
+    assert any(r["result"] == "blocked_websocket" and "example.com/socket" in r["url"] for r in ref.requests)
+    assert ref.run([], 2, stop_on_terminal=False), "a blocked socket must not stall the referee"
 
 
 def test_exception_in_a_game_callback_is_isolated_and_recorded(ref):

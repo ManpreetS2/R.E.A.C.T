@@ -163,8 +163,9 @@ class Referee:
             route.abort()
 
     def _websocket(self, ws: Any) -> None:
+        # Never calling ws.connect_to_server() keeps the socket mocked: nothing reaches any server. Do not call
+        # ws.close() here: inside a sync-API route handler it waits forever and freezes the referee (Mission 013).
         self.requests.append({"url": ws.url, "result": "blocked_websocket"})
-        ws.close()
 
     # ------------------------------------------------------------------ episodes
     def reset(self) -> dict[str, Any]:
