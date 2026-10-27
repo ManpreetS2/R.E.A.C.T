@@ -96,19 +96,23 @@ recordings (23/23, 66/66, 44/44 screenshots); the 120-frame cap and upstream gam
    user SID in its own token (not tested: whether it can resolve that SID to the account name or e-mail, or list
    other processes). None reveals the game, the referee or the repository; it matters for privacy only if
    transcripts are published.
-4. **Not a defence against a Windows kernel or AppContainer escape exploit**, or against an administrator. It is
+4. **File-existence oracle.** Opening a path the player cannot read fails with "access denied" if it exists and
+   "not found" if it does not (seen when CI's runner had no `.gitconfig`). The player can therefore test whether a
+   guessed path exists, but never read, list or write it. It does not reveal game state, which lives only in the
+   referee's memory and in record files whose names are already documented.
+5. **Not a defence against a Windows kernel or AppContainer escape exploit**, or against an administrator. It is
    the same boundary Edge/Chromium renderers and UWP apps rely on, not a virtual machine.
-5. **Resource exhaustion is bounded, not eliminated:** 1 GB memory cap, 1 process, size-capped requests (64 KB game,
+6. **Resource exhaustion is bounded, not eliminated:** 1 GB memory cap, 1 process, size-capped requests (64 KB game,
    2 MB model), 16 MB of recorded stderr, request and wall-clock limits. CPU time and disk writes inside the
    container's own (wiped) folder are not capped.
-6. **Timing and the screen are the intended channels.** Everything the player learns about the game comes from
+7. **Timing and the screen are the intended channels.** Everything the player learns about the game comes from
    screenshots and procedural counters (Mission 013 contract); that is the experiment.
-7. **The isolation applies to the player runtime.** A model provider's own servers are outside it: whatever the
+8. **The isolation applies to the player runtime.** A model provider's own servers are outside it: whatever the
    host sends to a model leaves the machine by design (screenshots, the objective, the two tool descriptions and
    the conversation). The gateway transcript records exactly that.
-8. **The runtime image hash depends on the checkout's line endings** (Windows `autocrlf` checks the player files out
+9. **The runtime image hash depends on the checkout's line endings** (Windows `autocrlf` checks the player files out
    with CRLF), so the digest differs between checkouts; each session records the digest it actually used.
-9. **No model runtime has been exercised.** The agent loop is verified only with a scripted gateway that is not a
+10. **No model runtime has been exercised.** The agent loop is verified only with a scripted gateway that is not a
    model. Real vision-model behaviour (image consumption, tool-call formats, refusals, cost) is untested.
 
 ## Commands

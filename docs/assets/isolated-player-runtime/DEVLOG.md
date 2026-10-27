@@ -51,3 +51,9 @@ was used; every player was a scripted NON-AI stand-in (or a scripted gateway tha
     tracked change). Isolated scripted sessions are byte-identical to Mission 013 (23/23, 66/66, 44/44); all six
     referee sessions replay identically; the 1,076 pre-existing files under `runs/` were hashed before and after:
     unchanged.
+15. **First CI run: Windows failed, macOS/Ubuntu passed** (Actions run 40555569128). Two test assumptions that only
+    held on this PC: (a) the runner has no `~/.gitconfig`, so the sandbox got "not found" instead of "access denied".
+    Nothing was read, but a missing file must not count as proof of denial: the test now attacks only paths that exist
+    on the host. This also exposed a real, documented limitation: the player can tell whether a guessed path exists.
+    (b) one of the player's own disk handles had no DOS path on the runner. The probe now also reports each handle's
+    NT path and error code, and the test checks the drive-relative path instead of assuming a DOS name.

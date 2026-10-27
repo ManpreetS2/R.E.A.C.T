@@ -152,6 +152,11 @@ def probe(tmp_path_factory):
         "read_after_play": [str(out / "referee/screenshots/000001.png"), str(out / "referee/session.json"),
                             str(out / "referee/episodes.jsonl"), str(out / "player_stderr.jsonl")],
     }
+    # Attack only what exists on the host, so "not found" can never pass for "denied". (Paths inside this
+    # session's own directory are created during the session and are attacked before and after they exist.)
+    targets["read"] = [p for p in targets["read"] if Path(p).is_file() or Path(p).is_relative_to(out)]
+    targets["list"] = [p for p in targets["list"] if Path(p).is_dir() or Path(p).is_relative_to(out)]
+    assert len(targets["read"]) >= 7 and len(targets["list"]) >= 6
     config = host_mod.HostConfig(out=out, mode="probe", player_label="pytest isolation probe stand-in (NOT AI)",
                                  max_episodes=1, episode_frame_budget=2000, probe_targets=targets)
     manifest = host_mod.Host(config).run()
@@ -183,7 +188,11 @@ def test_repository_records_profile_and_browser_are_unreadable(probe):
     attempts = probe["by"]("read_file") + probe["by"]("list_dir") + probe["by"]("read_file_after_play")
     assert len(attempts) == sum(len(probe["targets"][k]) for k in ("read", "list", "read_after_play"))
     for r in attempts:
-        assert r["outcome"] == "denied" and "PermissionError" in r["detail"], r
+        assert r["outcome"] == "denied", r
+        # session files attacked before the referee wrote them may not exist yet; everything else exists
+        assert "PermissionError" in r["detail"] or (r["probe"] == "read_file" and Path(r["target"]).is_relative_to(probe["out"])), r
+    for r in probe["by"]("read_file_after_play"):
+        assert Path(r["target"]).is_file() and "PermissionError" in r["detail"], r
 
 
 @needs_isolation
@@ -231,9 +240,14 @@ def test_only_disk_handles_are_the_players_own(probe):
     (handles,) = probe["by"]("disk_handles")
     image = probe["manifest"]["runtime_image"]["path"].lower()
     system = os.environ.get("SYSTEMROOT", r"C:\Windows").lower()
-    for path in json.loads(handles["detail"]):
-        p = path.lower().removeprefix("\\\\?\\")
-        assert p.startswith(image) or p.startswith(system), path
+    allowed = [image, system]
+    for entry in json.loads(handles["detail"]):
+        dos = entry.get("dos", "").lower().removeprefix("\\\\?\\")
+        # NT form \Device\HarddiskVolumeN\<path>: compare the drive-relative part when no DOS name resolves
+        nt_rest = "\\" + "\\".join(entry.get("nt", "").lower().split("\\")[3:])
+        ok = any(dos.startswith(a) for a in allowed) if dos else \
+            bool(entry.get("nt")) and any(nt_rest.startswith(a[2:]) for a in allowed)
+        assert ok, entry
 
 
 @needs_isolation

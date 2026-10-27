@@ -167,7 +167,7 @@ def secrets() -> None:
 def inherited_handles() -> None:
     """Every disk handle this process holds, with its path. Only the three pipes are inherited, so any disk
     handle must be one the process opened itself (e.g. its current directory) inside its own sandbox."""
-    k32 = ctypes.WinDLL("kernel32")
+    k32 = ctypes.WinDLL("kernel32", use_last_error=True)
     k32.GetFileType.argtypes = [wintypes.HANDLE]
     k32.GetFinalPathNameByHandleW.argtypes = [wintypes.HANDLE, wintypes.LPWSTR, wintypes.DWORD, wintypes.DWORD]
     k32.GetHandleInformation.argtypes = [wintypes.HANDLE, ctypes.POINTER(wintypes.DWORD)]
@@ -181,12 +181,18 @@ def inherited_handles() -> None:
                 disk.append(value)
         except OSError:
             continue
-    paths = []
+    found = []
     for value in disk:
-        buf = ctypes.create_unicode_buffer(1024)
-        k32.GetFinalPathNameByHandleW(value, buf, 1024, 0)
-        paths.append(buf.value)
-    report(probe="disk_handles", target="FILE_TYPE_DISK", outcome="observed", detail=json.dumps(paths))
+        entry = {}
+        for key, flag in (("dos", 0x0), ("nt", 0x2)):   # VOLUME_NAME_DOS, VOLUME_NAME_NT
+            buf = ctypes.create_unicode_buffer(1024)
+            ctypes.set_last_error(0)
+            if k32.GetFinalPathNameByHandleW(value, buf, 1024, flag):
+                entry[key] = buf.value
+            else:
+                entry[key + "_error"] = ctypes.get_last_error()
+        found.append(entry)
+    report(probe="disk_handles", target="FILE_TYPE_DISK", outcome="observed", detail=json.dumps(found))
 
 
 HOSTILE_LINES = [
