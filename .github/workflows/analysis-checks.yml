@@ -8,6 +8,8 @@ jobs:
   integrated:
     name: integrated (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    # a hung browser test once ran to GitHub's 6-hour limit (Mission 013); fail fast instead
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:

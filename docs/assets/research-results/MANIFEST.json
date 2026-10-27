@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-26 (Mission 012 entries added 2026-10-27)",
+  "generated": "2026-10-26 (Mission 012 entries added 2026-10-27; Mission 013 pointer added 2026-10-27)",
   "note": "Checksums are SHA-256 of local files under runs/ (gitignored, NOT on GitHub). Lock files and empty SQLite -wal/-shm files are omitted.",
   "experiments": [
     {
@@ -2232,5 +2232,24 @@
       "sha256": "c6499c124b9647263706bdd0761841b6c85195dad66f0d8bc85f16428519047e"
     }
   ],
-  "total_paid_spend_usd": 0.10601925
+  "total_paid_spend_usd": 0.10601925,
+  "mission013_blind_visual_local_records": {
+    "paid_spend_usd": 0,
+    "model_calls": 0,
+    "note": "Scripted NON-AI environment checks; no model played. Raw records local only (gitignored); per-file SHA-256 in the evidence files.",
+    "records": [
+      {
+        "directory": "runs/blind-visual/mission013",
+        "recorded": "2026-10-27 04:12 UTC, pre-fix tree",
+        "files": 305,
+        "evidence": "docs/assets/blind-visual-foundation/evidence.json"
+      },
+      {
+        "directory": "runs/blind-visual/mission013-verify-20261027",
+        "recorded": "2026-10-27, fixed tree 2f4f25a",
+        "files": 352,
+        "evidence": "docs/assets/blind-visual-foundation/evidence-verified-2026-10-27.json"
+      }
+    ]
+  }
 }

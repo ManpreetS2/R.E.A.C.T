@@ -1,7 +1,8 @@
 # Blind visual gameplay foundation (Mission 013)
 
-**Status (2026-10-27): built and verified offline with scripted, non-AI inputs only. No model has played.
-No paid API call, no model-driven gameplay, no reserved evaluation.** This is the environment
+**Status (2026-10-27, resumed and re-verified): built and verified offline with scripted, non-AI inputs only.
+The independent-review fixes are now tested (one of them hung and was fixed; see "Resumed and verified"
+below). No model has played. No paid API call, no model-driven gameplay, no reserved evaluation.** This is the environment
 PROJECT.md section 20 asks for: a future AI receives only screenshots of the authentic original
 ApolloLander and may only press keyboard keys for a bounded number of frames, starting from the single
 instruction "Land the rocket."
@@ -97,12 +98,12 @@ $env:PYTHONPATH='src'
 
 | Claim | Evidence |
 | --- | --- |
-| Authentic upstream code and physics | 17/17 committed files byte-identical to GitHub `0da09dc`; served files hash-checked at startup; only those files are fulfilled, all others aborted and logged (tests: served list, tampered copy refused) |
+| Authentic upstream code and physics | 17/17 committed files byte-identical to GitHub `0da09dc` (re-checked 2026-10-27: git blob SHA-1s equal the GitHub tree, and a fresh raw download matches every SHA-256 pin); served files hash-checked at startup and at fulfil time; only those files are fulfilled, all others aborted and logged (tests: served list, tampered copy refused, referee with other files refused) |
 | One upstream update per frame | `vy` after 120 idle ticks = start + 120 × 0.0005; tick and `counter` advance by exactly 1 (test) |
 | Keys reach the real game | each of the 12 keys appears in upstream `KeyTracker.keysPressed` and is released; ArrowUp burns fuel and changes velocity; ArrowRight rotates (tests; key-sweep record) |
 | Deterministic reset and replay | identical start state and screenshots across fresh browsers; different seed differs (test); all three demo sessions replayed with identical screenshots (23/23, 66/66, 44/44), tick states and outcomes |
 | Independent of wall-clock speed | same inputs with 0.4 s pauses produce identical screenshots (test) |
-| Bounded actions, no injection | 23 malformed/forbidden requests rejected in unit tests; in the browser, rejected requests do not advance the game; frames capped at 120 and at the episode budget (exact 250-frame cut test) |
+| Bounded actions, no injection | 23 malformed/forbidden requests rejected in unit tests; in the browser, rejected requests do not advance the game; frames capped at 120 and at the episode budget (exact 250-frame cut test); recorded hostile session: 44 malformed lines through the real pipe, 0 stderr bytes to the player, valid responses identical to a clean control |
 | No leaked state | observation field set is exact; the only numbers are procedural counters (test); brief contains no control/strategy words (test); stdout carries only protocol lines (test) |
 | No substituted controller | `blindplay` imports nothing outside itself and the standard library/Playwright (AST test); no reference to the custom simulator or guidance controller (test); acts accept only keys and frames |
 | Authentic outcomes | terminal state from upstream `gameState`; native messages recorded (e.g. "FUEL PENALTY −326 / LUNAR MODULE DESTROYED"); terminal screenshots show the upstream outcome screen |
@@ -112,6 +113,12 @@ screen): `idle` 2 episodes, both crashed at frame 1293; `key-sweep` 1 episode, c
 3 episodes, crashed at 792, 970 and 960. 0 landings. These show the pipeline works; they are not gameplay
 results. Chronological problems and fixes: `docs/assets/blind-visual-foundation/DEVLOG.md`.
 
+Re-recorded on the fixed tree (`docs/assets/blind-visual-foundation/evidence-verified-2026-10-27.json`, also
+NOT AI; raw records local under `runs/blind-visual/mission013-verify-20261027`): the same three scripts give
+**byte-identical** results to the pre-fix recordings (133/133 screenshots, all tick states and receipts), and
+each replays identically in a fresh Chromium. The pre-fix `evidence.json` and its raw records are kept
+unchanged. Verification scripts: `docs/assets/blind-visual-foundation/verify/`.
+
 ## Independent review of the isolation boundary
 
 A fresh-context reviewer agent (same model family, not a human) audited the boundary on 2026-10-27 with
@@ -119,27 +126,25 @@ probe scripts. Verdict: **the protocol-level boundary is sound** (no request rea
 changes seed/budget, holds keys across acts or exceeds 120 frames; PNGs carry no metadata; no measurable
 timing side channel; `episode_ended` reveals nothing the screen does not). Findings and status:
 
-| Finding | Status at pause |
+| Finding | Status (tests run 2026-10-27, after resume) |
 | --- | --- |
-| M1 a malformed line (5000-digit int, 100k `[`) crashed the referee with no record | **Fixed in code** (`serve.decode_line`: 64 KB cap, strict UTF-8, no duplicate keys/NaN, recursion/int-limit caught; raw line recorded; any exception ends the session with a record). Test written, **not yet run** |
-| M2 referee stderr inherited by the player process (tracebacks show paths and upstream function names) | **Fixed in code** (fd 1 and 2 redirected to `<out>/referee_stderr.log`; client uses DEVNULL). Test written, **not yet run** |
+| M1 a malformed line (5000-digit int, 100k `[`) crashed the referee with no record | **Fixed and verified** (`serve.decode_line`: 64 KB cap, strict UTF-8, no duplicate keys/NaN, recursion/int-limit caught; raw line recorded; any exception ends the session with a record). Tests pass; recorded hostile session (44 lines) confirms |
+| M2 referee stderr inherited by the player process (tracebacks show paths and upstream function names) | **Fixed and verified** (fd 1 and 2 redirected to `<out>/referee_stderr.log`; client uses DEVNULL). Tests assert 0 bytes on the player's stderr; so does the hostile session |
 | M3 process isolation intended, not enforced; player side chooses the serve command and self-declares `is_ai` | **Open, documented** (gap 2 below): the trusted runner must own the serve command; model gets only observe/act |
-| m1 served-file hashes were constants | **Fixed in code** (hash at fulfil time; Session refuses non-pinned files) |
-| m2 network log blind to WebSocket/DNS | **Fixed in code** (`--host-resolver-rules=MAP * ~NOTFOUND`, `route_web_socket` blocks and logs) |
-| m3 Date edge cases, unpinned timezone/locale, throwing callback aborts the run | **Fixed in code** (exact Date pass-through, UTC/en-US, per-callback isolation recorded in `page_errors`) |
-| m4 replay bypassed serve decoding and did not compare provenance or stored PNGs | **Fixed in code** (re-decodes recorded raw bytes; compares upstream/clock/browser/served files; hashes PNGs on disk) |
-| m6 test gaps | Tests added for all of the above, **not yet run** |
+| m1 served-file hashes were constants | **Fixed and verified** (hash at fulfil time; Session refuses non-pinned files; test passes) |
+| m2 network log blind to WebSocket/DNS | **Fixed, then re-fixed and verified.** The first fix called `ws.close()` inside the sync-API WebSocket route handler, which **hangs forever** (this is what stalled the paused test run). Now the attempt is logged and the socket is never connected (Playwright mocks it); the test asserts the log entry and that the referee keeps ticking |
+| m3 Date edge cases, unpinned timezone/locale, throwing callback aborts the run | **Fixed and verified** (exact Date pass-through, UTC/en-US, per-callback isolation recorded in `page_errors`); re-recorded sessions are byte-identical to the pre-fix ones |
+| m4 replay bypassed serve decoding and did not compare provenance or stored PNGs | **Fixed and verified** (re-decodes recorded raw bytes; compares upstream/clock/browser/served files; hashes PNGs on disk); all 5 new sessions replay with `reproduced: true` |
+| m6 test gaps | **Closed**: `tests/blindplay` 52 passed; full suite 492 passed, 0 failed, 0 skipped (Windows, Python 3.13.5, Chromium 156.0.8078.4) |
 
-## WORK IN PROGRESS: paused 2026-10-27 at the owner's request
+## Resumed and verified (2026-10-27)
 
-The review fixes above were written but the test suite was **stopped before it finished**; their tests have
-not run. The 47 earlier blind-play tests and the 440 existing tests passed on the pre-fix tree. The
-scripted evidence in `docs/assets/blind-visual-foundation/` was recorded on the pre-fix tree. To resume:
-
-1. `pip install -e ".[dev,blindplay]"`, `python -m playwright install chromium`, then
-   `PYTHONPATH=src python -m pytest tests/blindplay -q` and fix anything failing.
-2. Re-record the three scripted sessions and replays on the fixed tree; rebuild `evidence.json`.
-3. Update PROJECT.md §0 with the verified milestone and gaps; mark the draft PR ready for review (not merge).
+The review fixes were written before a pause; their test run had **hung**, not merely been stopped (DEVLOG 10).
+On resume: the hang was diagnosed and fixed (commit `2f4f25a`); all tests pass; upstream re-verified against
+GitHub; the three scripted sessions were re-recorded into a new directory and are byte-identical to the
+pre-fix recordings; each replays identically in a fresh Chromium; a recorded hostile-input session and a
+sweep of every player-visible response found no leak (DEVLOG 11-13). Original records were hashed before and
+after: unchanged. CI on Windows, macOS and Ubuntu: see PROJECT.md section 0.2 and the PR.
 
 ## Against the PROJECT.md 20.10 launch gates
 

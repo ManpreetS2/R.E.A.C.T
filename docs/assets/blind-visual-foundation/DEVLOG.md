@@ -43,3 +43,38 @@ optimise the game; all gameplay inputs were the scripted, non-AI sequences in `s
 
 Outcome of the scripted demonstrations (all reported, none selected): 6 episodes, 6 crashes, 0 landings,
 0 timeouts. Each session replayed in a fresh browser with identical screenshots, tick states and outcomes.
+
+## Paused, then resumed (2026-10-27, same PC)
+
+The session was paused at the owner's request after the independent-review fixes were written but before
+their tests had finished (checkpoint `4e20dfa`). Resumed later the same day.
+
+10. **The paused test run had not merely been stopped: it hung.** `pytest tests/blindplay` ran for more than
+    10 minutes without output. A `faulthandler` stack dump showed it blocked in `Referee._websocket` ->
+    `WebSocketRoute.close()`. Calling `close()` inside a Playwright *sync-API* `route_web_socket` handler
+    waits forever, so the review fix m2 (block and log WebSockets) would have frozen the referee the
+    moment any page opened a socket. Fix: record the attempt and do not connect; a routed socket that never
+    calls `connect_to_server()` is mocked by Playwright, so nothing reaches a server (and
+    `--host-resolver-rules` resolves no host anyway). The seal test now also asserts the socket attempt is
+    logged and the referee keeps ticking. After the fix: `tests/blindplay` 52 passed in 20 s; full suite
+    492 passed (440 + 52), 0 failed, 0 skipped; Node physics/replay checks pass. Commit `2f4f25a`.
+    All other review fixes (M1 malformed input, M2 stderr, m1, m3, m4) passed their tests unchanged.
+11. **Upstream re-verified against GitHub.** The 17 vendored git blob SHA-1s equal the GitHub tree of
+    `0da09dc` (17/17; the only extra file is our `UPSTREAM_COMMIT.txt`), and a fresh download of all 17 raw
+    files matches the SHA-256 pins in `upstream.py` (17/17).
+12. **Re-recorded on the fixed, clean tree** into a new directory, `runs/blind-visual/mission013-verify-20261027`
+    (the originals were hashed first, 305 files, and re-checked afterwards: unchanged; so were the 419 Mission
+    010/012 run files). Same scripts, seeds and budgets as before. The new recordings equal the pre-fix ones
+    **byte for byte**: 133/133 screenshots, every referee tick state, all 6 episode receipts, one start frame.
+    `clock.js`'s hash differs (review fix m3 edited it) without changing a single output byte. Each session
+    then replayed in a fresh Chromium: 23/23, 66/66, 44/44 identical, provenance identical.
+13. **Hostile-input session through the real pipe**: 44 malformed/forbidden lines (oversized ints, 100k
+    brackets, invalid UTF-8, duplicate keys, Infinity, >64 KB, `eval`/`state`/`reset` tools, injected
+    `javascript`/`seed`/`episode_frame_budget` fields) interleaved with 5 valid requests. 0 bytes reached the
+    player's stderr; every rejection is a fixed contract message naming no file, path or game variable; the
+    5 valid responses are identical to a clean control session that received only those 5 lines (rejected
+    lines advance nothing); both sessions replay identically. A sweep of all 380 player-visible responses
+    (286 PNGs) across the 10 recorded sessions found 0 field violations and no PNG metadata chunks
+    (only IHDR/IDAT/IEND). Scripts: `verify/`; evidence: `evidence-verified-2026-10-27.json`.
+14. **Own mistake (no effect on results):** the first run of `build_evidence.py` mixed a relative session
+    root with an absolute repository root and failed in `Path.relative_to`; rerun with absolute paths.
