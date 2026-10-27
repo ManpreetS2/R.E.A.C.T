@@ -144,7 +144,10 @@ On resume: the hang was diagnosed and fixed (commit `2f4f25a`); all tests pass; 
 GitHub; the three scripted sessions were re-recorded into a new directory and are byte-identical to the
 pre-fix recordings; each replays identically in a fresh Chromium; a recorded hostile-input session and a
 sweep of every player-visible response found no leak (DEVLOG 11-13). Original records were hashed before and
-after: unchanged. CI on Windows, macOS and Ubuntu: see PROJECT.md section 0.2 and the PR.
+after: unchanged. **GitHub CI passed on Windows, macOS and Ubuntu** for commit `9ba7c98` (Actions runs
+40547788929 and 40547794521): 492 tests per OS, including the 52 blind-play tests against a real headless
+Chromium (`REACT_REQUIRE_BROWSER=1`, so a missing browser fails rather than skips). Cross-OS pixel identity of
+screenshots is still not claimed; each OS checks its own determinism.
 
 ## Against the PROJECT.md 20.10 launch gates
 

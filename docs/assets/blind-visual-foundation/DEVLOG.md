@@ -78,3 +78,7 @@ their tests had finished (checkpoint `4e20dfa`). Resumed later the same day.
     (only IHDR/IDAT/IEND). Scripts: `verify/`; evidence: `evidence-verified-2026-10-27.json`.
 14. **Own mistake (no effect on results):** the first run of `build_evidence.py` mixed a relative session
     root with an absolute repository root and failed in `Path.relative_to`; rerun with absolute paths.
+15. **CI.** The run before the pause was not merely cancelled: it ran 6 h 0 m to GitHub's job limit, the same
+    WebSocket hang as entry 10. After the fix, commit `9ba7c98` passed on Windows, macOS and Ubuntu (Actions
+    runs 40547788929 push and 40547794521 PR): 320 core/provider/analysis + 52 blind-play + 120 environment
+    tests per OS, plus the Node physics/replay checks. The job now has a 45-minute timeout.
