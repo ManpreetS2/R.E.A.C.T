@@ -45,7 +45,7 @@ flowchart LR
 | Flight manifests + deterministic replay | **Proven** |
 | Freeze → sealed held-out eval (no model call) | **Proven** (offline) |
 | Authorized live CLI + spend gates | **Proven** with mocked HTTP |
-| Real OpenAI controller-tuning pilot | **Exploratory:** 12 valid GPT-5.4-mini controllers (Mission 010); no measured feedback-driven gain; no cross-provider model rankings |
+| Real OpenAI controller-tuning pilots | **Exploratory:** v2 (Mission 010, 12 calls) and v3 (Mission 012, 18 calls) with GPT-5.4-mini; valid controllers; no measured feedback-driven gain; no cross-provider model rankings |
 | Independently validated model ranking | **Empty** — not claimed |
 
 Scripted and hand-specified controllers demonstrate the pipeline. They are **not** evidence that a language model learned.
@@ -120,10 +120,13 @@ The v2 pilot (12 `gpt-5.4-mini` calls, $0.039) produced 12/12 valid guidance con
 but no feedback-driven improvement: the no-feedback arm improved most and the numerical-reward arm got worse. See
 `docs/assets/study-v2-pilot/RESULTS.md`.
 
-The controlled redesign (`docs/STUDY_V3_PROTOCOL.md`, not executed) starts every arm from the same fixed failing
+The controlled redesign (`docs/STUDY_V3_PROTOCOL.md`) starts every arm from the same fixed failing
 controller (crash-type and timeout-type), measures improvement from that shared start against matched random
 search, and checks whether edits move in the direction the failure calls for. Free tools:
-`python -m rewardbench.study_v3 budget | seed | analyze | rehearse`.
+`python -m rewardbench.study_v3 budget | seed | analyze | rehearse`. Its pilot (Mission 012, 18 calls, $0.063)
+gave 17/18 valid controllers but **no evidence of feedback use** by its predeclared rule: from the crash start
+every arm, including no feedback, landed 8/8 after one edit; from the timeout start no arm landed. See
+`docs/assets/study-v3/PILOT_RESULTS.md`.
 
 
 `docs/STUDY_V2_PROTOCOL.md`, `docs/FIRST_LLM_STUDY_BUDGET.md` and `docs/FIRST_LLM_STUDY_LAUNCH.md` define the

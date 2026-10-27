@@ -214,4 +214,8 @@ foreach ($block in "crash1_r1", "timeout1_r1") {
 
 ## Deviations
 
-None yet.
+None. Execution record, 2026-10-27 (Mission 012): the pilot tier ran with the exact commands above under the
+owner's written authorization (OpenAI `gpt-5.4-mini`, blocks `crash1-r1` and `timeout1-r1`, ≤ 18 paid calls,
+$0.21 cumulative ceiling). Both blocks completed: 18 calls, $0.063374, cumulative recorded spend $0.106019.
+G1 passed, G2 failed: no evidence of feedback use, study tier not run. Results:
+`docs/assets/study-v3/PILOT_RESULTS.md`. The status line at the top is kept as written at design time.

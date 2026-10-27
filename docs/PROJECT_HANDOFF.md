@@ -1,6 +1,6 @@
 # R.E.A.C.T. project handoff (current state)
 
-Last updated: 2026-10-26 (emergency checkpoint, written from a low-usage session).
+Last updated: 2026-10-27 (Mission 012: v3 pilot run, results recorded).
 `docs/HANDOFF.md` is an older, historical handoff (Agent 4, 2026-10-15); this file supersedes it.
 
 Repository: `ManpreetS2/R.E.A.C.T` (private). Local checkout: `C:\Users\sh1ft\R.E.A.C.T`.
@@ -10,9 +10,11 @@ Repository: `ManpreetS2/R.E.A.C.T` (private). Local checkout: `C:\Users\sh1ft\R.
 R.E.A.C.T. measures whether an LLM can improve a controller for the ApolloLander task from reward feedback
 (`no_feedback` vs `reward_only` vs `numerical_reward`). The offline v1 infrastructure is merged (PR #2) and verified.
 Two single paid exploratory calls (Missions 006, 008) and the 12-call v2 pilot (Mission 010, prompt v4,
-`autopilot`, `runs/first-llm-study/pilot-p4/`) have been made with `openai:gpt-5.4-mini`; total recorded spend
-**$0.042646**. The pilot found **no feedback-driven improvement** (`docs/assets/study-v2-pilot/RESULTS.md`), so
-the v2 study tier is not run; the next step is a v3 protocol.
+`autopilot`, `runs/first-llm-study/pilot-p4/`) and the 18-call v3 pilot (Mission 012,
+`runs/first-llm-study/v3-pilot/`) have been made with `openai:gpt-5.4-mini`; total recorded spend **$0.106019**.
+Neither pilot found feedback-driven improvement (`docs/assets/study-v2-pilot/RESULTS.md`,
+`docs/assets/study-v3/PILOT_RESULTS.md`); the v3 go/no-go failed on G2, so the v3 study tier is not run.
+`PROJECT.md` §0 is the canonical status; it was merged into the v3 branch from PR #20 in Mission 012.
 
 ## PR stack (all draft, none merged; each stacked on the previous)
 
@@ -39,6 +41,8 @@ PRs #3-#11 are unrelated RL research branches off `main`.
 | 008 | Paid call with prompt v3: valid but copied the prompt's example; 8/8 timeouts. $0.00093225 | Done; failed as evidence |
 | 009 | v2 protocol, prompt v4 (guidance-only, mechanics taught, no copyable controller), `autopilot`, scripted baselines, v2 configs | Done (PR #18, CI green on 3 OSes) |
 | 010 | v2 pilot: 12 paid calls via `autopilot`, 3 arms x 4 revisions. 12/12 valid; no feedback-driven improvement. $0.039129 | Done (`docs/assets/study-v2-pilot/RESULTS.md`); study tier not run |
+| 011 | v3 design: shared fixed failing starts, matched random-search references, edit alignment, `--require-whole-run-fit` | Done, offline (PR #21, CI green on 3 OSes) |
+| 012 | PR #20 merged into the v3 branch; v3 pilot: 18 paid calls, 2 blocks x 3 arms x 3 revisions, 17/18 valid. G1 pass, G2 fail: no evidence of feedback use. $0.063374 | Done (`docs/assets/study-v3/PILOT_RESULTS.md`); study tier not run |
 
 ## Test results at this checkpoint
 
@@ -80,13 +84,13 @@ Never modify, delete or resume them.
 
 ## Next recommended mission
 
-1. Owner review of the Mission 010 pilot (`docs/assets/study-v2-pilot/RESULTS.md`) and decision on a private
-   backup of `runs/` (see `RESULTS.md` in `research-results/`).
-2. Review the v3 design (Mission 011, `docs/STUDY_V3_PROTOCOL.md`, offline only): shared fixed failing starts,
-   matched random-search references, edit-direction analysis, `study_v3 seed/analyze`, autopilot
-   `--require-whole-run-fit`.
-3. Only with written owner approval of a ceiling (proposed $0.21 cumulative) and 18 calls, run the v3 pilot
-   with the exact commands in the protocol; apply its go/no-go before any study-tier spend.
+1. Owner review of the v3 pilot (`docs/assets/study-v3/PILOT_RESULTS.md`). Its predeclared rule says stop:
+   no study tier. No further paid run is authorized.
+2. Decision on an off-machine private backup of `runs/` (local zip snapshots exist in
+   `C:\Users\sh1ft\R.E.A.C.T-backups\`; see `docs/assets/research-results/RESULTS.md`).
+3. Owner decision on direction (`PROJECT.md` §0.3): the blind visual-gameplay track, or a new, separately
+   approved controller-tuning protocol. The pilot's descriptive pattern (crash start saturated by the model's
+   prior; arms separated only on the timeout start) is a hypothesis for such a protocol, not a result.
 
 ## Exact steps to resume
 
