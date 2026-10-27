@@ -149,6 +149,14 @@ def main(
         resume_selected = 0
         if existing is not None:
             resume_selected = sum(1 for item in store.fetch_attempts(exp_id) if item.selected)
+        if args.mode == "live" and config.metadata.get("initial_controller") is not None and resume_selected == 0:
+            # Revision 0 is the fixed start: fly it offline first, so a live invocation still makes exactly
+            # one call, its quote sees the real revision-0 results, and the start's flights are not
+            # labelled model-generated.
+            raise ConfigError(
+                "this experiment starts from a fixed controller that has not been flown yet; record revision 0 "
+                f"offline first (free): python -m rewardbench.study_v3 seed --config {args.config}"
+            )
 
         model = build_model(
             config,

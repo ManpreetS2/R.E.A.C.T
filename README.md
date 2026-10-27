@@ -2,9 +2,11 @@
 
 **Reward-Enhanced Adaptive Controller Testing**
 
-R.E.A.C.T. asks a precise question: *when a language model may revise a constrained controller inside a simulator, does seeing numerical rewards change those revisions more than an otherwise identical no-feedback condition?*
+**Canonical research and development plan: [PROJECT.md](PROJECT.md).** Read it before planning missions; [AGENTS.md](AGENTS.md) and [CLAUDE.md](CLAUDE.md) direct coding agents to it. The full Google Docs master plan (all 421 paragraphs, including the owner's October 17 decision) has been migrated there.
 
-Adaptation is **in-context**. Model weights stay fixed. A physics simulator—not another model—assigns the score. Development revisions and sealed held-out evaluation are separate steps.
+**Primary research vision:** Can an AI learn to play the original ApolloLander using only genuine screenshots and bounded keyboard actions after being told "Land the rocket"? That blind gameplay track is **not yet demonstrated**.
+
+**Existing controller-tuning research track:** R.E.A.C.T. also asks whether an LLM revising a constrained guidance controller changes its behavior usefully in response to reward feedback. This is **in-context** adaptation, not weight training. The 12-call Mission 010 pilot produced valid controllers but **did not demonstrate feedback-driven improvement**. See [the committed results](docs/assets/study-v2-pilot/RESULTS.md). Do not conflate controller-parameter tuning with autonomous blind visual gameplay.
 
 | | |
 | --- | --- |
@@ -43,7 +45,7 @@ flowchart LR
 | Flight manifests + deterministic replay | **Proven** |
 | Freeze → sealed held-out eval (no model call) | **Proven** (offline) |
 | Authorized live CLI + spend gates | **Proven** with mocked HTTP |
-| Real OpenAI / Gemini / Claude / Grok adaptation results | **Empty** — reserved for future owner-approved runs |
+| Real OpenAI controller-tuning pilots | **Exploratory:** v2 (Mission 010, 12 calls) and v3 (Mission 012, 18 calls) with GPT-5.4-mini; valid controllers; no measured feedback-driven gain; no cross-provider model rankings |
 | Independently validated model ranking | **Empty** — not claimed |
 
 Scripted and hand-specified controllers demonstrate the pipeline. They are **not** evidence that a language model learned.
@@ -117,6 +119,14 @@ Runs development → freeze → sealed held-out → report into one directory, s
 The v2 pilot (12 `gpt-5.4-mini` calls, $0.039) produced 12/12 valid guidance controllers and gentle 8/8 landings,
 but no feedback-driven improvement: the no-feedback arm improved most and the numerical-reward arm got worse. See
 `docs/assets/study-v2-pilot/RESULTS.md`.
+
+The controlled redesign (`docs/STUDY_V3_PROTOCOL.md`) starts every arm from the same fixed failing
+controller (crash-type and timeout-type), measures improvement from that shared start against matched random
+search, and checks whether edits move in the direction the failure calls for. Free tools:
+`python -m rewardbench.study_v3 budget | seed | analyze | rehearse`. Its pilot (Mission 012, 18 calls, $0.063)
+gave 17/18 valid controllers but **no evidence of feedback use** by its predeclared rule: from the crash start
+every arm, including no feedback, landed 8/8 after one edit; from the timeout start no arm landed. See
+`docs/assets/study-v3/PILOT_RESULTS.md`.
 
 
 `docs/STUDY_V2_PROTOCOL.md`, `docs/FIRST_LLM_STUDY_BUDGET.md` and `docs/FIRST_LLM_STUDY_LAUNCH.md` define the
