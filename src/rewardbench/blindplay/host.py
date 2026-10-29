@@ -174,6 +174,7 @@ class Host:
             "runtime_image": getattr(self, "image_info", None),
             "referee_command": getattr(self, "referee_command", None),
             "player_command": getattr(self, "player_command", None),
+            "player_exit_code": getattr(self, "player_exit_code", None),   # negative = killed by that signal (POSIX)
             "counts": dict(self.counts),
         }
 
@@ -394,7 +395,7 @@ class Host:
                     player.stdin.close()
                 except OSError:
                     pass
-                player.wait(10)
+                self.player_exit_code = player.wait(10)
                 if drain is not None:
                     drain.join(10)
                 player.close()

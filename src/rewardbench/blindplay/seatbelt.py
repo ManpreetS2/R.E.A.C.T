@@ -35,7 +35,6 @@ from __future__ import annotations
 import hashlib
 import io
 import os
-import platform
 import re
 import signal
 import subprocess
@@ -105,7 +104,8 @@ def profile(image: Path, executable: Path, extra_readable: tuple[Path, ...] = ()
 
 
 def _needs_rosetta(executable: Path) -> bool:
-    if platform.machine() != "arm64":
+    arm64 = subprocess.run(["/usr/sbin/sysctl", "-n", "hw.optional.arm64"], capture_output=True, text=True).stdout
+    if arm64.strip() != "1":   # not platform.machine(): a host Python under Rosetta reports x86_64
         return False
     head = Path(executable).read_bytes()[:8]
     return head[:4] == b"\xcf\xfa\xed\xfe" and head[4:8] == b"\x07\x00\x00\x01"   # thin x86_64 Mach-O

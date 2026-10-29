@@ -282,7 +282,9 @@ def probe(tmp_path_factory):
 @needs_isolation
 def test_probe_session_completed(probe):
     assert probe["manifest"]["status"] == "closed" and probe["manifest"]["failure"] is None
-    assert any(r.get("event") == "probe_done" for r in probe["results"]), probe["results"][-5:]
+    assert any(r.get("event") == "probe_done" for r in probe["results"]), \
+        (probe["manifest"]["player_exit_code"], probe["results"][-5:])
+    assert probe["manifest"]["player_exit_code"] == 0
     assert probe["manifest"]["player_is_ai"] is False
 
 
