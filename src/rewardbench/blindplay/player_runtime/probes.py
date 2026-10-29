@@ -1,4 +1,5 @@
-"""NON-AI security stand-in. Runs INSIDE the isolated AppContainer and tries to escape it.
+"""NON-AI security stand-in. Runs INSIDE the isolated sandbox (Windows AppContainer or macOS Seatbelt) and
+tries to escape it.
 
 Every attempt is reported on stderr as ``{"probe": ..., "target": ..., "outcome": "denied" | "allowed", ...}``.
 The trusted host saves stderr to its own log; the tests decide which outcomes are acceptable. ``targets``
@@ -14,9 +15,11 @@ import os
 import socket
 import subprocess
 import sys
-from ctypes import wintypes
 
 from runtime import Host, report
+
+if sys.platform == "win32":
+    from ctypes import wintypes
 
 
 def _attempt(probe: str, target: str, fn) -> None:
@@ -41,6 +44,8 @@ def _write(path):
 def filesystem(targets: dict) -> None:
     for path in targets.get("read", []):
         _attempt("read_file", path, lambda p=path: _read(p))
+    for path in targets.get("read_missing", []):        # paths that do not exist: is "absent" distinguishable?
+        _attempt("read_missing", path, lambda p=path: _read(p))
     for path in targets.get("list", []):
         _attempt("list_dir", path, lambda p=path: f"{len(os.listdir(p))} entries")
     for path in targets.get("write", []):
@@ -195,6 +200,119 @@ def inherited_handles() -> None:
     report(probe="disk_handles", target="FILE_TYPE_DISK", outcome="observed", detail=json.dumps(found))
 
 
+# ------------------------------------------------------------------ macOS (Seatbelt) equivalents
+def _libc():
+    return ctypes.CDLL(None, use_errno=True)   # the process's own symbols: libSystem, no file is opened
+
+
+def _errno_error(what: str):
+    err = ctypes.get_errno()
+    return OSError(err, f"{what}: {os.strerror(err)}")
+
+
+def sandbox_status() -> None:
+    """The kernel's own answer: is this process sandboxed? (``sandbox_check(pid, NULL, 0)`` is 1 if so)."""
+    libc = _libc()
+    libc.sandbox_check.restype = ctypes.c_int
+    libc.sandbox_check.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int]
+    report(probe="sandbox", target="sandbox_check(self)", outcome="observed", detail=str(libc.sandbox_check(os.getpid(), None, 0)))
+
+
+def open_descriptors() -> None:
+    """Every open file descriptor with its type (and path, for files). Only the three host pipes should exist."""
+    import fcntl
+    import stat
+    found = []
+    for fd in range(0, 1024):
+        try:
+            st = os.fstat(fd)
+        except OSError:
+            continue
+        entry = {"fd": fd, "type": "fifo" if stat.S_ISFIFO(st.st_mode) else "socket" if stat.S_ISSOCK(st.st_mode)
+                 else "file" if stat.S_ISREG(st.st_mode) else "dir" if stat.S_ISDIR(st.st_mode) else "other"}
+        if entry["type"] in ("file", "dir", "other"):
+            try:
+                entry["path"] = fcntl.fcntl(fd, 50, b"\0" * 1024).split(b"\0")[0].decode()   # F_GETPATH
+            except OSError as exc:
+                entry["path_error"] = exc.errno
+        found.append(entry)
+    report(probe="open_descriptors", target="fd 0-1023", outcome="observed", detail=json.dumps(found))
+
+
+def processes_macos(targets: dict) -> None:
+    for exe in ("/bin/sh", "/bin/zsh", "/usr/bin/osascript", "/usr/bin/pbpaste", "/usr/bin/security", sys.executable):
+        _attempt("spawn", exe, lambda e=exe: subprocess.run([e, "-c", "echo x"], capture_output=True, timeout=10).returncode)
+    _attempt("spawn", "os.system", lambda: _nonzero(os.system("echo x")))
+    def fork():
+        pid = os.fork()
+        if pid == 0:
+            os._exit(0)
+        os.waitpid(pid, 0)
+        return f"forked {pid}"
+    _attempt("spawn", "os.fork", fork)
+    libc = _libc()
+    libc.proc_pidpath.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_uint32]
+    libc.proc_listallpids.argtypes = [ctypes.c_void_p, ctypes.c_int]
+    for pid in targets.get("pids", []):
+        _attempt("signal_process", str(pid), lambda p=pid: os.kill(p, 0) or "signal permitted")
+        def pidpath(pid=pid):
+            buf = ctypes.create_string_buffer(4096)
+            if libc.proc_pidpath(pid, buf, 4096) <= 0:
+                raise _errno_error("proc_pidpath")
+            return buf.value.decode()
+        _attempt("process_info", str(pid), pidpath)
+    def list_pids():
+        n = libc.proc_listallpids(None, 0)
+        if n <= 1:   # a sandboxed process sees at most itself
+            raise _errno_error(f"proc_listallpids returned {n}")
+        return f"{n} processes"
+    _attempt("list_processes", "proc_listallpids", list_pids)
+    def sysctl_procs():
+        size = ctypes.c_size_t()
+        if libc.sysctlbyname(b"kern.proc.all", None, ctypes.byref(size), None, 0) != 0:
+            raise _errno_error("sysctlbyname(kern.proc.all)")
+        return f"{size.value} bytes"
+    _attempt("list_processes", "sysctl kern.proc.all", sysctl_procs)
+    def tty():
+        with open("/dev/tty", "wb") as f:
+            f.write(b"x")
+        return "written"
+    _attempt("console", "/dev/tty", tty)
+
+
+MACH_SERVICES = ("com.apple.pasteboard.1", "com.apple.SecurityServer", "com.apple.securityd.xpc",
+                 "com.apple.mDNSResponder", "com.apple.windowserver.active", "com.apple.coreservices.launchservicesd",
+                 "com.apple.tccd", "com.apple.system.opendirectoryd.api")
+
+
+def mach_services() -> None:
+    """Mach service lookups (how macOS programs reach the clipboard, keychain, DNS, window server ...)."""
+    libc = _libc()
+    port = ctypes.c_uint.in_dll(libc, "bootstrap_port")
+    libc.bootstrap_look_up.argtypes = [ctypes.c_uint, ctypes.c_char_p, ctypes.POINTER(ctypes.c_uint)]
+    for name in MACH_SERVICES:
+        def look_up(name=name):
+            out = ctypes.c_uint()
+            kr = libc.bootstrap_look_up(port, name.encode(), ctypes.byref(out))
+            if kr != 0:
+                raise OSError(kr, f"bootstrap_look_up kern_return {kr}")
+            return "port obtained"
+        _attempt("mach_lookup", name, look_up)
+
+
+def unix_sockets(targets: dict) -> None:
+    for path in ["/var/run/mDNSResponder", "/var/run/syslog"] + list(targets.get("unix", [])):
+        def connect(path=path):
+            s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            try:
+                s.settimeout(3)
+                s.connect(path)
+                return "connected"
+            finally:
+                s.close()
+        _attempt("unix_connect", path, connect)
+
+
 HOSTILE_LINES = [
     b"not json", b"[" * 100000, b'{"tool":"act","keys":[],"frames":' + b"9" * 5000 + b"}",
     b'{"tool":"observe","id":"\xff\xfe"}', b'{"tool":"act","keys":[],"frames":5,"frames":120}',
@@ -232,13 +350,22 @@ def play(host: Host) -> None:
 
 
 def run(host: Host, targets: dict) -> int:
-    inherited_handles()
-    token()
-    filesystem(targets)
-    processes(targets)
-    network(targets)
-    secrets()
-    registry()
+    if sys.platform == "win32":
+        inherited_handles()
+        token()
+        filesystem(targets)
+        processes(targets)
+        network(targets)
+        secrets()
+        registry()
+    else:
+        open_descriptors()
+        sandbox_status()
+        filesystem(targets)
+        processes_macos(targets)
+        network(targets)
+        unix_sockets(targets)
+        mach_services()
     for marker in targets.get("persist_check", []):
         _attempt("persisted_marker", marker, lambda m=marker: _read(m))
     for marker in targets.get("persist_write", []):

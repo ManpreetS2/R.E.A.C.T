@@ -4,7 +4,8 @@ TRUSTED HOST SIDE. The host owns, and the player can neither see nor change:
 
 * the referee command (built here from ``HostConfig``; ``rewardbench.blindplay.serve`` with fixed budgets),
 * the referee's records, stderr and browser (in ``<out>/referee``, outside the sandbox),
-* the sandbox itself (``isolation.launch`` from the verified ``runtime_image``),
+* the sandbox itself (``isolation.launch`` from the verified ``runtime_image``: a Windows AppContainer or
+  the macOS Seatbelt sandbox),
 * the model gateway (credentials, provider, model id and limits, if one is ever configured).
 
 The isolated player reaches the host only through its stdin/stdout. Each line is size-capped and
@@ -169,13 +170,7 @@ class Host:
             "started_utc": self.started, "ended_utc": None if self.status in ("starting", "running") else _now(),
             "config": {k: (str(v) if isinstance(v, Path) else v) for k, v in asdict(c).items()},
             "player_is_ai": bool(self.gateway.is_model), "gateway": self.gateway.name,
-            "isolation": {"technology": "Windows AppContainer (no capabilities) + Job Object",
-                          "container": isolation.CONTAINER_NAME, "container_sid": getattr(self, "sid", None),
-                          "child_processes": "blocked (child-process policy + job active-process limit 1)",
-                          "network": "none (no capabilities)", "inherited_handles": "stdin/stdout/stderr pipes only",
-                          "console": "none (DETACHED_PROCESS)", "profile_reset": "before and after the session",
-                          "environment": sorted(isolation.default_environment()),
-                          "windows_build": sys.getwindowsversion().build},
+            "isolation": getattr(self, "isolation_facts", None),
             "runtime_image": getattr(self, "image_info", None),
             "referee_command": getattr(self, "referee_command", None),
             "player_command": getattr(self, "player_command", None),
@@ -350,7 +345,7 @@ class Host:
         manifest = runtime_image.verify(image)
         self.image_info = {"path": str(image), "digest": manifest["digest"], "python": manifest["python"],
                            "files": len(manifest["files"])}
-        self.sid = isolation.container_sid()
+        self.isolation_facts = isolation.describe()
         self._write_manifest()
         self._referee = self._start_referee()
         player = drain = None
@@ -359,7 +354,8 @@ class Host:
             isolation.reset_profile()
             args = c.player_args(image)
             self.player_command = [str(runtime_image.python_executable(image)), *args]
-            player = isolation.launch(runtime_image.python_executable(image), args, cwd=image)
+            player = isolation.launch(runtime_image.python_executable(image), args, cwd=image,
+                                      extra_readable=runtime_image.external_libraries(image))
             self.status = "running"
             self._write_manifest()
             drain = threading.Thread(target=self._drain_stderr, args=(player.stderr,), daemon=True)
@@ -402,6 +398,8 @@ class Host:
                 if drain is not None:
                     drain.join(10)
                 player.close()
+                if getattr(player, "killed_for_memory", False):
+                    self.status, self.failure = "aborted_player_memory_limit", "player exceeded the memory limit"
             self._referee.stdin.close()
             try:
                 self._referee.wait(120)
