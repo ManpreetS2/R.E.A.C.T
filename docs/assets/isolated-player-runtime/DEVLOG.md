@@ -97,3 +97,19 @@ second Mission 014 from PR #22, so both backends share one host, contract, probe
     `runs/blind-visual/mission014-macos-2a0953d` (local, gitignored), summary
     `evidence-macos-2026-10-28.json`: isolated sessions byte-identical to unsandboxed control on this Mac, outcomes
     equal to the Windows Mission 013 evidence, six replays identical.
+27. **First macOS CI run failed** (Actions 40822081774 / 40822120467; Windows and Ubuntu passed): on the runner
+    every sandboxed player died at once with SIGKILL and no output, so the probe produced no results. The runner's
+    `setup-python` 3.11.9 is the python.org framework build: a hardened-runtime executable with entitlements whose
+    signature binds `Python.app`'s Info.plist. Copied out of the bundle, `codesign` reports it "invalid Info.plist",
+    and the kernel kills it at exec. (Confirmed by downloading the exact `actions/python-versions` package into a
+    scratch folder and inspecting signatures only; the binary was not executed.) My local Homebrew test had missed
+    this because that build is only ad-hoc signed. Fix: framework builds copy the whole `Python.app` bundle into the
+    image and run the executable inside it (`._pth` next to it). The host now records `player_exit_code`, and the
+    probe test requires exit code 0, so a silently killed player can no longer look like a completed session. Also
+    fixed: Apple silicon is detected with `sysctl hw.optional.arm64`, not `platform.machine()` (wrong under
+    Rosetta).
+28. **CI green on `1c89ba5`** (Actions 40824056302 push, 40824062527 PR), every step on Windows, macOS and Ubuntu.
+    Blind-play step with isolation required on Windows and macOS: macOS 98 passed / 1 skipped, Windows 90 / 9
+    (macOS-only tests), Ubuntu 74 / 25 (no backend; fail-closed tests ran), 0 failed. The macOS runner's unsandboxed
+    control produced the same fixed-start frame `aa31f5af…` as this Mac. The local evidence file was recorded on
+    `2a0953d` with the standalone uv interpreter, whose image layout the fix does not change.
