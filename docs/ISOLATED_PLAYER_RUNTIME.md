@@ -1,6 +1,8 @@
 # Isolated blind-player runtime (Mission 014)
 
-**Status (2026-10-27): built and verified on this Windows 11 PC with scripted, NON-AI stand-ins only. No model has
+**Status (2026-10-28): two OS backends, both verified with scripted, NON-AI stand-ins only — Windows AppContainer +
+Job Object (Windows 11 PC, 2026-10-27) and macOS Seatbelt (`sandbox-exec`, MacBook Pro, macOS 26.6.2 arm64,
+2026-10-28; see [macOS backend](#macos-backend-seatbelt-2026-10-28)). Linux still fails closed. No model has
 played; no API call was made; no model provider is wired in.** This is the boundary PROJECT.md section 20.5
 requires before an AI may play: the player is confined by the operating system, not by instructions.
 
@@ -27,8 +29,9 @@ frames per act).
 
 | Module | Side | Role |
 | --- | --- | --- |
-| `isolation.py` | host | Starts a process in a Windows AppContainer (no capabilities) inside a Job Object; resets the container profile; credential preflight. Fails closed on other platforms. |
-| `runtime_image.py` | host | Builds a minimal Python (exe, DLLs, stdlib) plus `player_runtime/` into `%LOCALAPPDATA%\REACT-blindplay\runtime-images\<digest>`, grants only the container SID read+execute, and re-hashes every file before each session. |
+| `isolation.py` | host | Starts a process in a Windows AppContainer (no capabilities) inside a Job Object; resets the container profile; credential preflight. On macOS dispatches to `seatbelt.py`. Fails closed on other platforms. |
+| `seatbelt.py` | host | macOS backend: builds a deny-by-default Seatbelt profile per launch and starts the player under `/usr/bin/sandbox-exec` with an empty environment, resource limits and a memory watchdog. |
+| `runtime_image.py` | host | Builds a minimal Python (exe, DLLs, stdlib) plus `player_runtime/` into `%LOCALAPPDATA%\REACT-blindplay\runtime-images\<digest>` (macOS: `~/Library/Caches/REACT-blindplay/runtime-images/<digest>`), grants only the container SID read+execute (macOS: the profile allows reading only the image), and re-hashes every file before each session. |
 | `host.py` | host | Owns the referee command, the sandbox, the broker and the records. CLI starts only scripted NON-AI stand-ins. |
 | `player_runtime/runtime.py` | player | The only code that runs in the sandbox. Talks to the host over its own stdio. Modes: `scripted`, `probe`, `agent`. |
 | `player_runtime/probes.py` | player | NON-AI security stand-in that tries to break out. |
@@ -78,10 +81,82 @@ to attack.
 **Fidelity:** the isolated scripted idle, key-sweep and seeded-random sessions are byte-identical to the Mission 013
 recordings (23/23, 66/66, 44/44 screenshots); the 120-frame cap and upstream game are unchanged.
 
+## macOS backend (Seatbelt, 2026-10-28)
+
+**Why Seatbelt.** This Mac has `sandbox-exec` (the kernel's Sandbox.kext, the mechanism behind the App Sandbox and
+Safari/Chromium renderers); Docker/Colima are installed but no daemon runs, and a container would put a Linux VM and
+a shared-folder boundary between host and player without removing the need to verify it. A second macOS user would
+need administrator rights. `sandbox-exec` is marked deprecated in its man page but is present and enforced on macOS
+26 and is what several current agent sandboxes use; if Apple removes it, the host fails closed (`supported()`).
+
+**Profile** (built per launch by `seatbelt.profile`, recorded by SHA-256): `(deny default)`, then only
+
+| Allowed | Why |
+| --- | --- |
+| `process-exec` of the image's interpreter (one literal path) | sandbox-exec must exec it; nothing else can be executed, `process-fork` stays denied |
+| `file-read*` of the runtime image directory and any non-system library the interpreter links (hash-pinned in `MANIFEST.json` `external`; none for the uv/python-build-standalone build) | the interpreter and stdlib |
+| `file-read-data` of `/` (the root directory listing) | dyld needs it; reveals only top-level names |
+| `file-read-metadata` of the image's ancestor directories (not their contents) | `realpath` of the executable |
+| `sysctl-read` of `kern.ostype`, `kern.hostname`, `kern.osrelease`, `kern.version`, `hw.machine` | `os.uname()` (ctypes imports it) |
+| `process-info*` for itself only, with an explicit `(deny process-info*)` | **`deny default` does not cover process info**: the first probe run listed all 1,072 processes and read other processes' executable paths. Fixed and tested |
+| Rosetta runtime paths, only when an x86_64 interpreter runs on Apple silicon | translation |
+
+Nothing is writable. System libraries come from the dyld shared cache, so `/usr/lib` and `/System` are not opened.
+The host starts it as `sh -c 'ulimit -t 14400 -n 64 -f 0 -c 0 && exec env -i "$@"' sandbox-exec -p <profile>
+<image>/python/bin/python3 -I -S -B <image>/player/runtime.py ...` in a new session (no controlling terminal), with
+only the three pipes inherited. `sys.path` is locked by `python3._pth` to the image (getpath honours `._pth` on macOS
+too), so the player command line is the same as on Windows. Framework Python builds are handled by copying the inner
+`Python.app` binary (the `bin/python3.X` stub re-execs it, which the profile would deny).
+
+**Verified on this Mac** (`tests/blindplay/test_isolation.py`, evidence
+`docs/assets/isolated-player-runtime/evidence-macos-2026-10-28.json`, recorded on commit `2a0953d`):
+
+| Attempt by the player | Result |
+| --- | --- |
+| Kernel check `sandbox_check(self)` | 1 (sandboxed) |
+| Read 24 files: repository (PROJECT.md, AGENTS.md, referee/host/seatbelt source, upstream `game.js`, custom simulator, `pyproject.toml`), the main checkout's `.git/config` and **uncommitted Gymnasium experiment files**, this session's referee/host records, `~/.gitconfig`, `~/.zshrc`, `~/.zsh_history`, `~/.claude.json`, GitHub CLI `hosts.yml`, `~/.ssh/known_hosts`, the login keychain, the installed Python's `os.py`, `/etc/hosts`, `/etc/passwd` | All denied (`EPERM`) |
+| List 14 directories (repo, main checkout, home, `.ssh`, `.claude`, Playwright browsers, runtime-image root, `/tmp`, `/Users`, `/Applications`, session dir) | All denied |
+| Read the session's screenshots, `session.json`, `episodes.jsonl`, host stderr log after they exist | Denied |
+| Write to the repo, session, image root, `/tmp`, home | Denied; no file created. Even with the sandbox disabled (mutation test) the `ulimit -f 0` layer left only empty files |
+| `/bin/sh`, `/bin/zsh`, `osascript`, `pbpaste`, `security`, Python, `os.system`, `os.fork` | All denied |
+| Signal, `proc_pidpath`, task port of the host and `launchd`; `proc_listallpids`, `sysctl kern.proc.all` | All denied |
+| TCP out (internet, host loopback listener), UDP DNS round trip, `getaddrinfo`, `listen()`, Unix sockets (`mDNSResponder`, `syslog`, a host listener) | All denied; host listeners got 0 connections |
+| Mach lookups: pasteboard, SecurityServer/securityd (keychain), mDNSResponder, window server, launchservicesd, tccd, opendirectoryd | All denied (`BOOTSTRAP_NOT_PRIVILEGED`) |
+| `/dev/tty` | Denied |
+| Open descriptors | Exactly fds 0, 1, 2 (pipes) |
+| Environment | Empty |
+| 26 hostile protocol lines | All rejected by the host; referee saw exactly brief + observe + 3 acts |
+| Memory hog (64 × 64 MB) / CPU spin | Killed by the watchdog (256 MB test cap) / `SIGXCPU` from `RLIMIT_CPU` |
+| Player crash mid-session | Host closes cleanly, referee records complete and replayable, next session starts; the crash text stays in the private stderr log, never in a response |
+
+**Negative controls:** the same read-and-spawn code succeeds unsandboxed; and the suite was run against two
+deliberately weakened profiles: removing the process-info rule failed exactly the process test; `(allow default)`
+failed 9 tests. **Fidelity:** isolated idle / key-sweep / seeded-random sessions are byte-identical to the same scripts
+run unsandboxed on this Mac (23/23, 66/66, 44/44 screenshots), their outcomes equal the Windows Mission 013 evidence
+exactly (crash at 1,293 / 1,293; 1,293; 792 / 970 / 960 frames), and all six referee sessions replay identically.
+Screenshot **bytes differ between macOS and Windows** (Chromium text rasterization; the macOS fixed-start frame is
+`aa31f5af…`, Windows `fbcbb40b…`), so a study must fix its platform at pre-registration.
+
+**macOS-specific limitations:**
+
+* **File-existence oracle, as on Windows:** a guessed missing path fails with `ENOENT`, an existing one with `EPERM`
+  (pinned by `test_file_existence_oracle_is_the_only_thing_a_missing_path_reveals`). Nothing is read.
+* **The player can learn:** the account name (its own image path, and `getlogin()`), the hostname and kernel version
+  (`uname`), the names in `/`, and whether a PID exists / its priority and process group (`getpriority`/`getpgid` are
+  not covered by `process-info`). None reveals the game, the referee or the repository.
+* **Memory is a host-side watchdog** (resident size sampled every 0.25 s via `ps`, 1 GB default), not a kernel limit:
+  macOS rejects `RLIMIT_AS`/`RLIMIT_DATA`. A fast enough allocation can exceed the cap briefly before the kill.
+* **Not a defence against a kernel or Sandbox.kext exploit**, or against code running as the same user outside the
+  sandbox (which could, e.g., modify the image between verification and launch; the image is re-hashed before
+  every session).
+* `sandbox-exec` and the SBPL profile language are undocumented and deprecated by Apple; behaviour was verified on
+  macOS 26.6.2 (arm64) and must be re-verified on each macOS used (CI runs the full attack suite on `macos-latest`).
+
 ## Limitations (what this does not guarantee)
 
-1. **Windows only.** Linux/macOS have no backend; there the host refuses to start (tested in CI). A Linux backend
-   (e.g. user namespaces/bubblewrap or a container) would need its own verification.
+1. **Windows and macOS only.** Linux has no backend; there the host refuses to start (tested in CI). A Linux backend
+   (e.g. user namespaces/bubblewrap or a container) would need its own verification. macOS-specific limitations are
+   listed in the macOS section above; items 2, 3, 6 and 9 below are Windows-specific.
 2. **Readable by every AppContainer by Windows design:** system files (`C:\Windows`, `C:\Program Files`) and parts
    of `HKCU`/`HKLM` (`HKCU\Environment`, `Control Panel`, `Software\Microsoft`, `Software\Classes`,
    `Software\Policies`; 45 of 116 `HKCU` keys to depth 2). None of this contains game state or project data.
@@ -116,6 +191,17 @@ recordings (23/23, 66/66, 44/44 screenshots); the 120-frame cap and upstream gam
    model. Real vision-model behaviour (image consumption, tool-call formats, refusals, cost) is untested.
 
 ## Commands
+
+macOS (Seatbelt):
+
+```bash
+python3.12 -m venv .venv && .venv/bin/pip install -e ".[dev,blindplay]" && .venv/bin/python -m playwright install chromium
+PYTHONPATH=src REACT_REQUIRE_ISOLATION=1 .venv/bin/python -m pytest tests/blindplay -q        # 99 collected
+PYTHONPATH=src .venv/bin/python -m rewardbench.blindplay.host --out runs/blind-visual/<id> --script idle --episodes 2
+PYTHONPATH=src .venv/bin/python docs/assets/isolated-player-runtime/verify/record_evidence_macos.py . runs/blind-visual/<new>
+```
+
+Windows (AppContainer):
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -e ".[dev,blindplay]"

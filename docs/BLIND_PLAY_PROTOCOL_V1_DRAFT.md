@@ -1,6 +1,7 @@
 # Blind-play protocol v1 — DRAFT for owner review
 
-**Status (2026-10-27): DRAFT. Not approved, not pre-registered, not executed.** Nothing in this document selects a
+**Status (2026-10-27, amended 2026-10-28 for the macOS backend — see §12): DRAFT. Not approved, not
+pre-registered, not executed.** Nothing in this document selects a
 model, authorizes an API key, or approves spending. Every value marked *proposed* is a recommendation for the owner
 to accept, change or reject. Prepared in Mission 014 on top of the isolated runtime (`docs/ISOLATED_PLAYER_RUNTIME.md`)
 and the Mission 013 environment (`docs/BLIND_VISUAL_FOUNDATION.md`), following PROJECT.md section 20.
@@ -20,10 +21,11 @@ including crashes, refusals, errors and sessions with no landing.
 | --- | --- |
 | Environment | `apollolander-upstream-fixed-start` (PROJECT.md 20.3 A), upstream `0da09dc`, SHA-256-pinned |
 | Seed | 0 (fixed start). The reserved cohorts 1000000–1000007 and 2000000–2000015 are **not used** |
-| Start | Every episode: fresh browser context, unmodified game, 2 title frames, referee click, 4 playing frames; first screenshot is always frame `fbcbb40b641e…` |
+| Start | Every episode: fresh browser context, unmodified game, 2 title frames, referee click, 4 playing frames; first screenshot is always frame `fbcbb40b641e…` on Windows, `aa31f5af16ad…` on macOS (same physics, different text rasterization) |
+| Platform | **Fixed at pre-registration** (one OS, OS version, Chromium build and runtime-image digest for the whole study); never mixed within a comparison |
 | Reset | Automatic. After a terminal state the referee shows 60 more frames (the authentic outcome screen); the next `observe`/`act` starts the next episode. The player cannot reset early |
 | Deviations from the live game | As recorded in every `session.json` (virtual clock, seeded RNG, muted audio, fresh game per episode, title screen not shown) |
-| Isolation | Windows AppContainer runtime (Mission 014); host refuses to start if any check fails |
+| Isolation | Windows AppContainer or macOS Seatbelt runtime (Mission 014); host refuses to start if any check fails |
 
 ## 3. Budgets (*proposed*)
 
@@ -33,6 +35,7 @@ including crashes, refusals, errors and sessions with no landing.
 | Frames per `act` | **1–120** | Unchanged contract cap |
 | Simulated frames per episode | **8,000** (133 s of game time) | Unchanged; idle descent crashes at frame 1,293 |
 | Model calls per session | **150** | Hard stop in the host |
+| Tool calls per model reply | **≤ 8** (extra calls dropped and logged) | Host-enforced; each is validated like any other request |
 | Game requests per session | **1,000** | Referee `max_requests` |
 | Screenshots per model call | **4** (the most recent; older ones replaced by a text note) | Host-enforced |
 | Wall-clock per session | **2 hours** | Host-enforced |
@@ -81,7 +84,7 @@ models' results, any hint after failure. No provider-side tools (web search, cod
 * *Within a session (all episodes):* one continuous conversation. The full text history — the model's own visible
   messages, its tool calls, and the counters — is kept; only the last 4 screenshots are sent as images, older ones
   become `[earlier screenshot omitted]`. So the model can remember what it tried in earlier episodes in its own words.
-* *Across sessions:* nothing. New conversation, container storage wiped, no provider memory features, no notes
+* *Across sessions:* nothing. New conversation, container storage wiped (macOS: the sandbox has no writable storage at all), no provider memory features, no notes
   carried over. Prompt caching (if used) is a billing feature, not memory.
 * Hidden reasoning is not requested or stored; only what the model visibly returns.
 
@@ -168,7 +171,8 @@ OpenAI entries must be confirmed before choosing them.
 1. **Owner decisions:** accept or amend this protocol; the `S` option (§4); the model, provider and exact model ID;
    per-session and cumulative spend caps; the number of sessions; smoke test or full P1.
 2. **Build the provider gateway** in `host.py` (not done): credentials read by the host from host-only storage (never
-   `setx`/`HKCU\Environment`, which the sandbox can read); fixed model ID and parameters; message/tool/image
+   `setx`/`HKCU\Environment`, which the Windows sandbox can read; on macOS a host-only file or the login keychain,
+   both unreadable from the Seatbelt sandbox); fixed model ID and parameters; message/tool/image
    translation; usage and cost ledger with a pre-call worst-case check and hard stop; provider request IDs logged; no
    provider-side tools. Verify it **offline with a mocked transport** (budget stop, refusal, malformed tool calls,
    oversized replies) at zero cost.
@@ -182,3 +186,13 @@ OpenAI entries must be confirmed before choosing them.
 
 Varied starts, held-out evaluation, feedback ablations and cross-model comparisons (PROJECT.md 20.8) are separate,
 later protocols.
+
+## 12. Amendments 2026-10-28 (macOS backend; still a draft)
+
+* A macOS Seatbelt backend exists and passed the same attack suite (`docs/ISOLATED_PLAYER_RUNTIME.md`). Either
+  platform may host P1, but only one, recorded in the pre-registration (§2 Platform).
+* Added the host's existing per-reply tool-call cap (8) to §3; nothing else in the budgets changed.
+* Owner decisions are unchanged and still open: accept/amend P1; `S` option A or B (B recommended); model,
+  provider, model ID; spend caps; number of sessions; smoke test or full P1. The §10 prices are copied from the
+  2026-10-14 catalog and must be re-verified on the providers' pages before any approval; no model was called to
+  check them.
