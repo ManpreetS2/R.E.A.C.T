@@ -57,3 +57,59 @@ was used; every player was a scripted NON-AI stand-in (or a scripted gateway tha
     on the host. This also exposed a real, documented limitation: the player can tell whether a guessed path exists.
     (b) one of the player's own disk handles had no DOS path on the runner. The probe now also reports each handle's
     NT path and error code, and the test checks the drive-relative path instead of assuming a DOS name.
+
+## macOS backend (2026-10-28, MacBook Pro, macOS 26.6.2 arm64)
+
+Same rules: no model, no API call, scripted NON-AI stand-ins only. Built on PR #23's branch instead of starting a
+second Mission 014 from PR #22, so both backends share one host, contract, probe set and test file.
+
+16. **Workspace.** Three checkouts: `~/R.E.A.C.T` (clean `main`), its worktree under `~/.t3/worktrees` (clean), and
+    `~/Projects/R.E.A.C.T` (branch `experiment/apollo-gymnasium-rl` with 10 uncommitted files, left untouched). Work
+    happened in a new worktree `~/Projects/R.E.A.C.T-worktrees/isolated-player-macos` on
+    `feature/isolated-player-runtime-macos`. Claude Code ran on the owner's subscription login (no API-key, Bedrock or
+    Vertex variables or `apiKeyHelper`).
+17. **Choosing the isolation technology.** `sandbox-exec` present; Docker/Colima installed but no daemon; no admin
+    needed for Seatbelt. Chosen: a deny-by-default Seatbelt profile (see `docs/ISOLATED_PLAYER_RUNTIME.md`).
+18. **Bisecting the minimum profile.** Python aborted (SIGABRT, no log entry) under a strict profile until it could
+    list `/` (dyld). No `/usr/lib` or `/System` access is needed (shared cache). `ctypes` then failed on
+    `os.uname()`: five `sysctl` names are needed, including the hostname (uname fails without it).
+19. **Framework Python builds** (python.org/Homebrew; CI's `setup-python` may be one) link a `Python` dylib by absolute
+    path and their `bin/python3.X` re-execs `Python.app`. The image copies the inner binary and allows reading the
+    linked dylib, hash-pinned as `external`. Tested by hand with Homebrew 3.11 (x86_64 under Rosetta, which needs
+    its runtime paths); the local venv uses uv's statically linked 3.12, which needs no external library.
+20. **`._pth` works on macOS**, so the player command stays `python -I -S -B runtime.py` with an empty environment.
+    `/bin/sh` added `PWD`; the launcher now `exec`s `env -i` before `sandbox-exec`.
+21. **Real finding: `deny default` does not deny `process-info`.** The first probe session listed 1,072 processes
+    (`proc_listallpids`) and read the host's and `launchd`'s executable paths (`proc_pidpath`). Fixed with an
+    explicit `(deny process-info*)` + `(allow process-info* (target self))`; probe and test added.
+22. **Own wrong assumption:** I expected Seatbelt to deny before path lookup and so hide file existence; the test I
+    wrote for that failed (`ENOENT` for missing paths). The test now pins the documented existence oracle instead.
+23. **Memory limits:** macOS rejects `ulimit -v/-d/-m`; a host-side RSS watchdog kills the player (tested). CPU,
+    open-file, file-size (0) and core limits are kernel `ulimit`s (CPU tested: `SIGXCPU`).
+24. **Mutation tests of the test suite:** removing the process-info rule failed exactly the process test;
+    `(allow default)` failed 9 tests. That run let the probe create two empty `pwned.txt` files (repo root and
+    image root; the `-f 0` limit kept them empty); I deleted both.
+25. **Side effect (not data):** `playwright install chromium` garbage-collected two unused cached browser builds
+    (`firefox-1538`, `webkit-2336`) from `~/Library/Caches/ms-playwright`; reinstallable with
+    `playwright install firefox webkit`.
+26. **Results.** Full suite on this Mac: 539 collected, 538 passed, 1 skipped (the Linux-only fail-closed test), 0
+    failed; Node physics/replay checks passed. Evidence recorded on commit `2a0953d` into
+    `runs/blind-visual/mission014-macos-2a0953d` (local, gitignored), summary
+    `evidence-macos-2026-10-28.json`: isolated sessions byte-identical to unsandboxed control on this Mac, outcomes
+    equal to the Windows Mission 013 evidence, six replays identical.
+27. **First macOS CI run failed** (Actions 40822081774 / 40822120467; Windows and Ubuntu passed): on the runner
+    every sandboxed player died at once with SIGKILL and no output, so the probe produced no results. The runner's
+    `setup-python` 3.11.9 is the python.org framework build: a hardened-runtime executable with entitlements whose
+    signature binds `Python.app`'s Info.plist. Copied out of the bundle, `codesign` reports it "invalid Info.plist",
+    and the kernel kills it at exec. (Confirmed by downloading the exact `actions/python-versions` package into a
+    scratch folder and inspecting signatures only; the binary was not executed.) My local Homebrew test had missed
+    this because that build is only ad-hoc signed. Fix: framework builds copy the whole `Python.app` bundle into the
+    image and run the executable inside it (`._pth` next to it). The host now records `player_exit_code`, and the
+    probe test requires exit code 0, so a silently killed player can no longer look like a completed session. Also
+    fixed: Apple silicon is detected with `sysctl hw.optional.arm64`, not `platform.machine()` (wrong under
+    Rosetta).
+28. **CI green on `1c89ba5`** (Actions 40824056302 push, 40824062527 PR), every step on Windows, macOS and Ubuntu.
+    Blind-play step with isolation required on Windows and macOS: macOS 98 passed / 1 skipped, Windows 90 / 9
+    (macOS-only tests), Ubuntu 74 / 25 (no backend; fail-closed tests ran), 0 failed. The macOS runner's unsandboxed
+    control produced the same fixed-start frame `aa31f5af…` as this Mac. The local evidence file was recorded on
+    `2a0953d` with the standalone uv interpreter, whose image layout the fix does not change.

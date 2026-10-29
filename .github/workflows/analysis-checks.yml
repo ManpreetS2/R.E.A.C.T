@@ -41,8 +41,8 @@ jobs:
         env:
           PYTHONPATH: src
           REACT_REQUIRE_BROWSER: "1"
-          # AppContainer isolation exists only on Windows: required there, fail-closed tests elsewhere
-          REACT_REQUIRE_ISOLATION: ${{ runner.os == 'Windows' && '1' || '0' }}
+          # OS isolation: AppContainer on Windows, Seatbelt on macOS (required there); fail-closed tests on Linux
+          REACT_REQUIRE_ISOLATION: ${{ runner.os != 'Linux' && '1' || '0' }}
       - name: Install simulator dependencies when environment tests exist
         if: hashFiles('tests/environments/**/*.py') != ''
         run: python -m pip install -e ".[environments]"

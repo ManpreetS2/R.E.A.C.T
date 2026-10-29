@@ -1,4 +1,5 @@
-r"""Operating-system isolation for the blind player: a Windows AppContainer inside a Job Object.
+r"""Operating-system isolation for the blind player: a Windows AppContainer inside a Job Object, or the
+macOS Seatbelt sandbox (``seatbelt.py``, same interface; this module dispatches to it on macOS).
 
 TRUSTED HOST SIDE. This module starts the player process; the player never runs any of it.
 
@@ -25,8 +26,8 @@ What the kernel enforces for a process started by ``launch`` (verified by probes
   ``CONIN$``/``CONOUT$``. The environment block is built from scratch: ``SYSTEMROOT`` and ``LOCALAPPDATA``
   only (Windows requires the latter and rewrites it, ``TEMP`` and ``TMP`` to the container's own folder).
 
-Only Windows is supported. Elsewhere ``launch`` refuses (``IsolationUnavailable``); it never falls back
-to an unisolated process.
+Only Windows (here) and macOS (``seatbelt.py``) are supported. Elsewhere ``launch`` refuses
+(``IsolationUnavailable``); it never falls back to an unisolated process.
 """
 
 from __future__ import annotations
@@ -34,6 +35,7 @@ from __future__ import annotations
 import ctypes
 import io
 import os
+import platform
 import re
 import subprocess
 import sys
@@ -42,18 +44,19 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from rewardbench.blindplay import seatbelt
+from rewardbench.blindplay.seatbelt import IsolationUnavailable
+
 CONTAINER_NAME = "REACT.BlindPlay.Player"
 DEFAULT_MEMORY_LIMIT = 1024 * 1024 * 1024
 
 
-class IsolationUnavailable(RuntimeError):
-    """OS isolation cannot be provided here. Nothing is started; there is no unisolated fallback."""
-
-
 def supported() -> str | None:
-    """``None`` when AppContainer isolation is available, else the reason it is not."""
+    """``None`` when OS isolation is available, else the reason it is not."""
+    if sys.platform == "darwin":
+        return seatbelt.supported()
     if sys.platform != "win32":
-        return f"AppContainer isolation requires Windows (this is {sys.platform})"
+        return f"OS isolation requires Windows (AppContainer) or macOS (Seatbelt); this is {sys.platform}"
     if sys.getwindowsversion().build < 15063:   # Windows 10 1703: child-process creation policy
         return "Windows 10 1703 or later is required"
     return None
@@ -183,10 +186,13 @@ def reset_profile(name: str = CONTAINER_NAME) -> None:
     """Delete and recreate the container profile: wipes the only folder the player can write to.
 
     Windows refuses to start an AppContainer process whose profile is not registered (ERROR_FILE_NOT_FOUND).
+    On macOS there is nothing to wipe: the Seatbelt profile allows no writes at all.
     """
     reason = supported()
     if reason:
         raise IsolationUnavailable(reason)
+    if sys.platform == "darwin":
+        return
     _uenv.DeleteAppContainerProfile(name)   # absent is fine
     sid = PSID()
     hr = _uenv.CreateAppContainerProfile(name, name, "R.E.A.C.T. isolated blind player (no capabilities)",
@@ -198,7 +204,7 @@ def reset_profile(name: str = CONTAINER_NAME) -> None:
 
 
 def delete_profile(name: str = CONTAINER_NAME) -> None:
-    if supported() is None:
+    if sys.platform == "win32" and supported() is None:
         _uenv.DeleteAppContainerProfile(name)
 
 
@@ -216,9 +222,10 @@ def exposed_user_environment_secrets() -> list[str]:
 
     Windows grants every AppContainer read access to ``HKCU\\Environment`` (where ``setx`` stores user
     variables), and the sandbox cannot remove that grant without editing the user's registry ACLs. The host
-    therefore refuses to start while anything credential-like is stored there.
+    therefore refuses to start while anything credential-like is stored there. macOS has no such shared
+    store: the player's environment is empty and the Seatbelt profile denies the home folder and keychain.
     """
-    if supported() is not None:
+    if sys.platform != "win32" or supported() is not None:
         return []
     import winreg
     found = []
@@ -296,12 +303,42 @@ class IsolatedProcess:
         _k32.CloseHandle(self._job)   # kill-on-close also ends anything left in the job
 
 
+def identity() -> str:
+    """What the sandbox is keyed on: the AppContainer SID (Windows) or ``seatbelt`` (the profile is per launch)."""
+    return container_sid() if sys.platform == "win32" else "seatbelt"
+
+
+def describe() -> dict[str, Any]:
+    """Isolation facts recorded in every host session manifest."""
+    if sys.platform == "darwin":
+        return {"technology": "macOS Seatbelt sandbox (sandbox-exec, deny-by-default profile)",
+                "read": "runtime image + interpreter's own non-system libraries only",
+                "write": "none", "child_processes": "blocked (process-fork denied; exec of the interpreter only)",
+                "network": "none (inet and Unix sockets denied)", "mach_services": "none",
+                "inherited_handles": "stdin/stdout/stderr pipes only", "console": "none (new session, no tty)",
+                "environment": [], "limits": {"cpu_seconds": seatbelt.DEFAULT_CPU_SECONDS,
+                                              "open_files": seatbelt.MAX_OPEN_FILES, "file_size": 0,
+                                              "memory_bytes_watchdog": seatbelt.DEFAULT_MEMORY_LIMIT},
+                "macos": platform.mac_ver()[0], "machine": platform.machine()}
+    return {"technology": "Windows AppContainer (no capabilities) + Job Object",
+            "container": CONTAINER_NAME, "container_sid": container_sid(),
+            "child_processes": "blocked (child-process policy + job active-process limit 1)",
+            "network": "none (no capabilities)", "inherited_handles": "stdin/stdout/stderr pipes only",
+            "console": "none (DETACHED_PROCESS)", "profile_reset": "before and after the session",
+            "environment": sorted(default_environment()), "windows_build": sys.getwindowsversion().build}
+
+
 def launch(executable: Path, args: list[str], *, cwd: Path, env: dict[str, str] | None = None,
-           container: str = CONTAINER_NAME, memory_limit: int = DEFAULT_MEMORY_LIMIT) -> IsolatedProcess:
-    """Start ``executable args`` in the AppContainer + Job Object described in the module docstring."""
+           container: str = CONTAINER_NAME, memory_limit: int = DEFAULT_MEMORY_LIMIT,
+           extra_readable: tuple[Path, ...] = ()) -> IsolatedProcess | seatbelt.SeatbeltProcess:
+    """Start ``executable args`` in the AppContainer + Job Object described in the module docstring, or on
+    macOS under the Seatbelt profile (``cwd`` = the runtime image, plus ``extra_readable`` files)."""
     reason = supported()
     if reason:
         raise IsolationUnavailable(reason)
+    if sys.platform == "darwin":
+        return seatbelt.launch(executable, args, cwd=cwd, env=env, extra_readable=extra_readable,
+                               memory_limit=memory_limit)
     sid_text = container_sid(container)
     sid = PSID()
     hr = _uenv.DeriveAppContainerSidFromAppContainerName(container, ctypes.byref(sid))

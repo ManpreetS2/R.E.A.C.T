@@ -1,16 +1,33 @@
 """The read-only runtime image an isolated player executes from.
 
-TRUSTED HOST SIDE. The AppContainer can read nothing it is not explicitly granted, including the
-installed Python and this repository. The host therefore assembles a minimal, standalone directory:
+TRUSTED HOST SIDE. The sandbox can read nothing it is not explicitly granted, including the
+installed Python and this repository. The host therefore assembles a minimal, standalone directory.
+
+Windows (AppContainer):
 
     <image>/python/        python.exe + its DLLs + the standard library (no site-packages, no tests, no tk)
     <image>/python/python3XX._pth   fixes sys.path to the image; ``import site`` is absent
-    <image>/player/        the player-side code (``player_runtime/*.py``, standard library only)
-    <image>/MANIFEST.json  SHA-256 of every file
 
-and grants the container SID read+execute on it, nothing else (no write, no other directory). The
-image directory name is the hash of its manifest, and ``verify`` re-hashes every file before each
-session, so an altered image is never used.
+macOS (Seatbelt):
+
+    <image>/python/bin/python3        the interpreter (standalone builds), or for framework builds
+    <image>/python/Python.app/        the framework's whole ``Python.app`` bundle, unmodified except for one
+                                      ``Contents/MacOS/Python._pth``: its signature binds the bundle's Info.plist,
+                                      so the bare executable copied out of the bundle is killed at exec
+    <image>/python/.../<exe>._pth     fixes sys.path to the image (honoured by getpath on macOS too)
+    <image>/python/lib/python3.X/     the standard library; extension modules only if they link nothing
+                                      but system libraries
+
+both:
+
+    <image>/player/        the player-side code (``player_runtime/*.py``, standard library only)
+    <image>/MANIFEST.json  SHA-256 of every file, plus ``external``: non-system libraries the interpreter
+                           links (e.g. a framework's ``Python`` dylib) by absolute path and SHA-256
+
+On Windows the container SID is granted read+execute on the image, nothing else (no write, no other
+directory); on macOS the per-launch Seatbelt profile allows reading exactly the image and ``external``.
+The image directory name is the hash of its manifest, and ``verify`` re-hashes every file (including
+``external``) before each session, so an altered image is never used.
 """
 
 from __future__ import annotations
@@ -19,7 +36,9 @@ import hashlib
 import json
 import os
 import shutil
+import subprocess
 import sys
+import sysconfig
 from pathlib import Path
 
 from rewardbench.blindplay import isolation
@@ -32,6 +51,8 @@ _DLL_EXCLUDE = ("_tkinter", "tcl", "tk")
 
 
 def default_root() -> Path:
+    if sys.platform == "darwin":
+        return Path.home() / "Library" / "Caches" / "REACT-blindplay" / "runtime-images"
     base = os.environ.get("LOCALAPPDATA") or str(Path.home() / "AppData" / "Local")
     return Path(base) / "REACT-blindplay" / "runtime-images"
 
@@ -55,22 +76,94 @@ def _python_files(base: Path) -> list[tuple[Path, str]]:
     return files
 
 
-def _sources() -> list[tuple[Path, str]]:
-    files = _python_files(Path(sys.base_prefix))
+_SYSTEM_LIBRARY_PREFIXES = ("/usr/lib/", "/System/")
+
+
+def _linked_libraries(path: Path) -> list[str]:
+    """Libraries a Mach-O file loads (``otool -L``), excluding its own install name."""
+    out = subprocess.run(["/usr/bin/otool", "-L", str(path)], capture_output=True, text=True, check=True).stdout
+    names = [line.strip().split(" (compatibility")[0] for line in out.splitlines() if line.startswith("\t")]
+    own = subprocess.run(["/usr/bin/otool", "-D", str(path)], capture_output=True, text=True).stdout.splitlines()[1:]
+    return sorted(set(names) - {o.strip() for o in own})
+
+
+_BUNDLE_EXECUTABLE = "python/Python.app/Contents/MacOS/Python"
+
+
+def _macos_framework_bundle() -> Path | None:
+    """A framework build's ``Python.app`` (its ``bin/python3.X`` stub re-execs the bundle's executable)."""
+    bundle = Path(sys.base_prefix) / "Resources" / "Python.app"
+    return bundle if (bundle / "Contents" / "MacOS" / "Python").is_file() else None
+
+
+def _macos_interpreter() -> Path:
+    bundle = _macos_framework_bundle()
+    if bundle is not None:
+        return bundle / "Contents" / "MacOS" / "Python"
+    return Path(os.path.realpath(getattr(sys, "_base_executable", sys.executable)))
+
+
+def _macos_python_files() -> tuple[list[tuple[Path, str]], list[Path]]:
+    """Interpreter + stdlib for the image, and the non-system libraries the interpreter needs in place."""
+    interpreter = _macos_interpreter()
+    external = []
+    for lib in _linked_libraries(interpreter):
+        if lib.startswith(_SYSTEM_LIBRARY_PREFIXES):
+            continue
+        if not lib.startswith("/"):
+            raise isolation.IsolationUnavailable(f"interpreter links a relative library ({lib}); use another Python build")
+        external.append(Path(os.path.realpath(lib)))
+    allowed = {str(p) for p in external}
+    version = f"python{sys.version_info.major}.{sys.version_info.minor}"
+    bundle = _macos_framework_bundle()
+    if bundle is None:
+        files: list[tuple[Path, str]] = [(interpreter, "python/bin/python3")]
+    else:   # copy the signed bundle whole, so its code signature stays valid
+        files = [(p, "python/Python.app/" + p.relative_to(bundle).as_posix())
+                 for p in sorted(bundle.rglob("*")) if p.is_file() and not p.is_symlink()]
+    lib = Path(sysconfig.get_paths()["stdlib"])
+    for root, dirs, names in os.walk(lib):
+        dirs[:] = sorted(d for d in dirs if d not in _LIB_EXCLUDE and not d.startswith("config-"))
+        for n in sorted(names):
+            src = Path(root) / n
+            if n.endswith(".py") or (n.endswith(".so") and all(
+                    d.startswith(_SYSTEM_LIBRARY_PREFIXES) or os.path.realpath(d) in allowed
+                    for d in _linked_libraries(src))):
+                files.append((src, f"python/lib/{version}/" + src.relative_to(lib).as_posix()))
+    return files, sorted(set(external))
+
+
+def _sources() -> tuple[list[tuple[Path, str]], list[Path]]:
+    if sys.platform == "darwin":
+        files, external = _macos_python_files()
+    else:
+        files, external = _python_files(Path(sys.base_prefix)), []
     for p in sorted(PLAYER_SOURCE.glob("*.py")):
         files.append((p, f"player/{p.name}"))
-    return files
+    return files, external
+
+
+def _macos_executable_rel() -> str:
+    return _BUNDLE_EXECUTABLE if _macos_framework_bundle() is not None else "python/bin/python3"
 
 
 def _pth_name() -> str:
+    if sys.platform == "darwin":
+        return _macos_executable_rel() + "._pth"
     return f"python/python{sys.version_info.major}{sys.version_info.minor}._pth"
 
 
-_PTH = b"Lib\r\nDLLs\r\n../player\r\n"
+def _pth() -> bytes:
+    if sys.platform == "darwin":
+        version = f"python{sys.version_info.major}.{sys.version_info.minor}"
+        up = "../" * (_macos_executable_rel().count("/") - 1)   # from the executable's folder back to python/
+        return f"{up}lib/{version}\n{up}lib/{version}/lib-dynload\n{up}../player\n".encode()
+    return b"Lib\r\nDLLs\r\n../player\r\n"
 
 
-def _digest(entries: dict[str, str]) -> str:
-    return hashlib.sha256(json.dumps(entries, sort_keys=True).encode()).hexdigest()
+def _digest(entries: dict[str, str], external: dict[str, str] | None = None) -> str:
+    combined = dict(entries, **{f"external:{k}": v for k, v in (external or {}).items()})
+    return hashlib.sha256(json.dumps(combined, sort_keys=True).encode()).hexdigest()
 
 
 def build(root: Path | None = None) -> Path:
@@ -79,10 +172,11 @@ def build(root: Path | None = None) -> Path:
     if reason:
         raise isolation.IsolationUnavailable(reason)
     root = Path(root or default_root())
-    sources = _sources()
+    sources, external_paths = _sources()
     entries = {rel: hashlib.sha256(src.read_bytes()).hexdigest() for src, rel in sources}
-    entries[_pth_name()] = hashlib.sha256(_PTH).hexdigest()
-    image = root / _digest(entries)[:24]
+    entries[_pth_name()] = hashlib.sha256(_pth()).hexdigest()
+    external = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in external_paths}
+    image = root / _digest(entries, external)[:24]
     if (image / "MANIFEST.json").is_file():
         verify(image)
         return image
@@ -93,10 +187,14 @@ def build(root: Path | None = None) -> Path:
         dst = staging / rel
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(src, dst)
-    (staging / _pth_name()).write_bytes(_PTH)
-    manifest = {"schema": SCHEMA, "python": sys.version.split()[0], "files": entries, "digest": _digest(entries)}
+    (staging / _pth_name()).write_bytes(_pth())
+    if sys.platform == "darwin":
+        os.chmod(staging / _macos_executable_rel(), 0o755)
+    manifest = {"schema": SCHEMA, "python": sys.version.split()[0], "files": entries, "external": external,
+                "digest": _digest(entries, external)}
     (staging / "MANIFEST.json").write_text(json.dumps(manifest, indent=1, sort_keys=True) + "\n", encoding="utf-8")
-    isolation.grant_read_execute(staging, isolation.container_sid())
+    if sys.platform == "win32":
+        isolation.grant_read_execute(staging, isolation.container_sid())
     staging.rename(image)
     verify(image)
     return image
@@ -112,10 +210,23 @@ def verify(image: Path) -> dict:
     for rel, digest in manifest["files"].items():
         if hashlib.sha256((image / rel).read_bytes()).hexdigest() != digest:
             raise RuntimeError(f"runtime image file changed: {rel}")
-    if _digest(manifest["files"]) != manifest["digest"] or not image.name == manifest["digest"][:24]:
+    external = manifest.get("external", {})
+    for path, digest in external.items():
+        if hashlib.sha256(Path(path).read_bytes()).hexdigest() != digest:
+            raise RuntimeError(f"runtime image external library changed: {path}")
+    if _digest(manifest["files"], external) != manifest["digest"] or not image.name == manifest["digest"][:24]:
         raise RuntimeError("runtime image manifest does not match its directory")
     return manifest
 
 
 def python_executable(image: Path) -> Path:
+    if sys.platform == "darwin":
+        bundled = image / _BUNDLE_EXECUTABLE
+        return bundled if bundled.is_file() else image / "python" / "bin" / "python3"
     return image / "python" / "python.exe"
+
+
+def external_libraries(image: Path) -> tuple[Path, ...]:
+    """Non-system libraries the sandbox must let the interpreter read where they are installed."""
+    manifest = json.loads((image / "MANIFEST.json").read_text(encoding="utf-8"))
+    return tuple(Path(p) for p in sorted(manifest.get("external", {})))
