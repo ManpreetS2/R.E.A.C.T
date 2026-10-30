@@ -1,0 +1,144 @@
+{
+  "local_tests": {
+    "blindplay_collected": 334,
+    "browser_required": true,
+    "collected": 774,
+    "failed": 0,
+    "isolation_required": true,
+    "new_tests": 235,
+    "passed": 765,
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.13.5",
+    "skipped": 9,
+    "skipped_reason": "POSIX or macOS only"
+  },
+  "mutation_check": {
+    "caught": 32,
+    "mutations": 32,
+    "mutations_tried": [
+      "live calls enabled",
+      "non-offline transport accepted",
+      "budget refusal ignored (call goes out without a reservation)",
+      "image window off by one",
+      "screenshots kept in memory beyond the window",
+      "outbound image guard removed",
+      "game accepts actions the model never made",
+      "next turn allowed with calls pending",
+      "hallucinated tools accepted",
+      "extra tool-call arguments accepted",
+      "too many tool calls accepted",
+      "cut-off replies executed",
+      "screenshot hash not checked",
+      "PNG CRC not checked",
+      "extra game fields forwarded",
+      "refusal not treated as the end",
+      "wrong model accepted",
+      "missing usage accepted",
+      "timeouts charged nothing",
+      "context limit removed",
+      "model call limit removed",
+      "consecutive error limit removed",
+      "consecutive invalid limit removed",
+      "redaction removed",
+      "session cap not enforced",
+      "cumulative cap not enforced",
+      "ledger chain not verified",
+      "ledger mode not checked",
+      "keyset.v2 still offers the speed key",
+      "host forwards without asking the gateway",
+      "player may supply model content",
+      "host and gateway may disagree"
+    ],
+    "not_applied": [],
+    "survived": []
+  },
+  "offline_demo": {
+    "allowed_keys": [
+      "ArrowDown",
+      "ArrowLeft",
+      "ArrowRight",
+      "ArrowUp",
+      "Enter",
+      "Escape",
+      "KeyA",
+      "KeyD",
+      "KeyW",
+      "ShiftLeft",
+      "Space"
+    ],
+    "audit": {
+      "ledger_matches_transcript": true,
+      "ledger_open_reservations": [],
+      "ledger_spent_usd": "0.022194700",
+      "max_images_in_a_call": 4,
+      "model_call_records": 31,
+      "privileged_words_sent": [],
+      "transcript": {
+        "charged_usd": "0.022194700",
+        "records": 37,
+        "tip_sha256": "782c67ebd53b3126505ec1be393238bd19df3dc9e01a550e0b2bfc63bd937abe",
+        "valid": true
+      }
+    },
+    "browser": "156.0.8078.4",
+    "contract": "react.blindplay.player.v2",
+    "disclaimer": "MOCK PROVIDER: scripted replies, not a model. Nothing here measures AI ability.",
+    "episode_outcomes": [
+      "crashed",
+      "crashed"
+    ],
+    "gateway": {
+      "charged_usd": "0.022194700",
+      "config_sha256": "005d0e784feeb69444b20c5d677c3457d3787ac6ced6c4cdd175d6ab86ffeab5",
+      "counts": {
+        "budget_refusals": 0,
+        "game_requests_refused": 0,
+        "invalid_replies": 4,
+        "model_calls": 31,
+        "provider_errors": 2,
+        "screenshots_received": 33,
+        "tool_calls_executed": 32,
+        "tool_calls_rejected": 5,
+        "tool_calls_requested": 37
+      },
+      "stop_reason": "session_over",
+      "transcript_records": 37,
+      "transcript_tip_sha256": "782c67ebd53b3126505ec1be393238bd19df3dc9e01a550e0b2bfc63bd937abe"
+    },
+    "git": {
+      "commit": "1ebf8b205a14827f9a68ace5060445258119191f",
+      "dirty": false
+    },
+    "host_counts": {
+      "forwarded_to_referee": 34,
+      "model_calls": 31,
+      "model_rejected": 0,
+      "player_lines": 63,
+      "rejected_by_host": 0
+    },
+    "host_status": "closed",
+    "images_per_request": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "isolation": "Windows AppContainer (no capabilities) + Job Object",
+    "keyset": "keyset.v2",
+    "mock_requests_received": 31,
+    "network_transport_exists": false,
+    "paid_api_calls": 0,
+    "platform": "Windows-11-10.0.26300-SP0",
+    "player_exit_code": 0,
+    "player_is_ai": false,
+    "replay": {
+      "reproduced": true,
+      "requests": 34,
+      "screenshots_compared": 33,
+      "screenshots_identical": 33
+    },
+    "runtime_image_digest": "5d335306f74d9558a86ad773f6510885c0f283c1db85329aef7e16f3100a5729"
+  },
+  "recorded_utc_date": "2026-10-30",
+  "statement": "Offline verification only. No model played. No API was called, authenticated to or charged. Raw session data stays local."
+}
