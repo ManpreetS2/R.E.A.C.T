@@ -4,6 +4,9 @@
 authenticated to or charged. There is no network code in the gateway. Nothing in this document selects a model, approves
 a protocol or authorizes spending.**
 
+*Update 2026-10-30 (Mission 015B):* a live transport now exists behind a closed gate, and still nothing can reach a provider. See `docs/LIVE_TRANSPORT_PREPARATION.md`, which also corrects this document on
+thinking, the SDK and 529 charging. The gateway modules described here still contain no network code. Everything below describes Mission 015A as delivered.
+
 Builds on the isolated runtime (`docs/ISOLATED_PLAYER_RUNTIME.md`) and the environment
 (`docs/BLIND_VISUAL_FOUNDATION.md`). The research protocol is `docs/BLIND_PLAY_PROTOCOL_V1_DRAFT.md`. Chronology:
 `docs/assets/offline-ai-gateway/DEVLOG.md`.

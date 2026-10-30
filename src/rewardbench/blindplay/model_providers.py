@@ -5,8 +5,8 @@ that.** An adapter only translates between the gateway's neutral request and one
 that JSON. The only transport here is ``OfflineTransport``, which calls a Python function in this process.
 
 ``AnthropicMessagesAdapter`` is written from the documented Messages API format and has **never been exercised against
-the real API**. Real calls also need a live transport, which does not exist, and ``model_gateway.LIVE_CALLS_PERMITTED``,
-which is False; both changes require owner approval and pre-registration.
+the real API**. The only code that could send it is ``live_transport.py``, behind a gate that is closed:
+``model_gateway.LIVE_CALLS_PERMITTED`` is False, and opening it requires owner approval and pre-registration.
 """
 
 from __future__ import annotations
@@ -78,6 +78,7 @@ class ProviderReply:
     model: str | None = None
     refusal_category: str | None = None
     discarded_blocks: tuple[str, ...] = ()
+    thinking_tokens: int | None = None  # billed reasoning inside output_tokens, when the provider reports it
 
 
 class ProviderAdapter(Protocol):
@@ -198,8 +199,11 @@ class AnthropicMessagesAdapter:
     Deliberate choices, each tied to the protocol (docs/OFFLINE_AI_GATEWAY.md):
 
     * **Thinking blocks are discarded, never replayed.** The last-four-screenshots policy rewrites earlier turns, and
-      current Claude models reject replayed thinking blocks after such an edit on enforced accounts. Without replay
-      there is nothing to invalidate. The model keeps its visible text and tool calls, as protocol P1 §5 already says.
+      current Claude models reject replayed thinking blocks after such an edit on enforced accounts. The model keeps its
+      visible text and tool calls, as protocol P1 §5 already says. The documentation also tells callers to echo thinking
+      blocks during tool use, so dropping them is only safe if none exist: ``thinking="disabled"`` is the setting that
+      fits P1 ("hidden reasoning is not requested"), and the only one the live gate accepts. Omitting ``thinking`` means
+      adaptive thinking on current models.
     * No ``fallbacks``: a server-side fallback would change the model mid-session, breaking the pre-registered model id.
     * No provider-side tools, no betas, no prompt caching, no sampling parameters, ``tool_choice`` always ``auto``
       (forced tool use is rejected by current models, and steering a model to a tool would be a hint).
@@ -208,17 +212,33 @@ class AnthropicMessagesAdapter:
     wire_format = "anthropic.messages.2023-06-01"
     is_model = True
 
-    def __init__(self, *, effort: str | None = None) -> None:
+    def __init__(self, *, effort: str | None = None, thinking: str | None = None) -> None:
         if effort is not None and effort not in _ANTHROPIC_EFFORTS:
             raise ValueError(f"unknown effort {effort!r}")
+        if thinking not in (None, "adaptive", "disabled"):
+            raise ValueError(f"unknown thinking setting {thinking!r}")
+        if thinking == "disabled" and effort in ("xhigh", "max"):
+            raise ValueError("thinking cannot be disabled at effort xhigh or max")
         self.effort = effort
+        self.thinking = thinking
+
+    def settings(self) -> tuple[tuple[str, str], ...]:
+        return tuple((k, v) for k, v in (("effort", self.effort), ("thinking", self.thinking)) if v is not None)
+
+    def terminal_error(self, response: TransportResponse) -> str | None:
+        """The monthly spend cap is a 429 with no retry-after that keeps failing until access resumes."""
+        error = response.body.get("error") if isinstance(response.body, Mapping) else None
+        details = error.get("details") if isinstance(error, Mapping) else None
+        if response.status == 429 and isinstance(details, Mapping) and details.get("error_code") == "enforced_spend_limit_reached":
+            return "provider_spend_cap"
+        return None
 
     @staticmethod
     def _content(parts: list[dict[str, Any]]) -> list[dict[str, Any]]:
         blocks = []
         for part in parts:
             if part["type"] == "text":
-                if part["text"]:
+                if part["text"].strip():   # the API rejects empty or whitespace-only text blocks
                     blocks.append({"type": "text", "text": part["text"]})
             else:
                 blocks.append({"type": "image", "source": {"type": "base64", "media_type": part["media_type"],
@@ -253,6 +273,8 @@ class AnthropicMessagesAdapter:
         }
         if self.effort is not None:
             request["output_config"] = {"effort": self.effort}
+        if self.thinking is not None:
+            request["thinking"] = {"type": self.thinking}
         return request
 
     def parse_response(self, response: TransportResponse) -> ProviderReply:
@@ -272,7 +294,10 @@ class AnthropicMessagesAdapter:
                 raise ProviderProtocolError("a content block has no type")
         stop_details = body.get("stop_details")
         headers = {k.lower(): v for k, v in response.headers.items()}
-        return ProviderReply(text="\n".join(text), tool_calls=tuple(calls), stop=_ANTHROPIC_STOPS.get(body.get("stop_reason"), "other"),
+        usage = body.get("usage")
+        details = usage.get("output_tokens_details") if isinstance(usage, Mapping) else None
+        return ProviderReply(thinking_tokens=_count(details.get("thinking_tokens")) if isinstance(details, Mapping) else None,
+                             text="\n".join(text), tool_calls=tuple(calls), stop=_ANTHROPIC_STOPS.get(body.get("stop_reason"), "other"),
                              usage=parse_usage(body.get("usage")), request_id=headers.get("request-id") or body.get("id"),
                              model=body.get("model"),
                              refusal_category=stop_details.get("category") if isinstance(stop_details, Mapping) else None,

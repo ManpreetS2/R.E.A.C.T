@@ -1,7 +1,7 @@
 # Blind-play protocol v1 — DRAFT for owner review
 
 **Status (2026-10-27, amended 2026-10-28 for the macOS backend — see §12 — and 2026-10-30 for `keyset.v2` and the model
-gateway — see §13): DRAFT. Not approved, not pre-registered, not executed.** Nothing in this document selects a
+gateway — see §13 — and for live transport preparation, which corrects §5 — see §14): DRAFT. Not approved, not pre-registered, not executed.** Nothing in this document selects a
 model, authorizes an API key, or approves spending. Every value marked *proposed* is a recommendation for the owner
 to accept, change or reject. Prepared in Mission 014 on top of the isolated runtime (`docs/ISOLATED_PLAYER_RUNTIME.md`)
 and the Mission 013 environment (`docs/BLIND_VISUAL_FOUNDATION.md`), following PROJECT.md section 20.
@@ -229,3 +229,19 @@ These are proposals for the owner to accept or change.
   script, on deliberately small settings, and is not one of those baselines.
 
 Model requirements, the owner checklist, the pre-registration procedure and what remains are in `docs/OFFLINE_AI_GATEWAY.md`.
+
+## 14. Amendments 2026-10-30 (live transport preparation; still a draft)
+
+Nothing here was tested against a real API. These are proposals; the reasoning is in `docs/LIVE_TRANSPORT_PREPARATION.md`.
+
+* **Correction to §5 and §13.** §5 says thinking "cannot be turned off" on current Claude models. That is wrong for `claude-haiku-5-5`, which accepts `thinking: {"type": "disabled"}` at effort `high` or
+  below. §13 describes dropping returned thinking blocks. The provider's documentation requires them to be echoed during tool use, so that approach is not safe. The earlier wording stays in place as history.
+* **Thinking (needs a decision).** Proposed: `disabled`, the only mode the live gate accepts. It matches §5's "Hidden reasoning is not requested", and it means results describe the model without thinking. The other
+  options conflict with this protocol: keeping thinking requires either abandoning the last-four-screenshots policy or storing and replaying opaque blocks with a beta setting.
+* **Effort (new parameter, needs a decision).** Proposed for a smoke test: `low`. It is fixed for a session and hashed into its records.
+* **Smoke test status (needs a decision).** §7 and §11 place baselines and pre-registration before any model session. Proposed: a 1-episode, up-to-30-call technical smoke test, labelled as such and excluded from study
+  results, which requires amending that order for this one session. Per §5, nothing from it carries over to any later session.
+* **§10 inputs.** A 1280×720 screenshot is 1,196 tokens, not 1,229. Without thinking, the 600-output-token assumption is likely high rather than low. Prices re-read on 2026-10-30 match §10 for this model ($0.10/$0.50 per
+  MTok), and rise to $0.50/$2.50 for a prompt over 100,000 tokens, which the 90,000-token limit is there to prevent.
+* **New stopping conditions**, ending the session before further spending: the provider's monthly spend cap. An unexpected stop reason does not end the session, but the affected calls are not executed.
+* **§7 baselines were not run**, and nothing is pre-registered.

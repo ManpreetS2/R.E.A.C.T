@@ -47,9 +47,11 @@ PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 _CALL_ID = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
 _SECRET = re.compile(r"(sk-|sk_|ghp_|gho_|ghu_|ghs_|ghr_|github_pat_|glpat-|AKIA|ASIA|AIza|xox[abposr]-|hf_|r8_|eyJ)"
                      r"[A-Za-z0-9_\-.]{6,}|(?i:bearer\s+)[A-Za-z0-9_\-.]{6,}")
-# Status codes that the provider documents as "not processed": nothing to pay for.
-_NOT_BILLED_RETRYABLE = {429, 529}
-_UNCERTAIN_RETRYABLE = {408, 409, 500, 502, 503, 504}
+# A rate limit is refused before processing, so there is nothing to pay for. For everything else retryable the provider's
+# documentation does not say, so the call stays charged at worst case until reconciled against the provider's records.
+_NOT_BILLED_RETRYABLE = {429}
+_UNCERTAIN_RETRYABLE = {408, 409, 500, 502, 503, 504, 529}
+_TOOL_NAME = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
 
 
 def _now() -> str:
@@ -146,6 +148,8 @@ class GatewayConfig:
     # transport behaviour
     provider_timeout_seconds: float = 120.0
     max_retry_wait_seconds: float = 60.0
+    # provider-specific request settings that change what the model does (hashed, and checked against the adapter)
+    adapter_settings: tuple[tuple[str, str], ...] = ()
 
     def __post_init__(self) -> None:
         session, cumulative = spend_ledger.usd(self.session_cap_usd), spend_ledger.usd(self.cumulative_cap_usd)
@@ -227,6 +231,13 @@ class VisionGateway:
             raise LiveCallsDisabled("live model calls are disabled: only an offline transport may be used")
         if transport.is_offline and ledger.mode != spend_ledger.MODE_OFFLINE_MOCK:
             raise LiveCallsDisabled("an offline transport must not write to a live ledger")
+        if not transport.is_offline:
+            if ledger.mode != spend_ledger.MODE_LIVE:
+                raise LiveCallsDisabled("a live transport must write to a live ledger")
+            if getattr(transport, "authorized_config_sha256", None) != config.sha256():
+                raise LiveCallsDisabled("the live transport was not authorized for this exact configuration")
+        if tuple(tuple(x) for x in config.adapter_settings) != tuple(getattr(adapter, "settings", tuple)()):
+            raise ValueError("the configuration and the adapter disagree on the request settings")
         if adapter.provider_id != config.provider_id:
             raise ValueError("adapter and configuration name different providers")
         self.config = config
@@ -538,8 +549,14 @@ class VisionGateway:
         status = response.status
         headers = {str(k).lower(): v for k, v in response.headers.items()}
         detail = redact(response.body)
+        terminal = getattr(self.adapter, "terminal_error", lambda r: None)(response)
+        if terminal is not None:   # e.g. a monthly spend cap: retrying cannot help until the provider restores access
+            self.ledger.settle(reservation, charged=0, basis=f"{terminal}:not_billed", detail={"status": status})
+            self.counts["provider_errors"] += 1
+            self._record(dict(record, outcome={"kind": terminal, "status": status, "detail": detail, "charged_usd": "0"}))
+            raise self.stop(terminal)
         if status in _NOT_BILLED_RETRYABLE:
-            return self._failed(record, reservation, worst, kind="rate_limited" if status == 429 else "overloaded", detail=detail,
+            return self._failed(record, reservation, worst, kind="rate_limited", detail=detail,
                                 status=status, retry_after=headers.get("retry-after"), charge_worst=False)
         if status in _UNCERTAIN_RETRYABLE:
             return self._failed(record, reservation, worst, kind="server_error", detail=detail, status=status,
@@ -558,7 +575,8 @@ class VisionGateway:
                            detail={"usage": asdict(usage) if usage else None, "request_id": redact(reply.request_id, 128)})
         self._charged += charged
         outcome = {"kind": "reply", "stop": reply.stop, "request_id": redact(reply.request_id, 128), "provider_model": redact(reply.model, 128),
-                   "usage": asdict(usage) if usage else None, "charged_usd": str(charged), "charge_basis": basis,
+                   "usage": asdict(usage) if usage else None, "thinking_tokens": reply.thinking_tokens,
+                   "charged_usd": str(charged), "charge_basis": basis,
                    "discarded_blocks": list(reply.discarded_blocks), "refusal_category": redact(reply.refusal_category, 64) if reply.refusal_category else None,
                    "text": redact(reply.text, self.config.max_reply_text_chars),
                    "tool_calls": json.loads(redact_json(list(reply.tool_calls), 16384))}
@@ -622,7 +640,7 @@ class VisionGateway:
         for raw in raw_calls:
             error, canonical, arguments = self._check_call(raw, accepted, reply.stop)
             name = raw.get("name")
-            call = {"id": raw["id"], "name": name if isinstance(name, str) and len(name) <= 64 else "invalid", "arguments": arguments}
+            call = {"id": raw["id"], "name": name if isinstance(name, str) and _TOOL_NAME.match(name) else "invalid", "arguments": arguments}
             calls.append(call)
             if error is None:
                 accepted += 1
@@ -643,6 +661,8 @@ class VisionGateway:
             safe_arguments = {}
         if stop == "max_tokens":
             return "the reply was cut off by the output limit; this call was not executed", None, safe_arguments
+        if stop not in ("tool_use", "end_turn"):   # e.g. the context window ran out: the call may be incomplete
+            return "the reply stopped early; this call was not executed", None, safe_arguments
         name = raw.get("name")
         # "brief" is a valid player request but is not a model tool
         if not isinstance(name, str) or name not in {t["name"] for t in self.tools}:
