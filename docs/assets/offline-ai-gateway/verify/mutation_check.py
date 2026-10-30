@@ -17,6 +17,7 @@ import tempfile
 from pathlib import Path
 
 GATEWAY, LEDGER, CONTRACT, HOST = "model_gateway.py", "spend_ledger.py", "contract.py", "host.py"
+LIVE, PROVIDERS = "live_transport.py", "model_providers.py"
 
 # (name, file, exact text, replacement)
 MUTATIONS = [
@@ -54,9 +55,28 @@ MUTATIONS = [
     ("keyset.v2 still offers the speed key", CONTRACT, 'if k != "KeyS")', 'if k != "KeyQ")'),
     ("host forwards without asking the gateway", HOST, "self.gateway.authorize_game(tool, act)", "pass"),
     ("player may supply model content", HOST, 'if set(request) != {"tool"}:', "if False:"),
+    ("early-stopped replies executed", GATEWAY, 'if stop not in ("tool_use", "end_turn"):', "if False:"),
+    ("live transport not bound to the configuration", GATEWAY, 'if getattr(transport, "authorized_config_sha256", None) != config.sha256():', "if False:"),
+    ("live transport may use a mock ledger", GATEWAY, "if ledger.mode != spend_ledger.MODE_LIVE:", "if False:"),
+    ("spend cap retried", PROVIDERS, 'return "provider_spend_cap"', "return None"),
+    ("gate ignores the live flag", LIVE, "    if model_gateway.LIVE_CALLS_PERMITTED is not True:\n        raise model_gateway.LiveCallsDisabled(DISABLED_MESSAGE)\n    _refuse", "    _refuse"),
+    ("transport send ignores the live flag", LIVE, "        if model_gateway.LIVE_CALLS_PERMITTED is not True:\n            raise model_gateway.LiveCallsDisabled(DISABLED_MESSAGE)\n        extra", "        extra"),
+    ("gate allows an API key in the environment", LIVE, "    if found:\n        raise LiveGateRefused", "    if False:\n        raise LiveGateRefused"),
+    ("gate does not check the configuration hash", LIVE, "if auth.config_sha256 != config.sha256():", "if False:"),
+    ("gate accepts an expired authorization", LIVE, "if now >= expires:", "if False:"),
+    ("gate accepts a dirty checkout", LIVE, 'if state["dirty"] is not False or state["commit"] != auth.git_commit:', "if False:"),
+    ("gate accepts adaptive thinking", LIVE, "if auth.thinking not in SUPPORTED_THINKING:", "if False:"),
+    ("gate accepts a credential inside the repository", LIVE, "if resolved.is_relative_to(REPOSITORY):", "if False:"),
+    ("gate accepts any key format", LIVE, "if not _KEY_FORMAT.fullmatch(text):", "if False:"),
+    ("opening balance not enforced", LIVE, "if state.spent < opening:", "if False:"),
+    ("transport call count not limited", LIVE, "if self.requests_sent >= self.authorization.max_model_calls:", "if False:"),
+    ("transport sends unexpected request fields", LIVE, "if extra:", "if False:"),
+    ("transport sends a different model", LIVE, 'if wire_request.get("model") != self.authorization.model_id:', "if False:"),
+    ("human confirmation skipped", "live_session.py", "if not stdin.isatty():", "if False:"),
     ("host and gateway may disagree", HOST, 'raise ValueError("the host and the gateway disagree on the keyset, episodes, frames, wall clock or game requests")', "pass"),
 ]
-TESTS = ["tests/blindplay/test_model_gateway.py", "tests/blindplay/test_spend_ledger.py", "tests/blindplay/test_keyset_v2.py"]
+TESTS = ["tests/blindplay/test_model_gateway.py", "tests/blindplay/test_spend_ledger.py", "tests/blindplay/test_keyset_v2.py",
+         "tests/blindplay/test_live_transport.py"]
 
 
 def run(copy: Path) -> tuple[bool, str]:
