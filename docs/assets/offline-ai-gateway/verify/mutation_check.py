@@ -26,6 +26,7 @@ MUTATIONS = [
      'raise self.stop(f"budget_exhausted_{exc.scope}") from None', 'reservation = "unreserved"'),
     ("image window off by one", GATEWAY, 'keep = set(sorted(self._images)[-self.config.max_images_per_call:])',
      'keep = set(sorted(self._images)[-(self.config.max_images_per_call + 1):])'),
+    ("screenshots kept in memory beyond the window", GATEWAY, "for seq in sorted(self._images)[:-self.config.max_images_per_call]:", "for seq in []:"),
     ("outbound image guard removed", GATEWAY, 'if len(images) > self.config.max_images_per_call:', "if False:"),
     ("game accepts actions the model never made", GATEWAY, "if entry.canonical != (tool, act):", "if False:"),
     ("next turn allowed with calls pending", GATEWAY, "if self._next_executable() is not None and not self._batch_closed:", "if False:"),
@@ -58,11 +59,13 @@ MUTATIONS = [
 TESTS = ["tests/blindplay/test_model_gateway.py", "tests/blindplay/test_spend_ledger.py", "tests/blindplay/test_keyset_v2.py"]
 
 
-def run(repo: Path, src: Path) -> tuple[bool, str]:
-    env = dict(os.environ, PYTHONPATH=str(src), PYTHONDONTWRITEBYTECODE="1")
+def run(copy: Path) -> tuple[bool, str]:
+    # Run from inside the copy: pyproject.toml's pytest `pythonpath` would otherwise put the checkout's src first, and
+    # every mutation would "survive" because the mutated code was never imported (that happened; see DEVLOG).
+    env = dict(os.environ, PYTHONPATH=str(copy / "src"), PYTHONDONTWRITEBYTECODE="1")
     done = subprocess.run([sys.executable, "-m", "pytest", *TESTS, "-q", "-x", "--no-header", "-p", "no:cacheprovider",
                            "-k", "not same_inputs and not speed_key_records and not still_replays"],
-                          cwd=repo, env=env, capture_output=True, text=True, timeout=600)
+                          cwd=copy, env=env, capture_output=True, text=True, timeout=600)
     failed = [ln for ln in done.stdout.splitlines() if ln.startswith(("FAILED", "ERROR"))]
     return done.returncode == 0, failed[0][:160] if failed else done.stdout.strip().splitlines()[-1][:160]
 
@@ -71,10 +74,19 @@ def main(repo_arg: str, report_arg: str) -> int:
     repo = Path(repo_arg).resolve()
     results = []
     with tempfile.TemporaryDirectory(prefix="react-mutation-") as tmp:
-        src = Path(tmp) / "src"
-        shutil.copytree(repo / "src", src, ignore=shutil.ignore_patterns("__pycache__", "*.egg-info"))
-        package = src / "rewardbench" / "blindplay"
-        passed, summary = run(repo, src)
+        copy = Path(tmp)
+        ignore = shutil.ignore_patterns("__pycache__", "*.egg-info")
+        shutil.copytree(repo / "src", copy / "src", ignore=ignore)
+        shutil.copytree(repo / "tests" / "blindplay", copy / "tests" / "blindplay", ignore=ignore)
+        shutil.copytree(repo / "frontend" / "apollolander" / "upstream", copy / "frontend" / "apollolander" / "upstream")
+        shutil.copy(repo / "pyproject.toml", copy / "pyproject.toml")
+        package = copy / "src" / "rewardbench" / "blindplay"
+        imported = subprocess.run([sys.executable, "-c", "from rewardbench.blindplay import contract; print(contract.__file__)"],
+                                  cwd=copy, env=dict(os.environ, PYTHONPATH=str(copy / "src")), capture_output=True, text=True).stdout
+        if not Path(imported.strip()).resolve().is_relative_to(copy.resolve()):
+            print("the copy is not what gets imported:", imported)
+            return 2
+        passed, summary = run(copy)
         if not passed:
             print("the unmodified copy does not pass:", summary)
             return 2
@@ -86,7 +98,7 @@ def main(repo_arg: str, report_arg: str) -> int:
                 continue
             path.write_text(original.replace(old, new), encoding="utf-8")
             try:
-                survived, detail = run(repo, src)
+                survived, detail = run(copy)
             finally:
                 path.write_text(original, encoding="utf-8")
             results.append({"mutation": name, "result": "SURVIVED" if survived else "caught", "detail": detail})

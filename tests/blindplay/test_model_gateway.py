@@ -296,6 +296,21 @@ def test_gateway_keeps_only_the_window_in_memory(tmp_path):
     assert len(gateway._images) == 4
 
 
+def test_the_window_holds_by_itself_even_if_more_images_are_in_memory(tmp_path):
+    """Three layers keep images down (memory trim, window, outbound guard); each must work on its own."""
+    gateway, _, _, _ = make(tmp_path)
+    game = opened(gateway)
+    gateway._messages.append({"role": "user", "content": []})
+    for _ in range(5):
+        obs = game.observation()
+        gateway._images[obs["seq"]] = obs["image"]["base64"]
+        gateway._messages[-1]["content"].append({"type": "image", "media_type": "image/png", "seq": obs["seq"], "sha256": obs["image"]["sha256"]})
+    request = gateway._request()
+    images = [p for m in request["messages"] for p in m["content"] if p["type"] == "image"]
+    assert [p["seq"] for p in images] == [3, 4, 5, 6]
+    gateway._guard(request)
+
+
 @pytest.mark.parametrize("window", [1, 2, 4])
 def test_outbound_guard_blocks_more_images_than_the_policy_whatever_the_code_above_did(tmp_path, window):
     gateway, provider, _, records = make(tmp_path, max_images_per_call=window)

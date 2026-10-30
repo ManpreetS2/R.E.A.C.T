@@ -35,3 +35,12 @@ charged. Every "model" was a fixed script (a mocked provider), and every sandbox
    session cap above the cumulative cap (the configuration correctly refused it); a second session whose own cap fired before
    the cumulative one (rewritten to test the cumulative cap directly); a test host missing its start time. None of these changed a
    safety rule.
+8. **Host and gateway could disagree on one limit.** Episodes, frames, wall clock and keyset had to match, but not the game-request
+   budget (P1: 1,000; the host's default: 20,000). Added to the check.
+9. **Mutation check, and a harness mistake.** `verify/mutation_check.py` breaks one safety rule at a time in a throwaway copy and
+   requires a test to fail. The first run reported every mutation as surviving, including `LIVE_CALLS_PERMITTED = True`, which a
+   test checks directly. That was impossible, so the harness was wrong: `pyproject.toml`'s `pythonpath = ["src", ...]` made pytest
+   import the checkout instead of the mutated copy. It now runs from inside the copy and first verifies which file gets imported.
+10. **A real test gap.** The corrected run caught 30 of 31. The survivor, an off-by-one in the screenshot window, was hidden by a second
+    layer (memory holds only 4 images anyway), so the window's own logic had no direct test. Added one, and a mutation for the memory
+    layer. Final result in the evidence file.

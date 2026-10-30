@@ -222,6 +222,23 @@ reservation that fits both caps.
    defence against kernel exploits. Linux has no backend; the gateway's logic tests run there, the sandbox tests do not.
 8. **macOS was verified by CI only in this mission**; this work was done on the Windows PC.
 
+## Verification
+
+On the Windows PC (Python 3.13, Chromium, AppContainer required): **774 tests collected, 765 passed, 9 skipped (POSIX or macOS
+only), 0 failed**, including 334 blind-play tests, of which 235 are new. Evidence: `docs/assets/offline-ai-gateway/evidence-2026-10-30.json`.
+
+* **Real sandbox, real game, mocked provider:** normal play, hostile replies, budget exhaustion, gateway crash, and the player,
+  referee and host each killed mid-session. The Mission 014 attack suite still passes unchanged.
+* **Attacks from inside the sandbox with a gateway attached:** reading the ledger, the gateway's records and a fake credential file;
+  network; 13 protocol attacks (smuggled history, choosing the model, forged actions, the speed key, replaying a call). All denied,
+  none reached the referee or the provider.
+* **Mutation check** (`docs/assets/offline-ai-gateway/verify/mutation_check.py`): 32 of 32 deliberately broken safety rules were
+  caught by the browser-free tests.
+* **Offline demo:** the mocked session's referee record replays identically; ledger and transcript agree; at most 4 images in any
+  call; no privileged word in anything sent.
+
+CI results are recorded in the devlog.
+
 ## Commands
 
 ```powershell
