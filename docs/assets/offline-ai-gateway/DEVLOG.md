@@ -43,4 +43,9 @@ charged. Every "model" was a fixed script (a mocked provider), and every sandbox
    import the checkout instead of the mutated copy. It now runs from inside the copy and first verifies which file gets imported.
 10. **A real test gap.** The corrected run caught 30 of 31. The survivor, an off-by-one in the screenshot window, was hidden by a second
     layer (memory holds only 4 images anyway), so the window's own logic had no direct test. Added one, and a mutation for the memory
-    layer. Final result in the evidence file.
+    layer. Final result: 32 of 32 caught.
+11. **CI.** Green on Windows, macOS and Ubuntu for `76f7eb6` (runs 41112768451, 41112823564) and `ac3d45e` (runs 41115293177,
+    41115306128). Isolation is required on Windows and macOS: `test_gateway_isolated.py` and `test_isolation.py` raise at import if the
+    sandbox or browser is missing, so a green job means those tests ran. Linux runs the gateway's logic and keyset tests and the
+    fail-closed checks; it has no sandbox backend. The project's pytest settings suppress the summary line, so per-OS test counts
+    are not in the logs. The macOS results are CI only; this mission did not use the MacBook.
