@@ -22,6 +22,9 @@ Session layout (``out``, never inside the sandbox's reach):
     gateway_transcript.jsonl exactly what a model was sent (images as sha256) and what it returned
     referee/                 the referee's session (Mission 013 layout; replayable with ``replay.py``)
 
+With a ``model_gateway.VisionGateway`` (mode ``model``) the host's conversation replaces the player's: ``{"tool":
+"model"}`` carries no content, and a game request is forwarded only if it is the model's next validated tool call.
+
     python -m rewardbench.blindplay.host --out runs/blind-visual/<id> --mode scripted --script idle --episodes 2
 """
 
@@ -41,7 +44,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol
 
-from rewardbench.blindplay import contract, isolation, runtime_image, serve, session
+from rewardbench.blindplay import contract, isolation, model_gateway, runtime_image, serve, session
 
 HOST_SCHEMA = "react.blindplay.host-session.v1"
 MAX_GAME_LINE = serve.MAX_LINE_BYTES
@@ -101,7 +104,7 @@ class ScriptedGateway:
 @dataclass
 class HostConfig:
     out: Path
-    mode: str                                    # scripted | probe | agent
+    mode: str                                    # scripted | probe | agent | model | gateway-probe
     player_label: str
     script: str = "idle"
     script_seed: int = 0
@@ -115,6 +118,7 @@ class HostConfig:
     image_window: int = 4
     probe_targets: dict[str, Any] = field(default_factory=dict)   # security tests only
     image_root: Path | None = None
+    keyset: str = contract.V1.keyset
 
     def player_args(self, image: Path) -> list[str]:
         args = ["-I", "-S", "-B", str(image / "player" / "runtime.py"), "--mode", self.mode]
@@ -122,9 +126,9 @@ class HostConfig:
             args += ["--script", self.script, "--script-seed", str(self.script_seed)]
         elif self.mode == "agent":
             args += ["--image-window", str(self.image_window), "--max-model-calls", str(self.max_model_calls)]
-        elif self.mode == "probe":
+        elif self.mode in ("probe", "gateway-probe"):
             args += ["--probe-targets", json.dumps(self.probe_targets)]
-        else:
+        elif self.mode != "model":
             raise ValueError(f"unknown mode {self.mode}")
         return args
 
@@ -141,8 +145,19 @@ class Host:
                 f"{exposed}. Move them to host-only storage (see docs/ISOLATED_PLAYER_RUNTIME.md).")
         self.config = config
         self.gateway = gateway or DisabledGateway()
+        self.contract = contract.version_for(config.keyset)
+        self.owned = bool(getattr(self.gateway, "owns_history", False))   # model_gateway.VisionGateway
         if config.mode == "agent" and self.gateway.is_model and config.max_model_calls < 1:
             raise ValueError("a model gateway needs a positive max_model_calls")
+        if self.gateway.is_model and not self.owned:
+            raise ValueError("a real model may only run behind a gateway that owns the conversation")
+        if self.owned != (config.mode in ("model", "gateway-probe")):
+            raise ValueError(f"mode {config.mode!r} does not match gateway {self.gateway.name!r}")
+        if self.owned:
+            g = self.gateway.config
+            if (g.keyset, g.max_episodes, g.episode_frame_budget, g.max_wall_seconds, g.max_game_requests) != \
+                    (config.keyset, config.max_episodes, config.episode_frame_budget, config.max_wall_seconds, config.max_requests):
+                raise ValueError("the host and the gateway disagree on the keyset, episodes, frames, wall clock or game requests")
         self.out = Path(config.out)
         if self.out.exists() and any(self.out.iterdir()):
             raise FileExistsError(f"{self.out} is not empty; records are never overwritten")
@@ -152,9 +167,13 @@ class Host:
                        "model_rejected": 0}
         self.status = "starting"
         self.failure: str | None = None
+        self.gateway_failure: str | None = None
+        self.watchdog_fired = False
         self._files = {n: open(self.out / n, "a", encoding="utf-8")
                        for n in ("host_transcript.jsonl", "player_stderr.jsonl", "gateway_transcript.jsonl")}
         self._lock = threading.Lock()
+        if self.owned:
+            self.gateway.bind_sink(lambda record: self._append("gateway_transcript.jsonl", record))
 
     # ------------------------------------------------------------------ records
     def _append(self, name: str, record: dict[str, Any]) -> None:
@@ -176,6 +195,8 @@ class Host:
             "player_command": getattr(self, "player_command", None),
             "player_exit_code": getattr(self, "player_exit_code", None),   # negative = killed by that signal (POSIX)
             "counts": dict(self.counts),
+            "gateway_session": self.gateway.manifest() if self.owned else None,
+            "gateway_failure": self.gateway_failure, "watchdog_fired": self.watchdog_fired,
         }
 
     def _write_manifest(self) -> None:
@@ -190,8 +211,9 @@ class Host:
                                 "--player-label", c.player_label, "--player-is-ai", str(bool(self.gateway.is_model)).lower(),
                                 "--seed", str(c.seed), "--episode-frame-budget", str(c.episode_frame_budget),
                                 "--max-episodes", str(c.max_episodes), "--max-requests", str(c.max_requests),
-                                "--max-wall-seconds", str(c.max_wall_seconds)]
-        env = dict(os.environ)
+                                "--max-wall-seconds", str(c.max_wall_seconds), "--keyset", c.keyset]
+        # the referee and its browser never need a credential, so a provider key in the host's environment stays out
+        env = {k: v for k, v in os.environ.items() if not isolation.looks_like_credential(k, v)}
         src = str(Path(__file__).resolve().parents[2])
         env["PYTHONPATH"] = src + (os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
         return subprocess.Popen(self.referee_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
@@ -223,20 +245,40 @@ class Host:
     # ------------------------------------------------------------------ broker
     def _reject(self, message: str) -> bytes:
         self.counts["rejected_by_host"] += 1
-        return json.dumps(contract.error(message)).encode("utf-8") + b"\n"
+        return json.dumps(contract.error(message, self.contract)).encode("utf-8") + b"\n"
+
+    def _gateway_ended(self) -> bytes:
+        """The player learns only that the session is over, never why (the reason stays in the host's records)."""
+        return self._reject(model_gateway.ENDED_MESSAGE)
+
+    def _gateway_crashed(self, exc: BaseException) -> bytes:
+        self.gateway_failure = f"{type(exc).__name__}: {model_gateway.redact(exc, 2000)}"
+        return self._gateway_ended()
 
     def _handle_game(self, request: Any) -> tuple[bytes, str]:
         try:
-            tool, act = contract.parse_request(request)
+            tool, act = contract.parse_request(request, self.contract)
         except contract.ActionRejected as exc:
             return self._reject(str(exc)), "rejected"
+        if self.owned:
+            try:
+                self.gateway.authorize_game(tool, act)
+            except model_gateway.GatewayRejected as exc:
+                return self._reject(str(exc)), "rejected"
         canonical: dict[str, Any] = {"tool": tool}
         if act is not None:
             canonical.update(keys=list(act.keys), frames=act.frames)
         line = self._referee_call(canonical)
         self.counts["forwarded_to_referee"] += 1
         reply = json.loads(line)
-        if "image" in reply:
+        if self.owned:
+            try:
+                self.gateway.record_game(reply)
+            except model_gateway.GatewayStopped:
+                return self._gateway_ended(), "gateway_stopped"
+            except Exception as exc:  # noqa: BLE001 - a broken gateway ends the session; it never crashes the referee
+                return self._gateway_crashed(exc), "gateway_crashed"
+        elif "image" in reply:
             self.images[reply["seq"]] = {"sha256": reply["image"]["sha256"], "base64": reply["image"]["base64"]}
         return line, "forwarded"
 
@@ -270,7 +312,27 @@ class Host:
             raise contract.ActionRejected(f"at most {self.config.max_images_per_model_call} screenshots per model call")
         return resolved
 
+    def _handle_owned_model(self, request: dict[str, Any]) -> tuple[bytes, str]:
+        """The gateway owns the conversation, so a player can only say "next turn" and cannot supply any content."""
+        if set(request) != {"tool"}:
+            self.counts["model_rejected"] += 1
+            return self._reject("model requests carry no fields; the host owns the conversation"), "rejected"
+        try:
+            reply = self.gateway.turn()
+        except model_gateway.GatewayRejected as exc:
+            self.counts["model_rejected"] += 1
+            return self._reject(str(exc)), "rejected"
+        except model_gateway.GatewayStopped:
+            return self._gateway_ended(), "gateway_stopped"
+        except Exception as exc:  # noqa: BLE001 - recorded; any open reservation stays charged at its worst case
+            return self._gateway_crashed(exc), "gateway_crashed"
+        finally:
+            self.counts["model_calls"] = self.gateway.counts["model_calls"]
+        return json.dumps(reply).encode("utf-8") + b"\n", "model"
+
     def _handle_model(self, request: Any) -> tuple[bytes, str]:
+        if self.owned:
+            return self._handle_owned_model(request)
         if set(request) != {"tool", "messages"}:
             self.counts["model_rejected"] += 1
             return self._reject("model requests contain only messages"), "rejected"
@@ -350,6 +412,7 @@ class Host:
         self._write_manifest()
         self._referee = self._start_referee()
         player = drain = None
+        watchdog = None
         deadline = time.monotonic() + c.max_wall_seconds + 60
         try:
             isolation.reset_profile()
@@ -357,10 +420,19 @@ class Host:
             self.player_command = [str(runtime_image.python_executable(image)), *args]
             player = isolation.launch(runtime_image.python_executable(image), args, cwd=image,
                                       extra_readable=runtime_image.external_libraries(image))
+            self.player = player
             self.status = "running"
             self._write_manifest()
             drain = threading.Thread(target=self._drain_stderr, args=(player.stderr,), daemon=True)
             drain.start()
+
+            def expire() -> None:   # a silent player would otherwise block the read below forever
+                self.watchdog_fired = True
+                player.kill()
+
+            watchdog = threading.Timer(c.max_wall_seconds + 60, expire)
+            watchdog.daemon = True
+            watchdog.start()
             while time.monotonic() < deadline and self.counts["player_lines"] < c.max_requests + 1000:
                 item = self._read_player_line(player.stdout)
                 if item is None:
@@ -384,12 +456,14 @@ class Host:
                     "raw_bytes": len(raw), "raw_sha256": hashlib.sha256(raw).hexdigest(),
                     "raw_head_base64": base64.b64encode(raw[:RECORDED_RAW_BYTES]).decode("ascii"), "overlong": overlong,
                     "decision": decision, "response": summary})
-            self.status = "closed"
+            self.status = "aborted_gateway_failure" if self.gateway_failure else "closed"
         except BaseException as exc:
             self.status = "aborted_host_failure"
             self.failure = f"{type(exc).__name__}: {str(exc)[:2000]}"
             raise
         finally:
+            if watchdog is not None:
+                watchdog.cancel()
             if player is not None:
                 try:
                     player.stdin.close()
@@ -401,7 +475,10 @@ class Host:
                 player.close()
                 if getattr(player, "killed_for_memory", False):
                     self.status, self.failure = "aborted_player_memory_limit", "player exceeded the memory limit"
-            self._referee.stdin.close()
+            try:
+                self._referee.stdin.close()
+            except OSError:   # the referee already died, with data still in the pipe's buffer
+                pass
             try:
                 self._referee.wait(120)
             except subprocess.TimeoutExpired:

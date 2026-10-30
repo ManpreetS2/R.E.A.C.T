@@ -4,16 +4,19 @@ Standard library only; imports nothing from the repository (the sandbox could no
 It talks to the trusted host over its own stdin/stdout, one JSON object per line:
 
     {"tool": "brief"} | {"tool": "observe"} | {"tool": "act", "keys": [...], "frames": n}
-    {"tool": "model", "messages": [...]}      (host-side model gateway; disabled unless the host enables it)
+    {"tool": "model", "messages": [...]}      (Mission 014 scripted gateway; disabled unless the host enables it)
+    {"tool": "model"}                         (host-side model gateway; the host owns the conversation)
 
 Modes (chosen by the host, which builds this command line; the player cannot choose):
 
 * ``scripted``  NON-AI stand-in input scripts (idle, key-sweep, seeded-random) that never look at the screen.
 * ``probe``     NON-AI security stand-in: tries to break out of the sandbox and to misuse the host
                 protocol, reports every result as JSON lines on stderr, then plays a fixed scripted input.
-* ``agent``     the loop a future vision model would run in: screenshots go to the model only through
-                the host gateway (as references the host resolves), tool calls come back and are executed
-                through the host. The model never gets any other tool.
+* ``agent``     Mission 014's plumbing loop for the scripted not-a-model gateway. Screenshots go to it as references the
+                host resolves, and this side keeps the message list. The host refuses a real model in this mode.
+* ``model``     the relay used with the host's model gateway (``model_gateway.py``), which owns the conversation:
+                ``{"tool": "model"}`` asks for the next reply and validated tool calls come back to be pressed.
+* ``gateway-probe``  NON-AI security stand-in: attacks the gateway's rules from inside the sandbox.
 """
 
 from __future__ import annotations
@@ -136,6 +139,36 @@ def run_agent(host: Host, image_window: int, max_model_calls: int) -> int:
     return 0
 
 
+def run_model_session(host: Host) -> int:
+    """The loop behind the host's model gateway. The host owns the conversation; this only relays. It asks for the next
+    turn, then presses what the model asked for. The model's words and the provider never come near the sandbox."""
+    host.brief()
+    obs = host.observe()
+    turns = 0
+    while "error" not in obs:
+        reply = host.call({"tool": "model"})
+        turns += 1
+        if "error" in reply:
+            report(event="model_session_ended", turns=turns, detail=reply["error"])
+            return 0
+        for call in reply["tool_calls"]:
+            if call["name"] == "observe":
+                obs = host.observe()
+            else:
+                obs = host.call({"tool": "act", "keys": call["arguments"]["keys"], "frames": call["arguments"]["frames"]})
+            if obs.get("session_over"):
+                report(event="model_session_ended", turns=turns, detail="session over")
+                return 0
+            if "error" in obs:
+                report(event="game_request_failed", detail=obs["error"])
+                obs = {}    # the model is told; only its next turn decides what happens
+                break
+            if obs.get("episode_ended"):
+                break       # the rest of this batch was meant for the episode that just ended
+    report(event="model_session_ended", turns=turns, detail=obs["error"])
+    return 0
+
+
 def _window(messages: list, image_window: int) -> list:
     seen = 0
     out = []
@@ -153,7 +186,7 @@ def _window(messages: list, image_window: int) -> list:
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(prog="player_runtime")
-    parser.add_argument("--mode", choices=("scripted", "probe", "agent"), required=True)
+    parser.add_argument("--mode", choices=("scripted", "probe", "agent", "model", "gateway-probe"), required=True)
     parser.add_argument("--script", default="idle")
     parser.add_argument("--script-seed", type=int, default=0)
     parser.add_argument("--probe-targets", default="{}", help="JSON; probe mode only (security tests)")
@@ -165,7 +198,11 @@ def main(argv=None) -> int:
         return run_scripted(host, args.script, args.script_seed)
     if args.mode == "agent":
         return run_agent(host, args.image_window, args.max_model_calls)
+    if args.mode == "model":
+        return run_model_session(host)
     import probes
+    if args.mode == "gateway-probe":
+        return probes.run_gateway_attacks(host, json.loads(args.probe_targets))
     return probes.run(host, json.loads(args.probe_targets))
 
 

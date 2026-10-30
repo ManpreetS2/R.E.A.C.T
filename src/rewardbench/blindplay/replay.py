@@ -45,7 +45,7 @@ def replay(original: Path, *, label: str | None = None) -> dict[str, Any]:
                              episode_frame_budget=budgets["episode_frame_budget"],
                              max_episodes=budgets["max_episodes"], max_requests=budgets["max_requests"],
                              player_label=label or f"replay of {original.name} (referee verification, not a player)",
-                             player_is_ai=False) as s:
+                             player_is_ai=False, keyset=manifest["player_contract"]["keyset"]) as s:
         for entry in transcript:
             if "raw_line_base64" in entry:   # arrived over serve: re-decode the exact bytes the same way
                 raw = base64.b64decode(entry["raw_line_base64"])

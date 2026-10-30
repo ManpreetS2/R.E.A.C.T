@@ -86,6 +86,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--max-episodes", type=int, default=session.DEFAULT_MAX_EPISODES)
     parser.add_argument("--max-requests", type=int, default=session.DEFAULT_MAX_REQUESTS)
     parser.add_argument("--max-wall-seconds", type=float, default=None)
+    parser.add_argument("--keyset", choices=sorted(contract.CONTRACTS), default=contract.V1.keyset)
     args = parser.parse_args(argv)
 
     args.out.mkdir(parents=True, exist_ok=True)
@@ -102,7 +103,7 @@ def main(argv: list[str] | None = None) -> int:
     with session.Session(args.out, seed=args.seed, episode_frame_budget=args.episode_frame_budget,
                          max_episodes=args.max_episodes, max_requests=args.max_requests,
                          max_wall_seconds=args.max_wall_seconds, player_label=args.player_label,
-                         player_is_ai=args.player_is_ai, allow_files={"referee_stderr.log"}) as s:
+                         player_is_ai=args.player_is_ai, allow_files={"referee_stderr.log"}, keyset=args.keyset) as s:
         for raw in read_lines(sys.stdin.buffer):
             if not raw.strip():
                 continue

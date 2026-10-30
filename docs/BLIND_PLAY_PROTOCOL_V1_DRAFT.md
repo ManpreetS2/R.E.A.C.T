@@ -1,7 +1,7 @@
 # Blind-play protocol v1 — DRAFT for owner review
 
-**Status (2026-10-27, amended 2026-10-28 for the macOS backend — see §12): DRAFT. Not approved, not
-pre-registered, not executed.** Nothing in this document selects a
+**Status (2026-10-27, amended 2026-10-28 for the macOS backend — see §12 — and 2026-10-30 for `keyset.v2` and the model
+gateway — see §13): DRAFT. Not approved, not pre-registered, not executed.** Nothing in this document selects a
 model, authorizes an API key, or approves spending. Every value marked *proposed* is a recommendation for the owner
 to accept, change or reject. Prepared in Mission 014 on top of the isolated runtime (`docs/ISOLATED_PLAYER_RUNTIME.md`)
 and the Mission 013 environment (`docs/BLIND_VISUAL_FOUNDATION.md`), following PROJECT.md section 20.
@@ -39,13 +39,16 @@ including crashes, refusals, errors and sessions with no landing.
 | Game requests per session | **1,000** | Referee `max_requests` |
 | Screenshots per model call | **4** (the most recent; older ones replaced by a text note) | Host-enforced |
 | Wall-clock per session | **2 hours** | Host-enforced |
-| Spend per session / cumulative | **Owner to set** | Host must stop *before* a call whose worst-case cost would exceed the cap (§10) |
+| Spend per session / cumulative | **Owner to set** | Host stops *before* a call whose worst-case cost would exceed a cap (`docs/OFFLINE_AI_GATEWAY.md`, Money) |
+| Output tokens per model call | **2,048** (added 2026-10-30) | Sets the worst-case cost; a reply cut off here is not executed |
+| Estimated context per model call | **90,000 tokens** (added 2026-10-30) | The estimate is a deliberate overestimate; history is never silently shortened, the session stops instead |
 
 ## 4. Permitted inputs and the upstream `S` key
 
-The player may press any subset of `keyset.v1` (alphabetical, no meanings given): ArrowDown, ArrowLeft, ArrowRight,
-ArrowUp, Enter, Escape, KeyA, KeyD, KeyS, KeyW, ShiftLeft, Space. Several do nothing in this game; finding out which
-is part of the task.
+*Proposed since 2026-10-30:* the player may press any subset of **`keyset.v2`** (alphabetical, no meanings given):
+ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Enter, Escape, KeyA, KeyD, KeyW, ShiftLeft, Space. Several do nothing in this
+game; finding out which is part of the task. `keyset.v2` is built and tested but **still needs owner approval**; the
+gateway accepts only it. `keyset.v1` (the same plus KeyS) remains frozen for replaying earlier sessions.
 
 **`KeyS` needs an owner decision.** Upstream `game.js` `checkKeys()` contains `// SPEED MODE!` — while `S` is held,
 `lander.update()` runs 3 extra times per frame (4× physics). It is an undocumented developer feature: nothing on screen
@@ -64,7 +67,7 @@ Either way the choice is fixed before the first session and never changed mid-st
 **Sent to the model on every call** (exactly; logged in `gateway_transcript.jsonl`):
 
 * System text: `Land the rocket.`
-* Two tools, verbatim from `contract.TOOLS`: `observe` ("Return the current game screen as an image. Does not
+* Two tools, verbatim from `contract.V2.tools`: `observe` ("Return the current game screen as an image. Does not
   advance the game.") and `act` ("Press and hold the listed keys (none, one or several) for the given number of game
   frames, then release them, and return the game screen. The game is paused between calls; it runs at 60 frames per
   second of game time."), with the key enumeration and `1 ≤ frames ≤ 120`.
@@ -73,8 +76,10 @@ Either way the choice is fixed before the first session and never changed mid-st
   `episode_frame_budget`, `max_episodes`, `frames_advanced`, `episode_ended`, `session_over`) and the new screenshot
   (1280×720 PNG). Everything about the game (score, time, fuel, altitude, velocities, outcome messages) comes only from
   the authentic on-screen HUD.
-* If a reply contains no tool call, the runtime adds the fixed procedural text `Use a tool to continue.` (disclosed
+* If a reply contains no tool call, the host adds the fixed procedural text `Use a tool to continue.` (disclosed
   here; it carries no strategy).
+* A rejected tool call is answered with a fixed or contract-generated error (the full list is in
+  `docs/OFFLINE_AI_GATEWAY.md`). None describes the game.
 
 **Never sent:** control mappings, physics, rules, scores beyond the screen, referee state, previous sessions, other
 models' results, any hint after failure. No provider-side tools (web search, code execution, memory) are enabled.
@@ -86,7 +91,8 @@ models' results, any hint after failure. No provider-side tools (web search, cod
   become `[earlier screenshot omitted]`. So the model can remember what it tried in earlier episodes in its own words.
 * *Across sessions:* nothing. New conversation, container storage wiped (macOS: the sandbox has no writable storage at all), no provider memory features, no notes
   carried over. Prompt caching (if used) is a billing feature, not memory.
-* Hidden reasoning is not requested or stored; only what the model visibly returns.
+* Hidden reasoning is not requested, stored or sent back; only what the model visibly returns. On current Claude models
+  thinking cannot be turned off and is still billed; see §13.
 
 ## 6. Outcomes
 
@@ -134,9 +140,10 @@ Already implemented and tested: host transcript (every player line), player stde
 what the model received, images by sha256, and its replies), referee transcript, every screenshot, privileged
 per-frame referee state, episode receipts, runtime-image digest, container SID, browser/Playwright/Python versions,
 upstream and clock hashes, git commit. Deterministic replay re-runs the referee transcript in a fresh browser and must
-reproduce every screenshot. To add with the provider gateway: provider request IDs, exact model version string,
-token usage and computed cost per call, refusal/stop reasons. Raw data stays local (gitignored); summaries and hashes
-go to the repository.
+reproduce every screenshot. Since 2026-10-30 the gateway also records, tested with a mocked provider only: provider
+request IDs, the model string each reply reports, token usage and computed cost per call, refusal/stop reasons, a
+hash-chained call transcript, the configuration hash and the tool-schema hash. Raw data stays local (gitignored);
+summaries and hashes go to the repository.
 
 ## 10. Model options and approximate cost (for owner review — none selected)
 
@@ -170,13 +177,11 @@ OpenAI entries must be confirmed before choosing them.
 
 1. **Owner decisions:** accept or amend this protocol; the `S` option (§4); the model, provider and exact model ID;
    per-session and cumulative spend caps; the number of sessions; smoke test or full P1.
-2. **Build the provider gateway** in `host.py` (not done): credentials read by the host from host-only storage (never
+2. **Provider gateway:** built and verified offline on 2026-10-30 (`docs/OFFLINE_AI_GATEWAY.md`). **Still to add, with
+   owner approval:** a live transport with credentials read by the host from host-only storage (never
    `setx`/`HKCU\Environment`, which the Windows sandbox can read; on macOS a host-only file or the login keychain,
-   both unreadable from the Seatbelt sandbox); fixed model ID and parameters; message/tool/image
-   translation; usage and cost ledger with a pre-call worst-case check and hard stop; provider request IDs logged; no
-   provider-side tools. Verify it **offline with a mocked transport** (budget stop, refusal, malformed tool calls,
-   oversized replies) at zero cost.
-3. If option B: implement `keyset.v2`, update the contract tests, re-run all isolation and foundation tests.
+   both unreadable from the Seatbelt sandbox), and enabling live calls.
+3. `keyset.v2` (option B): implemented and tested on 2026-10-30; owner approval outstanding.
 4. Provider-side spending limit configured by the owner.
 5. Record the §7 scripted baselines through the isolated host with the final settings.
 6. **Pre-register:** commit the final protocol, host configuration and gateway code; record the commit hash and
@@ -196,3 +201,31 @@ later protocols.
   provider, model ID; spend caps; number of sessions; smoke test or full P1. The §10 prices are copied from the
   2026-10-14 catalog and must be re-verified on the providers' pages before any approval; no model was called to
   check them.
+
+## 13. Amendments 2026-10-30 (`keyset.v2` and the model gateway; still a draft)
+
+Everything here was built and tested with a **mocked provider only**. No model has played, and no API has been called.
+These are proposals for the owner to accept or change.
+
+* **Keyset:** option B of §4 is implemented as `keyset.v2`. Choosing it is still an owner decision.
+* **The host owns the conversation** (changes §5's mechanism, not what the model sees). The sandboxed player only asks for
+  the next turn and presses what comes back; a game request is forwarded only if it is the model's next validated call.
+* **Batches stop at the end of an episode (new).** If a reply holds several tool calls and one ends the episode, the rest are
+  not executed and are answered with `not executed: the episode ended`, so keys meant for one episode cannot land in the next.
+* **Every tool call is answered (changes §3's "extra calls dropped").** Providers require an answer for each call, so extras
+  beyond 8 get a fixed error instead of silence. Invalid calls are answered the same way, and a reply with no valid call counts
+  toward stopping rule 6.
+* **New stopping conditions**, all ending the session before further spending: estimated context above the limit, a reply from a
+  different model than the pre-registered one, a reply without usage numbers, more output than requested, an invalid
+  screenshot, a game reply with fields outside the contract.
+* **Stopping rule 5** counts only consecutive failed calls, and each retry counts toward the 150 model calls and the budget.
+  Rate-limit waits are capped at 60 s each and count toward the 2 hours.
+* **Thinking is not replayed.** Replacing old screenshots with a note edits earlier turns, which current Claude models reject when
+  thinking blocks are replayed on enforced accounts. The model keeps its visible text and tool calls only. Thinking still costs
+  output tokens, so §10's 600-token assumption may be low for those models, and the cost table's uncertainty stands until a smoke
+  test measures it. Output is capped at 2,048 tokens per call, which may also cut off a heavily thinking model; the smoke test must
+  check how often this happens.
+* **§7 baselines were not run.** The offline demonstration (`rewardbench.blindplay.offline_demo`) is a pipeline check with a fixed
+  script, on deliberately small settings, and is not one of those baselines.
+
+Model requirements, the owner checklist, the pre-registration procedure and what remains are in `docs/OFFLINE_AI_GATEWAY.md`.

@@ -64,7 +64,9 @@ class Session:
     def __init__(self, out: Path, *, seed: int = 0, episode_frame_budget: int = DEFAULT_EPISODE_FRAME_BUDGET,
                  max_episodes: int = DEFAULT_MAX_EPISODES, max_requests: int = DEFAULT_MAX_REQUESTS,
                  max_wall_seconds: float | None = None, player_label: str, player_is_ai: bool,
-                 ref: referee_mod.Referee | None = None, allow_files: set[str] | None = None) -> None:
+                 ref: referee_mod.Referee | None = None, allow_files: set[str] | None = None,
+                 keyset: str = contract.V1.keyset) -> None:
+        self.contract = contract.version_for(keyset)
         if not player_label:
             raise ValueError("player_label is required (who or what is playing)")
         if episode_frame_budget < 1 or max_episodes < 1 or max_requests < 1:
@@ -131,11 +133,13 @@ class Session:
                     "referee clicks to start; the title screen is never shown to the player",
                     "an episode ends at the first terminal event (upstream would continue with a new life)",
                     "time zone UTC and locale en-US pinned; network limited to the pinned upstream files",
-                    "upstream speed mode (KeyS) runs 4 physics updates per frame; frame limits bound frames",
+                    "upstream speed mode (KeyS) runs 4 physics updates per frame; frame limits bound frames"
+                    if "KeyS" in self.contract.keys else
+                    "upstream developer speed mode (KeyS) not offered to the player (keyset.v2)",
                 ],
             },
-            "player_contract": {"protocol": contract.PROTOCOL, "objective": contract.OBJECTIVE,
-                                "keyset": contract.KEYSET_VERSION, "allowed_keys": list(contract.ALLOWED_KEYS),
+            "player_contract": {"protocol": self.contract.protocol, "objective": contract.OBJECTIVE,
+                                "keyset": self.contract.keyset, "allowed_keys": list(self.contract.keys),
                                 "max_frames_per_act": contract.MAX_FRAMES_PER_ACT},
             "budgets": {"episode_frame_budget": self.episode_frame_budget, "max_episodes": self.max_episodes,
                         "max_requests": self.max_requests, "max_wall_seconds": self.max_wall_seconds},
@@ -185,9 +189,10 @@ class Session:
                 raise contract.ActionRejected("request budget exhausted")
             if self.max_wall_seconds is not None and time.monotonic() - self._t0 > self.max_wall_seconds:
                 self.session_over = True
-            tool, act = contract.parse_request(request)
+            tool, act = contract.parse_request(request, self.contract)
             if tool == "brief":
-                response = contract.brief(episode_frame_budget=self.episode_frame_budget, max_episodes=self.max_episodes)
+                response = contract.brief(episode_frame_budget=self.episode_frame_budget, max_episodes=self.max_episodes,
+                                          version=self.contract)
             elif self.session_over:
                 raise contract.ActionRejected("session is over")
             elif tool == "observe":
@@ -195,11 +200,11 @@ class Session:
             else:
                 response = self._act(act)
         except contract.ActionRejected as exc:
-            response = contract.error(str(exc))
+            response = contract.error(str(exc), self.contract)
         except Exception as exc:  # noqa: BLE001 - any environment failure ends the session, with a record
             self.failure = f"{type(exc).__name__}: {str(exc)[:2000]}"
             self.session_over = True
-            response = contract.error("environment failure; the session has ended")
+            response = contract.error("environment failure; the session has ended", self.contract)
             self._write_manifest("aborted_environment_failure")
         recorded = json.loads(json.dumps(response))
         if "image" in recorded:
@@ -241,7 +246,7 @@ class Session:
         return contract.observation(seq=self.seq, episode=self.episode, episode_frame=self.episode_frame,
                                     episode_frame_budget=self.episode_frame_budget, max_episodes=self.max_episodes,
                                     frames_advanced=frames_advanced, episode_ended=episode_ended,
-                                    session_over=self.session_over, image=image)
+                                    session_over=self.session_over, image=image, version=self.contract)
 
     def _observe(self) -> dict[str, Any]:
         self._reset_if_needed()
