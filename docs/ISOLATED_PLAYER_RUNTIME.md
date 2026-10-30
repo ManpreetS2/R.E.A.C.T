@@ -49,6 +49,10 @@ Only two gateways exist: `DisabledGateway` (default; every model request is refu
 (**not a model**: replays fixed tool calls, used to prove the plumbing). There is no provider adapter, so this code
 cannot call any paid API.
 
+*Update 2026-10-30 (Mission 015A):* the section above describes Mission 014's `agent` mode, which remains for its test. A
+model would now use `model` mode and the host-side gateway in `docs/OFFLINE_AI_GATEWAY.md`, where the host owns the
+conversation. It is verified with a mocked provider only and still cannot call any paid API.
+
 ## Guarantees (verified on this PC, 2026-10-27)
 
 Each line is backed by a probe in `tests/blindplay/test_isolation.py` and recorded evidence in
