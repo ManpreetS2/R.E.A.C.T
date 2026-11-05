@@ -210,6 +210,12 @@ def _sddl_is_private(sddl: str, current_sid: "str | None" = None) -> bool:
     if not current_sid or not re.fullmatch(r"S-1-[0-9-]+", current_sid.strip(), re.IGNORECASE):
         return False
     allowed = _PRIVILEGED_TRUSTEES | {current_sid.strip().upper()}
+    # SDDL prints the machine's built-in Administrator (RID 500) and Guest (RID 501) accounts as the aliases LA and LG instead of
+    # SIDs. An alias is the current user only when the current SID is that very account, never otherwise: GitHub's Windows runner
+    # runs as the built-in Administrator, and its own files were refused until this was added.
+    own = re.fullmatch(r"S-1-5-21(?:-\d+){3}-(500|501)", current_sid.strip(), re.IGNORECASE)
+    if own:
+        allowed = allowed | {"LA" if own.group(1) == "500" else "LG"}
     owners = list(_OWNER.finditer(sddl))
     if not owners or owners[-1].group(1).upper() not in allowed:
         return False

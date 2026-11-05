@@ -170,7 +170,7 @@ def _own_only_file(tmp_path, name):
 @pytest.mark.skipif(lt.sys.platform != "win32", reason="Windows ACLs")
 def test_real_file_failure_to_know_the_current_sid_refuses(tmp_path, monkeypatch):
     f = _own_only_file(tmp_path, "mine.key")
-    assert lt._windows_acl_is_private(f) is True
+    assert lt._windows_acl_is_private(f) is True, _acl_diag(f)
     monkeypatch.setattr(lt, "_current_user_sid", lambda: None)
     assert lt._windows_acl_is_private(f) is False
 
@@ -194,7 +194,7 @@ def test_real_file_shared_with_another_specific_user_sid_is_refused(tmp_path, ri
     other = mine.rsplit("-", 1)[0] + f"-{rid}"
     assert other != mine
     f = _own_only_file(tmp_path, f"shared{rid}.key")
-    assert lt._windows_acl_is_private(f) is True
+    assert lt._windows_acl_is_private(f) is True, _acl_diag(f)
     done = subprocess.run(["icacls", str(f), "/grant", f"*{other}:R"], capture_output=True, text=True)
     assert done.returncode == 0, f"icacls could not grant {other}: {done.stdout!r} {done.stderr!r}"
     assert other.upper() in lt._file_owner_and_dacl_sddl(f).upper(), "the grant is not in the DACL"
@@ -532,3 +532,25 @@ def test_the_referees_request_budget_error_ends_the_session_with_no_further_mode
     with pytest.raises(mg.GatewayStopped):
         gateway.turn()
     assert len(provider.requests) == calls_before
+
+
+def _acl_diag(path):
+    """What the check saw, so a CI failure on an unfamiliar account says why (owner, DACL, current SID)."""
+    return f"owner+DACL={lt._file_owner_and_dacl_sddl(path)!r} current_sid={lt._current_user_sid()!r}"
+
+
+# --- the built-in Administrator (RID 500) and Guest (RID 501) accounts: SDDL prints them as the aliases LA / LG, not as SIDs.
+# GitHub's Windows runner runs as such an account, so without this the owner's own file was refused (CI, Mission 018).
+@pytest.mark.parametrize("sddl, current, private", [
+    ("O:LAG:LAD:PAI(A;;FA;;;LA)", "S-1-5-21-1-2-3-500", True),                       # I am the built-in Administrator
+    ("O:LAG:LAD:PAI(A;;FA;;;LA)(A;;FA;;;SY)(A;;FA;;;BA)", "S-1-5-21-1-2-3-500", True),
+    ("O:S-1-5-21-1-2-3-500D:PAI(A;;FA;;;LA)", "S-1-5-21-1-2-3-500", True),           # numeric owner, alias ACE
+    ("O:LAG:LAD:PAI(A;;FA;;;LA)", "S-1-5-21-1-2-3-1001", False),                      # LA is NOT me
+    ("O:S-1-5-21-1-2-3-1001D:PAI(A;;FA;;;LA)", "S-1-5-21-1-2-3-1001", False),        # another account's alias on my file
+    ("O:LAG:LAD:PAI(A;;FA;;;LG)", "S-1-5-21-1-2-3-500", False),                       # Guest is not me
+    ("O:LGG:LGD:PAI(A;;FA;;;LG)", "S-1-5-21-1-2-3-501", True),                        # I am the Guest account
+    ("O:LAG:LAD:PAI(A;;FA;;;LA)(A;;FR;;;WD)", "S-1-5-21-1-2-3-500", False),           # still refused with Everyone added
+    ("O:LAG:LAD:PAI(A;;FA;;;LA)", "S-1-5-32-544", False),                              # alias cannot be tied to a non-domain SID
+])
+def test_sddl_aliases_for_the_builtin_administrator_and_guest_accounts(sddl, current, private):
+    assert lt._sddl_is_private(sddl, current) is private

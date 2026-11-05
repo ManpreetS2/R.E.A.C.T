@@ -377,7 +377,8 @@ def test_real_windows_acl_check_on_real_files(tmp_path):
         assert done.returncode == 0, f"icacls failed for {grants}: {done.stdout!r}"   # fail, never pass vacuously
         return f
 
-    assert lt._windows_acl_is_private(make("mine.key")) is True
+    mine = make("mine.key")
+    assert lt._windows_acl_is_private(mine) is True, (lt._file_owner_and_dacl_sddl(mine), lt._current_user_sid())
     assert lt._windows_acl_is_private(make("everyone.key", "/grant", "*S-1-1-0:R")) is False
     assert lt._windows_acl_is_private(make("users.key", "/grant", "*S-1-5-32-545:R")) is False
     assert lt._windows_acl_is_private(make("auth.key", "/grant", "*S-1-5-11:R")) is False

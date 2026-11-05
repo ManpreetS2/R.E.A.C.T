@@ -8,7 +8,7 @@ Replaces deny-list checking. On Windows the file passes only if **all** hold: th
 
 Tests (real files, fake content, `tests/blindplay/test_audit_017_live.py`, `test_live_transport.py`): a real file shared with **another specific user SID** (current user's domain plus RID 503 and 504) is refused and the tests fail rather than skip if the grant fails; real files granted LOCAL SERVICE, NETWORK SERVICE, Backup Operators, Remote Desktop Users and all-services are refused; an Everyone grant on the fixture credential is refused by the **unpatched** gate; NULL DACL, foreign owner, unknown current SID and malformed SDDL are refused; swap-during-read, rewrite-in-place, link-swap and ACL-widened-during-read are refused.
 
-Known limits: group membership is not expanded; the built-in Administrator account (SDDL alias `LA`) is refused; a swap that restores identical file index, size and mtime is not detectable without opening once and using the handle; the tests run on Windows only (CI's macOS and Ubuntu runners skip them); never exercised on a real key.
+Known limits: group membership is not expanded; SDDL prints the built-in Administrator (RID 500) and Guest (RID 501) accounts as the aliases `LA`/`LG`, so those aliases are accepted only when they are the current user's own account (found by CI: GitHub's Windows runner runs as the built-in Administrator and its own files were refused; fixed with tests); a swap that restores identical file index, size and mtime is not detectable without opening once and using the handle; the tests run on Windows only (CI's macOS and Ubuntu runners skip them); never exercised on a real key.
 
 ## Amendment 2: budget-matched baseline request limits (`host.py`, `baselines.py`, `results.py`)
 
