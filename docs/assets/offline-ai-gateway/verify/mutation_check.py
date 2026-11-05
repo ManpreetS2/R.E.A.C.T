@@ -68,7 +68,7 @@ MUTATIONS = [
     ("gate accepts adaptive thinking", LIVE, "if auth.thinking not in SUPPORTED_THINKING:", "if False:"),
     ("gate accepts a credential inside the repository", LIVE, "if resolved.is_relative_to(REPOSITORY):", "if False:"),
     ("gate accepts any key format", LIVE, "if not _KEY_FORMAT.fullmatch(text):", "if False:"),
-    ("opening balance not enforced", LIVE, "if state.spent < opening:", "if False:"),
+    ("opening balance not enforced", LIVE, "if state.opening < opening:", "if False:"),
     ("transport call count not limited", LIVE, "if self.requests_sent >= self.authorization.max_model_calls:", "if False:"),
     ("transport sends unexpected request fields", LIVE, "if extra:", "if False:"),
     ("transport sends a different model", LIVE, 'if wire_request.get("model") != self.authorization.model_id:', "if False:"),

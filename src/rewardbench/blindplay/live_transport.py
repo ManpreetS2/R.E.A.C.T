@@ -115,9 +115,11 @@ def build_config(settings: Mapping[str, Any]) -> model_gateway.GatewayConfig:
 
 def git_state() -> dict[str, Any]:
     try:
-        head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPOSITORY, capture_output=True, text=True, timeout=10).stdout.strip()
-        dirty = subprocess.run(["git", "status", "--porcelain"], cwd=REPOSITORY, capture_output=True, text=True, timeout=10).stdout.strip()
-        return {"commit": head or None, "dirty": bool(dirty)}
+        head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPOSITORY, capture_output=True, text=True, timeout=10)
+        status = subprocess.run(["git", "status", "--porcelain"], cwd=REPOSITORY, capture_output=True, text=True, timeout=10)
+        if head.returncode != 0 or status.returncode != 0:   # a failed status prints nothing, which must not read as "clean"
+            return {"commit": None, "dirty": None}
+        return {"commit": head.stdout.strip() or None, "dirty": bool(status.stdout.strip())}
     except (OSError, subprocess.SubprocessError):
         return {"commit": None, "dirty": None}
 
@@ -167,7 +169,10 @@ def _check_authorization(auth: LiveAuthorization, config: model_gateway.GatewayC
         raise LiveGateRefused("the authorization has expired")
     if expires - approved > timedelta(days=MAX_AUTHORIZATION_DAYS):
         raise LiveGateRefused(f"an authorization may last at most {MAX_AUTHORIZATION_DAYS} days")
-    if now - _utc(auth.pricing_verified_utc, "pricing_verified_utc") > timedelta(days=MAX_PRICE_CHECK_AGE_DAYS):
+    verified = _utc(auth.pricing_verified_utc, "pricing_verified_utc")
+    if verified > now:
+        raise LiveGateRefused("prices cannot have been checked in the future")
+    if now - verified > timedelta(days=MAX_PRICE_CHECK_AGE_DAYS):
         raise LiveGateRefused(f"prices must have been checked within the last {MAX_PRICE_CHECK_AGE_DAYS} days")
     if state["dirty"] is not False or state["commit"] != auth.git_commit:
         raise LiveGateRefused("the checkout must be clean and at the exact authorized commit")
@@ -182,15 +187,30 @@ def _refuse_ambient_credentials(environ: Mapping[str, str]) -> None:
 
 # Trustees whose access an AppContainer or another user could use: SDDL aliases and numeric SIDs, so the check does not
 # depend on the language of Windows. Everyone, Users, Authenticated Users, Interactive, Network, All Application Packages
-# (AC) and every individual AppContainer package SID (S-1-15-2-...).
-_BROAD_TRUSTEES = {"WD", "BU", "AU", "IU", "NU", "AC", "S-1-1-0", "S-1-5-32-545", "S-1-5-11", "S-1-5-4", "S-1-5-2"}
-_ALLOW_ACE = re.compile(r"\((A|OA|XA);[^;]*;[^;]*;[^;]*;[^;]*;([^;)]+)(?:;[^)]*)?\)")
+# (AC), anonymous, guests, domain users/guests, restricted code, power users and every individual AppContainer package SID
+# (S-1-15-2-...) or capability SID (S-1-15-3-...). A specific other user's SID cannot be told from the owner's here.
+_BROAD_TRUSTEES = {"WD", "BU", "AU", "IU", "NU", "AC", "AN", "BG", "DU", "DG", "RC", "WR", "PU", "LG", "DD", "DC", "RU", "CG",
+                   "S-1-1-0", "S-1-5-32-545", "S-1-5-11", "S-1-5-4", "S-1-5-2", "S-1-5-7", "S-1-5-32-546", "S-1-5-32-547",
+                   "S-1-5-32-554", "S-1-5-12", "S-1-5-33"}
+_BROAD_RIDS = {"513", "514", "515"}      # Domain Users, Domain Guests, Domain Computers
+_ALLOW_ACE = re.compile(r"\((A|OA|XA|ZA);[^;]*;[^;]*;[^;]*;[^;]*;([^;)]+)(?:;[^)]*)?\)")
+_DACL_HEADER = re.compile(r"D:(NO_ACCESS_CONTROL|[PAIR]{0,6})(?=\(|S:|\s|$)")
+
+
+def _is_broad(trustee: str) -> bool:
+    t = trustee.strip().upper()
+    return (t in _BROAD_TRUSTEES or t.startswith(("S-1-15-2-", "S-1-15-3-"))
+            or (t.startswith("S-1-5-21-") and t.rsplit("-", 1)[-1] in _BROAD_RIDS))
 
 
 def _sddl_is_private(sddl: str) -> bool:
-    dacl = sddl.partition("D:")[2]
-    for _kind, trustee in _ALLOW_ACE.findall(dacl):
-        if trustee in _BROAD_TRUSTEES or trustee.startswith("S-1-15-2-"):
+    """False for a broad allow in any ACE shape, and also when the text has no DACL or has a NULL DACL: both mean that nobody
+    is restricted. The last ``D:`` header wins, since a file name printed before the SDDL may contain one."""
+    headers = list(_DACL_HEADER.finditer(sddl))
+    if not headers or headers[-1].group(1) == "NO_ACCESS_CONTROL":
+        return False
+    for _kind, trustee in _ALLOW_ACE.findall(sddl[headers[-1].end():]):
+        if _is_broad(trustee):
             return False
     return True
 
@@ -322,7 +342,7 @@ def _open_ledger(path: Path, opening: Decimal) -> spend_ledger.SpendLedger:
     if new:
         ledger.record_opening_balance(opening, "spending recorded in earlier missions, from the owner's authorization")
     state = ledger.state()
-    if state.spent < opening:
+    if state.opening < opening:   # the recorded balance itself, not later charges that merely add up to as much
         raise LiveGateRefused("this ledger does not include the authorized opening balance")
     return ledger
 

@@ -43,6 +43,7 @@ TOOL_RESULT_COUNTERS = ("episode", "episode_frame", "episode_frame_budget", "max
 OMITTED_IMAGE_NOTE = "[earlier screenshot omitted]"
 NO_TOOL_NOTE = "Use a tool to continue."
 ENDED_MESSAGE = "the model session has ended"
+GAME_REQUEST_LIMIT_MESSAGE = "request budget exhausted"   # session.py
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 _CALL_ID = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
 _SECRET = re.compile(r"(sk-|sk_|ghp_|gho_|ghu_|ghs_|ghr_|github_pat_|glpat-|AKIA|ASIA|AIza|xox[abposr]-|hf_|r8_|eyJ)"
@@ -255,6 +256,7 @@ class VisionGateway:
         self._started = clock()
         self._messages: list[dict[str, Any]] = []
         self._images: dict[int, str] = {}             # seq -> base64, only those still inside the window
+        self._seen_seqs: set[int] = set()             # every screenshot number ever accepted, even after it left the window
         self._batch: list[_BatchEntry] = []
         self._seen_call_ids: set[str] = set()
         self._batch_closed = False                    # the episode ended, so the rest of the batch is not executed
@@ -328,6 +330,8 @@ class VisionGateway:
         if fields == contract.ERROR_FIELDS:
             parts = [{"type": "text", "text": json.dumps({"error": redact(response["error"])})}]
             self._attach_result(parts, is_error=True, ended=True, session_over=False)
+            if response["error"] == GAME_REQUEST_LIMIT_MESSAGE:   # the referee will refuse everything from now on
+                raise self.stop("game_request_limit")
             return
         if fields != contract.OBSERVATION_FIELDS:
             raise self.stop("contract_violation")   # never forward a reply with extra (possibly privileged) fields
@@ -338,11 +342,12 @@ class VisionGateway:
             self._record({"event": "invalid_screenshot", "seq": response.get("seq"), "detail": str(exc)})
             raise self.stop("invalid_screenshot") from None
         seq, image = response["seq"], response["image"]
-        if type(seq) is not int or seq in self._images or \
+        if type(seq) is not int or seq in self._images or seq in self._seen_seqs or \
                 not all(type(response[k]) in (int, bool) for k in TOOL_RESULT_COUNTERS):
             raise self.stop("contract_violation")
         self.counts["screenshots_received"] += 1
         self._images[seq] = image["base64"]
+        self._seen_seqs.add(seq)
         counters = {k: response[k] for k in TOOL_RESULT_COUNTERS}
         image_part = {"type": "image", "media_type": image["media_type"], "seq": seq, "sha256": image["sha256"]}
         if not self._messages:
@@ -517,8 +522,9 @@ class VisionGateway:
             return self._status_failure(record, reservation, worst, response)
         try:
             reply = self.adapter.parse_response(response)
-        except providers.ProviderProtocolError as exc:
-            return self._failed(record, reservation, worst, kind="malformed_reply", detail=redact(exc), status=status)
+        except Exception as exc:  # noqa: BLE001 - whatever a reply does to the parser, it was paid for and is never interpreted
+            detail = redact(exc) if isinstance(exc, providers.ProviderProtocolError) else type(exc).__name__
+            return self._failed(record, reservation, worst, kind="malformed_reply", detail=detail, status=status)
         return self._settle_reply(record, reservation, worst, reply)
 
     def _failed(self, record: dict[str, Any], reservation: str, worst: Decimal, *, kind: str, detail: str,
@@ -558,17 +564,27 @@ class VisionGateway:
         if status in _NOT_BILLED_RETRYABLE:
             return self._failed(record, reservation, worst, kind="rate_limited", detail=detail,
                                 status=status, retry_after=headers.get("retry-after"), charge_worst=False)
-        if status in _UNCERTAIN_RETRYABLE:
+        if status in _UNCERTAIN_RETRYABLE or status >= 500:   # any 5xx, even an unlisted one: it may have been processed
             return self._failed(record, reservation, worst, kind="server_error", detail=detail, status=status,
                                 retry_after=headers.get("retry-after"))
-        # 400, 401, 402, 403, 404, 413, ...: a retry would fail the same way. A rejected request is not billed.
+        if not (300 <= status < 500):
+            # 1xx and 2xx other than the 200 that was expected (201, 204, ...): the POST may well have been processed, and
+            # nothing in the body can be trusted, so it is charged at worst case and the session ends.
+            self.ledger.settle(reservation, charged=worst, basis="unexpected_status:worst_case_unverified", detail={"status": status})
+            self._charged += worst
+            self.counts["provider_errors"] += 1
+            self._record(dict(record, outcome={"kind": "unexpected_status", "status": status, "detail": detail,
+                                               "charged_usd": str(worst)}))
+            raise self.stop(f"provider_unexpected_status_{status}")
+        # 3xx (never followed) and 4xx such as 400, 401, 402, 403, 404, 413: a retry would fail the same way. Not billed.
         self.ledger.settle(reservation, charged=0, basis="rejected_by_provider:not_billed", detail={"status": status})
         self.counts["provider_errors"] += 1
         self._record(dict(record, outcome={"kind": "rejected_by_provider", "status": status, "detail": detail, "charged_usd": "0"}))
         raise self.stop(f"provider_rejected_{status}")
 
     def _settle_reply(self, record: dict[str, Any], reservation: str, worst: Decimal, reply: providers.ProviderReply):
-        usage = reply.usage
+        # Every request carries a screenshot, so zero input tokens is not a real count and must not make the call free.
+        usage = reply.usage if reply.usage is not None and reply.usage.total_input_tokens > 0 else None
         charged = self.config.pricing.cost(usage) if usage is not None else worst
         basis = "provider_usage" if usage is not None else "worst_case_usage_missing"
         self.ledger.settle(reservation, charged=charged, basis=basis,

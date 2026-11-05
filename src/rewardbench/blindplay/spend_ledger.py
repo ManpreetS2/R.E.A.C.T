@@ -109,6 +109,7 @@ class LedgerState:
     open_reservations: dict[str, dict[str, Any]] = field(default_factory=dict)
     settled_reservations: dict[str, dict[str, Any]] = field(default_factory=dict)
     records: int = 0
+    opening: Decimal = Decimal(0)                   # only the recorded opening balance, never later charges
 
     @property
     def committed(self) -> Decimal:
@@ -181,6 +182,7 @@ class SpendLedger:
             event = r["event"]
             if event == "opening_balance":
                 state.spent += Decimal(r["amount_usd"])
+                state.opening += Decimal(r["amount_usd"])
             elif event == "reserve":
                 state.open_reservations[r["reservation"]] = r
                 state.reserved += Decimal(r["worst_case_usd"])
