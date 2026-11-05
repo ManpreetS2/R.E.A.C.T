@@ -69,6 +69,23 @@
 
 **Release gate:** Protocol text and related code remain pending amendment and verification; pre-registration, official baselines, real API traffic, spend and merge actions remain blocked. The most recently audited v1 milestone score is **29/100**. See the companion owner-decision table for individual statuses.
 
+
+#### P1 v1 final protocol acceptance and baseline authorization — 2026-11-05
+
+**Source of authority:** On 2026-11-05, the owner explicitly confirmed in the R.E.A.C.T. project conversation: "alri lets do it," immediately after the assistant offered **two distinct actions**: (A) accept P1 v1 as the final research protocol and (B) authorize **one** execution of the 14 non-AI official baselines. The following two statements were recorded by the assistant at the owner's direction. These are **separate approvals**; neither authorizes any API use or spending.
+
+**Sentence A — final protocol text accepted (milestone 2, research only):**
+
+> On 2026-11-05 I accept `docs/BLIND_PLAY_PROTOCOL_V1_CANDIDATE.md` at commit `c6506406d5686d1cabf090d4f353a038eb19d504` as protocol P1 v1 (research settings D1–D15 as recorded 2026-11-05, both amendments implemented and independently reviewed). This is acceptance of the text only; it authorizes no execution, spending, credential, billing, smoke test, AI session, live flag, pre-registration or merge.
+
+**Sentence B — separate, limited authorization for official NON-AI scripted baselines (milestone 3 execution):**
+
+> On 2026-11-05 I authorize recording the official non-AI scripted baselines exactly as in `docs/BASELINE_EXECUTION_CARD.md`: plan_sha256 `bb527a18a5ad88e82769ee800d97b2bfe8c9de73d856be688024e0286d6922dd` (14 runs, `keyset.v2`, `matched-1000` and `diagnostic-20000`), on this Windows PC, **once**, at the commit that adds this entry to `PROJECT.md`, whose only difference from `c6506406d5686d1cabf090d4f353a038eb19d504` must be `PROJECT.md`, with no API call, credential or spending. This does not authorize the smoke test, any AI session, the live flag, pre-registration, billing, or a merge.
+
+**Execution conditions:** Use a clean checkout of the single authorization commit, verify its exact SHA and that `git diff --name-only c6506406d5686d1cabf090d4f353a038eb19d504 HEAD` lists **only `PROJECT.md`**, verify the frozen plan hash, verify a real Windows sandbox + Chromium and green CI at the run SHA, then follow the card. Use a **fresh output directory**; do not touch or overwrite historical `runs/`. Preserve every attempt, report incomplete or censored runs honestly, and do not rerun for better results. Verify results/replays and copy evidence to a private off-machine destination selected and approved by the owner before deleting any worktree or source copy. This entry authorizes the one baseline recording only, not choosing an external data destination or any other D15 action.
+
+**Tracking:** Protocol acceptance satisfies the documented 5-point protocol-approval criterion; the 5-point baseline milestone is **not earned** until 14 genuine non-AI runs are recorded and verified. No real model has played and the live gate remains closed. The accepted protocol SHA is `c6506406d5686d1cabf090d4f353a038eb19d504`; the distinct **run SHA** is the commit that introduces this entry and must be recorded in the baseline receipts/report.
+
 ### 0.4 Repository workflow and document authority
 
 1. **`PROJECT.md` is the main living project specification.** Update the *current-direction, decision, roadmap and results* portions whenever an owner-approved mission changes scope. Add dated decision entries; avoid rewriting past experiments to imply a different original hypothesis.
