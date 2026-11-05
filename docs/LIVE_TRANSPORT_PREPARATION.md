@@ -114,7 +114,7 @@ invalid reply; whether safety classifiers misfire on this task (`general_harms`,
 | 2 | No `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_BASE_URL` in the environment | Any is set |
 | 3 | Authorization file | Missing fields, extra fields, wrong types, unfilled `OWNER_` placeholders |
 | 4 | Authorization content | Not the anthropic adapter, unsupported thinking, wrong configuration hash, not yet valid, expired, lasting over 7 days, prices checked over 7 days ago, checkout dirty or not at the authorized commit |
-| 5 | Credential file | Missing, a link, inside the repository, readable by other accounts, wrong format. Its content is never echoed |
+| 5 | Credential file | Missing, a link, inside the repository, wrong format, or (Windows, **fail-closed allowlist since Mission 018**) owned by anyone but your account, SYSTEM or Administrators; or its access list names anyone other than your own SID, SYSTEM, Administrators and OWNER RIGHTS; or the ACL or your SID cannot be read. Its content is never echoed |
 | 6 | Live ledger | A mock ledger, or missing the authorized opening balance |
 | 7 | A person at a real terminal (`live_session.py`) | Input is not a terminal, or the exact sentence is not typed |
 
@@ -180,7 +180,7 @@ Remove-Variable plain, secure
 icacls "$dir\anthropic-smoke.key"
 ```
 
-The last line should list only your own account (plus SYSTEM or Administrators if your PC adds them). Never put this file inside the repository or `runs/`; the gate refuses it there. Agents on your machine run as your user, so the sandbox protects this file from the player, not from other tools you run. Do not ask an agent to read it.
+The last line should list only your own account (plus SYSTEM or Administrators if your PC adds them). **Mission 018 (owner-approved amendment): the gate now allowlists** instead of only rejecting broad groups. Create the key file as the same Windows account that will run the session; the file's owner must be that account (or SYSTEM/Administrators), and its access list may name only your own account's SID, SYSTEM, Administrators and OWNER RIGHTS. Any other user, group, service account, AppContainer, Everyone, Users or Authenticated Users with an allow entry, an unreadable ACL, a NULL ACL, or an account SID that cannot be determined is refused. SYSTEM and Administrators are tolerated because they can read or take ownership of any file anyway. SDDL prints the machine's built-in Administrator (RID 500) and Guest (RID 501) accounts as the aliases `LA` and `LG`; the check accepts such an alias only when it is **your own** account (the current SID is that RID), never another account's. (This was found by GitHub's Windows runner, which runs as the built-in Administrator, and fixed in Mission 018.) The check is tested on real files granted to another specific user's SID, but it has never run against a real key. Never put this file inside the repository or `runs/`; the gate refuses it there. Agents on your machine run as your user, so the sandbox protects this file from the player, not from other tools you run. Do not ask an agent to read it.
 
 ### 4. Afterwards
 
@@ -207,7 +207,7 @@ The authorization file must name the commit that sets the flag, so a commit mess
 
 * **The real endpoint is untested**, as above.
 * **Authorization files are not signed.** Anyone able to write files as your user could write one. The terminal confirmation is what stands in the way of unattended use, and a person typing it is taking responsibility for what they typed.
-* **The Windows permission check matches English group names.** On a localized Windows it may miss a broad grant.
+* **The Windows permission check** (Mission 016 made it SID-based; Mission 018 made it a fail-closed allowlist of your SID, SYSTEM, Administrators and OWNER RIGHTS) does not expand group membership and has a small window between checking the file and reading it (a changed file is refused, see the tests). It is tested on real files, never on a real key.
 * **Everything in `docs/OFFLINE_AI_GATEWAY.md`'s limitations still applies**, including that a provider reporting more input than the estimate could slightly exceed a cap. The Console spend limits are the independent backstop.
 
 ## Owner decisions

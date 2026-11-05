@@ -72,11 +72,21 @@ MUTATIONS = [
     ("transport call count not limited", LIVE, "if self.requests_sent >= self.authorization.max_model_calls:", "if False:"),
     ("transport sends unexpected request fields", LIVE, "if extra:", "if False:"),
     ("transport sends a different model", LIVE, 'if wire_request.get("model") != self.authorization.model_id:', "if False:"),
+    ("credential ACL allowlist removed (any trustee accepted)", LIVE, 'if kind not in ("A", "OA") or len(fields) != 6 or fields[5].strip().upper() not in allowed:', "if False:"),
+    ("credential ACL allowlist widened to a deny-list shape (non-allowlisted SIDs accepted)", LIVE, "allowed = _PRIVILEGED_TRUSTEES | {current_sid.strip().upper()}", 'allowed = _PRIVILEGED_TRUSTEES | {current_sid.strip().upper(), "S-1-5-19", "S-1-5-21-1-2-3-1234"}'),
+    ("credential file owner not checked", LIVE, "if not owners or owners[-1].group(1).upper() not in allowed:", "if False:"),
+    ("unknown current user SID does not refuse", LIVE, 'if not current_sid or not re.fullmatch(r"S-1-[0-9-]+", current_sid.strip(), re.IGNORECASE):', "if False:"),
+    ("NULL or missing DACL accepted", LIVE, 'if not headers or headers[-1].group(1) == "NO_ACCESS_CONTROL":', "if False:"),
+    ("unparseable DACL body accepted", LIVE, "if not _DACL_BODY.fullmatch(body):", "if False:"),
+    ("real-file ACL check always private", LIVE, "return bool(sddl) and _sddl_is_private(sddl, sid)", "return True"),
+    ("credential ACL check skipped", LIVE, "if not _windows_acl_is_private(resolved):", "if False:"),
+    ("credential file identity not rechecked after the read", LIVE, "if not stat.S_ISREG(after.st_mode) or _identity(after) != _identity(info):", "if False:"),
+    ("credential ACL not rechecked after the read", LIVE, "    _check_private(resolved, after)\n", "    pass\n"),
     ("human confirmation skipped", "live_session.py", "if not stdin.isatty():", "if False:"),
     ("host and gateway may disagree", HOST, 'raise ValueError("the host and the gateway disagree on the keyset, episodes, frames, wall clock or game requests")', "pass"),
 ]
 TESTS = ["tests/blindplay/test_model_gateway.py", "tests/blindplay/test_spend_ledger.py", "tests/blindplay/test_keyset_v2.py",
-         "tests/blindplay/test_live_transport.py"]
+         "tests/blindplay/test_live_transport.py", "tests/blindplay/test_audit_017_live.py"]
 
 
 def run(copy: Path) -> tuple[bool, str]:

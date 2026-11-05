@@ -502,11 +502,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--keyset", choices=sorted(contract.CONTRACTS), default=contract.V1.keyset)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--max-wall-seconds", type=float, default=3600.0)
+    parser.add_argument("--max-requests", type=int, default=session.DEFAULT_MAX_REQUESTS,
+                        help="game-request limit (brief+observe+act); later requests are rejected, the session is not ended")
     args = parser.parse_args(argv)
+    if args.max_requests < 1:
+        parser.error("--max-requests must be positive")
     config = HostConfig(out=args.out, mode="scripted", script=args.script, script_seed=args.script_seed,
                         keyset=args.keyset, seed=args.seed, max_wall_seconds=args.max_wall_seconds,
                         player_label=f"isolated scripted:{args.script} script_seed={args.script_seed} (NOT AI)",
-                        max_episodes=args.episodes, episode_frame_budget=args.episode_frame_budget)
+                        max_episodes=args.episodes, episode_frame_budget=args.episode_frame_budget,
+                        max_requests=args.max_requests)
     print(json.dumps(Host(config).run()["counts"]))
     return 0
 

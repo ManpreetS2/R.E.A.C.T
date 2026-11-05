@@ -8,32 +8,72 @@ import pytest
 
 from rewardbench.blindplay import baselines, isolation, results
 
+needs_isolation = pytest.mark.skipif(isolation.supported() is not None,
+                                     reason="OS isolation needs Windows (AppContainer) or macOS (Seatbelt)")
 
-def test_plan_has_the_seven_protocol_runs():
+
+def _arg(run, flag):
+    return run["host_args"][run["host_args"].index(flag) + 1]
+
+
+def test_plan_has_two_conditions_of_the_seven_protocol_runs():
     runs = baselines.official_plan("keyset.v2")
-    assert [r["script"] for r in runs] == ["idle", "key-sweep"] + ["seeded-random"] * 5
-    assert [r["script_seed"] for r in runs[2:]] == [0, 1, 2, 3, 4]
-    assert len({r["subdir"] for r in runs}) == 7
-    for r in runs:
-        assert "--keyset" in r["host_args"] and r["host_args"][r["host_args"].index("--episodes") + 1] == "10"
+    assert len(runs) == 14 and len({r["subdir"] for r in runs}) == 14
+    for cond, limit in (("matched-1000", 1000), ("diagnostic-20000", 20000)):
+        sub = [r for r in runs if r["condition"] == cond]
+        assert [r["script"] for r in sub] == ["idle", "key-sweep"] + ["seeded-random"] * 5
+        assert [r["script_seed"] for r in sub[2:]] == [0, 1, 2, 3, 4]
+        for r in sub:
+            assert r["max_requests"] == limit and _arg(r, "--max-requests") == str(limit)
+            assert _arg(r, "--episodes") == "10" and _arg(r, "--episode-frame-budget") == "8000"
+            assert _arg(r, "--keyset") == "keyset.v2" and cond in r["subdir"]
+    assert {r["condition_role"] for r in runs if r["condition"] == "matched-1000"} == {"budget-matched control"}
+    assert all("NOT budget-matched" in r["condition_role"] for r in runs if r["condition"] == "diagnostic-20000")
     with pytest.raises(ValueError):
         baselines.official_plan("keyset.v9")
+    with pytest.raises(ValueError):
+        baselines.official_plan("keyset.v2", conditions=["nope"])
+
+
+def test_single_condition_can_be_selected_but_default_covers_both():
+    one = baselines.official_plan("keyset.v2", conditions=["matched-1000"])
+    assert len(one) == 7 and {r["condition"] for r in one} == {"matched-1000"}
+    assert baselines.plan_hash(one) != baselines.plan_hash(baselines.official_plan("keyset.v2"))
 
 
 def test_plan_hash_is_deterministic_and_sensitive():
-    a = baselines.plan_hash(baselines.official_plan("keyset.v2"))
+    full = baselines.official_plan("keyset.v2")
+    a = baselines.plan_hash(full)
     assert a == baselines.plan_hash(baselines.official_plan("keyset.v2"))
     assert a != baselines.plan_hash(baselines.official_plan("keyset.v1"))
     assert a != baselines.plan_hash(baselines.official_plan("keyset.v2", episodes=9))
+    c3 = baselines.plan_hash(baselines.official_plan("keyset.v2", conditions={"custom-3": 3}, dry_label="t"))
+    assert a != c3 and c3 != baselines.plan_hash(baselines.official_plan("keyset.v2", conditions={"custom-3": 4}, dry_label="t"))
+    assert a != baselines.plan_hash(baselines.official_plan("keyset.v2", conditions=["diagnostic-20000"]))
+    assert a != baselines.plan_hash([r for r in full if r["name"] != "07_seeded-random_seed4"])
 
 
-def test_plan_cli_prints_commands_and_hash_and_writes_nothing(tmp_path, capsys):
+def test_plan_hash_does_not_depend_on_the_output_path(tmp_path, capsys):
+    hashes = []
+    for name in ("a", "much/longer/other"):
+        assert baselines.main(["plan", "--keyset", "keyset.v2", "--out-root", str(tmp_path / name)]) == 0
+        hashes.append(capsys.readouterr().out.splitlines()[-1])
+    assert hashes[0] == hashes[1] == "plan_sha256 " + baselines.plan_hash(baselines.official_plan("keyset.v2"))
+
+
+def test_plan_cli_prints_both_conditions_and_writes_nothing(tmp_path, capsys):
     root = tmp_path / "out"
     assert baselines.main(["plan", "--keyset", "keyset.v2", "--out-root", str(root)]) == 0
-    text = capsys.readouterr().out.splitlines()
-    assert sum("rewardbench.blindplay.host" in line for line in text) == 7
-    assert text[-1] == "plan_sha256 " + baselines.plan_hash(baselines.official_plan("keyset.v2"))
+    text = capsys.readouterr().out
+    lines = text.splitlines()
+    assert sum("rewardbench.blindplay.host" in line for line in lines) == 14
+    assert sum("--max-requests 1000" in line for line in lines) == 7 and sum("--max-requests 20000" in line for line in lines) == 7
+    assert "matched-1000" in text and "budget-matched control" in text
+    assert "diagnostic-20000" in text and "NOT budget-matched" in text
+    assert lines[-1] == "plan_sha256 " + baselines.plan_hash(baselines.official_plan("keyset.v2"))
     assert not root.exists()
+    assert baselines.main(["plan", "--keyset", "keyset.v2", "--out-root", str(root), "--condition", "matched-1000"]) == 0
+    assert sum("rewardbench.blindplay.host" in line for line in capsys.readouterr().out.splitlines()) == 7
 
 
 def test_run_refuses_without_approval_reference(tmp_path):
@@ -63,23 +103,41 @@ def test_run_refuses_inside_populated_official_looking_dir(tmp_path):
     assert not (official / "new").exists()
 
 
-@pytest.mark.skipif(isolation.supported() is not None, reason="OS isolation needs Windows (AppContainer) or macOS (Seatbelt)")
-def test_dry_label_executes_all_seven_runs_isolated(tmp_path):
+@needs_isolation
+def test_dry_label_executes_the_matched_condition_isolated(tmp_path):
     result = baselines.run_plan("keyset.v2", tmp_path, approval_reference=None, dry_label="pytest",
-                                episodes=1, frame_budget=30)
+                                episodes=1, frame_budget=30, conditions=["matched-1000"])
     root = Path(result["out_root"])
     assert root.name == "NON-STUDY-pytest" and (root / baselines.FIXTURE_FILE).is_file()
     assert result["complete"] and result["executed_runs"] == 7
-    assert result["plan_sha256"] == baselines.plan_hash(baselines.official_plan("keyset.v2", 1, 30))
-    for run in baselines.official_plan("keyset.v2", 1, 30):
+    plan = baselines.official_plan("keyset.v2", 1, 30, conditions=["matched-1000"])
+    assert result["plan_sha256"] == baselines.plan_hash(plan)
+    log = json.loads((root / "baseline_run_log.json").read_text(encoding="utf-8"))
+    assert log["complete"] is True and log["conditions"] == {"matched-1000": 1000}
+    for run, entry in zip(plan, log["runs"]):
+        assert entry["condition"] == "matched-1000" and entry["max_requests"] == 1000 and entry["subdir"] == run["subdir"]
         s = results.summarize(root / run["subdir"])
         assert s["integrity"]["ok"] and s["completeness"]["flag"] == "complete"
+        assert s["completeness"]["censoring"]["flag"] == "not_censored"
+        assert s["header"]["max_requests"] == 1000 and s["header"]["condition"] == "matched-1000"
+        assert s["header"]["condition_max_requests_agrees"] is True
         assert s["header"]["label"] == "scripted NON-AI baseline" and s["header"]["keyset"] == "keyset.v2"
         assert s["header"]["script"] == run["script"] and s["header"]["script_seed"] == run["script_seed"]
-    assert json.loads((root / "baseline_run_log.json").read_text(encoding="utf-8"))["complete"] is True
 
 
-def test_approved_run_records_reference_verbatim(tmp_path, monkeypatch):
+@needs_isolation
+def test_dry_label_run_with_a_tiny_limit_is_censored_and_recorded(tmp_path):
+    result = baselines.run_plan("keyset.v2", tmp_path, approval_reference=None, dry_label="pytest-censor",
+                                episodes=2, frame_budget=30, conditions={"custom-3": 3}, only_scripts=["idle"])
+    root = Path(result["out_root"])
+    assert result["executed_runs"] == 1
+    s = results.summarize(root / "custom-3_01_idle", run_replay=True)
+    assert s["completeness"]["censoring"]["flag"] == "CENSORED_BY_REQUEST_LIMIT"
+    assert s["completeness"]["censoring"]["max_requests"] == 3 and s["header"]["condition"] == "custom-3"
+    assert s["integrity"]["ok"] and s["integrity"]["replay_receipt"]["reproduced"] is True
+
+
+def test_approved_run_records_reference_verbatim_and_condition(tmp_path, monkeypatch):
     calls = []
 
     class Done:
@@ -87,5 +145,34 @@ def test_approved_run_records_reference_verbatim(tmp_path, monkeypatch):
 
     monkeypatch.setattr(baselines.subprocess, "run", lambda cmd, **kw: calls.append(cmd) or Done())
     r = baselines.run_plan("keyset.v2", tmp_path / "study", approval_reference="OWNER-MSG-123", episodes=1, frame_budget=30)
-    assert len(calls) == 7 and r["complete"]
+    assert len(calls) == 14 and r["complete"]
+    assert sum(c[c.index("--max-requests") + 1] == "1000" for c in calls) == 7
     assert "OWNER-MSG-123" in (tmp_path / "study" / "OWNER_APPROVAL_REFERENCE.txt").read_text(encoding="utf-8")
+    log = json.loads((tmp_path / "study" / "baseline_run_log.json").read_text(encoding="utf-8"))
+    assert {(e["condition"], e["max_requests"]) for e in log["runs"]} == {("matched-1000", 1000), ("diagnostic-20000", 20000)}
+    assert log["conditions"] == {"matched-1000": 1000, "diagnostic-20000": 20000}
+
+
+def test_known_labels_cannot_carry_a_non_canonical_limit():
+    for bad in ({"matched-1000": 20000}, {"diagnostic-20000": 1000}, {"matched-1000": 1001, "diagnostic-20000": 20000}):
+        with pytest.raises(ValueError, match="canonically"):
+            baselines.official_plan("keyset.v2", conditions=bad)
+        with pytest.raises(ValueError, match="canonically"):
+            baselines.official_plan("keyset.v2", conditions=bad, dry_label="t")
+
+
+def test_custom_labels_need_dry_label_and_get_a_non_official_role():
+    with pytest.raises(baselines.PlanRefused):
+        baselines.official_plan("keyset.v2", conditions={"custom-3": 3})
+    with pytest.raises(baselines.PlanRefused):
+        baselines.run_plan("keyset.v2", Path("unused-x"), approval_reference="ref", conditions={"custom-3": 3})
+    runs = baselines.official_plan("keyset.v2", conditions={"custom-3": 3}, dry_label="t")
+    assert {r["condition_role"] for r in runs} == {"custom-3 (NOT budget-matched, NOT an official condition)"}
+
+
+def test_only_scripts_refused_on_an_approved_run(tmp_path):
+    with pytest.raises(baselines.PlanRefused, match="only_scripts"):
+        baselines.official_plan("keyset.v2", only_scripts=["idle"])
+    with pytest.raises(baselines.PlanRefused, match="only_scripts"):
+        baselines.run_plan("keyset.v2", tmp_path / "o", approval_reference="ref", only_scripts=["idle"])
+    assert not (tmp_path / "o").exists()

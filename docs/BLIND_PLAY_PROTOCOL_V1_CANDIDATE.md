@@ -164,23 +164,32 @@ a better result; nothing edited mid-session; every session is reported.
 
 Recorded through the same isolated host, keyset and platform, before the smoke test and under settings that must not be tuned. **Exact configuration:**
 `keyset.v2`, seed 0, 10 episodes, 8,000 frames per episode, with the frame length per `act` set by each script (`idle` 120; `key-sweep` 20; `seeded-random` 1–120).
-Command (`src/rewardbench/blindplay/baselines.py`): `python -m rewardbench.blindplay.baselines plan --keyset keyset.v2 --out-root <dir>` prints the seven host
-commands and a `plan_sha256`; `run` (same arguments plus `--i-have-owner-approval-reference <text>`) executes them in order and records that text verbatim
-without verifying it. The plan hash covers the run names, scripts, script seeds, keyset, episodes and frame budget (not the output path). **The plan hash and
-its seven run directories go into the pre-registration record (§14).** The tool refuses to overwrite an existing out root.
+Command (`src/rewardbench/blindplay/baselines.py`): `python -m rewardbench.blindplay.baselines plan --keyset keyset.v2 --out-root <dir>` prints every host
+command and a `plan_sha256`; `run` (same arguments plus `--i-have-owner-approval-reference <text>`) executes them in order and records that text verbatim
+without verifying it. **Owner amendment, 2026-11-05 (PROJECT.md section 0.3, D13): the plan has two separately labelled budget conditions of seven runs each,
+and `--max-requests` is frozen in every command and in the plan hash.** The plan hash covers the condition labels and roles, the request limit, the run names,
+scripts, script seeds, keyset, episodes and frame budget (not the output path). **The plan hash and its run directories go into the pre-registration record
+(section 14).** The tool refuses to overwrite an existing out root.
 
 * `idle`: no keys for 120 frames per act, 10 episodes (previously observed to crash at frame 1,293).
 * `key-sweep`: each allowed key alone for 20 frames in enumeration order, then no keys for 20 frames, repeating.
 * `seeded-random`: script seeds 0–4; 0–2 random keys for 1–120 frames, ignoring the screen.
 
-**Limits that are NOT the study limits, declared.** The host command sets no request or wall-clock limit of its own, so each baseline run uses the host
-defaults: **20,000 game requests** (`session.DEFAULT_MAX_REQUESTS`; `HostConfig.max_requests`, no command-line flag) and **3,600 s** wall clock
-(`--max-wall-seconds` exists but the baseline plan does not pass it), against 1,000 requests and 7,200 s for the study (§6). The 1,000-request limit
-cannot be applied to `key-sweep` as built: 8,000 frames at 20 frames per `act` is about 400 `act` requests per episode (plus observes), so 10 episodes need
-about 4,000; a limit of 1,000 would end that run after roughly 2 episodes. The proposal is therefore that baselines run with the defaults above and that the
-actual values are reported next to every baseline result. **Open engineering item:** if the owner wants baselines under a stated request limit, a
-`--max-requests` flag must be added to the host and the baseline plan before the official baselines are recorded, and the value must enter the plan hash.
-Nothing in this text assumes that has been done.
+**Budget conditions (owner amendment, Mission 018).** Both use the study's platform, `keyset.v2` and 8,000-frame episode limit:
+
+1. `matched-1000` (`--max-requests 1000`): the **budget-matched control**. Every game request counts (brief, observe and act). Once the limit is passed,
+   further requests are rejected with "request budget exhausted"; the session is not otherwise ended. Any comparison with the AI player uses this condition
+   and discloses censoring.
+2. `diagnostic-20000` (`--max-requests 20000`): an **extended scripted diagnostic. It is NOT a budget-matched control** and is never substituted for
+   `matched-1000`.
+
+Both budgets are reported side by side. A run that the request limit ended before its planned episodes finished (notably `key-sweep`: 8,000 frames at 20
+frames per `act` is about 400 `act` requests per episode, so 10 episodes need about 4,000 and a limit of 1,000 is expected to end that run after roughly 2
+episodes; this is not yet measured) is reported as `CENSORED_BY_REQUEST_LIMIT`, never as a complete run: `results.py` states planned versus finished
+episodes, the limit, the requests used and the partial episode, from the recorded manifests only. A run's condition is stated only when the run log records
+it, and a disagreement between the logged condition and the session's recorded limit is reported as a conflict. The wall clock stays at the host default of
+3,600 s for baselines (the study limit is 7,200 s, section 6; the baselines are scripted and do not approach either). **No official baselines are authorized by
+this text.**
 
 They show what blind input produces and are not controllers. No hand-written landing controller is used. Baselines tune no setting; their summaries go
 into the pre-registration commit. The offline demonstration (`offline_demo`) is a pipeline check, not a baseline.
