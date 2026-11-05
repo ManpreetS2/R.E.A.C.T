@@ -155,3 +155,148 @@ def test_same_keyset_seed_script_is_deterministic(good, tmp_path):
     assert strip(a) == strip(b)
     assert _image_hashes(good) == _image_hashes(other) and _image_hashes(good)
     assert [e["end_screenshot_sha256"] for e in _episodes(good)] == [e["end_screenshot_sha256"] for e in _episodes(other)]
+
+
+# ---------------------------------------------------------------- request-limit censoring (Mission 018)
+def _run_limited(out: Path, max_requests: int, episodes=2) -> None:
+    rc = host_mod.main(["--out", str(out), "--script", "idle", "--keyset", "keyset.v2", "--episodes", str(episodes),
+                        "--episode-frame-budget", "60", "--max-requests", str(max_requests)])
+    assert rc == 0
+
+
+@pytest.fixture(scope="module")
+def censored(tmp_path_factory) -> Path:
+    reason = isolation.supported()
+    if reason:
+        pytest.skip(reason)
+    out = tmp_path_factory.mktemp("censored") / "session"
+    _run_limited(out, 3)
+    return out
+
+
+def test_cli_max_requests_reaches_the_host_and_referee(censored):
+    host = json.loads((censored / "host_session.json").read_text(encoding="utf-8"))
+    ref = json.loads((censored / "referee" / "session.json").read_text(encoding="utf-8"))
+    assert host["config"]["max_requests"] == 3 and ref["budgets"]["max_requests"] == 3
+
+
+def test_request_limit_censoring_is_reported(censored):
+    s = results.summarize(censored, run_replay=True)
+    c = s["completeness"]
+    cen = c["censoring"]
+    assert cen["flag"] == "CENSORED_BY_REQUEST_LIMIT" and c["flag"] == "INCOMPLETE" and c["incomplete"]
+    assert cen["max_requests"] == 3 and cen["planned_episodes"] == 2
+    assert cen["finished_episodes"] < 2 and cen["finished_episodes"] == c["finished_episodes"]
+    assert cen["requests_used"] == 3 and cen["requests_rejected_over_limit"] >= 1
+    assert s["header"]["max_requests"] == 3
+    assert s["integrity"]["ok"], s["integrity"]
+    assert s["integrity"]["replay_receipt"]["reproduced"] is True
+    text = results.render_text(s)
+    assert "CENSORED_BY_REQUEST_LIMIT" in text and "max_requests=3" in text and "NOT a complete run" in text
+
+
+def test_normal_session_is_not_flagged_as_censored(tmp_path):
+    reason = isolation.supported()
+    if reason:
+        pytest.skip(reason)
+    out = tmp_path / "s"
+    _run_limited(out, 20000, episodes=1)
+    s = results.summarize(out)
+    assert s["completeness"]["censoring"]["flag"] == "not_censored"
+    assert s["completeness"]["flag"] == "complete" and s["header"]["max_requests"] == 20000
+    assert "CENSORED" not in results.render_text(s)
+
+
+def test_censoring_unavailable_facts_are_marked_not_invented(tmp_path):
+    ref = tmp_path / "referee"
+    ref.mkdir()
+    (tmp_path / "host_session.json").write_text(json.dumps({"status": "closed", "config": {}}), encoding="utf-8")
+    (ref / "session.json").write_text(json.dumps({"status": "closed", "budgets": {"max_episodes": 3}}), encoding="utf-8")
+    s = results.summarize(tmp_path)
+    assert s["completeness"]["censoring"]["flag"] == "unavailable"
+    assert s["header"]["max_requests"] == "unavailable" and s["header"]["condition"] == "unavailable"
+
+
+def test_hand_built_censored_session_without_files(tmp_path):
+    ref = tmp_path / "referee"
+    ref.mkdir()
+    (tmp_path / "host_session.json").write_text(json.dumps({"status": "closed", "config": {}}), encoding="utf-8")
+    (ref / "session.json").write_text(json.dumps({
+        "status": "closed", "budgets": {"max_episodes": 10, "max_requests": 1000},
+        "counts": {"requests": 1001, "episodes_finished": 2}}), encoding="utf-8")
+    (ref / "player_transcript.jsonl").write_text(
+        json.dumps({"request_index": 1001, "request": {}, "response": {"error": "request budget exhausted"}}) + "\n", encoding="utf-8")
+    cen = results.summarize(tmp_path)["completeness"]["censoring"]
+    assert cen["flag"] == "CENSORED_BY_REQUEST_LIMIT" and cen["max_requests"] == 1000 and cen["requests_used"] == 1000
+    assert cen["planned_episodes"] == 10
+
+
+def test_condition_only_from_the_run_log(tmp_path):
+    root = tmp_path / "root"
+    sess = root / "matched-1000_01_idle"
+    ref = sess / "referee"
+    ref.mkdir(parents=True)
+    (sess / "host_session.json").write_text(json.dumps({"status": "closed", "config": {}}), encoding="utf-8")
+    (ref / "session.json").write_text(json.dumps({"status": "closed", "budgets": {"max_episodes": 1, "max_requests": 1000}}),
+                                      encoding="utf-8")
+    assert results.summarize(sess)["header"]["condition"] == "unavailable"   # nothing recorded, nothing inferred
+    (root / "baseline_run_log.json").write_text(json.dumps({"runs": [
+        {"name": "01_idle", "subdir": "matched-1000_01_idle", "condition": "matched-1000", "max_requests": 1000}]}), encoding="utf-8")
+    h = results.summarize(sess)["header"]
+    assert h["condition"] == "matched-1000" and h["condition_max_requests_agrees"] is True
+    (root / "baseline_run_log.json").write_text(json.dumps({"runs": [
+        {"name": "01_idle", "subdir": "matched-1000_01_idle", "condition": "matched-1000", "max_requests": 20000}]}), encoding="utf-8")
+    assert results.summarize(sess)["header"]["condition_max_requests_agrees"] is False
+
+
+def _hand_session(sess: Path, *, max_requests=1000, requests=None, planned=3, finished=1) -> None:
+    ref = sess / "referee"
+    ref.mkdir(parents=True)
+    (sess / "host_session.json").write_text(json.dumps({"status": "closed", "config": {}}), encoding="utf-8")
+    counts = {} if requests is None else {"requests": requests}
+    (ref / "session.json").write_text(json.dumps({"status": "closed", "budgets": {"max_episodes": planned, "max_requests": max_requests},
+                                                  "counts": counts}), encoding="utf-8")
+    (ref / "episodes.jsonl").write_text(
+        "".join(json.dumps({"episode": n + 1, "outcome": "crashed", "utc": f"t{n}"}) + "\n" for n in range(finished)), encoding="utf-8")
+
+
+def test_disagreeing_condition_is_a_conflict_and_incomplete(tmp_path):
+    root = tmp_path / "root"
+    sess = root / "matched-1000_01_idle"
+    _hand_session(sess, max_requests=20000, planned=1, finished=1)
+    (sess / "baseline_condition.json").write_text(json.dumps({"condition": "matched-1000", "max_requests": 1000}), encoding="utf-8")
+    s = results.summarize(sess)
+    assert s["header"]["condition"] == "CONFLICT" and s["header"]["condition_recorded"] == "matched-1000"
+    assert s["completeness"]["flag"] == "INCOMPLETE" and any("CONFLICT" in r for r in s["completeness"]["reasons"])
+    assert not s["integrity"]["ok"] and s["integrity"]["problems"]
+    p = tmp_path / "out.json"
+    assert results.main(["summarize", str(sess), "--json", str(p)]) == 1
+
+
+def test_stopping_exactly_at_the_limit_is_censored_but_a_full_run_is_not(tmp_path):
+    a = tmp_path / "a"
+    _hand_session(a, max_requests=1000, requests=1000, planned=3, finished=1)   # no rejection record at all
+    cen = results.summarize(a)["completeness"]["censoring"]
+    assert cen["flag"] == "CENSORED_BY_REQUEST_LIMIT" and cen["requests_used"] == 1000
+    b = tmp_path / "b"
+    _hand_session(b, max_requests=1000, requests=1000, planned=3, finished=3)
+    assert results.summarize(b)["completeness"]["censoring"]["flag"] == "limit_reached_run_complete"
+    c = tmp_path / "c"
+    _hand_session(c, max_requests=1000, requests=999, planned=3, finished=1)
+    assert results.summarize(c)["completeness"]["censoring"]["flag"] == "not_censored"
+
+
+def test_run_log_fallback_matches_subdir_only_never_name(tmp_path):
+    root = tmp_path / "root"
+    m, d = root / "matched-1000_01_idle", root / "diagnostic-20000_01_idle"
+    _hand_session(m, max_requests=1000, planned=1)
+    _hand_session(d, max_requests=20000, planned=1)
+    (root / "baseline_run_log.json").write_text(json.dumps({"runs": [
+        {"name": "01_idle", "subdir": "matched-1000_01_idle", "condition": "matched-1000", "max_requests": 1000},
+        {"name": "01_idle", "subdir": "diagnostic-20000_01_idle", "condition": "diagnostic-20000", "max_requests": 20000}]}),
+        encoding="utf-8")
+    assert results.summarize(m)["header"]["condition"] == "matched-1000"
+    assert results.summarize(d)["header"]["condition"] == "diagnostic-20000"
+    other = root / "01_idle"   # a directory named like the run but not a recorded subdir
+    _hand_session(other, max_requests=1000, planned=1)
+    assert results.summarize(other)["header"]["condition"] == "unavailable"

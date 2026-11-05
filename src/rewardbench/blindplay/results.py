@@ -20,6 +20,8 @@ from rewardbench.blindplay import model_gateway, replay as replay_mod
 
 UNAVAILABLE = "unavailable"
 TIMEOUT_OUTCOME = "frame_budget_exhausted"
+CENSORED = "CENSORED_BY_REQUEST_LIMIT"
+BUDGET_REJECTION = "request budget exhausted"   # session.Session.handle: later requests are refused, the session is not ended
 
 
 def _sha(path: Path) -> str:
@@ -62,6 +64,59 @@ def _get(d: Any, *keys: str) -> Any:
     return UNAVAILABLE if d is None else d
 
 
+def _condition(root: Path) -> dict[str, Any]:
+    """Baseline condition, only if a run log or per-run file RECORDED it; never inferred from names or budgets."""
+    rec = _read_json(root / "baseline_condition.json")
+    if rec is None:
+        log = _read_json(root.parent / "baseline_run_log.json")
+        for r in (log or {}).get("runs", []) if isinstance(log, dict) else []:
+            if isinstance(r, dict) and r.get("subdir") == root.name and "condition" in r:
+                rec = r
+                break
+    if rec is None or "condition" not in rec:
+        return {"condition": UNAVAILABLE, "condition_role": UNAVAILABLE, "condition_max_requests": UNAVAILABLE}
+    return {"condition": rec["condition"], "condition_role": rec.get("condition_role", UNAVAILABLE),
+            "condition_max_requests": rec.get("max_requests", UNAVAILABLE)}
+
+
+def _censoring(rsess: dict[str, Any] | None, ptrans: list[dict[str, Any]] | None, referee_log: list[dict[str, Any]] | None,
+               planned: Any, finished: int) -> dict[str, Any]:
+    """Did the game-request limit end the session before the planned episodes finished? Recorded facts only."""
+    max_req, used_raw = _get(rsess, "budgets", "max_requests"), _get(rsess, "counts", "requests")
+    rejected: Any = UNAVAILABLE if ptrans is None else sum(
+        1 for e in ptrans if isinstance(e.get("response"), dict) and e["response"].get("error") == BUDGET_REJECTION)
+    over = isinstance(max_req, int) and isinstance(used_raw, int) and used_raw > max_req
+    at_limit = isinstance(max_req, int) and isinstance(used_raw, int) and used_raw >= max_req
+    # a player that stops exactly at the limit leaves no rejection record, so used >= limit counts as reached
+    hit = over or (isinstance(rejected, int) and rejected > 0) or at_limit
+    out: dict[str, Any] = {"max_requests": max_req, "planned_episodes": planned, "finished_episodes": finished,
+                           "requests_recorded": used_raw, "requests_rejected_over_limit": rejected,
+                           "requests_used": UNAVAILABLE, "partial_episode": UNAVAILABLE}
+    if isinstance(max_req, int) and isinstance(used_raw, int):
+        out["requests_used"] = min(used_raw, max_req)
+    elif isinstance(rejected, int) and rejected > 0 and isinstance(max_req, int):
+        out["requests_used"] = max_req
+    if max_req == UNAVAILABLE or (not hit and (used_raw == UNAVAILABLE and rejected == UNAVAILABLE)):
+        out["flag"] = "unavailable"
+    elif not hit:
+        out["flag"] = "not_censored"
+    elif planned == UNAVAILABLE:
+        out["flag"] = "unavailable"
+        out["note"] = "the request limit was reached but the planned episode count is unavailable"
+    elif finished < planned:
+        out["flag"] = CENSORED
+        last_ep = max((r.get("episode", 0) for r in referee_log or [] if isinstance(r.get("episode"), int)), default=0)
+        if last_ep > finished:
+            frames = [r.get("episode_frame_after", 0) for r in referee_log or []
+                      if r.get("event") == "act" and r.get("episode") == last_ep]
+            out["partial_episode"] = {"episode": last_ep, "frames_played": max(frames, default=0), "recorded_as_finished": False}
+        elif referee_log is not None:
+            out["partial_episode"] = "none (no episode was in progress when the limit ended the session)"
+    else:
+        out["flag"] = "limit_reached_run_complete"
+    return out
+
+
 def summarize(session_dir: Path, *, run_replay: bool = False) -> dict[str, Any]:
     root = Path(session_dir)
     ref = root / "referee"
@@ -86,7 +141,18 @@ def summarize(session_dir: Path, *, run_replay: bool = False) -> dict[str, Any]:
     header = {"player_is_ai": is_ai, "label": label, "player_label": _get(rsess, "player", "label"),
               "keyset": _get(rsess, "player_contract", "keyset"), "seed": _get(rsess, "environment", "seed"),
               "script": _get(host, "config", "script"), "script_seed": _get(host, "config", "script_seed"),
-              "mode": _get(host, "config", "mode"), "session_dir": str(root)}
+              "mode": _get(host, "config", "mode"), "session_dir": str(root),
+              "max_requests": _get(rsess, "budgets", "max_requests"), **_condition(root)}
+    cm = header["condition_max_requests"]
+    header["condition_max_requests_agrees"] = (UNAVAILABLE if UNAVAILABLE in (cm, header["max_requests"])
+                                               else cm == header["max_requests"])
+
+    conflict = header["condition_max_requests_agrees"] is False
+    if conflict:
+        header["condition_recorded"] = header["condition"]
+        header["condition"] = "CONFLICT"
+        problems.append(f"condition {header['condition_recorded']!r} recorded max_requests={cm} but session recorded "
+                        f"{header['max_requests']}")
 
     # ---- episodes (trusted referee data), chronological
     episodes, ep_errors = _read_jsonl(ref / "episodes.jsonl")
@@ -106,6 +172,8 @@ def summarize(session_dir: Path, *, run_replay: bool = False) -> dict[str, Any]:
     host_status, ref_status = _get(host, "status"), _get(rsess, "status")
     exit_code = _get(host, "player_exit_code")
     why: list[str] = []
+    if conflict:
+        why.append(f"condition CONFLICT: recorded {header['condition_recorded']!r} (max_requests={cm}) vs session max_requests={header['max_requests']}")
     if episodes is None:
         why.append("referee/episodes.jsonl missing")
     if planned == UNAVAILABLE:
@@ -126,7 +194,12 @@ def summarize(session_dir: Path, *, run_replay: bool = False) -> dict[str, Any]:
     stop_reason = _get(host, "gateway_session", "stop_reason")
     if stop_reason != UNAVAILABLE:
         why.append(f"gateway stop reason: {stop_reason}")
-    completeness = {"planned_episodes": planned, "finished_episodes": len(rows), "host_status": host_status,
+    censoring = _censoring(rsess, _read_jsonl(ref / "player_transcript.jsonl")[0], _read_jsonl(ref / "referee.jsonl")[0],
+                           planned, len(rows))
+    if censoring["flag"] == CENSORED:
+        why.append(f"{CENSORED}: {len(rows)} of {planned} planned episodes finished; limit max_requests={censoring['max_requests']}, "
+                   f"requests used {censoring['requests_used']}")
+    completeness = {"planned_episodes": planned, "censoring": censoring, "finished_episodes": len(rows), "host_status": host_status,
                     "referee_status": ref_status, "player_exit_code": exit_code,
                     "watchdog_fired": _get(host, "watchdog_fired"), "stop_reason": stop_reason,
                     "incomplete": bool(why), "flag": "INCOMPLETE" if why else "complete", "reasons": why}
@@ -250,6 +323,17 @@ def render_text(summary: dict[str, Any]) -> str:
            f"status: {c['flag']}  (planned {c['planned_episodes']}, finished {c['finished_episodes']}, host {c['host_status']}, "
            f"referee {c['referee_status']}, player exit {c['player_exit_code']}, watchdog {c['watchdog_fired']})"]
     out += [f"  reason: {r}" for r in c["reasons"]]
+    out.append(f"max_requests={h['max_requests']} condition={h['condition']} (condition recorded in run log only; 'unavailable' = not recorded)")
+    if h["condition_max_requests_agrees"] is False:
+        out.append(f"  WARNING: run log says max_requests={h['condition_max_requests']} but the session recorded {h['max_requests']}")
+    cen = c["censoring"]
+    if cen["flag"] == CENSORED:
+        out.append(f"*** {CENSORED}: planned {cen['planned_episodes']} episodes, finished {cen['finished_episodes']}, "
+                   f"max_requests={cen['max_requests']}, requests used {cen['requests_used']} "
+                   f"({cen['requests_rejected_over_limit']} rejected over the limit); partial episode: {cen['partial_episode']}. "
+                   f"This is NOT a complete run; do not compare it as if all planned episodes were played. ***")
+    elif cen["flag"] != "not_censored":
+        out.append(f"request-limit censoring: {cen['flag']}")
     out.append("episode  outcome                      timeout  frames  score  fuel  altitude")
     for r in summary["episodes"]:
         out.append(f"{r['episode']!s:<8} {r['outcome']!s:<28} {'YES' if r['timed_out'] else 'no':<8} {r['frames']!s:<7} "

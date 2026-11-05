@@ -71,14 +71,17 @@ def test_broad_allow_in_any_ace_shape_is_not_private(sddl):
     assert lt._sddl_is_private(sddl) is False
 
 
+ME = "S-1-5-21-1-2-3-1001"
+
+
 @pytest.mark.parametrize("sddl", [
-    "D:PAI(A;;FA;;;SY)(A;;FA;;;BA)(A;;FA;;;S-1-5-21-1-2-3-1001)",
-    "D:P",                                                         # empty DACL: nobody has access
-    "D:PAI(D;;FR;;;WD)(A;;FA;;;SY)S:(AU;SA;FA;;;WD)",              # a SACL audit entry naming Everyone grants nothing
-    "D:\\keys\\x.key\nD:PAI(A;;FA;;;SY)",                           # path text that contains a drive-like "D:"
+    f"O:{ME}D:PAI(A;;FA;;;SY)(A;;FA;;;BA)(A;;FA;;;{ME})",
+    "O:BAD:P",                                                     # empty DACL: nobody has access
+    f"O:{ME}D:PAI(D;;FR;;;WD)(A;;FA;;;SY)S:(AU;SA;FA;;;WD)",       # a SACL audit entry naming Everyone grants nothing
+    "D:\\keys\\x.key\nO:SYD:PAI(A;;FA;;;SY)",                       # path text that contains a drive-like "D:"
 ])
 def test_private_shapes_stay_private(sddl):
-    assert lt._sddl_is_private(sddl) is True
+    assert lt._sddl_is_private(sddl, ME) is True
 
 
 @pytest.mark.skipif(lt.sys.platform != "win32", reason="Windows ACLs")
@@ -92,9 +95,177 @@ def test_a_real_file_with_a_null_dacl_is_refused(tmp_path):
     advapi.SetNamedSecurityInfoW.argtypes = [ctypes.c_wchar_p, ctypes.c_int, ctypes.c_uint32, ctypes.c_void_p,
                                              ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p]
     code = advapi.SetNamedSecurityInfoW(str(f), SE_FILE_OBJECT, DACL_SECURITY_INFORMATION | 0x80000000, None, None, None, None)
-    if code != 0:
-        pytest.skip(f"could not install a NULL DACL ({code})")
+    assert code == 0, f"could not install a NULL DACL ({code}); the test must not pass vacuously"
     assert lt._windows_acl_is_private(f) is False
+
+
+# ------------------------------------------------------------ (1b) Mission 018: fail-closed allowlist
+OTHER = "S-1-5-21-1-2-3-1234"
+
+
+@pytest.mark.parametrize("sddl", [
+    f"O:{ME}D:PAI(A;;FA;;;{ME})(A;;FR;;;{OTHER})",                  # another specific user
+    f"O:{ME}D:PAI(A;;FR;;;{OTHER.lower()})",
+    f"O:{ME}D:PAI(A;;FR;;;S-1-5-19)",                               # LOCAL SERVICE
+    f"O:{ME}D:PAI(A;;FR;;;S-1-5-32-551)",                           # Backup Operators
+    f"O:{ME}D:PAI(A;;FR;;;LS)",
+    f"O:{ME}D:PAI(A;;FR;;;ZZ)",                                     # unknown alias
+    f"O:{ME}D:PAI(A;;FR;;;)",                                       # empty trustee
+    f"O:{ME}D:PAI(A;;FR;;;CO)",                                     # creator owner: not allowed
+    f"O:{ME}D:PAI(A;;FR;;;S-1-3-1)",                                # creator group
+    f"O:{ME}D:PAI(OA;;FR;00000000-0000-0000-0000-000000000000;;{OTHER})",
+    f'O:{ME}D:PAI(XA;;FR;;;{OTHER};(@User.Title=="x"))',            # conditional, unlisted trustee
+    f'O:{ME}D:PAI(XA;;FR;;;{ME};(@User.Title=="x"))',               # any conditional ACE is refused, even for the owner
+    f"O:{ME}D:PAI(ZA;;FR;;;{ME})",                                  # unknown / callback ACE type
+    f"O:{ME}D:PAI(A;;FR;;;{ME}",                                    # unbalanced: unparseable
+    f"O:{ME}D:PAI(A;;FR;;{ME})",                                    # too few fields
+    f"O:{ME}D:PAI(AU;;FR;;;{ME})",                                  # unexpected type in the DACL
+    f"O:{ME}D:PAI(A;;FR;;;{ME})(A;;FR;;;{OTHER})S:(AU;SA;FA;;;WD)",
+])
+def test_allowlist_refuses_every_unlisted_allow_trustee(sddl):
+    assert lt._sddl_is_private(sddl, ME) is False
+
+
+@pytest.mark.parametrize("sddl", [
+    f"O:{OTHER}D:PAI(A;;FA;;;{ME})",                                # file owned by someone else
+    f"O:LSD:PAI(A;;FA;;;{ME})",
+    f"D:PAI(A;;FA;;;{ME})",                                         # no owner: refuse
+    f"O:{ME}G:SY",                                                  # no DACL
+    f"O:{ME}G:SYD:NO_ACCESS_CONTROL",
+])
+def test_allowlist_refuses_wrong_missing_or_unknown_owner(sddl):
+    assert lt._sddl_is_private(sddl, ME) is False
+
+
+def test_owner_sid_only_and_owner_plus_system_and_admins_are_private():
+    assert lt._sddl_is_private(f"O:{ME}G:SYD:PAI(A;;FA;;;{ME})", ME) is True
+    assert lt._sddl_is_private(f"O:{ME}D:PAI(A;;FA;;;SY)(A;;FA;;;BA)(A;;FA;;;{ME})", ME) is True
+    assert lt._sddl_is_private(f"O:SYD:P(A;;FA;;;S-1-5-18)(A;;FA;;;S-1-5-32-544)(A;;FA;;;{ME.lower()})", ME) is True
+    assert lt._sddl_is_private(f"O:{ME.lower()}D:P(A;;FA;;;{ME})", ME.upper()) is True    # SIDs compare without case
+    assert lt._sddl_is_private(f"O:{ME}D:PAI(D;;FA;;;{OTHER})(A;;FA;;;{ME})", ME) is True    # deny grants nothing
+    assert lt._sddl_is_private(f"O:{ME}D:(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;OW)", ME) is True   # OWNER RIGHTS = the owner
+    assert lt._sddl_is_private(f"O:{OTHER}D:(A;ID;FA;;;OW)", ME) is False                     # ...so a foreign owner still fails
+
+
+def test_an_unavailable_or_malformed_current_sid_refuses(monkeypatch):
+    sddl = f"O:{ME}D:PAI(A;;FA;;;{ME})"
+    assert lt._sddl_is_private(sddl, ME) is True
+    monkeypatch.setattr(lt, "_current_user_sid", lambda: None)
+    assert lt._sddl_is_private(sddl) is False
+    assert lt._sddl_is_private(sddl, "") is False
+    assert lt._sddl_is_private(sddl, "not-a-sid") is False
+    monkeypatch.setattr(lt, "_current_user_sid", lambda: ME)
+    assert lt._sddl_is_private(sddl) is True
+
+
+def _own_only_file(tmp_path, name):
+    import os
+    f = tmp_path / name
+    f.write_text("x")
+    subprocess.run(["icacls", str(f), "/inheritance:r", "/grant:r", f"{os.environ['USERNAME']}:F"], check=True,
+                   capture_output=True)
+    return f
+
+
+@pytest.mark.skipif(lt.sys.platform != "win32", reason="Windows ACLs")
+def test_real_file_failure_to_know_the_current_sid_refuses(tmp_path, monkeypatch):
+    f = _own_only_file(tmp_path, "mine.key")
+    assert lt._windows_acl_is_private(f) is True
+    monkeypatch.setattr(lt, "_current_user_sid", lambda: None)
+    assert lt._windows_acl_is_private(f) is False
+
+
+@pytest.mark.skipif(lt.sys.platform != "win32", reason="Windows ACLs")
+@pytest.mark.parametrize("sid", ["S-1-5-19", "S-1-5-20", "S-1-5-32-551", "S-1-5-32-555", "S-1-5-80-0"])
+def test_real_file_granting_another_real_principal_is_refused(tmp_path, sid):
+    """Principals that were never on the old deny-list: LOCAL SERVICE, NETWORK SERVICE, Backup Operators, Remote Desktop
+    Users, all services. FAILS (never skips) if the grant fails, so it cannot pass vacuously."""
+    f = _own_only_file(tmp_path, "other.key")
+    done = subprocess.run(["icacls", str(f), "/grant", f"*{sid}:R"], capture_output=True)
+    assert done.returncode == 0, f"icacls could not grant {sid}: {done.stdout!r}"
+    assert lt._windows_acl_is_private(f) is False
+
+
+@pytest.mark.skipif(lt.sys.platform != "win32", reason="Windows ACLs")
+@pytest.mark.parametrize("rid", [503, 504])   # DefaultAccount, WDAGUtilityAccount
+def test_real_file_shared_with_another_specific_user_sid_is_refused(tmp_path, rid):
+    """Owner-required: a REAL file shared with another user of this machine (same domain prefix as the current user)."""
+    mine = lt._current_user_sid()
+    other = mine.rsplit("-", 1)[0] + f"-{rid}"
+    assert other != mine
+    f = _own_only_file(tmp_path, f"shared{rid}.key")
+    assert lt._windows_acl_is_private(f) is True
+    done = subprocess.run(["icacls", str(f), "/grant", f"*{other}:R"], capture_output=True, text=True)
+    assert done.returncode == 0, f"icacls could not grant {other}: {done.stdout!r} {done.stderr!r}"
+    assert other.upper() in lt._file_owner_and_dacl_sddl(f).upper(), "the grant is not in the DACL"
+    assert lt._windows_acl_is_private(f) is False
+
+
+def _swap_during_read(monkeypatch, replace):
+    """Let ``replace()`` swap the file after the checks and before/while its content is read."""
+    real = lt._read_text
+    def read(path):
+        replace()
+        return real(path)
+    monkeypatch.setattr(lt, "_read_text", read)
+
+
+def test_credential_swapped_between_check_and_read_is_refused(owner, monkeypatch):
+    path = owner["credential"]
+    def replace():
+        path.unlink()
+        path.write_text(lt_key() + "\n", encoding="utf-8")   # a different file, same name
+        path.chmod(0o600)
+    _swap_during_read(monkeypatch, replace)
+    with pytest.raises(lt.LiveGateRefused, match="changed"):
+        lt.read_credential(path)
+
+
+def test_credential_rewritten_in_place_during_the_read_is_refused(owner, monkeypatch):
+    path = owner["credential"]
+    _swap_during_read(monkeypatch, lambda: path.write_text(lt_key() + "\n# padding\n", encoding="utf-8"))
+    with pytest.raises(lt.LiveGateRefused, match="changed"):
+        lt.read_credential(path)
+
+
+def test_credential_replaced_by_a_link_between_check_and_read_is_refused(owner, monkeypatch, tmp_path):
+    path = owner["credential"]
+    target = tmp_path / "target.key"
+    target.write_text(lt_key(), encoding="utf-8")
+    def replace():
+        path.unlink()
+        try:
+            path.symlink_to(target)
+        except OSError:
+            pytest.skip("this account may not create symbolic links")
+    _swap_during_read(monkeypatch, replace)
+    with pytest.raises(lt.LiveGateRefused, match="changed"):
+        lt.read_credential(path)
+
+
+@pytest.mark.skipif(lt.sys.platform != "win32", reason="Windows ACLs")
+def test_credential_acl_widened_during_the_read_is_refused(owner, monkeypatch):
+    calls = []
+    def check(path):
+        calls.append(path)
+        return len(calls) == 1           # private at the first check, not after the read
+    monkeypatch.setattr(lt, "_windows_acl_is_private", check)
+    with pytest.raises(lt.LiveGateRefused, match="readable"):
+        lt.read_credential(owner["credential"])
+    assert len(calls) == 2
+
+
+def lt_key():
+    return "sk-ant-api03-FAKEFAKEFAKEFAKEFAKEFAKE-not-a-real-key"
+
+
+@pytest.mark.skipif(lt.sys.platform != "win32", reason="Windows ACLs")
+def test_real_file_current_sid_and_owner_section_are_read(tmp_path):
+    sid = lt._current_user_sid()
+    assert sid and sid.upper().startswith("S-1-5-")
+    f = _own_only_file(tmp_path, "owned.key")
+    assert lt._file_owner_and_dacl_sddl(f).upper().startswith("O:")
+    assert lt._file_owner_and_dacl_sddl(tmp_path / "missing.key") is None
 
 
 # ------------------------------------------------------------ (2) authorization integrity

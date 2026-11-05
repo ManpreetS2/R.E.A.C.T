@@ -30,7 +30,6 @@ import ssl
 import stat
 import subprocess
 import sys
-import tempfile
 from dataclasses import dataclass, fields
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
@@ -185,46 +184,146 @@ def _refuse_ambient_credentials(environ: Mapping[str, str]) -> None:
                               "variables would also switch Claude Code away from the subscription")
 
 
-# Trustees whose access an AppContainer or another user could use: SDDL aliases and numeric SIDs, so the check does not
-# depend on the language of Windows. Everyone, Users, Authenticated Users, Interactive, Network, All Application Packages
-# (AC), anonymous, guests, domain users/guests, restricted code, power users and every individual AppContainer package SID
-# (S-1-15-2-...) or capability SID (S-1-15-3-...). A specific other user's SID cannot be told from the owner's here.
-_BROAD_TRUSTEES = {"WD", "BU", "AU", "IU", "NU", "AC", "AN", "BG", "DU", "DG", "RC", "WR", "PU", "LG", "DD", "DC", "RU", "CG",
-                   "S-1-1-0", "S-1-5-32-545", "S-1-5-11", "S-1-5-4", "S-1-5-2", "S-1-5-7", "S-1-5-32-546", "S-1-5-32-547",
-                   "S-1-5-32-554", "S-1-5-12", "S-1-5-33"}
-_BROAD_RIDS = {"513", "514", "515"}      # Domain Users, Domain Guests, Domain Computers
-_ALLOW_ACE = re.compile(r"\((A|OA|XA|ZA);[^;]*;[^;]*;[^;]*;[^;]*;([^;)]+)(?:;[^)]*)?\)")
+# FAIL-CLOSED ALLOWLIST (Mission 018, owner amendment replacing the earlier deny-list). A credential file is private only
+# if every allow-type ACE of its DACL names one of these trustees, and its owner is one of them as well:
+#   * the SID of the user running this process (read from the process token, never from a display name);
+#   * OWNER RIGHTS (OW, S-1-3-4): means "the file's owner", who must already be on this list (Python and pytest create private
+#     files with exactly this ACE), so it adds no principal;
+#   * SYSTEM (SY, S-1-5-18) and built-in Administrators (BA, S-1-5-32-544): both can read any file or take ownership of it
+#     anyway, and the owner's setup instructions already tolerate them. No other principal is allowed, so every other user
+#     SID, group, alias, AppContainer or capability SID, unknown token, Everyone, Users and Authenticated Users is refused.
+# CREATOR OWNER (CO) is deliberately not allowed: it is not needed on a plain file.
+_PRIVILEGED_TRUSTEES = frozenset({"SY", "S-1-5-18", "BA", "S-1-5-32-544", "OW", "S-1-3-4"})
 _DACL_HEADER = re.compile(r"D:(NO_ACCESS_CONTROL|[PAIR]{0,6})(?=\(|S:|\s|$)")
+_OWNER = re.compile(r"(?mi)^O:(S-1-[0-9-]+|[A-Za-z]{2})(?=G:|D:|S:|\s|$)")
+_SACL_START = re.compile(r"(?:(?<=\))|^)S:")
+_DACL_BODY = re.compile(r'(?:\([^()"]*\))*')
 
 
-def _is_broad(trustee: str) -> bool:
-    t = trustee.strip().upper()
-    return (t in _BROAD_TRUSTEES or t.startswith(("S-1-15-2-", "S-1-15-3-"))
-            or (t.startswith("S-1-5-21-") and t.rsplit("-", 1)[-1] in _BROAD_RIDS))
-
-
-def _sddl_is_private(sddl: str) -> bool:
-    """False for a broad allow in any ACE shape, and also when the text has no DACL or has a NULL DACL: both mean that nobody
-    is restricted. The last ``D:`` header wins, since a file name printed before the SDDL may contain one."""
+def _sddl_is_private(sddl: str, current_sid: "str | None" = None) -> bool:
+    """True only when the owner and every allow ACE are in the allowlist above (current user SID, SY, BA). Anything else
+    is refused: a NULL, missing or unparseable DACL, an unknown or conditional ACE, an unknown ACE type, a missing owner,
+    or no current-user SID. Deny ACEs grant nothing. The last ``D:`` header wins, since a file name printed before the
+    SDDL may contain one."""
+    if current_sid is None:
+        current_sid = _current_user_sid()
+    if not current_sid or not re.fullmatch(r"S-1-[0-9-]+", current_sid.strip(), re.IGNORECASE):
+        return False
+    allowed = _PRIVILEGED_TRUSTEES | {current_sid.strip().upper()}
+    owners = list(_OWNER.finditer(sddl))
+    if not owners or owners[-1].group(1).upper() not in allowed:
+        return False
     headers = list(_DACL_HEADER.finditer(sddl))
     if not headers or headers[-1].group(1) == "NO_ACCESS_CONTROL":
         return False
-    for _kind, trustee in _ALLOW_ACE.findall(sddl[headers[-1].end():]):
-        if _is_broad(trustee):
+    rest = sddl[headers[-1].end():].rstrip()
+    sacl = _SACL_START.search(rest)
+    body = rest[:sacl.start()] if sacl else rest
+    if not _DACL_BODY.fullmatch(body):
+        return False
+    for ace in re.findall(r"\(([^()]*)\)", body):
+        fields = ace.split(";")
+        kind = fields[0].strip().upper()
+        if kind in ("D", "OD"):
+            continue
+        if kind not in ("A", "OA") or len(fields) != 6 or fields[5].strip().upper() not in allowed:
             return False
     return True
 
 
+def _current_user_sid() -> "str | None":
+    """SID string of the process token's user (locale independent), or None if it cannot be determined."""
+    if sys.platform != "win32":
+        return None
+    try:
+        import ctypes
+        from ctypes import wintypes
+        advapi, kernel = ctypes.WinDLL("advapi32", use_last_error=True), ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel.GetCurrentProcess.restype = wintypes.HANDLE
+        advapi.OpenProcessToken.argtypes = [wintypes.HANDLE, wintypes.DWORD, ctypes.POINTER(wintypes.HANDLE)]
+        advapi.GetTokenInformation.argtypes = [wintypes.HANDLE, ctypes.c_int, ctypes.c_void_p, wintypes.DWORD,
+                                               ctypes.POINTER(wintypes.DWORD)]
+        advapi.ConvertSidToStringSidW.argtypes = [ctypes.c_void_p, ctypes.POINTER(ctypes.c_void_p)]
+        kernel.LocalFree.argtypes = [ctypes.c_void_p]
+        kernel.CloseHandle.argtypes = [wintypes.HANDLE]
+        token = wintypes.HANDLE()
+        if not advapi.OpenProcessToken(kernel.GetCurrentProcess(), 0x8, ctypes.byref(token)):   # TOKEN_QUERY
+            return None
+        try:
+            size = wintypes.DWORD(0)
+            advapi.GetTokenInformation(token, 1, None, 0, ctypes.byref(size))   # TokenUser
+            buf = ctypes.create_string_buffer(size.value)
+            if not size.value or not advapi.GetTokenInformation(token, 1, buf, size, ctypes.byref(size)):
+                return None
+            sid_ptr = ctypes.cast(buf, ctypes.POINTER(ctypes.c_void_p))[0]
+            text = ctypes.c_void_p()
+            if not sid_ptr or not advapi.ConvertSidToStringSidW(sid_ptr, ctypes.byref(text)):
+                return None
+            try:
+                return ctypes.wstring_at(text.value)
+            finally:
+                kernel.LocalFree(text)
+        finally:
+            kernel.CloseHandle(token)
+    except Exception:   # noqa: BLE001 - any failure means "unknown": the caller refuses
+        return None
+
+
+def _file_owner_and_dacl_sddl(path: Path) -> "str | None":
+    """``O:...D:...`` SDDL of the file's owner and DACL from the Win32 API, or None on any failure. A NULL DACL yields
+    text without ``D:``."""
+    try:
+        import ctypes
+        from ctypes import wintypes
+        advapi, kernel = ctypes.WinDLL("advapi32", use_last_error=True), ctypes.WinDLL("kernel32", use_last_error=True)
+        advapi.GetNamedSecurityInfoW.argtypes = [wintypes.LPCWSTR, ctypes.c_int, wintypes.DWORD, ctypes.c_void_p,
+                                                 ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.POINTER(ctypes.c_void_p)]
+        advapi.GetNamedSecurityInfoW.restype = wintypes.DWORD
+        advapi.ConvertSecurityDescriptorToStringSecurityDescriptorW.argtypes = [
+            ctypes.c_void_p, wintypes.DWORD, wintypes.DWORD, ctypes.POINTER(ctypes.c_void_p), ctypes.c_void_p]
+        kernel.LocalFree.argtypes = [ctypes.c_void_p]
+        descriptor = ctypes.c_void_p()
+        # SE_FILE_OBJECT, OWNER_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION
+        if advapi.GetNamedSecurityInfoW(str(path), 1, 0x1 | 0x4, None, None, None, None, ctypes.byref(descriptor)) != 0:
+            return None
+        try:
+            text = ctypes.c_void_p()
+            if not advapi.ConvertSecurityDescriptorToStringSecurityDescriptorW(descriptor, 1, 0x1 | 0x4, ctypes.byref(text), None):
+                return None
+            try:
+                return ctypes.wstring_at(text.value)
+            finally:
+                kernel.LocalFree(text)
+        finally:
+            kernel.LocalFree(descriptor)
+    except Exception:   # noqa: BLE001
+        return None
+
+
 def _windows_acl_is_private(path: Path) -> bool:
-    """False when the file grants access to a broad group or an AppContainer. Read as SDDL (``icacls /save``), which
-    names trustees by SID alias, so the result does not depend on the Windows display language."""
-    with tempfile.TemporaryDirectory() as scratch:
-        saved = Path(scratch) / "acl.txt"
-        done = subprocess.run(["icacls", str(path), "/save", str(saved), "/Q"], capture_output=True, timeout=15)
-        if done.returncode != 0 or not saved.exists():
-            return False   # cannot read the ACL: refuse
-        text = saved.read_bytes().decode("utf-16", errors="replace")
-    return _sddl_is_private(text)
+    """True only when the owner and every allow ACE of the file are the current user, SYSTEM or Administrators. The
+    descriptor is read as SDDL, which names trustees by SID or alias, so the result does not depend on the display language.
+    Any failure to read the ACL or the current SID refuses."""
+    sid = _current_user_sid()
+    sddl = _file_owner_and_dacl_sddl(path) if sid else None
+    return bool(sddl) and _sddl_is_private(sddl, sid)
+
+
+def _identity(info: os.stat_result) -> tuple:
+    """Device, file index (st_ino is the NTFS file index on Windows), size and mtime."""
+    return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns)
+
+
+def _read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
+
+
+def _check_private(resolved: Path, info: os.stat_result) -> None:
+    if sys.platform == "win32":
+        if not _windows_acl_is_private(resolved):
+            raise LiveGateRefused("the credential file is readable by other accounts; see the icacls step in the instructions")
+    elif info.st_mode & 0o077:
+        raise LiveGateRefused("the credential file must be private to your user (chmod 600)")
 
 
 def read_credential(path: Path) -> "_Secret":
@@ -240,15 +339,16 @@ def read_credential(path: Path) -> "_Secret":
         raise LiveGateRefused("the credential file must be outside the repository")
     if info.st_size > 1024:
         raise LiveGateRefused("the credential file is too large to be a key")
-    if sys.platform == "win32":
-        if not _windows_acl_is_private(resolved):
-            raise LiveGateRefused("the credential file is readable by other accounts; see the icacls step in the instructions")
-    elif info.st_mode & 0o077:
-        raise LiveGateRefused("the credential file must be private to your user (chmod 600)")
+    _check_private(resolved, info)
     try:
-        text = resolved.read_text(encoding="utf-8").strip()
+        text = _read_text(resolved).strip()
+        after = candidate.lstat()
     except (OSError, UnicodeError) as exc:
         raise LiveGateRefused(f"cannot read the credential file: {type(exc).__name__}") from None
+    # TOCTOU: the file must be the very one that was checked, and still private after the read.
+    if not stat.S_ISREG(after.st_mode) or _identity(after) != _identity(info):
+        raise LiveGateRefused("the credential file changed while it was being read")
+    _check_private(resolved, after)
     if not _KEY_FORMAT.fullmatch(text):
         raise LiveGateRefused("the credential file does not hold a key in the documented sk-ant- format")
     return _Secret(text)
