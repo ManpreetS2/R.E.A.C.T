@@ -28,7 +28,7 @@ Not rehearsed: a full test run in a second checkout, because two checkouts runni
 
 ## 3. Why not merge the stacked PRs one by one
 
-* The stack is **16 PRs (#12 to #27)** and 25 PRs are open in total (#3 to #27). Each upper PR already **contains** all the lower ones; merging layer by layer produces 16 merges of the same commits and 16 CI cycles for no new content.
+* The stack is now **19 PRs (#12 to #30)** and 28 PRs are open in total (#3 to #30); when this plan was first written it was 16 PRs (#12 to #27) and 25 open (updated in Mission 019, 2026-11-05). Each upper PR already **contains** all the lower ones; merging layer by layer produces 19 merges of the same commits and 19 CI cycles for no new content.
 * The docs, manifests and evidence summaries **cite commit SHAs and CI run IDs** (for example `923e209`, `2419325`, runs 41127825866). **Squash or rebase would orphan those references** (GitHub rewrites the SHAs; the originals would stay reachable only through the kept branches and tags, not from `main`). Use a merge that preserves the commits.
 * GitHub does not retarget stacked PRs automatically when their base merges unless the base branch is deleted.
 
@@ -40,7 +40,7 @@ Not rehearsed: a full test run in a second checkout, because two checkouts runni
    **Alternative (equally valid, owner's choice):** fast-forward `main` to the release head. That keeps exactly the commits whose CI runs are cited and creates no new SHA; the cost is that GitHub shows no merge event for a release PR. Either way, the **pre-registration commit must be reachable from the release head**.
 4. **Before merging**, the owner tags the current `main`: `git tag pre-v1-main 5e624c7` (and pushes the tag). That is the rollback anchor.
 5. **After merging**, tag `v1.0.0` on the merge commit and publish the GitHub release with the results document. An earlier `v1.0.0-rc1` on the infrastructure may be tagged for review if wanted.
-6. **Child PRs #12–#27**: after the release PR is merged they show their commits as contained in `main`. Close them with a comment pointing at the release. **Never delete their branches** (they are the cited provenance).
+6. **Child PRs #12–#30**: after the release PR is merged they show their commits as contained in `main`. Close them with a comment pointing at the release. **Never delete their branches** (they are the cited provenance).
 7. **#20**: close after release (content already included).
 
 ## 5. CI checkpoints
@@ -58,7 +58,7 @@ Not rehearsed: a full test run in a second checkout, because two checkouts runni
 ## 7. Technical problems that would prevent a clean release (today)
 
 1. **No study results exist**, so there is nothing to release as v1 yet (milestones 1 to 8).
-2. `PROJECT.md` still contains migrated historical statements (for example "public v1 released; blind visual-gameplay protocol approved" at line 74, in the historical plan header) overridden only by §0.5. `main` carries that text until a merge happens; a small docs-only correction of that header line could land earlier if the owner wants (the original wording would stay in the Google Doc and in history). The release README should link the current status rather than the historical text.
+2. `PROJECT.md` still contains migrated historical statements (for example "public v1 released; blind visual-gameplay protocol approved" at line 93 of PROJECT.md at `e44d149`, in the historical plan header, whose full text is "Master research & build plan | Version 1.3 | Updated 17 October 2026 | Status: public v1 released; blind visual-gameplay protocol approved, implementation pending"; the earlier "line 74" was wrong) overridden only by §0.5. `main` carries that text until a merge happens; a small docs-only correction of that header line could land earlier if the owner wants (the original wording would stay in the Google Doc and in history). The release README should link the current status rather than the historical text.
 3. Mac-only evidence (Missions 014 macOS and 015A/B session records) is not on this PC; cross-platform claims in the release must cite the committed summaries only.
 4. An off-machine backup of `runs/` still does not exist (`docs/EVIDENCE_BACKUP_PROCEDURE.md`).
 5. Nothing in the repository forbids merging the stack, but PROJECT.md §0.4 says "never casually merge the full stack": merging stays a recorded owner decision.
