@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from rewardbench.blindplay import baselines, results
+from rewardbench.blindplay import baselines, isolation, results
 
 
 def test_plan_has_the_seven_protocol_runs():
@@ -63,6 +63,7 @@ def test_run_refuses_inside_populated_official_looking_dir(tmp_path):
     assert not (official / "new").exists()
 
 
+@pytest.mark.skipif(isolation.supported() is not None, reason="OS isolation needs Windows (AppContainer) or macOS (Seatbelt)")
 def test_dry_label_executes_all_seven_runs_isolated(tmp_path):
     result = baselines.run_plan("keyset.v2", tmp_path, approval_reference=None, dry_label="pytest",
                                 episodes=1, frame_budget=30)

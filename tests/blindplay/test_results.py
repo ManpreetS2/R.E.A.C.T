@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from rewardbench.blindplay import host as host_mod, results
+from rewardbench.blindplay import host as host_mod, isolation, results
 
 
 def _run(out: Path, *, script="seeded-random", script_seed=1, keyset="keyset.v2", episodes=2, budget=60) -> None:
@@ -18,6 +18,9 @@ def _run(out: Path, *, script="seeded-random", script_seed=1, keyset="keyset.v2"
 
 @pytest.fixture(scope="module")
 def good(tmp_path_factory) -> Path:
+    reason = isolation.supported()
+    if reason:
+        pytest.skip(reason)   # the isolated host needs Windows (AppContainer) or macOS (Seatbelt)
     out = tmp_path_factory.mktemp("results") / "session"
     _run(out)
     return out

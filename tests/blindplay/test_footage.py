@@ -52,8 +52,13 @@ def test_render_labels_frames_and_sidecar(recorded, tmp_path):
     before = (recorded / "session.json").read_bytes()
     result = footage.render(recorded, tmp_path / "out", every=5)
     side = json.loads((tmp_path / "out" / "footage.json").read_text(encoding="utf-8"))
-    assert (tmp_path / "out" / "footage.mp4").stat().st_size > 0
-    assert side["output_sha256"] == footage._sha256_file(tmp_path / "out" / "footage.mp4")
+    out = tmp_path / "out"
+    if (out / "footage.mp4").exists():
+        assert (out / "footage.mp4").stat().st_size > 0
+        assert side["output_sha256"] == footage._sha256_file(out / "footage.mp4")
+        assert "ffmpeg" in side["tool_versions"] and side["tool_versions"]["imageio"]
+    else:   # the 'environments' extra (imageio-ffmpeg) is not installed: numbered PNGs + manifest, as documented
+        assert (out / "frames_manifest.json").is_file()
     assert side["label"]["banner"] == "REPLAY OF RECORDED SESSION"
     assert side["label"]["player_is_ai"] is False and "NON-AI" in side["label"]["player_kind"]
     assert "scripted:pytest-fixture (NOT AI)" in side["label"]["player_label"]
@@ -64,7 +69,6 @@ def test_render_labels_frames_and_sidecar(recorded, tmp_path):
     assert side["capture_check"]["capture_pass_mismatches"] == []
     assert side["frame_count"] > side["acts"] == len(ACTS)
     assert side["game_frame_count"] >= 15 and result["frame_count"] == side["frame_count"]
-    assert "ffmpeg" in side["tool_versions"] and side["tool_versions"]["imageio"]
     assert (recorded / "session.json").read_bytes() == before
     assert not (recorded / "replays").exists()          # input directory untouched
     assert not (tmp_path / "out" / "_work").exists()
