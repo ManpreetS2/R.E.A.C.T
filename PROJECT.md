@@ -69,6 +69,16 @@
 
 **Release gate:** Protocol text and related code remain pending amendment and verification; pre-registration, official baselines, real API traffic, spend and merge actions remain blocked. The most recently audited v1 milestone score is **29/100**. See the companion owner-decision table for individual statuses.
 
+#### P1 v1 final protocol acceptance — 2026-11-05 (owner authorization A)
+
+On **2026-11-05**, I accept `docs/BLIND_PLAY_PROTOCOL_V1_CANDIDATE.md` at commit **`c6506406d5686d1cabf090d4f353a038eb19d504`** as **protocol P1 v1** (research settings D1–D15 as recorded 2026-11-05, including the credential-SID allowlist and two-condition request-budget baseline amendments). This accepts **the final protocol text only**, and authorizes no API execution, spending, credential access, billing setup, live-flag changes, smoke test, AI session, pre-registration, or merges. The original historical draft remains unchanged.
+
+#### P1 v1 official non-AI scripted-baseline authorization — 2026-11-05 (owner authorization B)
+
+On **2026-11-05**, I authorize recording the official **14 non-AI scripted baselines exactly once** according to `docs/BASELINE_EXECUTION_CARD.md`, with frozen **`plan_sha256 bb527a18a5ad88e82769ee800d97b2bfe8c9de73d856be688024e0286d6922dd`**, `keyset.v2`, game seed 0, 10 planned episodes per run, 8,000 frames per episode, and both `matched-1000` (7 budget-matched runs) and `diagnostic-20000` (7 separately labeled extended diagnostic runs) on the verified Windows PC. Execute at **the clean commit that adds this authorization entry to `PROJECT.md`**, with **`PROJECT.md` as the only file differing from accepted-protocol commit `c6506406d5686d1cabf090d4f353a038eb19d504`**. Check the new commit's cross-platform CI, real Windows isolation tests, frozen plan hash, historical evidence integrity and non-overwriting output directory before execution; preserve and report complete and censored runs, and do not rerun silently. The scripts use **no provider API, model credentials, or spending**. This authorization does **not** cover the real-model technical smoke test, any AI session, live-flag changes, pre-registration, billing, credential access, merges, or any additional run.
+
+**Execution boundary:** These approvals authorize only the specific study protocol and the single 14-run non-AI baseline procedure. Historical research records remain immutable; raw outputs stay private and local, with copy-only backup and hash verification before any cleanup. Maintain `LIVE_CALLS_PERMITTED = False`. This pair of entries is part of the protocol acceptance trail and is not itself research outcome evidence.
+
 ### 0.4 Repository workflow and document authority
 
 1. **`PROJECT.md` is the main living project specification.** Update the *current-direction, decision, roadmap and results* portions whenever an owner-approved mission changes scope. Add dated decision entries; avoid rewriting past experiments to imply a different original hypothesis.
