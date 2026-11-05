@@ -30,6 +30,7 @@ import ssl
 import stat
 import subprocess
 import sys
+import tempfile
 from dataclasses import dataclass, fields
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
@@ -179,10 +180,31 @@ def _refuse_ambient_credentials(environ: Mapping[str, str]) -> None:
                               "variables would also switch Claude Code away from the subscription")
 
 
+# Trustees whose access an AppContainer or another user could use: SDDL aliases and numeric SIDs, so the check does not
+# depend on the language of Windows. Everyone, Users, Authenticated Users, Interactive, Network, All Application Packages
+# (AC) and every individual AppContainer package SID (S-1-15-2-...).
+_BROAD_TRUSTEES = {"WD", "BU", "AU", "IU", "NU", "AC", "S-1-1-0", "S-1-5-32-545", "S-1-5-11", "S-1-5-4", "S-1-5-2"}
+_ALLOW_ACE = re.compile(r"\((A|OA|XA);[^;]*;[^;]*;[^;]*;[^;]*;([^;)]+)(?:;[^)]*)?\)")
+
+
+def _sddl_is_private(sddl: str) -> bool:
+    dacl = sddl.partition("D:")[2]
+    for _kind, trustee in _ALLOW_ACE.findall(dacl):
+        if trustee in _BROAD_TRUSTEES or trustee.startswith("S-1-15-2-"):
+            return False
+    return True
+
+
 def _windows_acl_is_private(path: Path) -> bool:
-    """Grants that an AppContainer or another user could use. Name-based, so a non-English Windows gets less protection."""
-    output = subprocess.run(["icacls", str(path)], capture_output=True, text=True, timeout=15).stdout
-    return not re.search(r"Everyone|BUILTIN\\Users|Authenticated Users|ALL APPLICATION PACKAGES", output, re.I)
+    """False when the file grants access to a broad group or an AppContainer. Read as SDDL (``icacls /save``), which
+    names trustees by SID alias, so the result does not depend on the Windows display language."""
+    with tempfile.TemporaryDirectory() as scratch:
+        saved = Path(scratch) / "acl.txt"
+        done = subprocess.run(["icacls", str(path), "/save", str(saved), "/Q"], capture_output=True, timeout=15)
+        if done.returncode != 0 or not saved.exists():
+            return False   # cannot read the ACL: refuse
+        text = saved.read_bytes().decode("utf-16", errors="replace")
+    return _sddl_is_private(text)
 
 
 def read_credential(path: Path) -> "_Secret":

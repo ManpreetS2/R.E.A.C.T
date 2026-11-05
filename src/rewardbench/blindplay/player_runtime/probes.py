@@ -78,6 +78,35 @@ def processes(targets: dict) -> None:
         user32.CloseClipboard()
         return "opened"
     _attempt("clipboard", "OpenClipboard", clipboard)
+    canary = targets.get("clipboard_canary")
+    if canary:
+        # What matters is whether data can cross, not whether OpenClipboard succeeds: some Windows builds let a
+        # restricted process open the clipboard while the UI limits still block reading it.
+        user32.GetClipboardData.restype = wintypes.HANDLE
+        user32.GetClipboardData.argtypes = [wintypes.UINT]
+        k32.GlobalLock.restype = ctypes.c_void_p
+        k32.GlobalLock.argtypes = [wintypes.HANDLE]
+        k32.GlobalUnlock.argtypes = [wintypes.HANDLE]
+        def clipboard_read():
+            if not user32.OpenClipboard(None):
+                raise ctypes.WinError(ctypes.get_last_error())
+            try:
+                handle = user32.GetClipboardData(13)   # CF_UNICODETEXT
+                if not handle:
+                    raise OSError("GetClipboardData returned no data")
+                ptr = k32.GlobalLock(handle)
+                if not ptr:
+                    raise OSError("GlobalLock failed")
+                try:
+                    text = ctypes.wstring_at(ptr)
+                finally:
+                    k32.GlobalUnlock(handle)
+            finally:
+                user32.CloseClipboard()
+            if not text.startswith(canary):
+                raise OSError("clipboard did not contain the canary")
+            return "read canary"
+        _attempt("clipboard_read", "GetClipboardData", clipboard_read)
     def console():
         with open("CONOUT$", "wb") as f:
             f.write(b"x")

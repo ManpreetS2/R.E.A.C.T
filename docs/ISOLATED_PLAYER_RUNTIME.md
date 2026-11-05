@@ -69,7 +69,8 @@ to attack.
 | Start `cmd.exe`, PowerShell, Python, `os.system` | Denied (`ERROR_CHILD_PROCESS_BLOCKED`) | child-process policy + Job active-process limit 1 |
 | TCP to the internet, DNS lookup, UDP DNS round trip, TCP to a host loopback listener | Denied / no reply; host listener got 0 connections | no network capabilities; AppContainer loopback isolation |
 | Accept a connection from the host (listening socket) | Socket can be opened, but the host's connection attempt times out | loopback isolation |
-| Open the host process, the clipboard, the console (`CONOUT$`) | Denied | AppContainer; Job UI limits; `DETACHED_PROCESS` |
+| Open the host process, read the clipboard, the console (`CONOUT$`) | Denied | AppContainer; Job UI limits; `DETACHED_PROCESS` |
+| `OpenClipboard` itself | **Allowed on Windows 11 build 26300 (observed 2026-11-05); data still denied.** The probe now reads a per-run canary the host places on the clipboard; `GetClipboardData` returned no data from inside the sandbox, while an unsandboxed control read the canary back. The guarantee is "no clipboard data crosses", not "the clipboard cannot be opened". Earlier builds denied the open too | AppContainer; Job UI limits (`READCLIPBOARD`/`WRITECLIPBOARD`) |
 | Inherited handles | Only stdin/stdout/stderr pipes; the only disk handles are the process's own (its working directory, system message files) | `PROC_THREAD_ATTRIBUTE_HANDLE_LIST` |
 | Environment variables | Exactly `LOCALAPPDATA`, `SYSTEMROOT`, `TEMP`, `TMP` (Windows points the first, third and fourth at the container's own folder) | host builds the block |
 | Token | AppContainer = 1, integrity Low (0x1000) | kernel |
