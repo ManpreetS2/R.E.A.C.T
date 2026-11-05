@@ -18,6 +18,7 @@ import sys
 import tempfile
 import threading
 import time
+import uuid
 from pathlib import Path
 
 import pytest
@@ -205,6 +206,62 @@ def sysconfig_stdlib() -> str:
     return sysconfig.get_paths()["stdlib"]
 
 
+_CLIPBOARD_SAVED: list = []
+
+
+def _clipboard_api():
+    import ctypes
+    from ctypes import wintypes
+    u, k = ctypes.WinDLL("user32", use_last_error=True), ctypes.WinDLL("kernel32", use_last_error=True)
+    u.GetClipboardData.restype, u.GetClipboardData.argtypes = wintypes.HANDLE, [wintypes.UINT]
+    u.SetClipboardData.restype, u.SetClipboardData.argtypes = wintypes.HANDLE, [wintypes.UINT, wintypes.HANDLE]
+    u.OpenClipboard.argtypes = [wintypes.HWND]
+    k.GlobalAlloc.restype, k.GlobalAlloc.argtypes = wintypes.HANDLE, [wintypes.UINT, ctypes.c_size_t]
+    k.GlobalLock.restype, k.GlobalLock.argtypes = ctypes.c_void_p, [wintypes.HANDLE]
+    k.GlobalUnlock.argtypes = [wintypes.HANDLE]
+    return ctypes, u, k
+
+
+def _set_clipboard_text(text: str | None) -> str | None:
+    """Host side: put ``text`` on the clipboard (None = empty it) and return what was there before."""
+    ctypes, u, k = _clipboard_api()
+    previous = None
+    for _ in range(20):
+        if u.OpenClipboard(None):
+            break
+        time.sleep(0.05)
+    else:
+        return None
+    try:
+        handle = u.GetClipboardData(13)
+        if handle:
+            ptr = k.GlobalLock(handle)
+            if ptr:
+                previous = ctypes.wstring_at(ptr)
+                k.GlobalUnlock(handle)
+        u.EmptyClipboard()
+        if text is not None:
+            data = (text + "\0").encode("utf-16-le")
+            mem = k.GlobalAlloc(0x0002, len(data))   # GMEM_MOVEABLE
+            ptr = k.GlobalLock(mem)
+            ctypes.memmove(ptr, data, len(data))
+            k.GlobalUnlock(mem)
+            u.SetClipboardData(13, mem)
+    finally:
+        u.CloseClipboard()
+    return previous
+
+
+def _put_clipboard_canary() -> str:
+    canary = "REACT-CLIPBOARD-CANARY-" + uuid.uuid4().hex
+    _CLIPBOARD_SAVED[:] = [_set_clipboard_text(canary)]
+    return canary
+
+
+def _restore_clipboard() -> None:
+    _set_clipboard_text(_CLIPBOARD_SAVED[0] if _CLIPBOARD_SAVED else None)
+
+
 @pytest.fixture(scope="module")
 def probe(tmp_path_factory):
     if _REASON:
@@ -257,6 +314,9 @@ def probe(tmp_path_factory):
         targets, marker = _windows_targets(out, listener.getsockname()[1])
     # Attack only what exists on the host, so "not found" can never pass for "denied". (Paths inside this
     # session's own directory are created during the session and are attacked before and after they exist.)
+    canary = _put_clipboard_canary() if WINDOWS else None
+    if canary:
+        targets["clipboard_canary"] = canary
     targets["read"] = [p for p in targets["read"] if Path(p).is_file() or Path(p).is_relative_to(out)]
     targets["list"] = [p for p in targets["list"] if Path(p).is_dir() or Path(p).is_relative_to(out)]
     assert len(targets["read"]) >= 7 and len(targets["list"]) >= 6
@@ -265,6 +325,8 @@ def probe(tmp_path_factory):
     try:
         manifest = host_mod.Host(config).run()
     finally:
+        if canary:
+            _restore_clipboard()
         stop.set()
         listener.close()
         if unix_listener is not None:
@@ -367,7 +429,9 @@ def test_no_network_in_or_out(probe):
 
 @needs_isolation
 def test_no_host_process_clipboard_console_or_credential_store(probe):
-    names = ("open_process", "clipboard", "console", "credential_manager") if WINDOWS else \
+    # Windows: OpenClipboard itself may succeed on newer builds (Windows 11 build 26300 observed 2026-11-05);
+    # the isolation guarantee is that no clipboard DATA crosses, so the host's canary must be unreadable.
+    names = ("open_process", "clipboard_read", "console", "credential_manager") if WINDOWS else \
         ("signal_process", "process_info", "list_processes", "console", "mach_lookup")
     for name in names:
         rs = probe["by"](name)

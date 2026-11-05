@@ -334,6 +334,44 @@ def test_a_credential_readable_by_others_is_refused(owner, live_flag, monkeypatc
         gate(owner)
 
 
+@pytest.mark.parametrize("sddl, private", [
+    ("O:S-1-5-21-1-2-3-1001G:S-1-5-21-1-2-3-513D:PAI(A;;FA;;;S-1-5-21-1-2-3-1001)", True),
+    ("D:PAI(A;;FA;;;SY)(A;;FA;;;BA)(A;;FA;;;S-1-5-21-1-2-3-1001)", True),
+    ("D:PAI(A;;FR;;;WD)", False),                        # Everyone
+    ("D:PAI(A;;FA;;;S-1-5-21-1-2-3-1001)(A;;0x1200a9;;;BU)", False),   # Users
+    ("D:PAI(A;;FR;;;AU)", False),                        # Authenticated Users
+    ("D:PAI(A;;FR;;;AC)", False),                        # ALL APPLICATION PACKAGES
+    ("D:PAI(A;;FR;;;S-1-15-2-1)", False),
+    ("D:PAI(A;;FR;;;S-1-15-2-2618405040-1-2-3-4-5-6)", False),   # one AppContainer package
+    ("D:PAI(A;;FR;;;S-1-1-0)", False),                   # Everyone, numeric (any display language)
+    ("D:PAI(D;;FR;;;WD)(A;;FA;;;SY)", True),             # a DENY for Everyone grants nothing
+])
+def test_sddl_trustee_check_is_language_independent(sddl, private):
+    assert lt._sddl_is_private(sddl) is private
+
+
+@pytest.mark.skipif(lt.sys.platform != "win32", reason="Windows ACLs")
+def test_real_windows_acl_check_on_real_files(tmp_path):
+    """The check was only ever monkeypatched before. Run it on real files with real icacls."""
+    import os
+    import subprocess
+    user = os.environ["USERNAME"]
+
+    def make(name, *grants):
+        f = tmp_path / name
+        f.write_text("x")
+        subprocess.run(["icacls", str(f), "/inheritance:r", "/grant:r", f"{user}:F", *grants], check=True,
+                       capture_output=True)
+        return f
+
+    assert lt._windows_acl_is_private(make("mine.key")) is True
+    assert lt._windows_acl_is_private(make("everyone.key", "/grant", "*S-1-1-0:R")) is False
+    assert lt._windows_acl_is_private(make("users.key", "/grant", "*S-1-5-32-545:R")) is False
+    assert lt._windows_acl_is_private(make("auth.key", "/grant", "*S-1-5-11:R")) is False
+    assert lt._windows_acl_is_private(make("allpkg.key", "/grant", "*S-1-15-2-1:R")) is False
+    assert lt._windows_acl_is_private(tmp_path / "missing.key") is False   # unreadable ACL: refuse
+
+
 def test_a_linked_credential_is_refused(owner, live_flag, tmp_path):
     link = tmp_path / "link.key"
     try:
