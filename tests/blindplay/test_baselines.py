@@ -176,3 +176,20 @@ def test_only_scripts_refused_on_an_approved_run(tmp_path):
     with pytest.raises(baselines.PlanRefused, match="only_scripts"):
         baselines.run_plan("keyset.v2", tmp_path / "o", approval_reference="ref", only_scripts=["idle"])
     assert not (tmp_path / "o").exists()
+
+# The plan the owner will be asked to authorize (docs/BASELINE_EXECUTION_CARD.md). If ANY of this changes, the frozen hash changes:
+# that must be a deliberate, reviewed edit of this test AND of the card and the protocol, never a side effect.
+FROZEN_PLAN_SHA256_KEYSET_V2 = "bb527a18a5ad88e82769ee800d97b2bfe8c9de73d856be688024e0286d6922dd"
+FROZEN_SUBDIRS = [
+    f"{cond}_{name}" for cond in ("matched-1000", "diagnostic-20000")
+    for name in ("01_idle", "02_key-sweep", "03_seeded-random_seed0", "04_seeded-random_seed1", "05_seeded-random_seed2",
+                 "06_seeded-random_seed3", "07_seeded-random_seed4")]
+
+
+def test_the_frozen_official_baseline_plan():
+    runs = baselines.official_plan("keyset.v2")
+    assert baselines.plan_hash(runs) == FROZEN_PLAN_SHA256_KEYSET_V2
+    assert [r["subdir"] for r in runs] == FROZEN_SUBDIRS
+    assert {(r["condition"], r["max_requests"]) for r in runs} == {("matched-1000", 1000), ("diagnostic-20000", 20000)}
+    assert all(_arg(r, "--seed") == "0" and _arg(r, "--episodes") == "10" and _arg(r, "--episode-frame-budget") == "8000"
+               and _arg(r, "--keyset") == "keyset.v2" for r in runs)

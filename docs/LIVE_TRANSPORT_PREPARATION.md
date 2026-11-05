@@ -1,3 +1,7 @@
+> **Superseded in parts (Mission 019, 2026-11-05).** Current sources: `docs/BLIND_PLAY_PROTOCOL_V1_CANDIDATE.md` (the consolidated text), `PROJECT.md` §0.3 ("P1 v1 owner decisions — 2026-11-05") and `docs/MISSION_018_OWNER_AMENDMENTS.md`. The body below is kept as the historical record of that mission (apart from the Mission 018 credential-check updates and the baselines note before "Remaining limitations").
+>
+> Outdated in the body below: the status line "approves nothing" and every "Proposed" cell in the provisional-candidate table (model, effort, thinking `disabled`, platform, 1 episode / 30 calls, caps $0.50 / $1.00 are now owner-approved research settings with no execution authority); the closing "Owner decisions" list and the section "Owner decisions" (thinking, effort, smoke test versus pre-registered session, keyset, provider and caps, transport are decided as research settings; billing, the flag and the off-machine backup remain open owner-only actions, D15); Incompatibility 3's "would need that ordering amended" (decided: an excluded smoke test after any approved baselines, before pre-registration); the test counts (890/881); and the references to draft protocol sections as the governing text (the governing text is the candidate protocol). The credential-file row and limitation were already updated in Mission 018. Still true: the real endpoint is untested, `LIVE_CALLS_PERMITTED = False`, no key exists.
+
 # Live transport preparation (Mission 015B)
 
 **Status (2026-10-30): the live transport is built and verified against a local mock HTTP server only. The gate is closed
@@ -202,6 +206,10 @@ Not to be done until authorized. In order:
 5. Whatever happens is reported. Then set the flag back to False in a new commit unless further sessions are authorized.
 
 The authorization file must name the commit that sets the flag, so a commit message or file cannot pre-approve itself.
+
+## Scripted baselines and `--max-requests` (Mission 018)
+
+The non-AI baselines are recorded through the same host before any smoke test and use no API or credential. Since Mission 018, `python -m rewardbench.blindplay.host` accepts `--max-requests` (default unchanged, 20,000), and `python -m rewardbench.blindplay.baselines plan --keyset keyset.v2 --out-root <path that does not exist>` prints 14 commands: `matched-1000` (`--max-requests 1000`, the budget-matched control that equals the gateway's 1,000-request limit) and `diagnostic-20000` (`--max-requests 20000`, an extended diagnostic, not budget-matched). `--max-requests` and the condition labels are part of the plan hash (`bb527a18a5ad88e82769ee800d97b2bfe8c9de73d856be688024e0286d6922dd` at `e44d149`). A scripted run that the limit ends early is reported as `CENSORED_BY_REQUEST_LIMIT`. When the same limit is reached in an AI session, the gateway ends it with stop reason `game_request_limit`. Details: candidate protocol §9 and §10 rule 17; procedure: `docs/BASELINE_EXECUTION_CARD.md`. Nothing has been recorded.
 
 ## Remaining limitations
 
