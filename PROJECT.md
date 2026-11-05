@@ -50,6 +50,23 @@
 - **Evidence integrity:** keep initial controllers, prompts, individual calls, exact simulator build, seed splits, request IDs, receipts, deterministic replays, hashes and negative findings. Never mislabel hand-tuned/scripted flights as LLM achievements. Preserve historical configs and raw records; no unapproved merges or uploads of private evidence.
 - **Attribution:** Original ApolloLander by Seb Lee-Delisle, ©2017, MIT, https://github.com/sebleedelisle/apollolander. Preserve license/credit; no affiliation or endorsement implied.
 
+
+#### P1 v1 owner decisions — 2026-11-05 (approved settings; amended protocol pending)
+
+**Owner response:** On 2026-11-05, the owner explicitly accepted the proposed P1 research settings **with two amendments** (credential ACL allowlisting and baseline request-limit comparability), as research/protocol decisions only. This is **not** approval to buy credits, use an API key, enable `LIVE_CALLS_PERMITTED`, merge a PR, run an AI session, or start the formal experiment. The clean candidate must be amended and independently reviewed before being marked an executable approved protocol or pre-registered. Source configuration: draft PR #28 `b631be4`, `docs/BLIND_PLAY_PROTOCOL_V1_CANDIDATE.md` and `docs/BLIND_PLAY_V1_OWNER_DECISIONS.md`.
+
+- **D1 (conditional):** Adopt consolidated P1 v1 subject to incorporation and verification of the amendments below. Historical draft remains unchanged. Do not call the as-is candidate final.
+- **D2–D6:** `keyset.v2` (without `KeyS`); thinking `disabled`; effort `low` throughout; Anthropic `claude-haiku-5-5`; Windows on the verified PC.
+- **D7–D9:** An excluded technical smoke test (one episode, at most 30 model calls) is allowed before study pre-registration, following any approved non-AI baselines. Formal study target: one session, 10 episodes, at most 150 model calls, 8,000 simulated frames per episode; no additional sessions implicitly authorized.
+- **D10 + sub-decision:** $0.50 is the proposed **smoke-test session accounting cap**; $1.00 is the **total cumulative project accounting cap**, inclusive of historical $0.106019 OpenAI spending (initial remaining balance $0.893981). The later formal study's session cap may be set to the **remaining reconciled cumulative balance at launch**, not a fixed $0.50. Every actual expenditure requires its own explicit owner approval and provider-side caps. These are limits, **not spending authorization**.
+- **D11–D12:** Accept merged stopping rules, including the 20,000-character per-reply text-history cut. Technical fixes after the smoke test must be documented and reviewed; at most two excluded smoke-test attempts may be considered under the same aggregate budget, each reported in full and each requiring separate execution approval.
+- **D13 (amended):** Before **official baselines**, implement and freeze a `--max-requests` setting and include it in the plan hash. Produce a **1,000-game-request budget-matched baseline condition** using the same platform/keyset/episode frame limit as the study; explicitly disclose any censored/truncated 10-episode runs (notably key-sweep). Retain **20,000-request extended scripted runs** as separately labeled diagnostics, **not** directly budget-matched controls; report both budgets and never substitute one for the other. No official baselines are yet authorized to run by this note alone.
+- **D14:** Retain the mock-verified Python standard-library `http.client` provider transport.
+- **Security amendment:** Before any real key is used, replace denylist-only credential-ACL validation with fail-closed checking of owner SID and narrowly justified principals; test a file granting access to a different specific user SID. Require independent safety review.
+- **D15 outstanding:** Private off-machine raw-data backup, Console billing/credits/organization and workspace spending limits, credential creation/storage, reviewed live-flag commit and terminal confirmation are separate owner-only actions. None has been scheduled or performed by this approval.
+
+**Release gate:** Protocol text and related code remain pending amendment and verification; pre-registration, official baselines, real API traffic, spend and merge actions remain blocked. The most recently audited v1 milestone score is **29/100**. See the companion owner-decision table for individual statuses.
+
 ### 0.4 Repository workflow and document authority
 
 1. **`PROJECT.md` is the main living project specification.** Update the *current-direction, decision, roadmap and results* portions whenever an owner-approved mission changes scope. Add dated decision entries; avoid rewriting past experiments to imply a different original hypothesis.
