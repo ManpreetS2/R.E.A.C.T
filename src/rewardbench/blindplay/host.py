@@ -499,8 +499,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--script-seed", type=int, default=0)
     parser.add_argument("--episodes", type=int, default=2)
     parser.add_argument("--episode-frame-budget", type=int, default=session.DEFAULT_EPISODE_FRAME_BUDGET)
+    parser.add_argument("--keyset", choices=sorted(contract.CONTRACTS), default=contract.V1.keyset)
+    parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--max-wall-seconds", type=float, default=3600.0)
     args = parser.parse_args(argv)
     config = HostConfig(out=args.out, mode="scripted", script=args.script, script_seed=args.script_seed,
+                        keyset=args.keyset, seed=args.seed, max_wall_seconds=args.max_wall_seconds,
                         player_label=f"isolated scripted:{args.script} script_seed={args.script_seed} (NOT AI)",
                         max_episodes=args.episodes, episode_frame_budget=args.episode_frame_budget)
     print(json.dumps(Host(config).run()["counts"]))
